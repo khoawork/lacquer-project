@@ -1,0 +1,17 @@
+{
+  "name": "lacquer-project-root",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Fullstack React + Express + MySQL lacquer project with Admin Dashboard",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "build:client": "cd client && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
+

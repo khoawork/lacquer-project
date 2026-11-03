@@ -1,0 +1,199 @@
+@import "tailwindcss";
+
+:root {
+  --gold-glow: rgba(212, 175, 55, 0.65);
+  --gold-glow-soft: rgba(255, 223, 115, 0.45);
+  --gold-glow-intense: rgba(255, 223, 115, 0.95);
+  --lacquer-bg: #28090d;
+}
+
+body {
+  background: radial-gradient(circle at 50% 15%, #421217 0%, #28090d 55%, #180507 100%);
+  background-color: #28090d;
+  color: #FAF7F2;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+h1, h2, h3, h4, .font-serif, [class*="font-display"] {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  text-wrap: balance;
+}
+
+p, li, blockquote, .font-body {
+  font-family: 'Lora', Georgia, serif;
+  text-wrap: pretty;
+}
+
+/* Chữ vàng hoàng gia sáng chói rực rỡ */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF5CC 15%, #FFE07D 40%, #E5B834 75%, #B88916 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 20px rgba(255, 223, 115, 0.65)) drop-shadow(0 0 45px rgba(212, 175, 55, 0.45));
+}
+
+.text-gold-subtle {
+  background: linear-gradient(135deg, #FFF9E5 0%, #FFE599 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Royal Gold Buttons - Primary */
+.btn-gold {
+  background: linear-gradient(135deg, #FFF0B3 0%, #FFDF73 30%, #D4AF37 70%, #A67C14 100%) !important;
+  color: #1a0303 !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.16em !important;
+  box-shadow: 0 4px 24px rgba(212, 175, 55, 0.55), 0 0 15px rgba(255, 223, 115, 0.4) !important;
+  border: 1px solid rgba(255, 243, 204, 0.8) !important;
+  transition: all 0.35s ease;
+}
+.btn-gold:hover {
+  filter: brightness(1.2);
+  box-shadow: 0 6px 36px rgba(255, 223, 115, 0.85), 0 0 24px rgba(255, 243, 204, 0.65) !important;
+  transform: translateY(-2px);
+}
+
+/* Ghost Outline Gold */
+.btn-gold-outline {
+  background: rgba(40, 9, 13, 0.85) !important;
+  color: #FFDF73 !important;
+  border: 1px solid rgba(212, 175, 55, 0.65) !important;
+  font-family: 'Cormorant Garamond', serif !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 700 !important;
+  backdrop-filter: blur(12px);
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+.btn-gold-outline:hover {
+  background: rgba(60, 16, 23, 0.95) !important;
+  border-color: #FFDF73 !important;
+  color: #FFF3CC !important;
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.6) !important;
+  transform: translateY(-2px);
+}
+
+/* Glow Card Borders */
+.card-lacquer {
+  background: linear-gradient(180deg, rgba(46, 12, 17, 0.92) 0%, rgba(32, 7, 11, 0.96) 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.38) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 223, 115, 0.18) !important;
+  transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.card-lacquer:hover {
+  background: linear-gradient(180deg, rgba(58, 16, 22, 0.95) 0%, rgba(40, 9, 13, 0.98) 100%) !important;
+  border-color: rgba(255, 223, 115, 0.85) !important;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.8), 0 0 28px rgba(212, 175, 55, 0.38), inset 0 1px 1px rgba(255, 243, 204, 0.4) !important;
+  transform: translateY(-3px);
+}
+
+/* Dashed Gold Cards (Đối tác / Mạng lưới liên kết) */
+.card-dashed-gold {
+  background: linear-gradient(145deg, rgba(32, 9, 12, 0.65) 0%, rgba(15, 4, 6, 0.85) 100%) !important;
+  border: 1px dashed rgba(212, 175, 55, 0.45) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(212, 175, 55, 0.05) !important;
+  transition: all 0.35s ease;
+}
+.card-dashed-gold:hover {
+  border-color: rgba(255, 223, 115, 0.8) !important;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), inset 0 0 20px rgba(212, 175, 55, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+/* Navigation Link underline effect & Active State */
+.nav-link-item {
+  position: relative;
+  transition: all 0.25s ease;
+}
+.nav-link-item::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37, #FFDF73);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px #FFDF73;
+}
+.nav-link-item:hover::after {
+  width: 100%;
+}
+.nav-link-item.active {
+  color: #FFDF73 !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 14px rgba(255, 223, 115, 0.8), 0 0 28px rgba(212, 175, 55, 0.5);
+}
+.nav-link-item.active::after {
+  width: 100% !important;
+  background: linear-gradient(90deg, #D4AF37, #FFDF73);
+  box-shadow: 0 0 12px #FFDF73;
+}
+
+/* ================= CÁC CHẤM TRÒN VÀNG KIM BAY TỰ DO RÕ NÉT (ĐỒNG BỘ TOÀN DỰ ÁN) ================= */
+.orb-glow-gold,
+.sparkle-particle,
+.gold-dust-sparkle,
+.hero-sparkle,
+.about-sparkle,
+.gold-stardust {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background-color: #FFF2B2;
+  box-shadow: 
+    0 0 2px 1px #FFFFFF,
+    0 0 4px 1.5px #FFDF73,
+    0 0 6px 1px rgba(255, 215, 100, 0.4);
+  will-change: transform;
+}
+
+/* Quỹ đạo chuyển động biên độ lớn (60px - 110px) - GIỮ NGUYÊN KÍCH THƯỚC (KHÔNG SCALE) */
+@keyframes flySparkle1 {
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(65px, -60px, 0); }
+  50% { transform: translate3d(110px, -20px, 0); }
+  75% { transform: translate3d(35px, 60px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes flySparkle2 {
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(-75px, -45px, 0); }
+  50% { transform: translate3d(-105px, 35px, 0); }
+  75% { transform: translate3d(-35px, 65px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes flySparkle3 {
+  0% { transform: translate3d(0, 0, 0); }
+  30% { transform: translate3d(-60px, 75px, 0); }
+  60% { transform: translate3d(70px, 45px, 0); }
+  85% { transform: translate3d(85px, -40px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes flySparkle4 {
+  0% { transform: translate3d(0, 0, 0); }
+  30% { transform: translate3d(75px, -55px, 0); }
+  60% { transform: translate3d(40px, -100px, 0); }
+  85% { transform: translate3d(-50px, -40px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes flySparkle5 {
+  0% { transform: translate3d(0, 0, 0); }
+  35% { transform: translate3d(-85px, -55px, 0); }
+  70% { transform: translate3d(60px, -75px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.anim-fly-1, .sparkle-1, .anim-sparkle-1, .anim-orb-1, .anim-about-1 { animation: flySparkle1 9s ease-in-out infinite; }
+.anim-fly-2, .sparkle-2, .anim-sparkle-2, .anim-orb-2, .anim-about-2 { animation: flySparkle2 11s ease-in-out infinite; }
+.anim-fly-3, .sparkle-3, .anim-sparkle-3, .anim-orb-3, .anim-about-3 { animation: flySparkle3 10s ease-in-out infinite; }
+.anim-fly-4, .sparkle-4, .anim-sparkle-4, .anim-orb-4, .anim-about-4 { animation: flySparkle4 12s ease-in-out infinite; }
+.anim-fly-5, .sparkle-5, .anim-sparkle-5, .anim-orb-5, .anim-about-5 { animation: flySparkle5 13s ease-in-out infinite; }
