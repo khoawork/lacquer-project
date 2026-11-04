@@ -40,14 +40,14 @@ const JourneyHeroSection = () => {
           <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#3a090e] to-[#D4AF37]/60 shadow-[0_0_40px_rgba(255,223,115,0.6)] group-hover:shadow-[0_0_65px_rgba(255,223,115,0.85)] transition-all duration-500 flex items-center justify-center">
             <img
               alt="Biểu trưng 100 năm Hành trình Sơn Mài"
-              className="w-full h-full object-cover rounded-full brightness-110 drop-shadow-[0_0_15px_rgba(255,223,115,0.7)]"
+              className="w-full h-full object-cover rounded-full brightness-110 drop-shadow-[0_0_15px_rgba(255,223,115,0.7)] transition-transform duration-700 group-hover:scale-105"
               src={HERO_SEAL}
               onError={(e) => {
                 e.currentTarget.src = LOGO_FALLBACK;
               }}
             />
           </div>
-          <div className="absolute -inset-3 rounded-full border border-[#D4AF37]/50 pointer-events-none" />
+          <div className="absolute -inset-3 rounded-full border border-[#D4AF37]/50 pointer-events-none group-hover:scale-105 transition-transform duration-500" />
         </div>
 
         {/* Badge tiêu đề */}

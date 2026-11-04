@@ -1,7 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const MonographArchiveSection = () => {
+const MonographArchiveSection = ({ pageProps }) => {
+  const archiveTag = pageProps?.archive_tag || 'KỶ YẾU';
+  const archiveHeadline = pageProps?.archive_headline || 'Kho tri thức mở của Hành trình';
+  const archiveDesc =
+    pageProps?.archive_desc ||
+    'Kỷ yếu tập hợp các bài tham luận hàn lâm, chân dung nghệ nhân – họa sĩ, tư liệu làng nghề, nghiên cứu vật liệu, hình ảnh sự kiện và dữ liệu định danh tác phẩm. Đây là nền móng học thuật và ký ức chung để hành trình được tiếp tục bởi nhiều thế hệ.';
+
   return (
     <section
       className="relative w-full py-24 bg-[#180303] border-t border-[#D4AF37]/20"
@@ -63,13 +69,13 @@ const MonographArchiveSection = () => {
             <div className="lg:col-span-7 space-y-6">
               <div className="space-y-2">
                 <span className="font-serif text-[15px] tracking-[0.25em] text-[#FFDF73] uppercase font-bold whitespace-nowrap">
-                  KỶ YẾU
+                  {archiveTag}
                 </span>
                 <h2 className="font-serif text-[34px] md:text-[46px] font-bold text-gold-gradient leading-tight">
-                  Kho tri thức mở của Hành trình
+                  {archiveHeadline}
                 </h2>
                 <p className="font-body text-[18px] text-[#FAF7F2] leading-[1.85]">
-                  Kỷ yếu tập hợp các bài tham luận hàn lâm, chân dung nghệ nhân – họa sĩ, tư liệu làng nghề, nghiên cứu vật liệu, hình ảnh sự kiện và dữ liệu định danh tác phẩm. Đây là nền móng học thuật và ký ức chung để hành trình được tiếp tục bởi nhiều thế hệ.
+                  {archiveDesc}
                 </p>
               </div>
 

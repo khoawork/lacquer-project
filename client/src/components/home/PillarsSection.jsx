@@ -1,7 +1,44 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
 
-const PillarsSection = () => {
+const PillarsSection = ({ pageProps }) => {
+  const headline = pageProps?.pillars_headline || 'Bốn hướng mở của hành trình';
+  const desc =
+    pageProps?.pillars_desc ||
+    'Một mô hình đa chiều kết nối truyền thống nghìn năm cùng nhịp đập kinh tế sáng tạo toàn cầu hóa.';
+
+  const pillar1Title = pageProps?.pillar1_title || 'Cộng đồng sáng tạo';
+  const pillar1Desc =
+    pageProps?.pillar1_desc ||
+    'Mở rộng Open Studio, bảo trợ chương trình lưu trú nghệ sĩ trẻ, workshop thể nghiệm đa chất liệu và truyền cảm hứng hội họa sơn mài đến công chúng đa thế hệ.';
+  const p1CtaText = pageProps?.pillar1_cta_text || 'Khám phá hoạt động';
+  const p1CtaLink = pageProps?.pillar1_cta_link || '/journey';
+
+  const pillar2Title = pageProps?.pillar2_title || 'Công nghiệp văn hóa';
+  const pillar2Desc =
+    pageProps?.pillar2_desc ||
+    'Đưa giá trị tạo hình sơn mài vào giáo dục mỹ thuật di sản, thiết kế nội thất, thời trang đương đại, sản phẩm cao cấp và không gian trải nghiệm.';
+  const p2CtaText = pageProps?.pillar2_cta_text || 'Khám phá sản phẩm';
+  const p2CtaLink = pageProps?.pillar2_cta_link || '/collections';
+
+  const pillar3Title = pageProps?.pillar3_title || 'Kinh tế di sản';
+  const pillar3Desc =
+    pageProps?.pillar3_desc ||
+    'Làng nghề, du lịch trải nghiệm, lưu trữ số, giám định, định danh và thị trường minh bạch.';
+  const p3CtaText = pageProps?.pillar3_cta_text || 'Khám phá dự án';
+  const p3CtaLink = pageProps?.pillar3_cta_link || '/events';
+
+  const pillar4Title = pageProps?.pillar4_title || 'Đổi mới vật liệu';
+  const pillar4Desc =
+    pageProps?.pillar4_desc ||
+    'Vật liệu lai, bề mặt kiến trúc, công nghệ bảo tồn và giải pháp bền vững.';
+  const p4CtaText = pageProps?.pillar4_cta_text || 'Khám phá thể nghiệm';
+  const p4CtaLink = pageProps?.pillar4_cta_link || '/archive';
+
+  const bottomCtaText = pageProps?.pillars_bottom_cta_text || 'XEM CHI TIẾT HỆ SINH THÁI';
+  const bottomCtaLink = pageProps?.pillars_bottom_cta_link || '#mo-hinh';
+
   return (
     <section
       className="relative w-full py-24 bg-[#180303] border-t border-[#D4AF37]/20"
@@ -17,10 +54,10 @@ const PillarsSection = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="space-y-2 max-w-2xl">
             <h2 className="font-serif text-[34px] md:text-[46px] font-bold text-gold-gradient leading-tight">
-              Bốn hướng mở của hành trình
+              {headline}
             </h2>
             <p className="font-body text-[18px] text-[#FAF7F2]">
-              Một mô hình đa chiều kết nối truyền thống nghìn năm cùng nhịp đập kinh tế sáng tạo toàn cầu hóa.
+              {desc}
             </p>
           </div>
         </div>
@@ -35,18 +72,31 @@ const PillarsSection = () => {
               </div>
               <div className="space-y-2">
                 <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
-                  Cộng đồng sáng tạo
+                  {pillar1Title}
                 </h3>
                 <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
-                  Mở rộng Open Studio, bảo trợ chương trình lưu trú nghệ sĩ trẻ, workshop thể nghiệm đa chất liệu và truyền cảm hứng hội họa sơn mài đến công chúng đa thế hệ.
+                  {pillar1Desc}
                 </p>
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              <span className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap">
-                Khám phá hoạt động{' '}
-                <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
-              </span>
+              {p1CtaLink.startsWith('#') ? (
+                <a
+                  href={p1CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p1CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </a>
+              ) : (
+                <Link
+                  to={p1CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p1CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -58,18 +108,31 @@ const PillarsSection = () => {
               </div>
               <div className="space-y-2">
                 <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
-                  Công nghiệp văn hóa
+                  {pillar2Title}
                 </h3>
                 <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
-                  Đưa giá trị tạo hình sơn mài vào giáo dục mỹ thuật di sản, thiết kế nội thất, thời trang đương đại, sản phẩm cao cấp và không gian trải nghiệm.
+                  {pillar2Desc}
                 </p>
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              <span className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap">
-                Khám phá sản phẩm{' '}
-                <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
-              </span>
+              {p2CtaLink.startsWith('#') ? (
+                <a
+                  href={p2CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p2CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </a>
+              ) : (
+                <Link
+                  to={p2CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p2CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -81,18 +144,31 @@ const PillarsSection = () => {
               </div>
               <div className="space-y-2">
                 <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
-                  Kinh tế di sản
+                  {pillar3Title}
                 </h3>
                 <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
-                  Làng nghề, du lịch trải nghiệm, lưu trữ số, giám định, định danh và thị trường minh bạch.
+                  {pillar3Desc}
                 </p>
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              <span className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap">
-                Khám phá dự án{' '}
-                <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
-              </span>
+              {p3CtaLink.startsWith('#') ? (
+                <a
+                  href={p3CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p3CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </a>
+              ) : (
+                <Link
+                  to={p3CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p3CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </Link>
+              )}
             </div>
           </div>
 
@@ -104,29 +180,51 @@ const PillarsSection = () => {
               </div>
               <div className="space-y-2">
                 <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
-                  Đổi mới vật liệu
+                  {pillar4Title}
                 </h3>
                 <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
-                  Vật liệu lai, bề mặt kiến trúc, công nghệ bảo tồn và giải pháp bền vững.
+                  {pillar4Desc}
                 </p>
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              <span className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap">
-                Khám phá thể nghiệm{' '}
-                <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
-              </span>
+              {p4CtaLink.startsWith('#') ? (
+                <a
+                  href={p4CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p4CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </a>
+              ) : (
+                <Link
+                  to={p4CtaLink}
+                  className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
+                >
+                  {p4CtaText}{' '}
+                  <span className="material-symbols-outlined text-sm font-bold">arrow_forward</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>
 
         <div className="mt-14 flex justify-center">
-          <a
-            className="btn-gold-outline px-10 py-3.5 rounded text-[16px] uppercase tracking-[0.2em] whitespace-nowrap inline-block"
-            href="#mo-hinh"
-          >
-            XEM CHI TIẾT HỆ SINH THÁI
-          </a>
+          {bottomCtaLink.startsWith('#') ? (
+            <a
+              className="btn-gold-outline px-10 py-3.5 rounded text-[16px] uppercase tracking-[0.2em] whitespace-nowrap inline-block"
+              href={bottomCtaLink}
+            >
+              {bottomCtaText}
+            </a>
+          ) : (
+            <Link
+              className="btn-gold-outline px-10 py-3.5 rounded text-[16px] uppercase tracking-[0.2em] whitespace-nowrap inline-block"
+              to={bottomCtaLink}
+            >
+              {bottomCtaText}
+            </Link>
+          )}
         </div>
       </div>
     </section>

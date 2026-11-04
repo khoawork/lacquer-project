@@ -2,9 +2,15 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { Award, Layers, Sparkles, CheckCircle2 } from 'lucide-react';
 
-const CollectionHeroSection = () => {
+const CollectionHeroSection = ({ pageProps = null }) => {
   const LOGO_SEAL =
     'https://lh3.googleusercontent.com/aida-public/AB6AXuAbx2zcEMt5QTXpYZ4vmxm9T3QK6QXfbGS31GYaycmOh0yKdDuKbXLrCd8jOekjZh0yRrUcG1Ach3DVtu4cJrwm9CqMdO0qkE9EMijUSxYvcI9F-i1XPm_j34ROMxlJJ6YQINYSQ3ZXdhzCmPxh9mn_ZAX193YRGA64fvuoaOJcaLmtQFm5g2f0GuT8VLii4tVPMsGA1sQn1srqxR_80HEyudzBxHHOpnljC5HpfKHyOK_K2hVKfueaKw';
+
+  const badgeText = pageProps?.badge || 'DI SẢN HỘI HỌA & MỸ THUẬT BÁCH NIÊN (1930–2030)';
+  const headlineText = pageProps?.headline || 'MỖI TÁC PHẨM LÀ MỘT LỚP THỜI GIAN';
+  const descText =
+    pageProps?.description ||
+    'Sơn mài không phô bày tất cả ngay từ đầu. Giá trị được tạo nên qua tích tụ, chờ đợi và mài lộ. Bộ sưu tập của Hành trình ghi nhận cả tác phẩm độc bản, dự án cộng đồng và thử nghiệm liên ngành – như những chứng tích sống của một thế kỷ đang tiếp diễn.';
 
   return (
     <section
@@ -57,18 +63,18 @@ const CollectionHeroSection = () => {
             style={{ backgroundColor: '#FFDF73', boxShadow: '0 0 8px #FFDF73' }}
           />
           <span className="font-serif uppercase text-[12px] md:text-[13px] tracking-[0.25em] font-bold text-[#FFDF73]">
-            DI SẢN HỘI HỌA & MỸ THUẬT BÁCH NIÊN (1930–2030)
+            {badgeText}
           </span>
         </div>
 
         {/* Main Monumental Heading */}
         <h1 className="font-serif text-[38px] sm:text-[50px] md:text-[58px] lg:text-[66px] leading-tight font-bold uppercase tracking-tight mb-6 text-gold-gradient drop-shadow-[0_4px_22px_rgba(255,223,115,0.45)]">
-          MỖI TÁC PHẨM LÀ MỘT LỚP THỜI GIAN
+          {headlineText}
         </h1>
 
         {/* Curatorial Thesis Narrative */}
         <p className="font-body text-[17px] md:text-[19px] leading-[1.9] max-w-3xl mb-12 text-[#FAF7F2]/95 font-normal">
-          Sơn mài không phô bày tất cả ngay từ đầu. Giá trị được tạo nên qua tích tụ, chờ đợi và mài lộ. Bộ sưu tập của Hành trình ghi nhận cả tác phẩm độc bản, dự án cộng đồng và thử nghiệm liên ngành – như những chứng tích sống của một thế kỷ đang tiếp diễn.
+          {descText}
         </p>
 
         {/* Heritage Metrics Plinth */}

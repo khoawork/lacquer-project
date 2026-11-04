@@ -1,6 +1,28 @@
 import React from 'react';
 
-const OperationalPipelineSection = () => {
+const OperationalPipelineSection = ({ pageProps }) => {
+  const headline = pageProps?.pipeline_headline || 'Từ ý tưởng đến giá trị';
+  const desc =
+    pageProps?.pipeline_desc ||
+    'Chu trình liên tục chuyển hóa chất xám nghiên cứu, năng lượng sáng tạo nghệ thuật thành các giá trị văn hóa và kinh tế bền vững cho đất nước.';
+
+  const s1Title = pageProps?.step1_title || 'LAB';
+  const s1Sub = pageProps?.step1_sub || 'Nghiên cứu & Thể nghiệm';
+  const s1Desc = pageProps?.step1_desc || 'Nghiên cứu lịch sử, lý luận, chất liệu và công nghệ.';
+
+  const s2Title = pageProps?.step2_title || 'STUDIO';
+  const s2Sub = pageProps?.step2_sub || 'Sáng tạo & Chế tác';
+  const s2Desc = pageProps?.step2_desc || 'Đồng hành cùng nghệ sĩ, nghệ nhân và xưởng nghề thực hành sáng tạo.';
+
+  const s3Title = pageProps?.step3_title || 'SHOWCASE';
+  const s3Sub = pageProps?.step3_sub || 'Trưng bày & Giám tuyển';
+  const s3Desc = pageProps?.step3_desc || 'Triển lãm, toạ đàm, trình diễn và không gian trải nghiệm.';
+
+  const s4Title = pageProps?.step4_title || 'MARKET';
+  const s4Sub = pageProps?.step4_sub || 'Thương mại hóa di sản';
+  const s4Desc =
+    pageProps?.step4_desc || 'Sản phẩm, bản quyền, hợp tác thương hiệu, đầu tư và thương mại hoá có trách nhiệm.';
+
   return (
     <section
       className="relative w-full py-24 bg-[#120202] border-t border-[#D4AF37]/20"
@@ -12,10 +34,10 @@ const OperationalPipelineSection = () => {
       <div className="max-w-7xl mx-auto px-5 md:px-12">
         <div className="text-center max-w-3xl mx-auto space-y-3 mb-16">
           <h2 className="font-serif text-[34px] md:text-[46px] font-bold text-gold-gradient leading-tight">
-            Từ ý tưởng đến giá trị
+            {headline}
           </h2>
           <p className="font-body text-[18px] text-[#FAF7F2]">
-            Chu trình liên tục chuyển hóa chất xám nghiên cứu, năng lượng sáng tạo nghệ thuật thành các giá trị văn hóa và kinh tế bền vững cho đất nước.
+            {desc}
           </p>
         </div>
 
@@ -32,12 +54,12 @@ const OperationalPipelineSection = () => {
               </span>
             </div>
             <div className="space-y-2">
-              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">LAB</h3>
+              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">{s1Title}</h3>
               <p className="font-serif text-[15px] text-[#FFDF73] tracking-wider font-semibold whitespace-nowrap">
-                Nghiên cứu &amp; Thể nghiệm
+                {s1Sub}
               </p>
               <p className="font-body text-[16px] text-[#FAF7F2] leading-relaxed">
-                Nghiên cứu lịch sử, lý luận, chất liệu và công nghệ.
+                {s1Desc}
               </p>
             </div>
             <div className="w-full h-1.5 bg-[#2a0606] rounded-full overflow-hidden">
@@ -56,12 +78,12 @@ const OperationalPipelineSection = () => {
               </span>
             </div>
             <div className="space-y-2">
-              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">STUDIO</h3>
+              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">{s2Title}</h3>
               <p className="font-serif text-[15px] text-[#FFDF73] tracking-wider font-semibold whitespace-nowrap">
-                Đồng hành nghệ nhân &amp; họa sĩ
+                {s2Sub}
               </p>
               <p className="font-body text-[16px] text-[#FAF7F2] leading-relaxed">
-                Sáng tác, thử nghiệm, workshop và đồng kiến tạo.
+                {s2Desc}
               </p>
             </div>
             <div className="w-full h-1.5 bg-[#2a0606] rounded-full overflow-hidden">
@@ -80,12 +102,12 @@ const OperationalPipelineSection = () => {
               </span>
             </div>
             <div className="space-y-2">
-              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">SHOWCASE</h3>
+              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">{s3Title}</h3>
               <p className="font-serif text-[15px] text-[#FFDF73] tracking-wider font-semibold whitespace-nowrap">
-                Trưng bày &amp; Giám tuyển
+                {s3Sub}
               </p>
               <p className="font-body text-[16px] text-[#FAF7F2] leading-relaxed">
-                Triển lãm, toạ đàm, trình diễn và không gian trải nghiệm.
+                {s3Desc}
               </p>
             </div>
             <div className="w-full h-1.5 bg-[#2a0606] rounded-full overflow-hidden">
@@ -104,12 +126,12 @@ const OperationalPipelineSection = () => {
               </span>
             </div>
             <div className="space-y-2">
-              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">MARKET</h3>
+              <h3 className="font-serif text-[26px] font-bold text-[#FAF7F2]">{s4Title}</h3>
               <p className="font-serif text-[15px] text-[#FFDF73] tracking-wider font-semibold whitespace-nowrap">
-                Thương mại hóa di sản
+                {s4Sub}
               </p>
               <p className="font-body text-[16px] text-[#FAF7F2] leading-relaxed">
-                Sản phẩm, bản quyền, hợp tác thương hiệu, đầu tư và thương mại hoá có trách nhiệm.
+                {s4Desc}
               </p>
             </div>
             <div className="w-full h-1.5 bg-[#2a0606] rounded-full overflow-hidden">

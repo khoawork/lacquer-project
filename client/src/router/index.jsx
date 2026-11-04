@@ -22,6 +22,11 @@ import NotFound from '../pages/NotFound';
 import AdminDashboard from '../pages/admin/Dashboard';
 import AdminProducts from '../pages/admin/Products';
 import AdminOrders from '../pages/admin/Orders';
+import PageManager from '../pages/admin/PageManager';
+import FormsManager from '../pages/admin/FormsManager';
+import SettingsManager from '../pages/admin/SettingsManager';
+import MenuManager from '../pages/admin/MenuManager';
+import DataCatalogManager from '../pages/admin/DataCatalogManager';
 
 const router = createBrowserRouter([
   {
@@ -93,6 +98,34 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <AdminDashboard />,
+      },
+      {
+        path: 'dashboard',
+        element: <AdminDashboard />,
+      },
+      {
+        path: 'pages/:pageKey',
+        element: <PageManager />,
+      },
+      {
+        path: 'system/forms',
+        element: <FormsManager />,
+      },
+      {
+        path: 'system/settings',
+        element: <SettingsManager />,
+      },
+      {
+        path: 'system/menus',
+        element: <MenuManager />,
+      },
+      {
+        path: 'system/categories',
+        element: <DataCatalogManager />,
+      },
+      {
+        path: 'system/users',
         element: <AdminDashboard />,
       },
       {

@@ -1,44 +1,64 @@
-import React from 'react';
-import { Clock, Building2, MapPin, Sparkles, ArrowRight, Download, CheckCircle, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Clock, Building2, MapPin, Sparkles, ArrowRight, Download } from 'lucide-react';
+import eventServices from '../../services/eventServices';
 
 const EventsProgramSection = () => {
+  const [featuredEvent, setFeaturedEvent] = useState(null);
+
+  // Đọc dữ liệu sự kiện nổi bật trực tiếp từ cơ sở dữ liệu
+  useEffect(() => {
+    let isMounted = true;
+    const fetchFeatured = async () => {
+      try {
+        const res = await eventServices.getEvents();
+        if (res.data && res.data.success && isMounted) {
+          const list = res.data.data || [];
+          const feat = list.find((e) => e.is_featured) || list[0];
+          if (feat) setFeaturedEvent(feat);
+        }
+      } catch (err) {
+        console.warn('Lỗi khi tải sự kiện nổi bật:', err.message);
+      }
+    };
+
+    fetchFeatured();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   const BANNER_BG =
+    featuredEvent?.thumbnail_url ||
     'https://lh3.googleusercontent.com/aida-public/AB6AXuAk9UadPB6Ai1dAdE5R0qsQCARUuFoxFXYN5lYL6e7giPVY2rL4L2QIb44QNIzDGrUEI-Sh_TwXJsJW_9CP3KNnJMrfz0Nj5GOrzkbjGLU-KeG3vzzgpln6w3jlB_Rw02IeaF-Bc_o22kuepOM8h4sGLJHLOVeM1cSrduIChr772u0YXzIIyTdTXlp62DlBD6PdZaLfFWx2ELqdJ2HmEtuvZWmT3heQFFwc2n8LHxDI';
 
-  const scheduleItems = [
-    {
-      time: '08:30 – 11:30',
-      title: 'Phiên 1: Khai mạc & Tham luận Cội nguồn: Nhựa Sơn Ta & Kỹ nghệ Bách Niên',
-      desc: 'Báo cáo khoa học về đặc tính hóa - sinh của nhựa sơn cội Phú Thọ, kỹ thuật ủ then, đánh bóng và nghệ thuật mài truyền thống dưới góc nhìn bảo tồn di sản.',
-      speakers: 'Các nghệ nhân tiêu biểu làng nghề Hạ Thái & Hội đồng Cố vấn Viện Kỷ Lục',
-    },
-    {
-      time: '13:30 – 15:30',
-      title: 'Phiên 2: Đối thoại Bàn tròn: Sơn Mài Đương Đại & Kinh Tế Sáng Tạo Số',
-      desc: 'Thảo luận mở về cách thức đưa nghệ thuật sơn mài hội họa bác học tiếp cận thị trường nghệ thuật quốc tế, tích hợp công nghệ định danh số và bảo chứng nguyên bản.',
-      speakers: 'Nhà giám tuyển độc lập, Giảng viên Đại học Mỹ thuật & Đại diện Doanh nghiệp Sáng tạo',
-    },
-    {
-      time: '16:00 – 17:30',
-      title: 'Phiên 3: Công bố Vinh Danh & Ký kết Liên minh Bảo tồn Sơn Mài 2026–2030',
-      desc: 'Nghi thức khởi động mạng lưới hợp tác bảo trợ thế hệ họa sĩ trẻ, trao kỷ niệm chương bách niên và công bố kế hoạch xuất bản Kỷ yếu Bách Niên toàn quốc.',
-      speakers: 'Ban điều hành Hành trình 100 năm & Các đơn vị đồng hành',
-    },
-  ];
+  const formatEventDate = (dateString) => {
+    if (!dateString) return 'Quý IV / 2026';
+    try {
+      const d = new Date(dateString);
+      return d.toLocaleDateString('vi-VN', {
+        weekday: 'long',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+    } catch {
+      return dateString;
+    }
+  };
 
   return (
     <section
       className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-20 scroll-mt-28 relative z-10"
       id="chuong-trinh-chi-tiet"
     >
-      {/* Decorative Section Header */}
+      {/* Section Header */}
       <div className="flex flex-col items-center text-center mb-10">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/40 mb-3 bg-[#24080b]/90 text-[#FFDF73] text-[12px] uppercase tracking-widest font-bold">
           <Sparkles className="w-3.5 h-3.5 text-[#FFDF73]" />
           <span>Mô hình chuẩn hóa</span>
         </div>
         <h3 className="font-serif text-3xl md:text-4xl text-gold-gradient font-bold tracking-tight">
-          Chương Trình Chi Tiết & Khung Vận Hành
+          Chương Trình Chi Tiết &amp; Khung Vận Hành
         </h3>
         <p className="font-body text-[16px] text-[#FAF7F2]/90 max-w-2xl mt-2">
           Cấu trúc phiên làm việc chính thức được thiết kế nhằm bảo đảm tính học thuật nghiêm cẩn và khả năng kết nối thực tiễn cao nhất.
@@ -46,9 +66,7 @@ const EventsProgramSection = () => {
       </div>
 
       {/* Main Container Card */}
-      <div
-        className="w-full rounded-2xl card-lacquer shadow-2xl overflow-hidden p-5 sm:p-7 md:p-10 space-y-10 border border-[#D4AF37]/40 relative"
-      >
+      <div className="w-full rounded-2xl card-lacquer shadow-2xl overflow-hidden p-5 sm:p-7 md:p-10 space-y-10 border border-[#D4AF37]/40 relative">
         {/* Background subtle amber glow */}
         <div
           className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[350px] rounded-full blur-[130px] pointer-events-none -z-10"
@@ -78,15 +96,16 @@ const EventsProgramSection = () => {
               style={{ background: 'rgba(38, 10, 14, 0.85)' }}
             >
               <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse" />
-              Mở cổng đăng ký trực tuyến
+              <span>{featuredEvent?.status === 'upcoming' ? 'Mở cổng đăng ký trực tuyến' : 'Thông tin phiên làm việc'}</span>
             </div>
 
             <h4 className="font-serif text-[28px] sm:text-[36px] md:text-[44px] leading-tight text-gold-gradient mb-4 font-bold">
-              Đại Hội Thảo & Giám Tuyển: Kỷ Nguyên Đương Đại Của Sơn Mài Việt Nam
+              {featuredEvent?.name || 'Đại Hội Thảo & Giám Tuyển: Kỷ Nguyên Đương Đại Của Sơn Mài Việt Nam'}
             </h4>
 
             <p className="font-body text-[15px] sm:text-[17px] text-[#FAF7F2] max-w-2xl leading-relaxed">
-              Phiên chuyên môn cao cấp quy tụ các nghệ sĩ bậc thầy, chuyên gia phục chế vật liệu son tự nhiên Phú Thọ và các nhà đầu tư văn hóa tiên phong.
+              {featuredEvent?.description ||
+                'Phiên chuyên môn cao cấp quy tụ các nghệ sĩ bậc thầy, chuyên gia phục chế vật liệu son tự nhiên Phú Thọ và các nhà đầu tư văn hóa tiên phong.'}
             </p>
           </div>
         </div>
@@ -110,11 +129,16 @@ const EventsProgramSection = () => {
               <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Thời gian tổ chức
               </span>
-              <span className="font-serif text-[19px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
-                08:30 – 17:30
+              <span className="font-serif text-[18px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+                {featuredEvent?.event_date
+                  ? new Date(featuredEvent.event_date).toLocaleTimeString('vi-VN', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })
+                  : '08:30 – 17:30'}
               </span>
               <span className="font-body text-[13px] sm:text-[14px] text-[#EADBCE]">
-                Thứ Bảy, 14 Tháng 11, 2026
+                {formatEventDate(featuredEvent?.event_date)}
               </span>
             </div>
           </div>
@@ -136,11 +160,11 @@ const EventsProgramSection = () => {
               <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Địa điểm thực hiện
               </span>
-              <span className="font-serif text-[19px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
-                Hội trường Di Sản SIHUB
+              <span className="font-serif text-[18px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+                {featuredEvent?.location ? featuredEvent.location.split(',')[0] : 'Hội trường Di Sản SIHUB'}
               </span>
               <span className="font-body text-[13px] sm:text-[14px] text-[#EADBCE]">
-                273 Điện Biên Phủ, Quận 3, TP.HCM
+                {featuredEvent?.location || '273 Điện Biên Phủ, Quận 3, TP.HCM'}
               </span>
             </div>
           </div>
@@ -162,56 +186,13 @@ const EventsProgramSection = () => {
               <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Bản đồ định vị GPS
               </span>
-              <span className="font-serif text-[19px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+              <span className="font-serif text-[18px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
                 Tọa độ kết nối mở
               </span>
               <span className="font-body text-[13px] sm:text-[14px] text-[#EADBCE]">
                 SIHUB Hub — Tầng 2 Gallery
               </span>
             </div>
-          </div>
-        </div>
-
-        {/* MODULE 3: DETAILED CONFERENCE AGENDA */}
-        <div className="space-y-4">
-          <h5 className="font-serif text-[20px] md:text-[22px] text-gold-gradient font-bold uppercase tracking-wider flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-[#FFDF73]" />
-            Lịch trình phiên làm việc
-          </h5>
-
-          <div className="space-y-3">
-            {scheduleItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="p-5 rounded-xl border border-[#D4AF37]/25 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:border-[#FFDF73]/50 transition-colors"
-                style={{ background: 'rgba(28, 7, 10, 0.75)' }}
-              >
-                <div className="space-y-1 md:max-w-3xl">
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif text-[13px] md:text-[14px] px-2.5 py-1 rounded bg-[#450e14] text-[#FFDF73] font-bold border border-[#D4AF37]/30">
-                      {item.time}
-                    </span>
-                    <h6 className="font-serif text-[16px] md:text-[18px] text-[#FAF7F2] font-bold group-hover:text-[#FFDF73] transition-colors">
-                      {item.title}
-                    </h6>
-                  </div>
-                  <p className="font-body text-[14px] md:text-[15px] text-[#FAF7F2]/80 leading-relaxed pt-1">
-                    {item.desc}
-                  </p>
-                  <div className="font-serif text-[12px] md:text-[13px] text-[#FFDF73] font-semibold flex items-center gap-1.5 pt-1">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Diễn giả: {item.speakers}</span>
-                  </div>
-                </div>
-
-                <div className="flex-shrink-0 self-start md:self-center">
-                  <span className="inline-flex items-center gap-1 text-[12px] font-serif uppercase tracking-wider text-[#EADBCE] px-3 py-1 rounded border border-[#D4AF37]/20">
-                    <CheckCircle className="w-3.5 h-3.5 text-[#FFDF73]" />
-                    Đã ấn định
-                  </span>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
@@ -222,7 +203,7 @@ const EventsProgramSection = () => {
         >
           <div className="space-y-1 text-center sm:text-left">
             <h6 className="font-serif text-[20px] md:text-[22px] text-gold-gradient font-bold">
-              Đăng ký tham dự Đại Hội Thảo & Giám Tuyển
+              Đăng ký tham dự: {featuredEvent?.name || 'Sự kiện tiêu biểu'}
             </h6>
             <p className="font-body text-[14px] md:text-[15px] text-[#FAF7F2]/85">
               Số lượng khách mời giới hạn 150 đại biểu nhằm đảm bảo chất lượng đối thoại học thuật.
@@ -230,18 +211,17 @@ const EventsProgramSection = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
+            <a
+              href="/contact"
               className="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer"
-              onClick={() => alert('Cổng đăng ký phiên chính đã tiếp nhận yêu cầu của quý vị!')}
             >
               <span>Đăng ký tham dự</span>
               <ArrowRight className="w-4 h-4 font-bold" />
-            </button>
+            </a>
             <button
               type="button"
               className="btn-gold-outline inline-flex items-center gap-2 px-5 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer"
-              onClick={() => alert('Tài liệu tóm tắt chương trình đang được chuẩn bị tải về.')}
+              onClick={() => alert('Brochure tóm tắt chương trình đang được chuẩn bị tải về.')}
             >
               <Download className="w-4 h-4" />
               <span>Tải Brochure PDF</span>
@@ -254,4 +234,3 @@ const EventsProgramSection = () => {
 };
 
 export default EventsProgramSection;
-

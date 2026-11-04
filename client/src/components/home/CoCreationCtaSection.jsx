@@ -2,7 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
 
-const CoCreationCtaSection = () => {
+const CoCreationCtaSection = ({ pageProps }) => {
+  const ctaTag = pageProps?.cta_tag || 'ĐỒNG KIẾN TẠO VĂN HÓA';
+  const ctaHeadline = pageProps?.cta_headline || 'Cùng viết tiếp hành trình 100 năm';
+  const ctaDesc =
+    pageProps?.cta_desc ||
+    'Dù bạn là nghệ sĩ, nghệ nhân, nhà nghiên cứu, doanh nghiệp, sinh viên hay người yêu nghệ thuật, luôn có một cách để bạn góp mặt trong hành trình này.';
+
   return (
     <section
       className="relative w-full py-28 border-t border-[#D4AF37]/30 text-center overflow-hidden"
@@ -24,13 +30,13 @@ const CoCreationCtaSection = () => {
         </div>
         <div className="space-y-3">
           <span className="font-serif text-[16px] tracking-[0.28em] text-[#FFDF73] uppercase font-bold whitespace-nowrap">
-            ĐỒNG KIẾN TẠO VĂN HÓA
+            {ctaTag}
           </span>
           <h2 className="font-serif text-[38px] md:text-[54px] font-bold text-gold-gradient leading-tight">
-            Cùng viết tiếp hành trình 100 năm
+            {ctaHeadline}
           </h2>
           <p className="font-body text-[19px] md:text-[21px] text-[#FAF7F2] max-w-2xl mx-auto leading-[1.85]">
-            Dù bạn là nghệ sĩ, nghệ nhân, nhà nghiên cứu, doanh nghiệp, sinh viên hay người yêu nghệ thuật, luôn có một cách để bạn góp mặt trong hành trình này.
+            {ctaDesc}
           </p>
         </div>
 

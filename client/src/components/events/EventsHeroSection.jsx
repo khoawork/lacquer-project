@@ -2,11 +2,17 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { Sparkles, Calendar, Users, Building, History } from 'lucide-react';
 
-const EventsHeroSection = () => {
+const EventsHeroSection = ({ pageProps = null }) => {
   const LOGO_FALLBACK =
     'https://res.cloudinary.com/ds11ggie4/image/upload/v1793672616/starbucks-removebg-preview_unczzr.png';
   const HERO_SEAL =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuCW2NGrEf3lfKTe7pxCmevWbwQ0drNpFQaZVy43uDF67MZdCLPfAhtv21Shw5iLaEqLx59sBzfChDSs94NDlOUrMUJPRM5Q3aT1E2n8H8JVJIhmGjrgjZQHMSGa38tuEocMJ0AkoKwSedVcJ6czgDFojWj2VrWGXAZuivXOY_msTjKc4RdDzNvMphFBEMPutqx7rc-7VV4i815sYYfRfu7Itz-O_koLFueJ_Xx4CHitwlZXEs6carZDwg';
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuA24EfoXZ-0BkTAtHr86R5VGrGCuTXxzBwWBzS6BW8ubJh3WRm5JLnWAsNYz24M--l0Syg2ccpf3_D4HwB1iJ28MuZ20kXwWQEszu9acBuTPnr9YSt4UIjhexbP9D6ngfVnhiLL5KLfhCvri5KxGGaVlSkgmNhA7NvFG2HBzEPoxjMXbrjfAwSFAPToizyXoP_KDUlAFU8mFRWqBKMUGElun99GkbN1VVDtASUHjdW1Zx9NSHjWRYrDUlYL4BYBXi95rV0';
+
+  const badgeText = pageProps?.badge || 'SỰ KIỆN & HOẠT ĐỘNG DI SẢN • 1930–2030';
+  const headlineText = pageProps?.headline || 'NƠI DI SẢN ĐƯỢC THỰC HÀNH';
+  const descText =
+    pageProps?.description ||
+    'Mỗi sự kiện là một điểm gặp giữa tri thức và hành động: người nghiên cứu gặp người làm nghề, nghệ sĩ gặp doanh nghiệp, chất liệu truyền thống gặp công nghệ mới và công chúng trở thành một phần của quá trình sáng tạo.';
 
   return (
     <section className="relative w-full py-16 lg:py-24 overflow-hidden flex flex-col items-center justify-center text-center select-none">
@@ -29,21 +35,19 @@ const EventsHeroSection = () => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-        {/* Watermarked Centenary Emblem */}
+        {/* Con dấu bách niên */}
         <div className="mb-6 relative group">
-          <div className="w-24 h-24 md:w-28 md:h-28 rounded-full p-1 bg-gradient-to-b from-[#FFDF73] via-[#D4AF37] to-transparent shadow-[0_0_28px_rgba(212,175,55,0.45)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full overflow-hidden bg-[#160405] flex items-center justify-center border border-[#D4AF37]/50">
-              <img
-                alt="Logo Kỷ nguyên Sơn Mài Hội họa Việt Nam 1930-2030"
-                className="w-full h-full object-cover opacity-95 transition-transform duration-700 group-hover:scale-105"
-                src={HERO_SEAL}
-                onError={(e) => {
-                  e.currentTarget.src = LOGO_FALLBACK;
-                }}
-              />
-            </div>
+          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#3a090e] to-[#D4AF37]/60 shadow-[0_0_40px_rgba(255,223,115,0.6)] group-hover:shadow-[0_0_65px_rgba(255,223,115,0.85)] transition-all duration-500 flex items-center justify-center">
+            <img
+              alt="Logo Kỷ nguyên Sơn Mài Hội họa Việt Nam 1930-2030"
+              className="w-full h-full object-cover rounded-full brightness-110 drop-shadow-[0_0_15px_rgba(255,223,115,0.7)] transition-transform duration-700 group-hover:scale-105"
+              src={HERO_SEAL}
+              onError={(e) => {
+                e.currentTarget.src = LOGO_FALLBACK;
+              }}
+            />
           </div>
-          <div className="absolute -inset-2 rounded-full bg-[#D4AF37]/25 blur-md -z-10 animate-pulse" />
+          <div className="absolute -inset-3 rounded-full border border-[#D4AF37]/50 pointer-events-none group-hover:scale-105 transition-transform duration-500" />
         </div>
 
         {/* Eyebrow Pill */}
@@ -53,19 +57,19 @@ const EventsHeroSection = () => {
         >
           <Sparkles className="w-4 h-4 text-[#FFDF73]" />
           <span className="font-serif text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-bold text-[#FFF3CC]">
-            SỰ KIỆN & HOẠT ĐỘNG DI SẢN • 1930–2030
+            {badgeText}
           </span>
           <Sparkles className="w-4 h-4 text-[#FFDF73]" />
         </div>
 
         {/* Monumental Typography Heading */}
         <h1 className="font-serif text-[38px] sm:text-[48px] md:text-[62px] md:leading-[72px] text-gold-gradient tracking-tight max-w-5xl mb-6 font-bold uppercase drop-shadow-[0_2px_16px_rgba(212,175,55,0.4)]">
-          NƠI DI SẢN ĐƯỢC THỰC HÀNH
+          {headlineText}
         </h1>
 
         {/* Curatorial Statement */}
         <p className="font-body text-[17px] md:text-[19px] text-[#FAF7F2] max-w-3xl leading-relaxed opacity-95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
-          Mỗi sự kiện là một điểm gặp giữa tri thức và hành động: người nghiên cứu gặp người làm nghề, nghệ sĩ gặp doanh nghiệp, chất liệu truyền thống gặp công nghệ mới và công chúng trở thành một phần của quá trình sáng tạo.
+          {descText}
         </p>
 
         {/* Visual Archival Metric Bar */}

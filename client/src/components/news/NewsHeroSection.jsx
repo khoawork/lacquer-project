@@ -1,7 +1,14 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 
-const NewsHeroSection = () => {
+const NewsHeroSection = ({ pageProps = null }) => {
+  const badgeText = pageProps?.badge || 'BÁCH NIÊN KHỞI SẮC • GÓC NHÌN & TIẾNG NÓI DI SẢN';
+  const headlineText = pageProps?.headline || 'NHỮNG CÂU CHUYỆN ĐANG ĐƯỢC VIẾT TIẾP';
+  const descText =
+    pageProps?.description ||
+    pageProps?.subtitle ||
+    'Tin tức của Hành trình không chỉ đưa tin sự kiện. Đây là nơi lịch sử được kể lại bằng ngôn ngữ gần gũi, người làm nghề được nhìn thấy và các ý tưởng mới được đưa vào đối thoại công chúng.';
+
   return (
     <section className="flex flex-col items-center text-center relative z-10 pt-16 md:pt-20 pb-10 select-none overflow-hidden">
       {/* Sparkles bay chuẩn Trang Hành Trình */}
@@ -21,19 +28,19 @@ const NewsHeroSection = () => {
             className="font-serif text-[13px] md:text-[14px] tracking-[0.25em] uppercase font-bold whitespace-nowrap"
             style={{ color: '#E6CA65', textShadow: '0 0 10px rgba(230, 202, 101, 0.35)' }}
           >
-            BÁCH NIÊN KHỞI SẮC • GÓC NHÌN &amp; TIẾNG NÓI DI SẢN
+            {badgeText}
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#FFDF73] animate-pulse shadow-[0_0_8px_#e9c349]" />
         </div>
 
         {/* Main Title */}
         <h1 className="font-serif text-[38px] sm:text-[50px] md:text-[62px] lg:text-[68px] lg:leading-[1.14] text-gold-gradient max-w-5xl tracking-tight mb-5 font-bold uppercase drop-shadow-[0_4px_30px_rgba(212,175,55,0.35)]">
-          NHỮNG CÂU CHUYỆN ĐANG ĐƯỢC VIẾT TIẾP
+          {headlineText}
         </h1>
 
         {/* Poetic Curatorial Subtitle */}
         <p className="font-body text-[17px] md:text-[19px] text-[#FAF7F2] max-w-3xl leading-[1.85] text-center font-normal opacity-95 mb-8 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-          Tin tức của Hành trình không chỉ đưa tin sự kiện. Đây là nơi lịch sử được kể lại bằng ngôn ngữ gần gũi, người làm nghề được nhìn thấy và các ý tưởng mới được đưa vào đối thoại công chúng.
+          {descText}
         </p>
 
         {/* Golden Hairline Divider with Center Diamond */}

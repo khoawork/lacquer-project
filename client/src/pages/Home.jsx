@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import HeroSection from '../components/home/HeroSection';
 import HeritageStorySection from '../components/home/HeritageStorySection';
 import PillarsSection from '../components/home/PillarsSection';
@@ -7,8 +7,37 @@ import FeaturedEventsSection from '../components/home/FeaturedEventsSection';
 import FeaturedArtworksSection from '../components/home/FeaturedArtworksSection';
 import MonographArchiveSection from '../components/home/MonographArchiveSection';
 import CoCreationCtaSection from '../components/home/CoCreationCtaSection';
+import pageServices from '../services/pageServices';
 
 const Home = () => {
+  const [pageProps, setPageProps] = useState(null);
+
+  // Đọc dữ liệu trang chủ trực tiếp từ bảng Page trong DB (slug chỉ nằm trong page)
+  useEffect(() => {
+    let isMounted = true;
+    const fetchPageData = async () => {
+      try {
+        const res = await pageServices.getPageBySlug('/');
+        if (res.data && res.data.success && isMounted) {
+          // Xử lý linh hoạt khi dữ liệu trả về là đối tượng đơn hoặc mảng
+          const pageData = Array.isArray(res.data.data)
+            ? res.data.data.find((p) => p.slug === '/' || p.slug === 'home' || p.id === 1) || res.data.data[0]
+            : res.data.data;
+
+          console.log('Dữ liệu trang chủ từ DB:', pageData); // Debugging line to check the data received
+          setPageProps(pageData?.props || null);
+        }
+      } catch (err) {
+        console.warn('Lỗi khi tải dữ liệu trang chủ từ cơ sở dữ liệu:', err.message);
+      }
+    };
+
+    fetchPageData();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <div className="flex flex-col w-full select-none relative overflow-x-hidden bg-[#100202] text-[#FAF7F2]">
       {/* Ambient Lacquer Glows in Background */}
@@ -20,28 +49,28 @@ const Home = () => {
       </div>
 
       {/* 1. HERO SECTION (100VH + Golden Sparkles + Watermark Logo) */}
-      <HeroSection />
+      <HeroSection pageProps={pageProps} />
 
       {/* 2. GIỚI THIỆU - Một thế kỷ, một hành trình đang tiếp diễn */}
-      <HeritageStorySection />
+      <HeritageStorySection pageProps={pageProps} />
 
       {/* 3. BỐN TRỤC MỞ - Bốn hướng mở của hành trình */}
-      <PillarsSection />
+      <PillarsSection pageProps={pageProps} />
 
       {/* 4. MÔ HÌNH VẬN HÀNH - Từ ý tưởng đến giá trị (LAB, STUDIO, SHOWCASE, MARKET) */}
-      <OperationalPipelineSection />
+      <OperationalPipelineSection pageProps={pageProps} />
 
       {/* 5. SỰ KIỆN NỔI BẬT - Chuỗi hoạt động đưa di sản vào đời sống */}
-      <FeaturedEventsSection />
+      <FeaturedEventsSection pageProps={pageProps} />
 
       {/* 6. BỘ SƯU TẬP - Những tác phẩm viết tiếp mạch di sản */}
-      <FeaturedArtworksSection />
+      <FeaturedArtworksSection pageProps={pageProps} />
 
       {/* 7. KỶ YẾU ARCHIVE - Kho tri thức mở của Hành trình */}
-      <MonographArchiveSection />
+      <MonographArchiveSection pageProps={pageProps} />
 
       {/* 8. ĐỒNG KIẾN TẠO VĂN HÓA - Cùng viết tiếp hành trình 100 năm */}
-      <CoCreationCtaSection />
+      <CoCreationCtaSection pageProps={pageProps} />
     </div>
   );
 };

@@ -1,6 +1,18 @@
 import React from 'react';
 
-const HeritageStorySection = () => {
+const HeritageStorySection = ({ pageProps }) => {
+  const headline = pageProps?.story_headline || 'Một thế kỷ — Một hành trình đang tiếp diễn';
+  const p1 =
+    pageProps?.story_p1 ||
+    'Sơn mài hội họa Việt Nam là kết quả diệu kỳ của sự gặp gỡ giữa nguồn nhựa sơn ta Phú Thọ huyền thoại, đôi bàn tay tài hoa của nghệ nhân cổ truyền và tư duy tạo hình hàn lâm hiện đại khởi nguồn từ Trường Mỹ thuật Đông Dương thập niên 1930.';
+  const p2 =
+    pageProps?.story_p2 ||
+    'Qua lớp lớp thời gian tôi luyện trong khói lửa kháng chiến, độc lập và đổi mới, sơn mài đã thoát thai khỏi một chất liệu trang trí mỹ nghệ đơn thuần để trở thành đỉnh cao ngôn ngữ tạo hình hội họa dân tộc. Năm 2030 không phải điểm kết thúc, mà là dấu mốc hoàn tất một thế kỷ để bước sang một chu kỳ kiến tạo tầm vóc mới.';
+  const callout = pageProps?.story_callout || '“Không chỉ để xã hội xem. Để xã hội cùng làm.”';
+  const calloutDesc =
+    pageProps?.story_callout_desc ||
+    'Hành trình được kiến tạo như một hệ sinh thái mở, nơi người nghệ sĩ, nghệ nhân làng nghề, giới học giả, trường viện nghiên cứu, doanh nghiệp và công chúng yêu nghệ thuật cùng tương tác, kiến tạo và làm giàu sinh khí cho di sản.';
+
   return (
     <section
       className="relative w-full py-24 bg-[#140202] border-t border-[#D4AF37]/20 overflow-hidden"
@@ -14,13 +26,13 @@ const HeritageStorySection = () => {
           {/* Left: Editorial Text */}
           <div className="lg:col-span-7 space-y-6">
             <h2 className="font-serif text-[34px] md:text-[46px] font-bold text-gold-gradient leading-tight tracking-normal">
-              Một thế kỷ — Một hành trình đang tiếp diễn
+              {headline}
             </h2>
             <p className="font-body text-[18px] md:text-[19px] text-[#FAF7F2] leading-[1.85] font-normal">
-              Sơn mài hội họa Việt Nam là kết quả diệu kỳ của sự gặp gỡ giữa nguồn nhựa sơn ta Phú Thọ huyền thoại, đôi bàn tay tài hoa của nghệ nhân cổ truyền và tư duy tạo hình hàn lâm hiện đại khởi nguồn từ Trường Mỹ thuật Đông Dương thập niên 1930.
+              {p1}
             </p>
             <p className="font-body text-[17px] md:text-[18px] text-[#EADBCE] leading-[1.85]">
-              Qua lớp lớp thời gian tôi luyện trong khói lửa kháng chiến, độc lập và đổi mới, sơn mài đã thoát thai khỏi một chất liệu trang trí mỹ nghệ đơn thuần để trở thành đỉnh cao ngôn ngữ tạo hình hội họa dân tộc. Năm 2030 không phải điểm kết thúc, mà là dấu mốc hoàn tất một thế kỷ để bước sang một chu kỳ kiến tạo tầm vóc mới.
+              {p2}
             </p>
 
             {/* Grand Statement Banner (Callout) */}
@@ -30,10 +42,10 @@ const HeritageStorySection = () => {
               </div>
               <div className="relative z-10 space-y-3">
                 <blockquote className="font-serif text-[24px] md:text-[28px] font-bold text-[#FFDF73] leading-snug">
-                  “Không chỉ để xã hội xem. Để xã hội cùng làm.”
+                  {callout}
                 </blockquote>
                 <p className="font-body text-[17px] text-[#FAF7F2] leading-[1.8] font-normal">
-                  Hành trình được kiến tạo như một hệ sinh thái mở, nơi người nghệ sĩ, nghệ nhân làng nghề, giới học giả, trường viện nghiên cứu, doanh nghiệp và công chúng yêu nghệ thuật cùng tương tác, kiến tạo và làm giàu sinh khí cho di sản.
+                  {calloutDesc}
                 </p>
               </div>
             </div>

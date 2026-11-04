@@ -1,12 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import EventsHeroSection from '../components/events/EventsHeroSection';
 import EventsFilterSection from '../components/events/EventsFilterSection';
 import EventsListSection from '../components/events/EventsListSection';
 import EventsProgramSection from '../components/events/EventsProgramSection';
 import EventsCtaSection from '../components/events/EventsCtaSection';
+import pageServices from '../services/pageServices';
 
 const Events = () => {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [pageProps, setPageProps] = useState(null);
+
+  // Đọc cấu hình trang sự kiện trực tiếp từ bảng Page trong DB
+  useEffect(() => {
+    let isMounted = true;
+    const fetchPageData = async () => {
+      try {
+        const res = await pageServices.getPageBySlug('/events');
+        if (res.data && res.data.success && isMounted) {
+          const raw = res.data.data;
+          const pageData = Array.isArray(raw)
+            ? raw.find((p) => p.slug === '/events' || p.slug === 'events') || raw[0]
+            : raw;
+          setPageProps(pageData?.props || null);
+        }
+      } catch (err) {
+        console.warn('Lỗi tải dữ liệu trang sự kiện từ DB:', err);
+      }
+    };
+
+    fetchPageData();
+    return () => { isMounted = false; };
+  }, []);
 
   return (
     <div className="flex flex-col w-full text-stone-100 select-none relative overflow-x-hidden">
@@ -19,13 +43,13 @@ const Events = () => {
       </div>
 
       {/* 1. HERO SECTION: NƠI DI SẢN ĐƯỢC THỰC HÀNH */}
-      <EventsHeroSection />
+      <EventsHeroSection pageProps={pageProps} />
 
       {/* 2. EVENT FILTER SECTION: BỘ LỌC CÁC CHỦ ĐỀ SỰ KIỆN */}
       <EventsFilterSection activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
 
       {/* 3. EVENT LISTINGS: DANH SÁCH SỰ KIỆN NỔI BẬT & ĐÃ DIỄN RA */}
-      <EventsListSection activeFilter={activeFilter} />
+      <EventsListSection activeFilter={activeFilter} pageProps={pageProps} />
 
       {/* 4. EVENT DETAIL & PROGRAM: CHƯƠNG TRÌNH CHI TIẾT & KHUNG VẬN HÀNH */}
       <EventsProgramSection />

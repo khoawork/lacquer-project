@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import siteServices from '../../services/siteServices';
 
 export default function ContactFormSection({ selectedRoute, setSelectedRoute, formRef }) {
   const [formData, setFormData] = useState({
@@ -38,11 +39,27 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const randomCode = Math.floor(1000 + Math.random() * 9000);
     const ref = `#SMVN-2026-REG-${randomCode}`;
     setReferenceCode(ref);
+
+    try {
+      await siteServices.submitForm({
+        form_type: formData.routeType || 'contact',
+        full_name: formData.fullName,
+        organization: formData.organization,
+        email: formData.email,
+        phone: formData.phone,
+        subject: `Đề xuất hợp tác: ${formData.routeType || 'Liên hệ chung'}`,
+        message: formData.proposalMessage,
+        reference_code: ref,
+      });
+    } catch (err) {
+      console.warn('Gửi form lưu trữ:', err.message);
+    }
+
     setShowModal(true);
   };
 
