@@ -1,4 +1,5 @@
-import { Apis, endpoints } from '../configs/Apis';
+import axios from 'axios';
+import { endpoints, BASE_URL } from '../configs/Apis';
 
 export const uploadService = {
   /**
@@ -12,11 +13,9 @@ export const uploadService = {
       const formData = new FormData();
       formData.append('image', fileOrBase64);
 
-      const res = await Apis().post(endpoints.upload, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      // Để Axios tự động nhận diện FormData và thiết lập boundary multipart/form-data chính xác
+      const uploadUrl = `${BASE_URL}${endpoints.upload}`;
+      const res = await axios.post(uploadUrl, formData);
 
       if (res.data && res.data.success) {
         return res.data.url;
@@ -26,7 +25,8 @@ export const uploadService = {
 
     // Trường hợp là base64 string
     if (typeof fileOrBase64 === 'string' && fileOrBase64.startsWith('data:image')) {
-      const res = await Apis().post(endpoints.upload, { base64: fileOrBase64 });
+      const uploadUrl = `${BASE_URL}${endpoints.upload}`;
+      const res = await axios.post(uploadUrl, { base64: fileOrBase64 });
       if (res.data && res.data.success) {
         return res.data.url;
       }

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import EventsHeroSection from '../components/events/EventsHeroSection';
-import EventsFilterSection from '../components/events/EventsFilterSection';
+import EventsFilterSection, { DEFAULT_EVENT_CATEGORIES } from '../components/events/EventsFilterSection';
 import EventsListSection from '../components/events/EventsListSection';
-import EventsProgramSection from '../components/events/EventsProgramSection';
 import EventsCtaSection from '../components/events/EventsCtaSection';
 import pageServices from '../services/pageServices';
+import siteServices from '../services/siteServices';
+import { DEFAULT_PAGE_PROPS } from './admin/PageManager';
 
 const Events = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
-  const [pageProps, setPageProps] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('Tất cả');
+  const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/events'] || null);
+  const [categories, setCategories] = useState(DEFAULT_EVENT_CATEGORIES);
 
   // Đọc cấu hình trang sự kiện trực tiếp từ bảng Page trong DB
   useEffect(() => {
@@ -21,15 +23,42 @@ const Events = () => {
           const pageData = Array.isArray(raw)
             ? raw.find((p) => p.slug === '/events' || p.slug === 'events') || raw[0]
             : raw;
-          setPageProps(pageData?.props || null);
+          if (pageData?.props) {
+            setPageProps(pageData.props);
+          }
         }
       } catch (err) {
         console.warn('Lỗi tải dữ liệu trang sự kiện từ DB:', err);
       }
     };
 
+    const fetchCategories = async () => {
+      try {
+        const res = await siteServices.getSettings();
+        if (res.data && res.data.success && isMounted) {
+          const settings = res.data.data || [];
+          const catSetting = settings.find((s) => s.key === 'event_categories');
+          if (catSetting && catSetting.value) {
+            const parsed = Array.isArray(catSetting.value)
+              ? catSetting.value
+              : typeof catSetting.value === 'string'
+              ? JSON.parse(catSetting.value)
+              : null;
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setCategories(parsed);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Lỗi tải thể loại sự kiện từ settings:', err);
+      }
+    };
+
     fetchPageData();
-    return () => { isMounted = false; };
+    fetchCategories();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (
@@ -46,19 +75,20 @@ const Events = () => {
       <EventsHeroSection pageProps={pageProps} />
 
       {/* 2. EVENT FILTER SECTION: BỘ LỌC CÁC CHỦ ĐỀ SỰ KIỆN */}
-      <EventsFilterSection activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+      <EventsFilterSection
+        activeFilter={activeFilter}
+        setActiveFilter={setActiveFilter}
+        categories={categories}
+        counterBadge={pageProps?.counter_badge}
+      />
 
       {/* 3. EVENT LISTINGS: DANH SÁCH SỰ KIỆN NỔI BẬT & ĐÃ DIỄN RA */}
       <EventsListSection activeFilter={activeFilter} pageProps={pageProps} />
 
-      {/* 4. EVENT DETAIL & PROGRAM: CHƯƠNG TRÌNH CHI TIẾT & KHUNG VẬN HÀNH */}
-      <EventsProgramSection />
-
-      {/* 5. CTA SECTION: ĐỒNG HÀNH KIẾN TẠO SỰ KIỆN TIẾP THEO */}
-      <EventsCtaSection />
+      {/* 4. CTA SECTION: ĐỒNG HÀNH KIẾN TẠO SỰ KIỆN TIẾP THEO */}
+      <EventsCtaSection pageProps={pageProps} />
     </div>
   );
 };
 
 export default Events;
-

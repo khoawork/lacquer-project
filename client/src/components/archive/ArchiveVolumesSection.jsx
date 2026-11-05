@@ -1,45 +1,49 @@
 import React from 'react';
 import { BookMarked, Download, Eye, FileText, Sparkles, ExternalLink } from 'lucide-react';
 
-const ArchiveVolumesSection = () => {
-  const volumes = [
-    {
-      vol: 'TẬP I',
-      era: '1930 — 1954',
-      title: 'Khởi Nguyên & Sự Khai Mở Của Hội Họa Sơn Mài',
-      focus: 'Từ kỹ nghệ phủ bóng dân gian đến ngôn ngữ hội họa bác học độc bản tại trường Mỹ thuật Đông Dương.',
-      pages: '380 trang',
-      papers: '24 Chuyên luận khoa học',
-      status: 'Đã hoàn tất bản thảo',
-    },
-    {
-      vol: 'TẬP II',
-      era: '1954 — 1986',
-      title: 'Kỹ Nghệ Bản Địa & Mạch Ngầm Làng Nghề Cổ Truyền',
-      focus: 'Khảo sát điền dã vùng cây sơn ta Phú Thọ, kỹ thuật ủ then Hạ Thái, Tương Bình Hiệp và chuỗi cung ứng vật liệu.',
-      pages: '420 trang',
-      papers: '32 Hồ sơ điền dã',
-      status: 'Đang biên tập phản biện',
-    },
-    {
-      vol: 'TẬP III',
-      era: '1986 — 2010',
-      title: 'Những Bậc Thầy Tiên Phong & Kiệt Tác Di Sản',
-      focus: 'Hệ thống tác giả, trường phái sáng tác tiêu biểu: Nguyễn Gia Trí, Phạm Hậu, Nguyễn Tư Nghiêm, Trần Văn Cẩn...',
-      pages: '510 trang',
-      papers: '45 Hồ sơ tác phẩm bảo vật',
-      status: 'Đang thẩm định tư liệu',
-    },
-    {
-      vol: 'TẬP IV',
-      era: '2010 — 2030',
-      title: 'Kỷ Nguyên Đương Đại & Hạ Tầng Kinh Tế Sáng Tạo',
-      focus: 'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
-      pages: '460 trang',
-      papers: '38 Đề xuất mô hình kinh tế số',
-      status: 'Đang tiếp nhận bản thảo',
-    },
-  ];
+const ArchiveVolumesSection = ({ pageProps }) => {
+  const volumes = Array.isArray(pageProps?.volumes) && pageProps.volumes.length > 0
+    ? pageProps.volumes
+    : [
+        {
+          vol: 'TẬP I',
+          era: '1930 — 1954',
+          title: pageProps?.vol1_title || '',
+          focus: pageProps?.vol1_desc || '',
+          pages: '380 trang',
+          papers: '24 Chuyên luận khoa học',
+          status: 'Đã hoàn tất bản thảo',
+        },
+        {
+          vol: 'TẬP II',
+          era: '1954 — 1986',
+          title: pageProps?.vol2_title || '',
+          focus: pageProps?.vol2_desc || '',
+          pages: '420 trang',
+          papers: '32 Hồ sơ điền dã',
+          status: 'Đang biên tập phản biện',
+        },
+        {
+          vol: 'TẬP III',
+          era: '1986 — 2010',
+          title: pageProps?.vol3_title || '',
+          focus: pageProps?.vol3_desc || '',
+          pages: '510 trang',
+          papers: '45 Hồ sơ tác phẩm bảo vật',
+          status: 'Đang thẩm định tư liệu',
+        },
+        {
+          vol: 'TẬP IV',
+          era: '2010 — 2030',
+          title: pageProps?.vol4_title || '',
+          focus: pageProps?.vol4_desc || '',
+          pages: '460 trang',
+          papers: '38 Đề xuất mô hình kinh tế số',
+          status: 'Đang tiếp nhận bản thảo',
+        },
+      ].filter((v) => v.title || v.focus);
+
+  if (volumes.length === 0) return null;
 
   return (
     <section

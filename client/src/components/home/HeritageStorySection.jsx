@@ -1,17 +1,19 @@
 import React from 'react';
+import { getImageUrl } from '../../configs/Apis';
 
 const HeritageStorySection = ({ pageProps }) => {
-  const headline = pageProps?.story_headline || 'Một thế kỷ — Một hành trình đang tiếp diễn';
-  const p1 =
-    pageProps?.story_p1 ||
-    'Sơn mài hội họa Việt Nam là kết quả diệu kỳ của sự gặp gỡ giữa nguồn nhựa sơn ta Phú Thọ huyền thoại, đôi bàn tay tài hoa của nghệ nhân cổ truyền và tư duy tạo hình hàn lâm hiện đại khởi nguồn từ Trường Mỹ thuật Đông Dương thập niên 1930.';
-  const p2 =
-    pageProps?.story_p2 ||
-    'Qua lớp lớp thời gian tôi luyện trong khói lửa kháng chiến, độc lập và đổi mới, sơn mài đã thoát thai khỏi một chất liệu trang trí mỹ nghệ đơn thuần để trở thành đỉnh cao ngôn ngữ tạo hình hội họa dân tộc. Năm 2030 không phải điểm kết thúc, mà là dấu mốc hoàn tất một thế kỷ để bước sang một chu kỳ kiến tạo tầm vóc mới.';
-  const callout = pageProps?.story_callout || '“Không chỉ để xã hội xem. Để xã hội cùng làm.”';
-  const calloutDesc =
-    pageProps?.story_callout_desc ||
-    'Hành trình được kiến tạo như một hệ sinh thái mở, nơi người nghệ sĩ, nghệ nhân làng nghề, giới học giả, trường viện nghiên cứu, doanh nghiệp và công chúng yêu nghệ thuật cùng tương tác, kiến tạo và làm giàu sinh khí cho di sản.';
+  const headline = pageProps?.story_headline || pageProps?.heritage_story?.headline || '';
+  const p1 = pageProps?.story_p1 || pageProps?.heritage_story?.p1 || '';
+  const p2 = pageProps?.story_p2 || pageProps?.heritage_story?.p2 || '';
+  const callout = pageProps?.story_callout || pageProps?.heritage_story?.callout || '';
+  const calloutDesc = pageProps?.story_callout_desc || pageProps?.heritage_story?.callout_desc || '';
+
+  const storyImage = pageProps?.story_image || pageProps?.heritage_story?.image || '';
+  const storyImageTag = pageProps?.story_image_tag || pageProps?.heritage_story?.tag || '';
+  const storyImageTitle = pageProps?.story_image_title || pageProps?.heritage_story?.title || '';
+  const storyImageDesc = pageProps?.story_image_desc || pageProps?.heritage_story?.desc || '';
+
+  if (!headline && !p1 && !storyImage) return null;
 
   return (
     <section
@@ -55,22 +57,30 @@ const HeritageStorySection = ({ pageProps }) => {
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-lg overflow-hidden border border-[#D4AF37]/40 bg-[#1e0404] shadow-[0_15px_40px_rgba(0,0,0,0.8)] aspect-[4/5] group">
               <div className="absolute -top-10 -right-10 w-44 h-44 bg-[#D4AF37]/20 rounded-full blur-[60px] pointer-events-none" />
-              <img
-                className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 transition-all duration-700 group-hover:scale-105"
-                alt="Nghệ nhân mài tranh sơn mài dưới nước"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKoUOowWq2-6yYBMnhlPakXy635SgnT6bWlRWvwNB1UVulyrbseIHbaOXgguNg7nh3lcMgUa-pvq8bBhYTzxFH2oC3t94vfeIIvVkf8_EjNo7MCYAVq030xWTgSQ0Byy3-DQVM0RutjVNBNGjT6b59Efk8bteqtEVz2k8PMTJjiN0oXe7gHfL_bNMpRxr6hE4walNjk5MugHU4qn8YFH8DPea3lNksCS_LSBmMEa5Mmi6lTXckCeijVQ"
-              />
+              {storyImage && (
+                <img
+                  className="w-full h-full object-cover filter brightness-95 group-hover:brightness-105 transition-all duration-700 group-hover:scale-105"
+                  alt={storyImageTitle || "Nghệ nhân mài tranh sơn mài dưới nước"}
+                  src={getImageUrl(storyImage)}
+                />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#140202] via-transparent to-transparent opacity-85" />
               <div className="absolute bottom-0 left-0 right-0 p-6 space-y-1.5">
-                <span className="font-serif text-[14px] tracking-[0.22em] text-[#FFDF73] uppercase font-bold whitespace-nowrap">
-                  Kỹ thuật truyền thống
-                </span>
-                <h3 className="font-serif text-[24px] text-[#FAF7F2] font-bold">
-                  Mài Dưới Dòng Nước Lộ Sắc
-                </h3>
-                <p className="font-body text-[16px] text-[#EADBCE] leading-relaxed">
-                  Sự kiên nhẫn bóc tách từng tầng sơn then, son cánh gián để vàng son ngọc diệp hiển lộ quang minh.
-                </p>
+                {storyImageTag && (
+                  <span className="font-serif text-[14px] tracking-[0.22em] text-[#FFDF73] uppercase font-bold whitespace-nowrap">
+                    {storyImageTag}
+                  </span>
+                )}
+                {storyImageTitle && (
+                  <h3 className="font-serif text-[24px] text-[#FAF7F2] font-bold">
+                    {storyImageTitle}
+                  </h3>
+                )}
+                {storyImageDesc && (
+                  <p className="font-body text-[16px] text-[#EADBCE] leading-relaxed">
+                    {storyImageDesc}
+                  </p>
+                )}
               </div>
             </div>
 

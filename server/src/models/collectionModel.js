@@ -23,6 +23,22 @@ const Collection = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
+    subtitle: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    watermark_left: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    watermark_right: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+    },
+    specs: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     cover_image: {
       type: DataTypes.STRING(500),
       allowNull: true,

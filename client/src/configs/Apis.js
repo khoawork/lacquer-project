@@ -7,7 +7,7 @@ export const endpoints = {
     const target = slug === undefined || slug === null ? '/' : slug;
     return `/pages?slug=${encodeURIComponent(target)}`;
   },
-  pageById: (id) => `/pages/id/${id}`,
+  pageById: (id) => `/pages/${id}`,
 
   // Events API
   events: '/events',

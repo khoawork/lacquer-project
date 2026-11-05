@@ -8,6 +8,7 @@ const ImageUploader = ({ value, onChange, label = 'Hình Ảnh', placeholder = '
   const [error, setError] = useState(null);
   const [inputMode, setInputMode] = useState('upload'); // 'upload' | 'url'
   const fileInputRef = useRef(null);
+  const inputId = useRef(`file_upload_${Math.random().toString(36).substring(2, 9)}`).current;
 
   const handleFileChange = async (e) => {
     const file = e.target.files?.[0];
@@ -123,11 +124,13 @@ const ImageUploader = ({ value, onChange, label = 'Hình Ảnh', placeholder = '
                 accept="image/*"
                 onChange={handleFileChange}
                 className="hidden"
-                id="file_upload_input"
+                id={inputId}
               />
               <div className="flex flex-wrap items-center gap-2">
-                <label
-                  htmlFor="file_upload_input"
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={uploading}
                   className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-[#2e070b] hover:bg-[#3e0b10] border border-[#D4AF37]/50 text-[#FFDF73] text-xs font-bold uppercase tracking-wider transition cursor-pointer shadow-sm ${
                     uploading ? 'opacity-50 pointer-events-none' : ''
                   }`}
@@ -138,7 +141,7 @@ const ImageUploader = ({ value, onChange, label = 'Hình Ảnh', placeholder = '
                     <Upload className="w-4 h-4 text-[#FFDF73]" />
                   )}
                   <span>{uploading ? 'Đang tải lên...' : 'Chọn ảnh từ máy tính'}</span>
-                </label>
+                </button>
 
                 {previewSrc && (
                   <span className="text-[11px] text-emerald-400 flex items-center gap-1 font-semibold">

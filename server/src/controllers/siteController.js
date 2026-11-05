@@ -32,6 +32,19 @@ class SiteController {
     }
   }
 
+  async getMenuByKey(req, res) {
+    try {
+      const { menuKey } = req.params;
+      const menu = await siteService.getMenuByKey(menuKey);
+      if (!menu) {
+        return res.status(404).json({ success: false, message: 'Menu không tồn tại' });
+      }
+      res.json({ success: true, data: menu });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  }
+
   async saveMenu(req, res) {
     try {
       const { menuKey } = req.params;

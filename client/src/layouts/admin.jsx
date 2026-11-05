@@ -68,6 +68,9 @@ const AdminLayout = () => {
     if (path === '/admin') {
       return location.pathname === '/admin' || location.pathname === '/admin/dashboard';
     }
+    if (path === '/admin/pages/home') {
+      return location.pathname === '/admin/pages/home' || location.pathname === '/admin/pages';
+    }
     return location.pathname === path;
   };
 

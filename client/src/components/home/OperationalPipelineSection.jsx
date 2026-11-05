@@ -1,27 +1,25 @@
 import React from 'react';
 
 const OperationalPipelineSection = ({ pageProps }) => {
-  const headline = pageProps?.pipeline_headline || 'Từ ý tưởng đến giá trị';
-  const desc =
-    pageProps?.pipeline_desc ||
-    'Chu trình liên tục chuyển hóa chất xám nghiên cứu, năng lượng sáng tạo nghệ thuật thành các giá trị văn hóa và kinh tế bền vững cho đất nước.';
+  const headline = pageProps?.pipeline_headline;
+  const desc = pageProps?.pipeline_desc;
+  const s1Title = pageProps?.step1_title;
+  const s1Sub = pageProps?.step1_sub;
+  const s1Desc = pageProps?.step1_desc || pageProps?.pipeline?.step1;
 
-  const s1Title = pageProps?.step1_title || 'LAB';
-  const s1Sub = pageProps?.step1_sub || 'Nghiên cứu & Thể nghiệm';
-  const s1Desc = pageProps?.step1_desc || 'Nghiên cứu lịch sử, lý luận, chất liệu và công nghệ.';
+  const s2Title = pageProps?.step2_title;
+  const s2Sub = pageProps?.step2_sub;
+  const s2Desc = pageProps?.step2_desc || pageProps?.pipeline?.step2;
 
-  const s2Title = pageProps?.step2_title || 'STUDIO';
-  const s2Sub = pageProps?.step2_sub || 'Sáng tạo & Chế tác';
-  const s2Desc = pageProps?.step2_desc || 'Đồng hành cùng nghệ sĩ, nghệ nhân và xưởng nghề thực hành sáng tạo.';
+  const s3Title = pageProps?.step3_title;
+  const s3Sub = pageProps?.step3_sub;
+  const s3Desc = pageProps?.step3_desc || pageProps?.pipeline?.step3;
 
-  const s3Title = pageProps?.step3_title || 'SHOWCASE';
-  const s3Sub = pageProps?.step3_sub || 'Trưng bày & Giám tuyển';
-  const s3Desc = pageProps?.step3_desc || 'Triển lãm, toạ đàm, trình diễn và không gian trải nghiệm.';
+  const s4Title = pageProps?.step4_title;
+  const s4Sub = pageProps?.step4_sub;
+  const s4Desc = pageProps?.step4_desc || pageProps?.pipeline?.step4;
 
-  const s4Title = pageProps?.step4_title || 'MARKET';
-  const s4Sub = pageProps?.step4_sub || 'Thương mại hóa di sản';
-  const s4Desc =
-    pageProps?.step4_desc || 'Sản phẩm, bản quyền, hợp tác thương hiệu, đầu tư và thương mại hoá có trách nhiệm.';
+  if (!headline && !desc && !s1Title) return null;
 
   return (
     <section

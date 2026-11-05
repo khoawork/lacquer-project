@@ -8,6 +8,7 @@ router.put('/settings/:key', siteController.updateSetting);
 
 // Menus
 router.get('/menus', siteController.getMenus);
+router.get('/menus/:menuKey', siteController.getMenuByKey);
 router.post('/menus/:menuKey', siteController.saveMenu);
 
 // Forms

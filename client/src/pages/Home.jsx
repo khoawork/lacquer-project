@@ -8,9 +8,10 @@ import FeaturedArtworksSection from '../components/home/FeaturedArtworksSection'
 import MonographArchiveSection from '../components/home/MonographArchiveSection';
 import CoCreationCtaSection from '../components/home/CoCreationCtaSection';
 import pageServices from '../services/pageServices';
+import { DEFAULT_PAGE_PROPS } from './admin/PageManager';
 
 const Home = () => {
-  const [pageProps, setPageProps] = useState(null);
+  const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/'] || null);
 
   // Đọc dữ liệu trang chủ trực tiếp từ bảng Page trong DB (slug chỉ nằm trong page)
   useEffect(() => {

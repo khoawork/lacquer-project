@@ -2,12 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const MonographArchiveSection = ({ pageProps }) => {
-  const archiveTag = pageProps?.archive_tag || 'KỶ YẾU';
-  const archiveHeadline = pageProps?.archive_headline || 'Kho tri thức mở của Hành trình';
-  const archiveDesc =
-    pageProps?.archive_desc ||
-    'Kỷ yếu tập hợp các bài tham luận hàn lâm, chân dung nghệ nhân – họa sĩ, tư liệu làng nghề, nghiên cứu vật liệu, hình ảnh sự kiện và dữ liệu định danh tác phẩm. Đây là nền móng học thuật và ký ức chung để hành trình được tiếp tục bởi nhiều thế hệ.';
+  const archiveTag = pageProps?.archive_tag;
+  const archiveHeadline = pageProps?.archive_headline;
+  const archiveDesc = pageProps?.archive_desc;
 
+  if (!archiveHeadline && !archiveDesc) return null;
   return (
     <section
       className="relative w-full py-24 bg-[#180303] border-t border-[#D4AF37]/20"

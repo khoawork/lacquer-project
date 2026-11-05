@@ -1,7 +1,13 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 
-const LeadershipHeroSection = () => {
+const LeadershipHeroSection = ({ pageProps }) => {
+  const badgeText = pageProps?.badge;
+  const headline = pageProps?.headline;
+  const description = pageProps?.description;
+
+  if (!headline && !description && !badgeText) return null;
+
   return (
     <section className="relative w-full pt-16 md:pt-20 pb-16 text-center select-none overflow-hidden">
       {/* Sparkles bay chuẩn Trang Hành Trình */}
@@ -18,19 +24,19 @@ const LeadershipHeroSection = () => {
         >
           <span className="w-1.5 h-1.5 rounded-full bg-[#FFDF73] animate-pulse shadow-[0_0_8px_#FFDF73]" />
           <span className="font-serif text-[13px] md:text-[14px] text-[#FFDF73] tracking-[0.24em] uppercase font-bold whitespace-nowrap">
-            • BÁCH NIÊN TRỌNG TRÁCH • MINH BẠCH &amp; LIÊN NGÀNH •
+            {badgeText}
           </span>
           <span className="w-1.5 h-1.5 rounded-full bg-[#FFDF73] animate-pulse shadow-[0_0_8px_#FFDF73]" />
         </div>
 
         {/* Headline */}
         <h1 className="font-serif text-[38px] sm:text-[50px] md:text-[62px] lg:text-[68px] uppercase tracking-tight text-gold-gradient max-w-5xl mx-auto leading-[1.14] mb-5 font-bold">
-          NHỮNG NGƯỜI GIỮ NHỊP CHO HÀNH TRÌNH
+          {headline}
         </h1>
 
         {/* Narrative Description */}
         <p className="font-body text-[17px] md:text-[19px] text-[#FAF7F2] max-w-4xl mx-auto leading-[1.85] text-balance mb-10 opacity-90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-          Một hành trình liên ngành chỉ bền vững khi mỗi chủ thể hiểu rõ vai trò của mình. Ban điều hành kết nối học thuật, sáng tạo, sản xuất, truyền thông, dữ liệu và nguồn lực để mọi hoạt động cùng hướng về một mục tiêu chung.
+          {description}
         </p>
       </div>
     </section>

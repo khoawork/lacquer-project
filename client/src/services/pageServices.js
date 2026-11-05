@@ -18,8 +18,13 @@ export const pageServices = {
     return await Apis().post(endpoints.pages, data);
   },
 
-  updatePage: async (id, data) => {
-    return await Apis().put(endpoints.pageById(id), data);
+  updatePage: async (idOrSlug, data) => {
+    // Nếu là ID số nguyên hợp lệ
+    if (typeof idOrSlug === 'number' || (!isNaN(idOrSlug) && !String(idOrSlug).includes('/'))) {
+      return await Apis().put(endpoints.pageById(idOrSlug), data);
+    }
+    // Nếu là chuỗi slug như '/events' hoặc 'events'
+    return await Apis().post(endpoints.pageBySlug(idOrSlug), data);
   },
 
   savePageBySlug: async (slug, data) => {

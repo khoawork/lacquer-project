@@ -3,36 +3,6 @@ import { Link } from 'react-router-dom';
 import eventServices from '../../services/eventServices';
 import { getImageUrl } from '../../configs/Apis';
 
-const defaultEvents = [
-  {
-    id: 'sample-1',
-    name: 'Kỷ nguyên Sơn Mài: Từ Đông Dương đến Toàn Cầu',
-    category: 'Tọa Đàm Quốc Tế',
-    location: 'Hà Nội',
-    date_display: '15/04/2026',
-    description: 'Quy tụ các nhà phê bình mỹ thuật từ Pháp, Nhật Bản và Việt Nam làm rõ vị thế độc tôn của chất liệu sơn ta trong bản đồ nghệ thuật hiện đại thế giới.',
-    thumbnail_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBj8hOf6OtOosVlLwIHxkjtVOh_T9QMxKbMQdcKtVVSH9syhS_CKkjeVeGkS5_eX4nLFBhl8q4VzHM5VAZfndgDRySW_6Y10Pe0312ZPzUVvpqiwt6-Y5LmxM33gbBtEUKCuNqHl4GXLr9_XrtVZLfHBaaPP7c_cSWpJ00C4KEAbpO3dyz7xxZoj-q_l8nWyMJvFWmQ2Ad7BDnQW4gv580yuehtpNQiW42opMfC2tCPjQPTagRmAstnsg',
-  },
-  {
-    id: 'sample-2',
-    name: 'Âm Vang Cánh Gián: 100 Năm Kiệt Tác',
-    category: 'Đại Triển Lãm Thế Kỷ',
-    location: 'Bảo tàng Mỹ thuật',
-    date_display: '2026',
-    description: 'Trưng bày hơn 120 kiệt tác sơn mài qua các thời kỳ lịch sử, tái hiện trọn vẹn hành trình biến chuyển từ thủ công mỹ nghệ dân gian thành bảo vật quốc gia.',
-    thumbnail_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDxD_WO1IVZYP6MR4AV5ZR66m90QGssGa99_G9X-3VMv5QVaD3mVJIonK-uv0w9MTb0TQ2r1k0JGA0VAOIm-u8maBJ50TanV8L9gtADbAwMPYL3crjlrKys-WNRRAIkBttap90bIdehfHIa8b-G_mhFmUPieKdWSfluZkrq14nVVL_gwGMRzMVqld8nUhVmnmgz9ivKXuoWgJ9rHPP6mJWxSADItJR9m7eL9a8XkkirdJYXc-uSBWHPaA',
-  },
-  {
-    id: 'sample-3',
-    name: 'Đêm Hội Nghệ Nhân Sơn Hà Thần Diệu',
-    category: 'Trình Diễn Di Sản',
-    location: 'Văn Miếu',
-    date_display: 'Hằng tháng',
-    description: 'Không gian thị phạm trực tiếp kỹ nghệ dát vàng quỳ, cẩn vỏ ốc xà cừ và mài ủ độc bản dưới sự dẫn dắt của các nghệ nhân nhân dân làng nghề trăm tuổi.',
-    thumbnail_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBq4xcdughL0KYYvlyAzXhVu6JB6Us7Z6mKaR00bqeRSCYxQB4UfeXfR3AzgYmU6C3w8N-6WyNmwAKBJtXZzlttYMcp-MHC9EuEORhfXjl99ihqt8jeKfHEeDLLqEiNCab4JD6uh2lZHIsG5NBusxBg1_9TMp3zAaQPqrn7Mii-6zRHEMRYg-MA_NwnF10kQbxl0fWLA1A8vDrTnROvSpH1Vj_z9RMwVC-8k3eOXVRYiHK6DNftln_nkw',
-  },
-];
-
 const FeaturedEventsSection = ({ pageProps = null }) => {
   const [events, setEvents] = useState([]);
 
@@ -65,13 +35,10 @@ const FeaturedEventsSection = ({ pageProps = null }) => {
     return () => { isMounted = false; };
   }, [JSON.stringify(featuredIds)]);
 
-  const displayList = events.length > 0 ? events : defaultEvents;
+  const displayList = events;
 
-  const sectionHeadline =
-    pageProps?.events_headline || 'Chuỗi hoạt động đưa di sản vào đời sống';
-  const sectionDesc =
-    pageProps?.events_desc ||
-    'Hành trình được hiện thực hóa qua các kỳ tọa đàm, triển lãm, trình diễn sáng tác, chương trình kỷ lục, hoạt động giáo dục và kết nối liên ngành Mỗi kỳ là một lát cắt chuyên sâu, đồng thời bổ sung dữ liệu cho hồ sơ 100 năm.';
+  const sectionHeadline = pageProps?.events_headline || '';
+  const sectionDesc = pageProps?.events_desc || '';
 
   return (
     <section
@@ -114,7 +81,7 @@ const FeaturedEventsSection = ({ pageProps = null }) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
           {displayList.map((evt) => {
             const rawImg = evt.thumbnail_url || evt.cover_image || evt.image;
-            const imgSrc = rawImg ? getImageUrl(rawImg) : defaultEvents[0].thumbnail_url;
+            const imgSrc = rawImg ? getImageUrl(rawImg) : '';
             const eventDate = evt.date_display || (evt.event_date ? new Date(evt.event_date).toLocaleDateString('vi-VN') : '2026');
 
             return (

@@ -2,15 +2,15 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { Award, Layers, Sparkles, CheckCircle2 } from 'lucide-react';
 
-const CollectionHeroSection = ({ pageProps = null }) => {
-  const LOGO_SEAL =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuAbx2zcEMt5QTXpYZ4vmxm9T3QK6QXfbGS31GYaycmOh0yKdDuKbXLrCd8jOekjZh0yRrUcG1Ach3DVtu4cJrwm9CqMdO0qkE9EMijUSxYvcI9F-i1XPm_j34ROMxlJJ6YQINYSQ3ZXdhzCmPxh9mn_ZAX193YRGA64fvuoaOJcaLmtQFm5g2f0GuT8VLii4tVPMsGA1sQn1srqxR_80HEyudzBxHHOpnljC5HpfKHyOK_K2hVKfueaKw';
+import { getImageUrl } from '../../configs/Apis';
 
-  const badgeText = pageProps?.badge || 'DI SẢN HỘI HỌA & MỸ THUẬT BÁCH NIÊN (1930–2030)';
-  const headlineText = pageProps?.headline || 'MỖI TÁC PHẨM LÀ MỘT LỚP THỜI GIAN';
-  const descText =
-    pageProps?.description ||
-    'Sơn mài không phô bày tất cả ngay từ đầu. Giá trị được tạo nên qua tích tụ, chờ đợi và mài lộ. Bộ sưu tập của Hành trình ghi nhận cả tác phẩm độc bản, dự án cộng đồng và thử nghiệm liên ngành – như những chứng tích sống của một thế kỷ đang tiếp diễn.';
+const CollectionHeroSection = ({ pageProps = null }) => {
+  const logoSeal = pageProps?.hero_image || pageProps?.hero_seal;
+  const badgeText = pageProps?.badge;
+  const headlineText = pageProps?.headline;
+  const descText = pageProps?.description;
+
+  if (!headlineText && !descText && !badgeText && !logoSeal) return null;
 
   return (
     <section
@@ -40,13 +40,15 @@ const CollectionHeroSection = ({ pageProps = null }) => {
       <FloatingSparkles size={4.5} />
 
       {/* Watermark Artistic Heritage Logo Background */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.11] max-w-xl w-full flex items-center justify-center">
-        <img
-          alt=""
-          className="w-[480px] h-[480px] object-contain rounded-full filter contrast-125"
-          src={LOGO_SEAL}
-        />
-      </div>
+      {logoSeal && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.11] max-w-xl w-full flex items-center justify-center">
+          <img
+            alt=""
+            className="w-[480px] h-[480px] object-contain rounded-full filter contrast-125"
+            src={getImageUrl(logoSeal)}
+          />
+        </div>
+      )}
 
       <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center z-10">
         {/* Archival Badge */}

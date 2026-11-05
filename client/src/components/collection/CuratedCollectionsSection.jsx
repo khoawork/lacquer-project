@@ -7,9 +7,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const selectedColIds = pageProps?.selected_collection_ids
-    ? pageProps.selected_collection_ids.map(Number)
-    : [];
+  const selectedColIds = (pageProps?.featured_collection_ids || pageProps?.selected_collection_ids || []).map(Number);
 
   // Đọc danh sách bộ sưu tập và tác phẩm trực tiếp từ cơ sở dữ liệu qua API (không hardcode)
   useEffect(() => {

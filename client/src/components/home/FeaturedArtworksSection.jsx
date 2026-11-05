@@ -4,36 +4,6 @@ import FloatingSparkles from '../common/FloatingSparkles';
 import collectionServices from '../../services/collectionServices';
 import { getImageUrl } from '../../configs/Apis';
 
-const defaultArtworks = [
-  {
-    id: 'sample-col-1',
-    name: 'Cửu Cửu — Mạch Ngầm Tinh Hoa',
-    subtitle: 'Sơn Ta • Vàng Quỳ • Cẩn Xà Cừ Cổ',
-    description: 'Tác phẩm thể hiện dòng chảy di sản cuộn trào qua các tầng sơn then thẳm sâu, gợi nhắc 9 thập kỷ đổi mới sáng tạo không ngừng của mỹ thuật nước nhà.',
-    cover_image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDEa_RaXKcNQyDo6ev-pTftpuK4I92c8InMGUgtTUJr7d4d3NzSAddUT-1bm9LCioxnl1CSa2HSMwZzAWgpi-2IU5t3FC6qYyoWATxan9LHzk5WiYNm6EbbsorqB3a50pIYKLEmIljvZLT-F70rlFkQy-Kxb92kvBIXLLWpbBuOsWjN6FwjkEagD2b-rSg13qhgAoK-FIZPO8CPOsi-hr4dklX0dcp54Mu_N-tlC0Wyv03i-5AQ55UaDQ',
-    dimensions: '180 × 240 cm',
-    tag: 'Sưu tập Quốc gia',
-  },
-  {
-    id: 'sample-col-2',
-    name: 'Bách Thụ Đồng Tâm Viên',
-    subtitle: 'Bình Phong Đại Cảnh 6 Tấm',
-    description: 'Biểu tượng sự hội tụ của một trăm thế hệ nghệ nhân và họa sư cùng vun đắp cho khu vườn di sản mỹ thuật Việt Nam trường tồn và rực rỡ.',
-    cover_image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCexZN5PdB3YP3SHYzKWyNItMYNeoiYzF2bYlM_EcSzhbCdsKVZfJXt2zlYaLHp2Dx7zAV80i2rVQtkgwl3KX8eH1e-cEyiyG-TjdqHLBi8Cef8NtcIQl1587qLDrGlXx5rAN-BqpYMXgHTAm9OQvgbgPlCcPwZddtNBpdtETcSaMfWkTgAaYzY173Pgy01shIHISz_024TQV8s0D3EHJcVTOeKkA72gSPM_HwtmyvwHY3Aa38SOehFOw',
-    dimensions: '200 × 360 cm',
-    tag: 'Tập thể Nghệ nhân',
-  },
-  {
-    id: 'sample-col-3',
-    name: 'Du Lãm Cõi Vô Cùng',
-    subtitle: 'Sơn Mài Biểu Hiện Đương Đại',
-    description: 'Tác phẩm thể hiện cuộc đối thoại triết học Đông - Tây, nơi không gian hội họa sơn mài phá vỡ tính ước lệ để vươn tới chiều kích trừu tượng thanh thoát.',
-    cover_image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC9WR2BKz0sjTphMA_KiHRMZ3AwzX_M6Pchw9MOZU7yaHXCQQaXEYdWBQt3Z79Efm138PH6AHA4KofNH2j551tbHmvb1hLeG0qaVyqk_e73vEjaPQTxjhQm4yAs8E-GYp2fWMsa1WR3jz-FQ6ckbc7pJQe6zUg2sIfQEomieApd9OcpI6Y-4oNNgpw_gAM_o_0YDCFhTI0I-NojayQ1l5sVwX-HJzswfOqyYQKLn-r6tEEB7QVklFRT3g',
-    dimensions: '160 × 160 cm',
-    tag: 'Họa sĩ Đương đại',
-  },
-];
-
 const FeaturedArtworksSection = ({ pageProps = null }) => {
   const [collections, setCollections] = useState([]);
 
@@ -66,13 +36,10 @@ const FeaturedArtworksSection = ({ pageProps = null }) => {
     return () => { isMounted = false; };
   }, [JSON.stringify(featuredColIds)]);
 
-  const displayList = collections.length > 0 ? collections : defaultArtworks;
+  const displayList = collections;
 
-  const sectionHeadline =
-    pageProps?.collections_headline || 'Những tác phẩm viết tiếp mạch di sản';
-  const sectionDesc =
-    pageProps?.collections_desc ||
-    'Từ "Cửu Cửu - Mạch Ngầm Tinh Hoa", "Bách Thụ Đồng Tam Viên" đến "Du Lãm", các bộ sưu tập không chỉ trưng bày kỹ thuật, mà kể câu chuyện về ký ức, cộng đồng, chuyển động và khả năng ứng dụng mới của sơn mài Việt Nam.';
+  const sectionHeadline = pageProps?.collections_headline || '';
+  const sectionDesc = pageProps?.collections_desc || '';
 
   return (
     <section
@@ -114,7 +81,7 @@ const FeaturedArtworksSection = ({ pageProps = null }) => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {displayList.map((col, idx) => {
             const rawImg = col.cover_image || col.thumbnail_url || col.image;
-            const imgSrc = rawImg ? getImageUrl(rawImg) : defaultArtworks[0].cover_image;
+            const imgSrc = rawImg ? getImageUrl(rawImg) : '';
 
             return (
               <div key={col.id} className="card-lacquer rounded-lg overflow-hidden flex flex-col group">

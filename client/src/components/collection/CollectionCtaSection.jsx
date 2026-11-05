@@ -1,10 +1,17 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { ArrowRight, Mail } from 'lucide-react';
+import { getImageUrl } from '../../configs/Apis';
 
-const CollectionCtaSection = () => {
-  const FINAL_SEAL =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuAbx2zcEMt5QTXpYZ4vmxm9T3QK6QXfbGS31GYaycmOh0yKdDuKbXLrCd8jOekjZh0yRrUcG1Ach3DVtu4cJrwm9CqMdO0qkE9EMijUSxYvcI9F-i1XPm_j34ROMxlJJ6YQINYSQ3ZXdhzCmPxh9mn_ZAX193YRGA64fvuoaOJcaLmtQFm5g2f0GuT8VLii4tVPMsGA1sQn1srqxR_80HEyudzBxHHOpnljC5HpfKHyOK_K2hVKfueaKw';
+const CollectionCtaSection = ({ pageProps }) => {
+  const ctaImage = pageProps?.cta_image || pageProps?.hero_image;
+  const ctaTag = pageProps?.cta_tag;
+  const ctaHeadline = pageProps?.cta_headline;
+  const ctaDesc = pageProps?.cta_desc;
+  const ctaBtnText = pageProps?.cta_button_text || 'Đăng ký tham gia kiến tạo';
+  const ctaBtnLink = pageProps?.cta_button_link || '/contact';
+
+  if (!ctaHeadline && !ctaDesc && !ctaImage) return null;
 
   return (
     <section
@@ -28,35 +35,42 @@ const CollectionCtaSection = () => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative max-w-3xl mx-auto space-y-6 z-10">
-        <div className="w-20 h-20 md:w-24 md:h-24 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#260508] to-[#D4AF37]/60 shadow-[0_0_35px_rgba(255,223,115,0.6)] flex items-center justify-center">
-          <img
-            alt="Centennial Emblem"
-            className="w-full h-full object-cover rounded-full brightness-110"
-            src={FINAL_SEAL}
-          />
-        </div>
+        {ctaImage && (
+          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#260508] to-[#D4AF37]/60 shadow-[0_0_35px_rgba(255,223,115,0.6)] flex items-center justify-center">
+            <img
+              alt="Centennial Emblem"
+              className="w-full h-full object-cover rounded-full brightness-110"
+              src={getImageUrl(ctaImage)}
+            />
+          </div>
+        )}
 
-        <span className="font-serif text-[#FFDF73] tracking-[0.25em] uppercase block text-[13px] md:text-[14px] font-bold">
-          KẾT NỐI DI SẢN BÁCH NIÊN
-        </span>
+        {ctaTag && (
+          <span className="font-serif text-[#FFDF73] tracking-[0.25em] uppercase block text-[13px] md:text-[14px] font-bold">
+            {ctaTag}
+          </span>
+        )}
 
-        <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient uppercase font-bold leading-tight">
-          BẠN MUỐN ĐỒNG KIẾN TẠO CÙNG CHÚNG TÔI?
-        </h2>
+        {ctaHeadline && (
+          <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient uppercase font-bold leading-tight">
+            {ctaHeadline}
+          </h2>
+        )}
 
-        <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/90 leading-relaxed max-w-2xl mx-auto">
-          Mỗi nghệ sĩ, nhà nghiên cứu, hay người yêu mỹ thuật đều có thể đóng góp một nét son trong trang sử mới của nghệ thuật sơn mài Việt Nam.
-        </p>
+        {ctaDesc && (
+          <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/90 leading-relaxed max-w-2xl mx-auto">
+            {ctaDesc}
+          </p>
+        )}
 
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3.5">
-          <button
-            type="button"
+          <a
+            href={ctaBtnLink}
             className="btn-gold px-6 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center gap-2"
-            onClick={() => alert('Cổng đăng ký tham gia đồng kiến tạo đã sẵn sàng tiếp nhận!')}
           >
-            <span>Đăng ký tham gia kiến tạo</span>
+            <span>{ctaBtnText}</span>
             <ArrowRight className="w-4 h-4 font-bold" />
-          </button>
+          </a>
           <a
             className="btn-gold-outline px-5 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center gap-2"
             href="mailto:info@sonmaihoihoavietnam.com"

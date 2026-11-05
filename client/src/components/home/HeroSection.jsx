@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
+import { getImageUrl } from '../../configs/Apis';
 
 const HeroSection = ({ pageProps }) => {
-  const badgeText = pageProps?.badge || '1930 • 2030 • BÁCH NIÊN KHỞI SẮC';
-  const subtitleText = pageProps?.subtitle || 'Bản Sắc Hội Họa & Di Sản Nghệ Thuật';
-  const headlineText = pageProps?.headline || 'HÀNH TRÌNH 100 NĂM SƠN MÀI HỘI HỌA VIỆT NAM';
-  const quoteText = pageProps?.quote || 'Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.';
-  const cta1Text = pageProps?.hero_cta1_text || 'KHÁM PHÁ HÀNH TRÌNH';
+  const badgeText = pageProps?.badge || '';
+  const subtitleText = pageProps?.subtitle || '';
+  const headlineText = pageProps?.headline || '';
+  const quoteText = pageProps?.quote || '';
+  const cta1Text = pageProps?.hero_cta1_text || '';
   const cta1Link = pageProps?.hero_cta1_link || '/journey';
-  const cta2Text = pageProps?.hero_cta2_text || 'THAM GIA ĐỒNG KIẾN TẠO';
+  const cta2Text = pageProps?.hero_cta2_text || '';
   const cta2Link = pageProps?.hero_cta2_link || '/contact';
-  const bottomQuoteText = pageProps?.bottom_quote || '“Một thế kỷ mở đường — Một hành trình kế tục và bừng sáng.”';
+  const bottomQuoteText = pageProps?.bottom_quote || '';
+  const heroImage = pageProps?.hero_image || '';
 
   return (
     <section
@@ -27,16 +29,18 @@ const HeroSection = ({ pageProps }) => {
       </div>
 
       {/* Center Lacquer Bloom Graphic with Gold Glow Halo */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none">
-        <div className="relative w-[550px] h-[550px] md:w-[680px] md:h-[680px] rounded-full overflow-hidden flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.45)] border border-[#D4AF37]/35 p-2">
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#3a0808]/70 via-transparent to-[#D4AF37]/20 rounded-full" />
-          <img
-            alt="Kỷ nguyên Sơn Mài Biểu Trưng"
-            className="w-full h-full object-cover rounded-full filter drop-shadow-[0_0_50px_rgba(212,175,55,0.6)]"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6q50uNbfjHPDj6-2aHqeSR8DW1g_492VREK_fAsMYMK3DQhFaFVLvrzrgBfkcJiOO2Tais7QvRuBF8ALjaz4nBsOtz2_OYNR9WdWGDVxkBf7NcORDAYbMcd2mrPyEmwkKfmDP20xLS_6bePaBtTvSZ-Ka5jNUCOMMIDzFfKoQnsM1b5MSjmOee7IfSPeNcTZstFNnDOBIGFaWlb4VwSZlLpre2zH2b53XVJdHercK7LRBB90ttJrMYIg2tBWbMCmHl44"
-          />
+      {heroImage && (
+        <div className="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none">
+          <div className="relative w-[550px] h-[550px] md:w-[680px] md:h-[680px] rounded-full overflow-hidden flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.45)] border border-[#D4AF37]/35 p-2">
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#3a0808]/70 via-transparent to-[#D4AF37]/20 rounded-full" />
+            <img
+              alt="Kỷ nguyên Sơn Mài Biểu Trưng"
+              className="w-full h-full object-cover rounded-full filter drop-shadow-[0_0_50px_rgba(212,175,55,0.6)]"
+              src={getImageUrl(heroImage)}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Top Badge Milestone */}
       <div className="relative z-10 flex flex-col items-center mt-3">

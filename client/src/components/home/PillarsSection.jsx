@@ -3,41 +3,33 @@ import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
 
 const PillarsSection = ({ pageProps }) => {
-  const headline = pageProps?.pillars_headline || 'Bốn hướng mở của hành trình';
-  const desc =
-    pageProps?.pillars_desc ||
-    'Một mô hình đa chiều kết nối truyền thống nghìn năm cùng nhịp đập kinh tế sáng tạo toàn cầu hóa.';
+  const headline = pageProps?.pillars_headline || '';
+  const desc = pageProps?.pillars_desc || '';
 
-  const pillar1Title = pageProps?.pillar1_title || 'Cộng đồng sáng tạo';
-  const pillar1Desc =
-    pageProps?.pillar1_desc ||
-    'Mở rộng Open Studio, bảo trợ chương trình lưu trú nghệ sĩ trẻ, workshop thể nghiệm đa chất liệu và truyền cảm hứng hội họa sơn mài đến công chúng đa thế hệ.';
-  const p1CtaText = pageProps?.pillar1_cta_text || 'Khám phá hoạt động';
+  const pillar1Title = pageProps?.pillar1_title || pageProps?.pillars?.[0]?.title || '';
+  const pillar1Desc = pageProps?.pillar1_desc || pageProps?.pillars?.[0]?.desc || '';
+  const p1CtaText = pageProps?.pillar1_cta_text || '';
   const p1CtaLink = pageProps?.pillar1_cta_link || '/journey';
 
-  const pillar2Title = pageProps?.pillar2_title || 'Công nghiệp văn hóa';
-  const pillar2Desc =
-    pageProps?.pillar2_desc ||
-    'Đưa giá trị tạo hình sơn mài vào giáo dục mỹ thuật di sản, thiết kế nội thất, thời trang đương đại, sản phẩm cao cấp và không gian trải nghiệm.';
-  const p2CtaText = pageProps?.pillar2_cta_text || 'Khám phá sản phẩm';
+  const pillar2Title = pageProps?.pillar2_title || pageProps?.pillars?.[1]?.title || '';
+  const pillar2Desc = pageProps?.pillar2_desc || pageProps?.pillars?.[1]?.desc || '';
+  const p2CtaText = pageProps?.pillar2_cta_text || '';
   const p2CtaLink = pageProps?.pillar2_cta_link || '/collections';
 
-  const pillar3Title = pageProps?.pillar3_title || 'Kinh tế di sản';
-  const pillar3Desc =
-    pageProps?.pillar3_desc ||
-    'Làng nghề, du lịch trải nghiệm, lưu trữ số, giám định, định danh và thị trường minh bạch.';
-  const p3CtaText = pageProps?.pillar3_cta_text || 'Khám phá dự án';
+  const pillar3Title = pageProps?.pillar3_title || pageProps?.pillars?.[2]?.title || '';
+  const pillar3Desc = pageProps?.pillar3_desc || pageProps?.pillars?.[2]?.desc || '';
+  const p3CtaText = pageProps?.pillar3_cta_text || '';
   const p3CtaLink = pageProps?.pillar3_cta_link || '/events';
 
-  const pillar4Title = pageProps?.pillar4_title || 'Đổi mới vật liệu';
-  const pillar4Desc =
-    pageProps?.pillar4_desc ||
-    'Vật liệu lai, bề mặt kiến trúc, công nghệ bảo tồn và giải pháp bền vững.';
-  const p4CtaText = pageProps?.pillar4_cta_text || 'Khám phá thể nghiệm';
+  const pillar4Title = pageProps?.pillar4_title || pageProps?.pillars?.[3]?.title || '';
+  const pillar4Desc = pageProps?.pillar4_desc || pageProps?.pillars?.[3]?.desc || '';
+  const p4CtaText = pageProps?.pillar4_cta_text || '';
   const p4CtaLink = pageProps?.pillar4_cta_link || '/archive';
 
-  const bottomCtaText = pageProps?.pillars_bottom_cta_text || 'XEM CHI TIẾT HỆ SINH THÁI';
+  const bottomCtaText = pageProps?.pillars_bottom_cta_text || '';
   const bottomCtaLink = pageProps?.pillars_bottom_cta_link || '#mo-hinh';
+
+  if (!headline && !desc && !pillar1Title) return null;
 
   return (
     <section
@@ -80,7 +72,7 @@ const PillarsSection = ({ pageProps }) => {
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              {p1CtaLink.startsWith('#') ? (
+              {(p1CtaLink || '').startsWith('#') ? (
                 <a
                   href={p1CtaLink}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
@@ -90,7 +82,7 @@ const PillarsSection = ({ pageProps }) => {
                 </a>
               ) : (
                 <Link
-                  to={p1CtaLink}
+                  to={p1CtaLink || '/journey'}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
                 >
                   {p1CtaText}{' '}
@@ -116,7 +108,7 @@ const PillarsSection = ({ pageProps }) => {
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              {p2CtaLink.startsWith('#') ? (
+              {(p2CtaLink || '').startsWith('#') ? (
                 <a
                   href={p2CtaLink}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
@@ -126,7 +118,7 @@ const PillarsSection = ({ pageProps }) => {
                 </a>
               ) : (
                 <Link
-                  to={p2CtaLink}
+                  to={p2CtaLink || '/collections'}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
                 >
                   {p2CtaText}{' '}
@@ -152,7 +144,7 @@ const PillarsSection = ({ pageProps }) => {
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              {p3CtaLink.startsWith('#') ? (
+              {(p3CtaLink || '').startsWith('#') ? (
                 <a
                   href={p3CtaLink}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
@@ -162,7 +154,7 @@ const PillarsSection = ({ pageProps }) => {
                 </a>
               ) : (
                 <Link
-                  to={p3CtaLink}
+                  to={p3CtaLink || '/events'}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
                 >
                   {p3CtaText}{' '}
@@ -188,7 +180,7 @@ const PillarsSection = ({ pageProps }) => {
               </div>
             </div>
             <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
-              {p4CtaLink.startsWith('#') ? (
+              {(p4CtaLink || '').startsWith('#') ? (
                 <a
                   href={p4CtaLink}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
@@ -198,7 +190,7 @@ const PillarsSection = ({ pageProps }) => {
                 </a>
               ) : (
                 <Link
-                  to={p4CtaLink}
+                  to={p4CtaLink || '/archive'}
                   className="group-hover:translate-x-1.5 transition-transform inline-flex items-center gap-1.5 whitespace-nowrap hover:text-[#FFE599]"
                 >
                   {p4CtaText}{' '}
@@ -210,17 +202,17 @@ const PillarsSection = ({ pageProps }) => {
         </div>
 
         <div className="mt-14 flex justify-center">
-          {bottomCtaLink.startsWith('#') ? (
+          {(bottomCtaLink || '').startsWith('#') ? (
             <a
               className="btn-gold-outline px-10 py-3.5 rounded text-[16px] uppercase tracking-[0.2em] whitespace-nowrap inline-block"
-              href={bottomCtaLink}
+              href={bottomCtaLink || '#mo-hinh'}
             >
               {bottomCtaText}
             </a>
           ) : (
             <Link
               className="btn-gold-outline px-10 py-3.5 rounded text-[16px] uppercase tracking-[0.2em] whitespace-nowrap inline-block"
-              to={bottomCtaLink}
+              to={bottomCtaLink || '#mo-hinh'}
             >
               {bottomCtaText}
             </Link>

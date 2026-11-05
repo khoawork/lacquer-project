@@ -10,11 +10,11 @@ router.post('/', pageController.createPage);
 
 // Lấy trang theo ID
 router.get('/id/:id', pageController.getPageById);
+router.put('/id/:id', pageController.updatePage);
+router.delete('/id/:id', pageController.deletePage);
 
-// Cập nhật trang theo ID
+// Cập nhật và xóa trang theo ID trực tiếp
 router.put('/:id', pageController.updatePage);
-
-// Xóa trang theo ID
 router.delete('/:id', pageController.deletePage);
 
 // Lấy và lưu trang theo slug qua route rõ ràng

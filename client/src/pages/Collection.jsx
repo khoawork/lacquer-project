@@ -4,9 +4,10 @@ import CuratedCollectionsSection from '../components/collection/CuratedCollectio
 import CollectionCommunitySection from '../components/collection/CollectionCommunitySection';
 import CollectionCtaSection from '../components/collection/CollectionCtaSection';
 import pageServices from '../services/pageServices';
+import { DEFAULT_PAGE_PROPS } from './admin/PageManager';
 
 const Collection = () => {
-  const [pageProps, setPageProps] = useState(null);
+  const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/collection'] || null);
 
   // Đọc cấu hình trang bộ sưu tập trực tiếp từ bảng Page trong DB
   useEffect(() => {
@@ -50,7 +51,7 @@ const Collection = () => {
       <CollectionCommunitySection />
 
       {/* 4. IMMERSIVE CALL-TO-ACTION */}
-      <CollectionCtaSection />
+      <CollectionCtaSection pageProps={pageProps} />
     </div>
   );
 };

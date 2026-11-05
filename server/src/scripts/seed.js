@@ -39,26 +39,87 @@ async function runSeed() {
         name: 'Trang chủ',
         slug: '/',
         props: {
+          hero_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuC6q50uNbfjHPDj6-2aHqeSR8DW1g_492VREK_fAsMYMK3DQhFaFVLvrzrgBfkcJiOO2Tais7QvRuBF8ALjaz4nBsOtz2_OYNR9WdWGDVxkBf7NcORDAYbMcd2mrPyEmwkKfmDP20xLS_6bePaBtTvSZ-Ka5jNUCOMMIDzFfKoQnsM1b5MSjmOee7IfSPeNcTZstFNnDOBIGFaWlb4VwSZlLpre2zH2b53XVJdHercK7LRBB90ttJrMYIg2tBWbMCmHl44',
           badge: '1930 • 2030 • BÁCH NIÊN KHỞI SẮC',
           headline: 'HÀNH TRÌNH 100 NĂM SƠN MÀI HỘI HỌA VIỆT NAM',
           subtitle: 'Bản Sắc Hội Họa & Di Sản Nghệ Thuật',
           quote: 'Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.',
-          heritage_story: {
-            headline: 'Một thế kỷ — Một hành trình đang tiếp diễn',
-            callout: 'Không chỉ để xã hội xem. Để xã hội cùng làm.',
-          },
-          pillars: [
-            { id: 1, title: 'Cộng đồng sáng tạo', desc: 'Kết nối thế hệ nghệ sĩ trẻ cùng nghệ nhân lão thành.' },
-            { id: 2, title: 'Công nghiệp văn hóa', desc: 'Chuyển hóa chất liệu truyền thống vào đời sống hiện đại.' },
-            { id: 3, title: 'Kinh tế di sản', desc: 'Định vị giá trị tác phẩm sơn mài trên thị trường nghệ thuật quốc tế.' },
-            { id: 4, title: 'Đổi mới vật liệu', desc: 'Nghiên cứu ứng dụng sơn then, vàng quỳ và vỏ trứng trên cấu trúc mới.' },
-          ],
-          pipeline: {
-            step1: 'LAB (Nghiên cứu & Thể nghiệm)',
-            step2: 'STUDIO (Đồng hành nghệ nhân & họa sĩ)',
-            step3: 'SHOWCASE (Trưng bày & Giám tuyển)',
-            step4: 'MARKET (Thương mại hóa di sản)',
-          },
+          hero_cta1_text: 'KHÁM PHÁ HÀNH TRÌNH',
+          hero_cta1_link: '/journey',
+          hero_cta2_text: 'THAM GIA ĐỒNG KIẾN TẠO',
+          hero_cta2_link: '/contact',
+          bottom_quote: '“Một thế kỷ mở đường — Một hành trình kế tục và bừng sáng.”',
+          story_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuAKoUOowWq2-6yYBMnhlPakXy635SgnT6bWlRWvwNB1UVulyrbseIHbaOXgguNg7nh3lcMgUa-pvq8bBhYTzxFH2oC3t94vfeIIvVkf8_EjNo7MCYAVq030xWTgSQ0Byy3-DQVM0RutjVNBNGjT6b59Efk8bteqtEVz2k8PMTJjiN0oXe7gHfL_bNMpRxr6hE4walNjk5MugHU4qn8YFH8DPea3lNksCS_LSBmMEa5Mmi6lTXckCeijVQ',
+          story_image_tag: 'Kỹ thuật truyền thống',
+          story_image_title: 'Mài Dưới Dòng Nước Lộ Sắc',
+          story_image_desc:
+            'Sự kiên nhẫn bóc tách từng tầng sơn then, son cánh gián để vàng son ngọc diệp hiển lộ quang minh.',
+          story_headline: 'Một thế kỷ — Một hành trình đang tiếp diễn',
+          story_p1:
+            'Sơn mài hội họa Việt Nam là kết quả diệu kỳ của sự gặp gỡ giữa nguồn nhựa sơn ta Phú Thọ huyền thoại, đôi bàn tay tài hoa của nghệ nhân cổ truyền và tư duy tạo hình hàn lâm hiện đại khởi nguồn từ Trường Mỹ thuật Đông Dương thập niên 1930.',
+          story_p2:
+            'Qua lớp lớp thời gian tôi luyện trong khói lửa kháng chiến, độc lập và đổi mới, sơn mài đã thoát thai khỏi một chất liệu trang trí mỹ nghệ đơn thuần để trở thành đỉnh cao ngôn ngữ tạo hình hội họa dân tộc. Năm 2030 không phải điểm kết thúc, mà là dấu mốc hoàn tất một thế kỷ để bước sang một chu kỳ kiến tạo tầm vóc mới.',
+          story_callout: '“Không chỉ để xã hội xem. Để xã hội cùng làm.”',
+          story_callout_desc:
+            'Hành trình được kiến tạo như một hệ sinh thái mở, nơi người nghệ sĩ, nghệ nhân làng nghề, giới học giả, trường viện nghiên cứu, doanh nghiệp và công chúng yêu nghệ thuật cùng tương tác, kiến tạo và làm giàu sinh khí cho di sản.',
+          pillars_headline: 'Bốn hướng mở của hành trình',
+          pillars_desc:
+            'Một mô hình đa chiều kết nối truyền thống nghìn năm cùng nhịp đập kinh tế sáng tạo toàn cầu hóa.',
+          pillar1_title: 'Cộng đồng sáng tạo',
+          pillar1_desc:
+            'Mở rộng Open Studio, bảo trợ chương trình lưu trú nghệ sĩ trẻ, workshop thể nghiệm đa chất liệu và truyền cảm hứng hội họa sơn mài đến công chúng đa thế hệ.',
+          pillar1_cta_text: 'Khám phá hoạt động',
+          pillar1_cta_link: '/journey',
+          pillar2_title: 'Công nghiệp văn hóa',
+          pillar2_desc:
+            'Định hình tiêu chuẩn sản phẩm mỹ thuật cao cấp, kết nối chuỗi cung ứng vật liệu truyền thống với các nhà thiết kế công nghiệp và nội thất đương đại.',
+          pillar2_cta_text: 'Khám phá sản phẩm',
+          pillar2_cta_link: '/collections',
+          pillar3_title: 'Kinh tế di sản',
+          pillar3_desc:
+            'Xây dựng hạ tầng định giá, bảo chứng bản quyền và xác lập giá trị đầu tư cho các tác phẩm kiệt tác trên thị trường nghệ thuật quốc tế.',
+          pillar3_cta_text: 'Khám phá dự án',
+          pillar3_cta_link: '/events',
+          pillar4_title: 'Đổi mới vật liệu',
+          pillar4_desc:
+            'Nghiên cứu khoa học về tính chất hóa sinh của cây sơn ta, quy chuẩn kỹ thuật mài then và phát triển các chế phẩm hỗ trợ sinh thái bền vững.',
+          pillar4_cta_text: 'Khám phá thể nghiệm',
+          pillar4_cta_link: '/archive',
+          pillars_bottom_cta_text: 'XEM CHI TIẾT HỆ SINH THÁI',
+          pillars_bottom_cta_link: '#mo-hinh',
+          pipeline_headline: 'Từ ý tưởng đến giá trị',
+          pipeline_desc:
+            'Chu trình liên tục chuyển hóa chất xám nghiên cứu, năng lượng sáng tạo nghệ thuật thành các giá trị văn hóa và kinh tế bền vững cho đất nước.',
+          step1_title: 'LAB',
+          step1_sub: 'Nghiên cứu & Thể nghiệm',
+          step1_desc: 'Nghiên cứu lịch sử, lý luận, chất liệu và công nghệ.',
+          step2_title: 'STUDIO',
+          step2_sub: 'Sáng tạo & Chế tác',
+          step2_desc: 'Đồng hành cùng nghệ sĩ, nghệ nhân và xưởng nghề thực hành sáng tạo.',
+          step3_title: 'SHOWCASE',
+          step3_sub: 'Trưng bày & Lan tỏa',
+          step3_desc: 'Đại triển lãm, tọa đàm chuyên sâu, ấn bản kỷ yếu và truyền thông số.',
+          step4_title: 'MARKET',
+          step4_sub: 'Thương mại hóa di sản',
+          step4_desc: 'Đưa tác phẩm sơn mài vào chuỗi giá trị kinh tế sáng tạo toàn cầu.',
+          events_headline: 'Chuỗi hoạt động đưa di sản vào đời sống',
+          events_desc:
+            'Hành trình được hiện thực hóa qua các kỳ tọa đàm, triển lãm, trình diễn sáng tác, chương trình kỷ lục, hoạt động giáo dục và kết nối liên ngành Mỗi kỳ là một lát cắt chuyên sâu, đồng thời bổ sung dữ liệu cho hồ sơ 100 năm.',
+          featured_event_ids: [1, 2, 3],
+          collections_headline: 'Những tác phẩm viết tiếp mạch di sản',
+          collections_desc:
+            'Từ "Cửu Cửu - Mạch Ngầm Tinh Hoa", "Bách Thụ Đồng Tam Viên" đến "Du Lãm", các bộ sưu tập không chỉ trưng bày kỹ thuật, mà kể câu chuyện về ký ức, cộng đồng, chuyển động và khả năng ứng dụng mới của sơn mài Việt Nam.',
+          featured_collection_ids: [1, 2, 3],
+          archive_tag: 'ẤN PHẨM KHẢO CỨU • TẬP I–IV',
+          archive_headline: 'KỶ YẾU BÁCH NIÊN SƠN MÀI (1930 — 2030)',
+          archive_desc:
+            'Công trình khảo cứu đồ sộ quy tụ hơn 500 trang tư liệu, bản vẽ kỹ thuật, bài phê bình nghệ thuật và hình ảnh độ phân giải cao của các kiệt tác quốc gia.',
+          cta_tag: 'ĐỒNG KIẾN TẠO VĂN HÓA',
+          cta_headline: 'Cùng viết tiếp hành trình 100 năm',
+          cta_desc:
+            'Dù bạn là nghệ sĩ, nghệ nhân, nhà nghiên cứu, doanh nghiệp, sinh viên hay người yêu nghệ thuật, luôn có một cách để bạn góp mặt trong hành trình này.',
         },
       },
       {
@@ -66,25 +127,176 @@ async function runSeed() {
         name: 'Giới thiệu',
         slug: '/about',
         props: {
-          badge: '1930 • 2030 — BÁCH NIÊN KHỞI SẮC',
+          hero_seal:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuA24EfoXZ-0BkTAtHr86R5VGrGCuTXxzBwWBzS6BW8ubJh3WRm5JLnWAsNYz24M--l0Syg2ccpf3_D4HwB1iJ28MuZ20kXwWQEszu9acBuTPnr9YSt4UIjhexbP9D6ngfVnhiLL5KLfhCvri5KxGGaVlSkgmNhA7NvFG2HBzEPoxjMXbrjfAwSFAPToizyXoP_KDUlAFU8mFRWqBKMUGElun99GkbN1VVDtASUHjdW1Zx9NSHjWRYrDUlYL4BYBXi95rV0',
+          badge: '1930 • 2030 — BÁCH NIÊN KHỞI SẮC | HỘI HỌA & DI SẢN',
           headline: 'TỪ DI SẢN ĐẾN HẠ TẦNG SÁNG TẠO',
+          description:
+            'Một thế kỷ sơn mài hội họa Việt Nam không chỉ được tạo nên bởi những tác phẩm. Đó là sự tích tụ của tri thức nghề, ký ức cộng đồng, thử nghiệm nghệ thuật, lao động vật chất và khát vọng định hình bản sắc Việt trong thế giới hiện đại.',
+          story_tag: 'KHỞI NGUỒN Ý NIỆM',
           story_headline: 'Vì sao Hành trình được hình thành?',
-          story_quote:
-            'Nối liền đứt gãy giữa hàn lâm và làng nghề — Biến di sản tĩnh tại thành tài nguyên sống động.',
-          mission: 'Kích hoạt giá trị sống của sơn mài hội họa Việt Nam trong thế kỷ mới',
-          vision: 'Một hệ sinh thái có khả năng tự vận hành, bảo tồn và lan tỏa tầm vóc quốc tế',
+          story_p1:
+            'Trong nhiều năm, sơn mài thường được nhìn qua hai lăng kính tách rời: một bên là mỹ thuật hàn lâm, một bên là thủ công – làng nghề. Hành trình 100 năm được khởi tạo để nối lại toàn bộ hệ sinh thái: từ lịch sử hội họa, nghệ nhân, họa sĩ, chất liệu và kỹ thuật đến thiết kế, công nghệ, truyền thông, giáo dục và thị trường.',
+          story_p2:
+            'Mục tiêu không phải đóng khung di sản trong quá khứ, mà tạo điều kiện để di sản tiếp tục sản sinh giá trị trong hiện tại, trao truyền một sinh quyển sáng tạo tự chủ, đĩnh đạc bước vào bách niên kế tiếp.',
+          story_quote: '“Nối liền đứt gãy giữa hàn lâm và làng nghề — Biến di sản tĩnh tại thành tài nguyên sống động.”',
+          story_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuAKoUOowWq2-6yYBMnhlPakXy635SgnT6bWlRWvwNB1UVulyrbseIHbaOXgguNg7nh3lcMgUa-pvq8bBhYTzxFH2oC3t94vfeIIvVkf8_EjNo7MCYAVq030xWTgSQ0Byy3-DQVM0RutjVNBNGjT6b59Efk8bteqtEVz2k8PMTJjiN0oXe7gHfL_bNMpRxr6hE4walNjk5MugHU4qn8YFH8DPea3lNksCS_LSBmMEa5Mmi6lTXckCeijVQ',
+          story_image_tag: 'TRIẾT LÝ TÍCH TỤ',
+          story_image_title: 'Ba Tầng Chiều Sâu Di Sản',
+          mv_tag: 'MỤC TIÊU CHIẾN LƯỢC',
+          mv_title: 'Sứ mệnh Di sản & Tầm nhìn 2030',
+          mission_badge: 'SỨ MỆNH',
+          mission_title: 'Kích hoạt giá trị sống của sơn mài hội họa Việt Nam',
+          mission: 'Kích hoạt giá trị sống của sơn mài hội họa Việt Nam',
+          mission_point1_bold: 'Hệ thống hóa và lan tỏa:',
+          mission_point1_text:
+            'Tri thức về lịch sử, mỹ học, kỹ thuật và chân dung những bậc thầy sơn mài Việt Nam.',
+          mission_point2_bold: 'Nền tảng đồng kiến tạo:',
+          mission_point2_text:
+            'Mở không gian để cộng đồng học giả, họa sĩ cùng nghiên cứu, thử nghiệm và công bố sáng tạo mới.',
+          mission_point3_bold: 'Hội tụ kinh tế di sản:',
+          mission_point3_text:
+            'Kết nối mỹ thuật tạo hình với công nghiệp văn hóa, đổi mới vật liệu và nền tảng chuyển đổi số.',
+          mission_point4_bold: 'Dữ liệu & Kỷ lục:',
+          mission_point4_text:
+            'Xây dựng hồ sơ định danh tác phẩm, xác lập chuyên đề kỷ lục bách niên có giá trị pháp lý lâu dài.',
+          mission_point5_bold: 'Định vị toàn cầu:',
+          mission_point5_text:
+            'Khẳng định sơn mài hội họa như một ngôn ngữ nghệ thuật bác học độc bản của văn hóa Việt.',
+          vision_badge: 'TẦM NHÌN 2030',
+          vision_title: 'Một hệ sinh thái có khả năng tự vận hành và lan tỏa',
+          vision:
+            'Đến năm 2030, Hành trình hướng tới một mạng lưới bền vững gồm kho tư liệu số, chương trình nghiên cứu – sáng tạo, không gian trưng bày và trải nghiệm, chuỗi hợp tác liên ngành, cơ chế định danh tác phẩm và thị trường minh bạch; từ đó tạo nền tảng cho thế hệ kế tiếp tiếp tục phát triển.',
+          vision_desc:
+            'Đến năm 2030, Hành trình hướng tới một mạng lưới bền vững gồm kho tư liệu số, chương trình nghiên cứu – sáng tạo, không gian trưng bày và trải nghiệm, chuỗi hợp tác liên ngành, cơ chế định danh tác phẩm và thị trường minh bạch; từ đó tạo nền tảng cho thế hệ kế tiếp tiếp tục phát triển.',
+          milestone_1_year: '2026',
+          milestone_1_desc: 'Khởi sắc di sản • Chuỗi tọa đàm & Open Studio',
+          milestone_2_year: '2028',
+          milestone_2_desc: 'Công bố Kỷ yếu bách niên Tập I–IV & Số hóa bảo tồn',
+          milestone_3_year: '2030',
+          milestone_3_desc: 'Đại lễ Kỷ niệm 100 năm Hội họa Sơn mài Việt Nam',
+          mission_points: [
+            {
+              bold: 'Hệ thống hóa và lan tỏa:',
+              text: 'Tri thức về lịch sử, mỹ học, kỹ thuật và chân dung những bậc thầy sơn mài Việt Nam.',
+            },
+            {
+              bold: 'Nền tảng đồng kiến tạo:',
+              text: 'Mở không gian để cộng đồng học giả, họa sĩ cùng nghiên cứu, thử nghiệm và công bố sáng tạo mới.',
+            },
+            {
+              bold: 'Hội tụ kinh tế di sản:',
+              text: 'Kết nối mỹ thuật tạo hình với công nghiệp văn hóa, đổi mới vật liệu và nền tảng chuyển đổi số.',
+            },
+            {
+              bold: 'Dữ liệu & Kỷ lục:',
+              text: 'Xây dựng hồ sơ định danh tác phẩm, xác lập chuyên đề kỷ lục bách niên có giá trị pháp lý lâu dài.',
+            },
+            {
+              bold: 'Định vị toàn cầu:',
+              text: 'Khẳng định sơn mài hội họa như một ngôn ngữ nghệ thuật bác học độc bản của văn hóa Việt.',
+            },
+          ],
+          milestones: [
+            {
+              year: '2026',
+              desc: 'Khởi sắc di sản • Chuỗi tọa đàm & Open Studio',
+            },
+            {
+              year: '2028',
+              desc: 'Công bố Kỷ yếu bách niên Tập I–IV & Số hóa bảo tồn',
+            },
+            {
+              year: '2030',
+              desc: 'Đại lễ Kỷ niệm 100 năm Hội họa Sơn mài Việt Nam',
+            },
+          ],
+          principles_tag: 'BA NGUYÊN TẮC CỐT LÕI',
+          principles_title: 'Điều không thay đổi trong mọi hoạt động',
+          principles_desc:
+            'Bộ ba nguyên tắc chỉ đạo bất biến định hướng mọi sáng kiến, đối thoại và sáng tạo trong hành trình bách niên.',
           principles: [
-            'Bản chất trước hình thức',
-            'Đồng kiến tạo thay vì độc quyền diễn giải',
-            'Giá trị dài hạn thay vì hiệu ứng sự kiện',
+            {
+              num: '01',
+              title: 'Bản chất trước hình thức',
+              desc: 'Mọi đổi mới phải tôn trọng lõi tạo ảnh và chiều sâu vật chất của sơn mài.',
+              tag: 'Tôn trọng cốt lõi',
+            },
+            {
+              num: '02',
+              title: 'Đồng kiến tạo thay vì độc quyền diễn giải',
+              desc: 'Tri thức được hình thành từ nhiều chủ thể và nhiều vùng thực hành.',
+              tag: 'Đối thoại đa chiều',
+            },
+            {
+              num: '03',
+              title: 'Giá trị dài hạn thay vì hiệu ứng sự kiện',
+              desc: 'Mỗi hoạt động phải để lại dữ liệu, tác phẩm, quan hệ hợp tác hoặc năng lực mới.',
+              tag: 'Bền vững thế kỷ',
+            },
           ],
+          arch_tag: 'MÔ HÌNH HỆ THỐNG',
+          arch_title: 'Kiến trúc nền tảng',
+          arch_subtitle: 'Lõi bất biến – Vòng mở – Lớp vận hành',
+          arch_tiers: [
+            {
+              tier_badge: 'Tầng 01 • Tâm Lõi',
+              title: 'Lõi bất biến (The Immutability Core)',
+              desc: 'Cơ chế tạo ảnh bằng tích tụ lớp, mài lộ, chiều sâu vật ánh sáng nội tại và thời gian.',
+              icon: 'lens',
+            },
+            {
+              tier_badge: 'Tầng 02 • Vành Đai Kết Nối',
+              title: 'Vòng mở (The Collaborative Ring)',
+              desc: 'Hội tụ nghệ sĩ, curator, nghệ nhân, nhà khoa học, nhà thiết kế, kiến trúc sư, doanh nghiệp, startup và nhà đầu tư.',
+              icon: 'hub',
+            },
+            {
+              tier_badge: 'Tầng 03 • Hạ Tầng Triển Khai',
+              title: 'Lớp vận hành (The Operational Loop)',
+              desc: 'LAB (Nghiên cứu & Thử nghiệm vật liệu) — STUDIO (Sáng tác & Đồng hành cùng nghệ sĩ) — SHOWCASE (Trưng bày, giám tuyển & Công bố tác phẩm) — MARKET (Thương mại hóa di sản).',
+              icon: 'cyclone',
+            },
+          ],
+          comm_tag: 'CỘNG ĐỒNG ĐỒNG HÀNH',
+          comm_title: 'Một hành trình dành cho nhiều cộng đồng',
+          comm_desc:
+            'Di sản chỉ tồn tại bền vững khi thuộc về tất cả những ai cùng trân quý và kiến tạo.',
           communities: [
-            'Nghệ sĩ & Làng nghề truyền thống',
-            'Học giả, Nhà giám tuyển & Viện trường',
-            'Doanh nghiệp sáng tạo & Kiến trúc sư',
-            'Tổ chức văn hóa & Viện Kỷ Lục Việt Nam (VietKings)',
-            'Công chúng & Thế hệ kế cận',
+            {
+              icon: 'palette',
+              title: 'Nghệ sĩ, nghệ nhân, làng nghề & nhà sưu tập',
+              desc: 'Những người gìn giữ lửa nghề, khai phá ngôn ngữ tạo hình sơn mài mới và các nhà sưu tập gìn giữ báu vật cho hậu thế.',
+            },
+            {
+              icon: 'menu_book',
+              title: 'Nhà nghiên cứu, sinh viên, giảng viên & Cơ sở đào tạo',
+              desc: 'Viện nghiên cứu, trường đại học mỹ thuật và giới lý luận phê bình kiến tạo hệ thống giáo trình, dữ liệu khoa học chuẩn mực.',
+            },
+            {
+              icon: 'architecture',
+              title: 'Doanh nghiệp sáng tạo, thương hiệu, kiến trúc sư, nhà thiết kế',
+              desc: 'Đưa tinh hoa sơn mài vào không gian sống, kiến trúc cao cấp, thiết kế sản phẩm ứng dụng và thời trang đương đại.',
+            },
+            {
+              icon: 'account_balance',
+              title: 'Cơ quan văn hóa, tổ chức xã hội, quỹ và mạng lưới quốc tế',
+              desc: 'Các đơn vị quản lý di sản, tổ chức phi chính phủ, bảo tàng ngoại giao mở rộng nhịp cầu giao lưu văn hóa liên quốc gia.',
+            },
+            {
+              icon: 'groups_3',
+              title: 'Công chúng yêu nghệ thuật & Thế hệ trẻ',
+              desc: 'Mọi trái tim rung cảm trước vẻ đẹp sơn mài, mong muốn chạm vào di sản, thấu hiểu tinh hoa dân tộc và truyền cảm hứng tự hào đến bạn bè thế giới.',
+            },
           ],
+          cta_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuDSpwqVIjojagpvlvPe0ivTpFXrw9nm4XweI5zUUEKSuj9OtFoea5AkYxnxeoNgfduQ7h6r7Kyfzr7RqXiLnjrg4VduONy_vOraXUiBuQSpBB-u2DGK1WgegvX45r76WVnEj2m9V3D9qO5GelY08XCUXEEJlx-Z-rP7iPit85HWbf1H3heVoG1cj91q8jEnlKWCKDNwmxgIcnuSw1V0NH_1HuUBd5BRIJdQC8O0BHTAcfkQykwkhfShB_XzEqiYcemH3G0',
+          cta_headline: 'Cùng trở thành một phần của Hành trình di sản',
+          cta_desc:
+            'Mỗi bàn tay, mỗi góc nhìn và mỗi nguồn lực đều có thể góp phần thắp sáng tương lai của nghệ thuật sơn mài Việt Nam bước vào thế kỷ mới.',
+          cta_button_text: 'Trở thành một phần của Hành trình',
+          cta_button_link: '/contact',
         },
       },
       {
@@ -92,32 +304,111 @@ async function runSeed() {
         name: 'Hành trình',
         slug: '/journey',
         props: {
-          badge: 'DÒNG CHẢY BÁCH NIÊN (1930–2030)',
-          headline: 'DÒNG CHẢY BÁCH NIÊN KHỞI SẮC',
+          badge: '✦ 1930 • 2030 — BÁCH NIÊN KHỞI SẮC ✦',
+          subtitle: 'BẢN SẮC HỘI HỌA & DI SẢN NGHỆ THUẬT',
+          headline: 'MỘT THẾ KỶ TÍCH TỤ\nMỘT TƯƠNG LAI ĐANG MỞ',
           description:
-            'Một thế kỷ chuyển mình của nghệ thuật sơn then truyền thống đến ngôn ngữ tạo hình bác học quốc tế.',
-          milestones: [
+            'Mỗi lớp sơn là một lớp thời gian. Mỗi lần mài lộ là một lần lịch sử hiển hiện. Hành trình 1930 - 2023 nhìn lại quá khứ để hiểu đúng bản chất, kết nối hiện tại để mở rộng thành phần và kiến tạo tương lai để di sản đạt khả dụng.',
+          hero_cta_text: 'KHÁM PHÁ HÀNH TRÌNH',
+          hero_cta_link: '#dong-thoi-gian',
+          bottom_quote: '“Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.”',
+          hero_seal:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBuzWfwJEOsC61MhtEz7HuLQnuwRHqUTgeGCy8Rqbfy7Cp9sp3Hxfn-XRJBAhOBurqcWdfXXGxxq6IkaAFuyvVr16OuLqsT7i-_mZT9f01lzVv-Hnn2GgR63ns6M7gtuaz5rdWWYOM9cbVQqDoOQ1wkarnSAYS1fQsJhj7G_373C4LnvVu7ws4BvHxGMPut_aC1_W4EUqvFUg-F7qoBK2fIM1HUQOrdpiuZWOgrTFCp28rqI-AOL458ABeJlMAswNaqR-s',
+          hero_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuBuzWfwJEOsC61MhtEz7HuLQnuwRHqUTgeGCy8Rqbfy7Cp9sp3Hxfn-XRJBAhOBurqcWdfXXGxxq6IkaAFuyvVr16OuLqsT7i-_mZT9f01lzVv-Hnn2GgR63ns6M7gtuaz5rdWWYOM9cbVQqDoOQ1wkarnSAYS1fQsJhj7G_373C4LnvVu7ws4BvHxGMPut_aC1_W4EUqvFUg-F7qoBK2fIM1HUQOrdpiuZWOgrTFCp28rqI-AOL458ABeJlMAswNaqR-s',
+          timeline_title: 'Dòng Thời Gian Lịch Sử & Tương Lai',
+          timeline_nodes: [
             {
+              tag: 'KHỞI SINH',
               era: '1930–1945',
-              title: 'Khai sinh hội họa sơn mài',
-              desc: 'Các danh họa Trường Mỹ thuật Đông Dương đưa chất liệu sơn ta thủ công lên tầm mỹ thuật hàn lâm.',
+              title: 'Khởi nguyên ngôn ngữ hiện đại',
+              desc: 'Kỹ thuật sơn truyền thống bước vào không gian hội họa hiện đại. Sơn ta, son, vàng bạc, vỏ trứng và kỹ thuật mài trở thành phương tiện tạo hình mới, đặt nền móng cho bản sắc sơn mài hội họa Việt Nam.',
             },
             {
+              tag: 'KHẲNG ĐỊNH BẢN SẮC',
               era: '1945–1975',
-              title: 'Sơn mài kháng chiến & Hiện thực',
-              desc: 'Giai đoạn tôi luyện bút pháp hiện thực hào hùng gắn liền với vận mệnh lịch sử dân tộc.',
+              title: 'Bản sắc trong biến động',
+              desc: 'Qua những biến động lịch sử, sơn mài tiếp tục được thực hành, giảng dạy và sáng tác. Chất liệu không chỉ ghi lại hình ảnh đất nước, con người mà còn củng cố một ngôn ngữ mỹ thuật riêng.',
             },
             {
-              era: '1975–2000',
-              title: 'Đổi mới & Thể nghiệm ngôn ngữ',
-              desc: 'Khai phá các biểu đạt trừu tượng, tìm tòi chất liệu mới và từng bước vươn ra các gallery quốc tế.',
+              tag: 'LAN TỎA ĐỜI SỐNG',
+              era: '1975–2020',
+              title: 'Truyền nghề và mở rộng ứng dụng',
+              desc: 'Các thế hệ họa sĩ, nghệ nhân, cơ sở đào tạo và làng nghề tiếp tục bảo tồn kỹ thuật, đồng thời mở rộng sơn mài vào trang trí, thiết kế, nội thất và sản phẩm văn hóa.',
             },
             {
-              era: '2026–2030',
-              title: 'Kỷ nguyên số & Kinh tế di sản',
-              desc: 'Xác lập vị thế di sản quốc gia, bảo chứng số nguyên bản và tổ chức chuỗi Đại lễ Bách Niên toàn quốc.',
+              tag: 'ĐANG TRIỂN KHAI',
+              era: '2025–2026',
+              title: 'Kích hoạt nền tảng',
+              desc: 'Kết nối trường đại học, nghệ sĩ, nghệ nhân, doanh nghiệp và đơn vị nghiên cứu; khởi động Open Studio, tọa đàm, triển lãm, chuyên đề kỷ lục và thử nghiệm vật liệu.',
+              is_live: true,
+            },
+            {
+              tag: 'TƯƠNG LAI GẦN',
+              era: '2026–2028',
+              title: 'Lan tỏa liên ngành',
+              desc: 'Phát triển triển lãm đa ngành, chương trình giáo dục, sản phẩm hợp tác, số hóa tư liệu và truyền thông rộng; hình thành các dự án có khả năng nhân rộng.',
+            },
+            {
+              tag: 'TẦM NHÌN 2030',
+              era: '2028–2030',
+              title: 'Kết tinh hệ sinh thái',
+              desc: 'Củng cố không gian thường trực, kho dữ liệu, cơ chế hợp tác, mô hình kinh tế và mạng lưới quốc tế; công bố thành quả hành trình 100 năm và mở ra chu kỳ mới.',
             },
           ],
+          key_quote:
+            '“Năm 2030 không khép lại hành trình; đó là lúc di sản được trao cho tương lai với một cấu trúc mạnh hơn.”',
+          symposia_title: 'Chuỗi Chuyên Đề',
+          symposia: [
+            {
+              code: 'CHUYÊN ĐỀ 01',
+              title: 'Tỏa sáng bản sắc',
+              desc: 'Nhận diện giá trị thẩm mỹ, lịch sử và ngôn ngữ tạo hình của sơn mài hội họa Việt Nam; từng bước hình thành hệ luận cứ cho định vị trong nước và quốc tế.',
+            },
+            {
+              code: 'CHUYÊN ĐỀ 02',
+              title: 'Đổi mới sáng tạo',
+              desc: 'Đối thoại về vật liệu mới và hợp tác phát triển liên ngành; tìm kiếm giới hạn mới của sơn mài trong kiến trúc, thiết kế, truyền thông và công nghệ.',
+            },
+            {
+              code: 'CHUYÊN ĐỀ 03',
+              title: 'Ký ức làng nghề',
+              desc: 'Kết nối lịch sử, con người, kỹ thuật và chuỗi cung ứng của các làng nghề; đặt câu hỏi về truyền nghề, sinh kế, thị trường và sức sống đương đại.',
+            },
+            {
+              code: 'CHUYÊN ĐỀ 04',
+              title: 'Điểm chạm tương lai',
+              desc: 'Đối thoại bàn tròn giữa doanh nhân, nhà sưu tập, họa sĩ, nghệ nhân và nhà nghiên cứu để hình thành các mô hình hợp tác khả thi.',
+              sub: 'Thị trường & Sưu tập',
+            },
+            {
+              code: 'CHUYÊN ĐỀ MỞ RỘNG',
+              title: 'Từ hội họa sơn mài đến sơn mài hội họa',
+              desc: 'Làm rõ chuyển biến về tư duy tạo hình và vị thế của chất liệu; từ phương tiện trang trí đến một ngôn ngữ hội họa có chiều sâu bản sắc.',
+            },
+            {
+              code: 'CHUYÊN ĐỀ CÔNG NGHỆ',
+              title: 'Sơn mài 2.0 – Giao lộ thế kỷ',
+              desc: 'Khi nghệ thuật độc bản gặp công nghệ, định danh số, vật liệu mới và kinh tế di sản; mở ra cơ chế để giá trị văn hóa được bảo chứng, lan tỏa và phát triển có trách nhiệm.',
+            },
+          ],
+          featured_symposium_code: 'CHUYÊN ĐỀ ĐẶC BIỆT • LẦN 7',
+          featured_symposium_title:
+            'Công nghiệp văn hóa mỹ thuật và thủ công mỹ nghệ sơn mài hội họa Việt Nam trong tương quan phát triển đồng bộ với nền tảng kinh tế số',
+          featured_symposium_desc:
+            'Tập trung vào quan hệ giữa sáng tạo, dữ liệu, quyền sở hữu trí tuệ, thương mại hóa và nền tảng số; hướng tới hệ sinh thái vừa bảo tồn bản sắc vừa tạo ra năng lực cạnh tranh mới.',
+          featured_symposium_btn1: 'Đăng ký tham dự diễn đàn',
+          featured_symposium_btn2: 'Tải đề cương chuyên đề',
+          cta_tag: '✦ THAM GIA KIẾN TẠO THẾ KỶ ✦',
+          cta_headline: 'Cùng Viết Tiếp Hành Trình 100 Năm',
+          cta_desc:
+            'Di sản không phải là một pho tượng đóng băng trong bảo tàng. Đó là ngọn lửa được bồi đắp bởi trí tuệ của từng thế hệ hôm nay.',
+          cta_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuApFGeFDZy4dfLBm4OXT4EuyeZrfovN4PVE1xnM_O7cu9S_oM5DC8AcvhmDI0TGT6frmdN7wDGuDf1CvpJlhftV4yVAdCv5jYcK2AdNCEhzgWhstsCr3GKvewNzwAEqTM7pL8-JkX8WZkAj24Erb6KWbbEoWFTT9cme4JCKHj9ccAXKUV4Lg14w9Bct2hiEtqjwubI2-UIisQ3d9X1pAfyoGqLEJ2_G9cDWqK5X5eYpjyun7pUWiLAkbEVfT9NquT8njg0',
+          cta_btn1_text: 'Trở thành một phần của hành trình',
+          cta_btn1_link: '/contact',
+          cta_btn2_text: 'Đề xuất hợp tác',
+          cta_btn2_link: '/contact',
         },
       },
       {
@@ -125,15 +416,35 @@ async function runSeed() {
         name: 'Sự kiện',
         slug: '/events',
         props: {
-          headline: 'Nơi di sản được thực hành, đối thoại và tái tạo',
-          stats: {
-            eventsCount: '12+ Kỳ sự kiện',
-            attendees: '3,500+ Khách mời',
-            artisans: '50+ Nghệ nhân & Học giả',
-          },
-          highlight_theme:
-            'Đại Hội Thảo & Giám Tuyển: Kỷ Nguyên Đương Đại Của Sơn Mài Việt Nam',
-          location: 'Hội trường Di Sản SIHUB, 273 Điện Biên Phủ, Quận 3, TP.HCM',
+          hero_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuCW2NGrEf3lfKTe7pxCmevWbwQ0drNpFQaZVy43uDF67MZdCLPfAhtv21Shw5iLaEqLx59sBzfChDSs94NDlOUrMUJPRM5Q3aT1E2n8H8JVJIhmGjrgjZQHMSGa38tuEocMJ0AkoKwSedVcJ6czgDFojWj2VrWGXAZuivXOY_msTjKc4RdDzNvMphFBEMPutqx7rc-7VV4i815sYYfRfu7Itz-O_koLFueJ_Xx4CHitwlZXEs6carZDwg',
+          badge: 'SỰ KIỆN & HOẠT ĐỘNG DI SẢN • 1930–2030',
+          headline: 'NƠI DI SẢN ĐƯỢC THỰC HÀNH',
+          description:
+            'Mỗi sự kiện là một điểm gặp giữa tri thức và hành động: người nghiên cứu gặp người làm nghề, nghệ sĩ gặp doanh nghiệp, chất liệu truyền thống gặp công nghệ mới và công chúng trở thành một phần của quá trình sáng tạo.',
+          stat1_num: '07',
+          stat1_label: 'Kỳ Hành Trình Di Sản',
+          stat2_num: '100+',
+          stat2_label: 'Nghệ Sĩ & Học Giả',
+          stat3_num: '30+',
+          stat3_label: 'Viện Đào Tạo & Doanh Nghiệp',
+          stat4_num: '1930–2030',
+          stat4_label: 'Kỷ Nguyên Bách Niên',
+          counter_badge: 'ĐANG CẬP NHẬT 2 SỰ KIỆN QUAN TRỌNG',
+          program_badge: 'Mở cổng đăng ký trực tuyến',
+          program_title: 'Đại Hội Thảo & Giám Tuyển: Kỷ Nguyên Đương Đại Của Sơn Mài Việt Nam',
+          program_desc:
+            'Phiên chuyên môn cao cấp quy tụ các nghệ sĩ bậc thầy, chuyên gia phục chế vật liệu son tự nhiên Phú Thọ và các nhà đầu tư văn hóa tiên phong.',
+          program_image:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuAk9UadPB6Ai1dAdE5R0qsQCARUuFoxFXYN5lYL6e7giPVY2rL4L2QIb44QNIzDGrUEI-Sh_TwXJsJW_9CP3KNnJMrfz0Nj5GOrzkbjGLU-KeG3vzzgpln6w3jlB_Rw02IeaF-Bc_o22kuepOM8h4sGLJHLOVeM1cSrduIChr772u0YXzIIyTdTXlp62DlBD6PdZaLfFWx2ELqdJ2HmEtuvZWmT3heQFFwc2n8LHxDI',
+          program_time: '08:30 – 17:30',
+          program_date: 'Thứ Bảy, 14 Tháng 11, 2026',
+          program_location: 'Hội trường Di Sản SIHUB',
+          program_address: '273 Điện Biên Phủ, Quận 3, TP.HCM',
+          program_gps_title: '273 Điện Biên Phủ',
+          program_gps_sub: 'Phường Võ Thị Sáu, Quận 3, TP.HCM',
+          featured_event_ids: [1, 2],
+          spotlight_event_id: 1,
         },
       },
       {
@@ -141,14 +452,42 @@ async function runSeed() {
         name: 'Bộ sưu tập',
         slug: '/collection',
         props: {
-          headline: 'Kho Tàng Kiệt Tác & Dòng Chảy Nghệ Thuật',
-          subHeadline:
-            'Những sáng tác độc bản kết hợp giữa kỹ nghệ truyền thống làng nghề Hạ Thái, nhựa sơn cội Phú Thọ và tư duy tạo hình hiện đại.',
-          curatedSeries: [
-            'Cửu Cửu – Mạch Ngầm Tinh Hoa',
-            'Bách Thụ Đồng Tâm Viên',
-            'Du Lãm Cõi Vô Cùng',
-          ],
+          badge: 'DI SẢN HỘI HỌA & MỸ THUẬT BÁCH NIÊN (1930–2030)',
+          headline: 'MỖI TÁC PHẨM LÀ MỘT LỚP THỜI GIAN',
+          description:
+            'Sơn mài không phô bày tất cả ngay từ đầu. Giá trị được tạo nên qua tích tụ, chờ đợi và mài lộ. Bộ sưu tập của Hành trình ghi nhận cả tác phẩm độc bản, dự án cộng đồng và thử nghiệm liên ngành – như những chứng tích sống của một thế kỷ đang tiếp diễn.',
+          hero_seal:
+            'https://lh3.googleusercontent.com/aida-public/AB6AXuAbx2zcEMt5QTXpYZ4vmxm9T3QK6QXfbGS31GYaycmOh0yKdDuKbXLrCd8jOekjZh0yRrUcG1Ach3DVtu4cJrwm9CqMdO0qkE9EMijUSxYvcI9F-i1XPm_j34ROMxlJJ6YQINYSQ3ZXdhzCmPxh9mn_ZAX193YRGA64fvuoaOJcaLmtQFm5g2f0GuT8VLii4tVPMsGA1sQn1srqxR_80HEyudzBxHHOpnljC5HpfKHyOK_K2hVKfueaKw',
+          stat1_num: '99',
+          stat1_label: 'Tác Phẩm Độc Bản Cửu Cửu',
+          stat2_num: '100',
+          stat2_label: 'Mô-đun Đồng Kiến Tạo',
+          stat3_num: '01',
+          stat3_label: 'Tuyệt Phẩm Du Lãm Vespa',
+          stat4_num: 'VIETKINGS',
+          stat4_label: 'Hồ Sơ Đang Giám Định Di Sản',
+          featured_collection_ids: [1, 2, 3],
+          community_badge: 'ĐỒNG KIẾN TẠO MỞ',
+          community_title: 'DỰ ÁN CỘNG ĐỒNG & XÁC LẬP KỶ LỤC',
+          community_desc:
+            'Mở rộng biên độ nghệ thuật sơn mài: từ xưởng họa cá nhân đến dấu ấn bàn tay của muôn người.',
+          project1_tag: 'DỰ ÁN CỘNG ĐỒNG • ĐỒNG SÁNG TÁC',
+          project1_title: 'BÁCH HỌA LIÊN HOA',
+          project1_desc:
+            'Không gian đồng sáng tác nơi nhiều bàn tay cùng tạo nên một tác phẩm lớn. Chương trình đề cao trải nghiệm thực hành, tính cộng đồng và khả năng biến người xem thành người tham gia.',
+          project1_btn: 'Xem hành trình đồng sáng tác',
+          project2_tag: 'XÁC LẬP KỶ LỤC • ĐỀ CỬ CHÍNH THỨC',
+          project2_title:
+            'TÁC PHẨM NHIỀU NGƯỜI CÙNG SÁNG TẠO BẰNG “THỦ CHỈ ĐẦU” TRÊN VẬT LIỆU SƠN MÀI CÔNG NGHỆ',
+          project2_desc:
+            'Một thử nghiệm giao thoa giữa hành vi tạo dấu, chất liệu mới và tinh thần cộng đồng; được tổ chức theo quy trình kiểm chứng, tư liệu hóa và xác lập dữ liệu rõ ràng.',
+          project2_btn: 'Xem hồ sơ kiểm chứng kỷ lục',
+          cta_tag: 'KẾT NỐI DI SẢN BÁCH NIÊN',
+          cta_headline: 'BẠN MUỐN ĐỒNG KIẾN TẠO CÙNG CHÚNG TÔI?',
+          cta_desc:
+            'Mỗi nghệ sĩ, nhà nghiên cứu, hay người yêu mỹ thuật đều có thể đóng góp một nét son trong trang sử mới của nghệ thuật sơn mài Việt Nam.',
+          cta_button_text: 'Đăng ký tham gia kiến tạo',
+          cta_button_link: '/contact',
         },
       },
       {
@@ -226,7 +565,7 @@ async function runSeed() {
     const eventsData = [
       {
         id: 1,
-        name: 'Hành trình lần 7: Chuyên đề Công nghiệp văn hóa mỹ thuật sơn mài',
+        name: 'Hành trình lần 7',
         category: 'Tọa đàm chuyên sâu',
         event_date: new Date('2026-11-14T08:30:00'),
         location: 'Hội trường Di Sản SIHUB, 273 Điện Biên Phủ, Quận 3, TP.HCM',
@@ -235,41 +574,43 @@ async function runSeed() {
         description:
           'Chuyên đề: Công nghiệp văn hóa mỹ thuật và thủ công mỹ nghệ sơn mài hội họa Việt Nam trong tương quan phát triển đồng bộ với nền tảng kinh tế số.',
         content:
-          'Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án, đề cử – vinh danh và kết nối hợp tác sáng tạo.',
+          'Nội dung chính: Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án, đề cử – vinh danh và kết nối hợp tác sáng tạo.\n' +
+          'Đối tượng: Nghệ sĩ, nghệ nhân, nhà nghiên cứu, trường đại học, doanh nghiệp sáng tạo, đơn vị công nghệ và công chúng yêu mỹ thuật.\n' +
+          'Kết quả kỳ vọng: Tư liệu hóa tri thức, hình thành đề xuất hợp tác thực chất và bổ sung hệ dữ liệu cho Kỷ yếu 100 năm.',
         status: 'upcoming',
         is_featured: true,
         sort_order: 1,
       },
       {
         id: 2,
-        name: 'Đại Triển Lãm Bách Niên: 100 Năm Dòng Chảy Sơn Mài Hội Họa',
-        category: 'Đại triển lãm',
-        event_date: new Date('2026-12-05T09:00:00'),
-        location: 'Bảo tàng Mỹ thuật TP. Hồ Chí Minh',
-        thumbnail_url:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuBzn3gGKOtd04V_bHywnZQHLzqggz0F4qIQUbpj0oRjQe467xTVyQ6US9jkaUkofml9Lpj2SvyifhAKBqvE0RluAfP0Ri5Z2m7zvGsJRAMDRli5Et9cab5FKpqmMFMwle2qEPmI0Vk3AX5UhEJcJGRzcKvhfnNabZ_yEVf3sjXBYosgNtPloQxmCslYNxYRQ6jNqDfWZh97n4hYktijxcPlNt6bElNGvnWBPHcz1FZH',
+        name: 'Chuỗi hoạt động tại Saigon Innovation Hub',
+        category: 'Workshop – Open Studio',
+        event_date: new Date('2026-05-27T09:00:00'),
+        location: 'Saigon Innovation Hub (SIHUB), TP.HCM',
         description:
-          'Không gian trưng bày hơn 100 tuyệt tác sơn mài qua các thời kỳ lịch sử từ Trường Mỹ thuật Đông Dương đến đương đại.',
+          'Nền móng kết nối liên ngành: Lab – Studio – Showcase – Market.',
         content:
-          'Trưng bày các tác phẩm quý hiếm, ứng dụng công nghệ ánh sáng bảo tàng quốc tế và bảo chứng số NFT nguyên bản cho từng tác phẩm.',
-        status: 'upcoming',
-        is_featured: true,
+          'Nội dung chính: Kết nối triển lãm, tọa đàm, trình diễn sáng tác và đối thoại chuyên môn đa phương.\n' +
+          'Đối tượng: Các nhà nghiên cứu, nghệ nhân di sản, kiến trúc sư, sinh viên và doanh nghiệp.\n' +
+          'Kết quả kỳ vọng: Xây dựng không gian thử nghiệm sáng tạo và chuẩn hóa hồ sơ tư liệu lưu trữ.',
+        status: 'completed',
+        is_featured: false,
         sort_order: 2,
       },
       {
         id: 3,
-        name: 'Workshop Trải Nghiệm Mài Lộ: Đánh Thức Ánh Sáng Của Then Và Vàng',
-        category: 'Workshop',
-        event_date: new Date('2026-10-20T14:00:00'),
-        location: 'Không Gian Sáng Tạo Hạ Thái Hub',
-        thumbnail_url:
-          'https://lh3.googleusercontent.com/aida-public/AB6AXuDcovcYwvq9C1e3BgE4cKA2fpp9AtwdlQLkwQEBqDn4u1dKIm61r4phdqTx5D_rPKMBU5HCmYBA4uh0Og09gwTW0uk9gzyxJ3QJRMDWKQPKFA6vhMoDcHesPKZq-VkgSdSqp0gzyvsOz_YKBHxLL9CaUrsJl8dx_h9Tp4hIQR7FBuBVU3rzM-5nJjAErHhXmkHQjMmFCyXaEpfoxSsNEsDfVIAVDUZpERIKL85w2Dzu',
+        name: 'Đại Triển Lãm Bách Niên: 100 Năm Dòng Chảy Sơn Mài Hội Họa',
+        category: 'Đại triển lãm',
+        event_date: new Date('2026-12-05T09:00:00'),
+        location: 'Bảo tàng Mỹ thuật TP. Hồ Chí Minh',
         description:
-          'Thao tác trực tiếp cùng các nghệ nhân lão thành với kỹ thuật ủ then, thếp vàng quỳ và mài nước truyền thống.',
+          'Không gian trưng bày tuyệt tác sơn mài qua các thời kỳ lịch sử từ Trường Mỹ thuật Đông Dương đến đương đại.',
         content:
-          'Trải nghiệm văn hóa thực cảnh cho các nhà nghiên cứu, kiến trúc sư và sinh viên mỹ thuật.',
-        status: 'completed',
-        is_featured: false,
+          'Nội dung chính: Trưng bày các tác phẩm quý hiếm, ứng dụng công nghệ ánh sáng bảo tàng quốc tế và bảo chứng số NFT nguyên bản cho từng tác phẩm.\n' +
+          'Đối tượng: Học giả, công chúng yêu nghệ thuật, các nhà sưu tập và du khách quốc tế.\n' +
+          'Kết quả kỳ vọng: Xác lập vị thế di sản nghệ thuật đỉnh cao của sơn mài Việt Nam trên trường quốc tế.',
+        status: 'upcoming',
+        is_featured: true,
         sort_order: 3,
       },
     ];
@@ -547,6 +888,20 @@ async function runSeed() {
       setting_key: 'social',
       setting_value: socialData,
       description: 'Liên kết mạng xã hội chính thức',
+    });
+
+    await SiteSetting.upsert({
+      setting_key: 'event_categories',
+      setting_value: [
+        'Tất cả',
+        'Tọa đàm – Hội thảo',
+        'Triển lãm',
+        'Workshop – Open Studio',
+        'Kỷ lục – Vinh danh',
+        'Giáo dục – Cộng đồng',
+        'Đã diễn ra',
+      ],
+      description: 'Danh sách các thể loại sự kiện hiển thị trên website',
     });
 
     // Menu chính điều hướng website

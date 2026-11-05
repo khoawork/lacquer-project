@@ -1,8 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
+import { getImageUrl } from '../../configs/Apis';
 
-const AboutCtaSection = () => {
+const AboutCtaSection = ({ pageProps }) => {
+  const ctaImage = pageProps?.cta_image;
+  const ctaHeadline = pageProps?.cta_headline;
+  const ctaDesc = pageProps?.cta_desc;
+  const ctaBtnText = pageProps?.cta_button_text || 'Trở thành một phần của Hành trình';
+  const ctaBtnLink = pageProps?.cta_button_link || '/contact';
+
+  if (!ctaHeadline && !ctaDesc && !ctaImage) return null;
+
   return (
     <section
       className="relative w-full py-20 lg:py-28 overflow-hidden"
@@ -24,25 +33,27 @@ const AboutCtaSection = () => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        <div className="w-20 h-20 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/40 via-[#1e0404] to-[#D4AF37]/50 shadow-[0_0_30px_rgba(212,175,55,0.5)] flex items-center justify-center">
-          <img
-            alt="Centennial Emblem"
-            className="w-full h-full object-cover rounded-full"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSpwqVIjojagpvlvPe0ivTpFXrw9nm4XweI5zUUEKSuj9OtFoea5AkYxnxeoNgfduQ7h6r7Kyfzr7RqXiLnjrg4VduONy_vOraXUiBuQSpBB-u2DGK1WgegvX45r76WVnEj2m9V3D9qO5GelY08XCUXEEJlx-Z-rP7iPit85HWbf1H3heVoG1cj91q8jEnlKWCKDNwmxgIcnuSw1V0NH_1HuUBd5BRIJdQC8O0BHTAcfkQykwkhfShB_XzEqiYcemH3G0"
-          />
-        </div>
+        {ctaImage && (
+          <div className="w-20 h-20 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/40 via-[#1e0404] to-[#D4AF37]/50 shadow-[0_0_30px_rgba(212,175,55,0.5)] flex items-center justify-center">
+            <img
+              alt="Centennial Emblem"
+              className="w-full h-full object-cover rounded-full"
+              src={getImageUrl(ctaImage)}
+            />
+          </div>
+        )}
         <h2 className="font-serif text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
-          Cùng trở thành một phần của Hành trình di sản
+          {ctaHeadline}
         </h2>
         <p className="font-body text-[17px] md:text-[19px] text-[#FAF7F2] max-w-2xl mx-auto leading-relaxed">
-          Mỗi bàn tay, mỗi góc nhìn và mỗi nguồn lực đều có thể góp phần thắp sáng tương lai của nghệ thuật sơn mài Việt Nam bước vào thế kỷ mới.
+          {ctaDesc}
         </p>
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
-            to="/contact"
+            to={ctaBtnLink}
             className="btn-gold inline-flex items-center justify-center px-8 py-3.5 rounded text-[15px] tracking-wider uppercase shadow-xl font-bold"
           >
-            Trở thành một phần của Hành trình
+            <span>{ctaBtnText}</span>
             <span className="material-symbols-outlined ml-2 text-xl font-bold">arrow_forward</span>
           </Link>
         </div>

@@ -3,9 +3,13 @@ const { Collection, Artwork } = require('../models/baseModel');
 class CollectionService {
   _normalizeData(data) {
     return {
-      name: data.name || data.title || 'Bộ sưu tập chưa đặt tên',
-      code: data.code || `COL-${Date.now().toString().slice(-4)}`,
-      description: data.description || data.curator_statement || data.subtitle || '',
+      name: (data.name || data.title ).replace(/<[^>]*>?/gm, '').trim(),
+      code: (data.code || `COL-${Date.now().toString().slice(-4)}`).replace(/<[^>]*>?/gm, '').trim(),
+      subtitle: (data.subtitle || '').replace(/<[^>]*>?/gm, '').trim(),
+      description: (data.description || data.curator_statement || '').replace(/<[^>]*>?/gm, '').trim(),
+      watermark_left: (data.watermark_left || '').replace(/<[^>]*>?/gm, '').trim(),
+      watermark_right: (data.watermark_right || '').replace(/<[^>]*>?/gm, '').trim(),
+      specs: (data.specs || '').replace(/<[^>]*>?/gm, '').trim(),
       cover_image: data.cover_image || data.thumbnail_url || data.image || '',
       sort_order: data.sort_order || 0,
       status: data.status || 'active',

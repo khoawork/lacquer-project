@@ -2,7 +2,12 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { Award } from 'lucide-react';
 
-export default function ArchiveHeroSection() {
+export default function ArchiveHeroSection({ pageProps }) {
+  const badge = pageProps?.badge;
+  const headline = pageProps?.headline;
+  const description = pageProps?.description;
+
+  if (!headline && !description && !badge) return null;
   return (
     <section
       className="relative w-full overflow-hidden pt-16 pb-24 text-stone-100 select-none"
@@ -24,36 +29,42 @@ export default function ArchiveHeroSection() {
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center z-10">
         {/* Archival Badge */}
-        <div
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(233,195,73,0.25)] mb-6 backdrop-blur-md"
-          style={{
-            background:
-              'linear-gradient(135deg, rgba(60, 16, 22, 0.65) 0%, rgba(30, 8, 12, 0.75) 100%)',
-            border: '1px solid rgba(212, 175, 55, 0.45)',
-          }}
-        >
-          <span className="text-[#D4AF37] text-[13px] leading-none select-none">✦</span>
-          <span
-            className="font-serif text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-bold text-[#FFDF73]"
-            style={{ textShadow: '0 0 10px rgba(255, 223, 115, 0.3)' }}
+        {badge && (
+          <div
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full shadow-[0_0_20px_rgba(233,195,73,0.25)] mb-6 backdrop-blur-md"
+            style={{
+              background:
+                'linear-gradient(135deg, rgba(60, 16, 22, 0.65) 0%, rgba(30, 8, 12, 0.75) 100%)',
+              border: '1px solid rgba(212, 175, 55, 0.45)',
+            }}
           >
-            KHO LƯU TRỮ VĂN HÓA & KỶ NGUYÊN BÁCH NIÊN (1930–2030)
-          </span>
-          <span className="text-[#D4AF37] text-[13px] leading-none select-none">✦</span>
-        </div>
+            <span className="text-[#D4AF37] text-[13px] leading-none select-none">✦</span>
+            <span
+              className="font-serif text-[12px] md:text-[13px] tracking-[0.22em] uppercase font-bold text-[#FFDF73]"
+              style={{ textShadow: '0 0 10px rgba(255, 223, 115, 0.3)' }}
+            >
+              {badge}
+            </span>
+            <span className="text-[#D4AF37] text-[13px] leading-none select-none">✦</span>
+          </div>
+        )}
 
         {/* Main Display Title with Royal Gold Gradient */}
-        <h1 className="font-serif text-[38px] sm:text-[48px] md:text-[58px] lg:text-[64px] max-w-5xl tracking-tight leading-tight text-gold-gradient drop-shadow-[0_4px_20px_rgba(255,223,115,0.45)] mb-6 font-bold uppercase">
-          KHO TRI THỨC CỦA MỘT DI SẢN ĐANG SỐNG
-        </h1>
+        {headline && (
+          <h1 className="font-serif text-[38px] sm:text-[48px] md:text-[58px] lg:text-[64px] max-w-5xl tracking-tight leading-tight text-gold-gradient drop-shadow-[0_4px_20px_rgba(255,223,115,0.45)] mb-6 font-bold uppercase">
+            {headline}
+          </h1>
+        )}
 
         {/* Curatorial Archival Description */}
-        <p
-          className="font-body text-[17px] md:text-[19px] max-w-4xl leading-[1.85] text-center font-normal tracking-wide opacity-95 mb-12"
-          style={{ color: '#FAF7F2', textShadow: '0 1px 8px rgba(0, 0, 0, 0.7)' }}
-        >
-          Kỷ yếu không chỉ ghi lại những gì đã xảy ra. Đây là không gian tập hợp, kiểm chứng và kết nối tri thức để mỗi thế hệ có thể tiếp tục nghiên cứu, thực hành và viết thêm chương mới cho sơn mài hội họa Việt Nam.
-        </p>
+        {description && (
+          <p
+            className="font-body text-[17px] md:text-[19px] max-w-4xl leading-[1.85] text-center font-normal tracking-wide opacity-95 mb-12"
+            style={{ color: '#FAF7F2', textShadow: '0 1px 8px rgba(0, 0, 0, 0.7)' }}
+          >
+            {description}
+          </p>
+        )}
 
         {/* Archive Metrics Bar */}
         <div

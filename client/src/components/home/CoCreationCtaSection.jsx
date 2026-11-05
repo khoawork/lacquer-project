@@ -3,11 +3,9 @@ import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
 
 const CoCreationCtaSection = ({ pageProps }) => {
-  const ctaTag = pageProps?.cta_tag || 'ĐỒNG KIẾN TẠO VĂN HÓA';
-  const ctaHeadline = pageProps?.cta_headline || 'Cùng viết tiếp hành trình 100 năm';
-  const ctaDesc =
-    pageProps?.cta_desc ||
-    'Dù bạn là nghệ sĩ, nghệ nhân, nhà nghiên cứu, doanh nghiệp, sinh viên hay người yêu nghệ thuật, luôn có một cách để bạn góp mặt trong hành trình này.';
+  const ctaTag = pageProps?.cta_tag || '';
+  const ctaHeadline = pageProps?.cta_headline || '';
+  const ctaDesc = pageProps?.cta_desc || '';
 
   return (
     <section

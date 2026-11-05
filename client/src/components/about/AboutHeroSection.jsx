@@ -1,11 +1,14 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
+import { getImageUrl } from '../../configs/Apis';
 
-const AboutHeroSection = () => {
-  const LOGO_FALLBACK =
-    'https://res.cloudinary.com/ds11ggie4/image/upload/v1793672616/starbucks-removebg-preview_unczzr.png';
-  const HERO_SEAL =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuA24EfoXZ-0BkTAtHr86R5VGrGCuTXxzBwWBzS6BW8ubJh3WRm5JLnWAsNYz24M--l0Syg2ccpf3_D4HwB1iJ28MuZ20kXwWQEszu9acBuTPnr9YSt4UIjhexbP9D6ngfVnhiLL5KLfhCvri5KxGGaVlSkgmNhA7NvFG2HBzEPoxjMXbrjfAwSFAPToizyXoP_KDUlAFU8mFRWqBKMUGElun99GkbN1VVDtASUHjdW1Zx9NSHjWRYrDUlYL4BYBXi95rV0';
+const AboutHeroSection = ({ pageProps }) => {
+  const heroSeal = pageProps?.hero_image || pageProps?.hero_seal;
+  const badgeText = pageProps?.badge;
+  const headline = pageProps?.headline;
+  const description = pageProps?.description;
+
+  if (!headline && !description && !badgeText && !heroSeal) return null;
 
   return (
     <section
@@ -35,39 +38,40 @@ const AboutHeroSection = () => {
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         {/* Centennial Emblem Seal with Gold Glow & Ring */}
-        <div className="mb-6 relative group">
-          <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#3a090e] to-[#D4AF37]/60 shadow-[0_0_40px_rgba(255,223,115,0.6)] group-hover:shadow-[0_0_65px_rgba(255,223,115,0.85)] transition-all duration-500 flex items-center justify-center">
-            <img
-              alt="Logo Kỷ nguyên Sơn Mài Hội hoạ Việt Nam"
-              className="w-full h-full object-cover rounded-full brightness-110 drop-shadow-[0_0_15px_rgba(255,223,115,0.7)] transition-transform duration-700 group-hover:scale-105"
-              src={HERO_SEAL}
-              onError={(e) => {
-                e.currentTarget.src = LOGO_FALLBACK;
-              }}
-            />
+        {heroSeal && (
+          <div className="mb-6 relative group">
+            <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#3a090e] to-[#D4AF37]/60 shadow-[0_0_40px_rgba(255,223,115,0.6)] group-hover:shadow-[0_0_65px_rgba(255,223,115,0.85)] transition-all duration-500 flex items-center justify-center">
+              <img
+                alt="Logo Kỷ nguyên Sơn Mài Hội hoạ Việt Nam"
+                className="w-full h-full object-cover rounded-full brightness-110 drop-shadow-[0_0_15px_rgba(255,223,115,0.7)] transition-transform duration-700 group-hover:scale-105"
+                src={getImageUrl(heroSeal)}
+              />
+            </div>
+            <div className="absolute -inset-3 rounded-full border border-[#D4AF37]/50 pointer-events-none group-hover:scale-105 transition-transform duration-500" />
           </div>
-          <div className="absolute -inset-3 rounded-full border border-[#D4AF37]/50 pointer-events-none group-hover:scale-105 transition-transform duration-500" />
-        </div>
+        )}
 
         {/* Centennial Badge */}
-        <div
-          className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-[#D4AF37]/40 shadow-[0_0_15px_rgba(212,175,55,0.25)] mb-6"
-          style={{ background: 'rgba(50, 10, 10, 0.7)', backdropFilter: 'blur(10px)' }}
-        >
-          <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse shadow-[0_0_8px_#FFDF73]" />
-          <span className="font-serif text-[13px] md:text-[14px] text-[#FFDF73] tracking-[0.24em] uppercase font-bold">
-            1930 • 2030 — BÁCH NIÊN KHỞI SẮC | HỘI HỌA &amp; DI SẢN
-          </span>
-        </div>
+        {badgeText && (
+          <div
+            className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-[#D4AF37]/40 shadow-[0_0_15px_rgba(212,175,55,0.25)] mb-6"
+            style={{ background: 'rgba(50, 10, 10, 0.7)', backdropFilter: 'blur(10px)' }}
+          >
+            <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse shadow-[0_0_8px_#FFDF73]" />
+            <span className="font-serif text-[13px] md:text-[14px] text-[#FFDF73] tracking-[0.24em] uppercase font-bold">
+              {badgeText}
+            </span>
+          </div>
+        )}
 
         {/* Main Headline with Gold Gradient */}
         <h1 className="font-serif text-3xl md:text-5xl lg:text-[54px] lg:leading-[64px] text-gold-gradient font-bold uppercase tracking-[0.06em] max-w-4xl text-center mb-6 drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-          TỪ DI SẢN ĐẾN HẠ TẦNG SÁNG TẠO
+          {headline}
         </h1>
 
         {/* Description Paragraph */}
         <p className="font-body text-[17px] md:text-[20px] md:leading-[1.9] text-[#FAF7F2] max-w-3xl mx-auto mb-10 text-center font-normal drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
-          Một thế kỷ sơn mài hội họa Việt Nam không chỉ được tạo nên bởi những tác phẩm. Đó là sự tích tụ của tri thức nghề, ký ức cộng đồng, thử nghiệm nghệ thuật, lao động vật chất và khát vọng định hình bản sắc Việt trong thế giới hiện đại.
+          {description}
         </p>
 
         {/* Traditional Calligraphy Emblem / Hairline Accent */}

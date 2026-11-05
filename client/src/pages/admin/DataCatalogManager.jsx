@@ -21,18 +21,36 @@ import {
   Clock,
   User,
   Filter,
+  Tag,
 } from 'lucide-react';
 import newsServices from '../../services/newsServices';
 import collectionServices from '../../services/collectionServices';
 import eventServices from '../../services/eventServices';
+import siteServices from '../../services/siteServices';
 import ImageUploader from '../../components/common/ImageUploader';
 import { getImageUrl } from '../../configs/Apis';
+
+const DEFAULT_EVENT_CATEGORIES_LIST = [
+  'Tọa đàm chuyên sâu',
+  'Tọa đàm – Hội thảo',
+  'Đại triển lãm',
+  'Triển lãm',
+  'Workshop – Open Studio',
+  'Kỷ lục – Vinh danh',
+  'Giáo dục – Cộng đồng',
+];
 
 const DataCatalogManager = () => {
   const [activeTab, setActiveTab] = useState('news'); // 'news' | 'collections' | 'events'
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusMsg, setStatusMsg] = useState(null);
+
+  // Event Categories State
+  const [eventCategories, setEventCategories] = useState(DEFAULT_EVENT_CATEGORIES_LIST);
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
+  const [newCategoryInput, setNewCategoryInput] = useState('');
+  const [quickCategoryInput, setQuickCategoryInput] = useState('');
 
   // Data states
   const [newsList, setNewsList] = useState([]);
@@ -103,11 +121,84 @@ const DataCatalogManager = () => {
           setEventList(res.data.data || []);
         }
       }
+
+      // Tải danh sách thể loại sự kiện từ Cài Đặt (site_settings)
+      try {
+        const settingsRes = await siteServices.getSettings();
+        if (settingsRes.data && settingsRes.data.success) {
+          const sList = settingsRes.data.data || [];
+          const catSetting = sList.find((s) => s.key === 'event_categories');
+          if (catSetting && catSetting.value) {
+            const parsed = Array.isArray(catSetting.value)
+              ? catSetting.value
+              : typeof catSetting.value === 'string'
+              ? JSON.parse(catSetting.value)
+              : null;
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setEventCategories(parsed);
+            }
+          }
+        }
+      } catch (err) {
+        console.warn('Lỗi đọc danh mục thể loại sự kiện:', err);
+      }
     } catch (err) {
       console.warn('Lỗi tải danh mục dữ liệu:', err);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Thêm thể loại sự kiện mới
+  const handleAddCategory = async (catName) => {
+    const trimmed = (catName || '').trim();
+    if (!trimmed) {
+      showNotification('error', 'Vui lòng nhập tên thể loại sự kiện.');
+      return;
+    }
+    if (eventCategories.includes(trimmed)) {
+      showNotification('error', `Thể loại "${trimmed}" đã tồn tại.`);
+      return;
+    }
+    const updated = [...eventCategories, trimmed];
+    setEventCategories(updated);
+    setNewCategoryInput('');
+    setQuickCategoryInput('');
+    try {
+      await siteServices.updateSetting(
+        'event_categories',
+        JSON.stringify(updated),
+        'Danh sách thể loại sự kiện'
+      );
+      showNotification('success', `Đã thêm thể loại sự kiện "${trimmed}" thành công!`);
+    } catch (err) {
+      showNotification('error', 'Lỗi lưu thể loại sự kiện: ' + err.message);
+    }
+  };
+
+  // Xóa thể loại sự kiện
+  const handleDeleteCategory = async (catToDelete) => {
+    if (!window.confirm(`Bạn có chắc muốn xóa thể loại "${catToDelete}"?`)) return;
+    const updated = eventCategories.filter((c) => c !== catToDelete);
+    setEventCategories(updated);
+    try {
+      await siteServices.updateSetting(
+        'event_categories',
+        JSON.stringify(updated),
+        'Danh sách thể loại sự kiện'
+      );
+      showNotification('success', `Đã xóa thể loại "${catToDelete}" thành công!`);
+    } catch (err) {
+      showNotification('error', 'Lỗi xóa thể loại: ' + err.message);
+    }
+  };
+
+  // Thêm nhanh thể loại ngay trong modal tạo/sửa sự kiện
+  const handleQuickAddCategory = async () => {
+    if (!quickCategoryInput.trim()) return;
+    const newCat = quickCategoryInput.trim();
+    await handleAddCategory(newCat);
+    setEventForm((prev) => ({ ...prev, category: newCat }));
   };
 
   useEffect(() => {
@@ -273,6 +364,34 @@ const DataCatalogManager = () => {
   };
 
   // ================= EVENT CRUD =================
+  const parseRawContentToPlainText = (raw) => {
+    if (!raw) return '';
+    try {
+      const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      if (Array.isArray(parsed?.breakdown_list)) {
+        return parsed.breakdown_list
+          .map((i) => (i.bold ? `${i.bold} ${i.text || ''}`.trim() : (i.text || '')))
+          .filter(Boolean)
+          .join('\n');
+      }
+      if (Array.isArray(parsed)) {
+        return parsed
+          .map((item) => {
+            if (typeof item === 'string') return item.trim();
+            const bold = item.bold ? item.bold.trim() + ' ' : '';
+            const txt = item.text || item.desc || '';
+            return (bold + txt).trim();
+          })
+          .filter(Boolean)
+          .join('\n');
+      }
+    } catch {
+      // not JSON
+    }
+    // Strip any HTML tags
+    return String(raw).replace(/<[^>]*>?/gm, '').trim();
+  };
+
   const openCreateEvent = () => {
     setEventForm({
       title: '',
@@ -282,8 +401,10 @@ const DataCatalogManager = () => {
       status: 'Sắp diễn ra',
       cover_image: '',
       description: 'Chuyên đề: Công nghiệp văn hóa mỹ thuật và thủ công mỹ nghệ sơn mài hội họa Việt Nam trong tương quan phát triển đồng bộ với nền tảng kinh tế số.',
-      content: 'Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án, đề cử – vinh danh và kết nối hợp tác sáng tạo.',
-      is_featured: false,
+      content:
+        'Nội dung chính: Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án, đề cử – vinh danh và kết nối hợp tác sáng tạo.\n' +
+        'Đối tượng: Nghệ sĩ, nghệ nhân, nhà nghiên cứu, trường đại học, doanh nghiệp sáng tạo, đơn vị công nghệ và công chúng yêu mỹ thuật.\n' +
+        'Kết quả kỳ vọng: Tư liệu hóa tri thức, hình thành đề xuất hợp tác thực chất và bổ sung hệ dữ liệu cho Kỷ yếu 100 năm.',
     });
     setCurrentEditItem(null);
     setModalType('create_event');
@@ -302,9 +423,8 @@ const DataCatalogManager = () => {
           ? 'Đã kết thúc'
           : 'Sắp diễn ra',
       cover_image: item.thumbnail_url || item.cover_image || '',
-      description: item.description || item.subtitle || '',
-      content: item.content || '',
-      is_featured: Boolean(item.is_featured),
+      description: (item.description || item.subtitle || '').replace(/<[^>]*>?/gm, '').trim(),
+      content: parseRawContentToPlainText(item.content),
     });
     setCurrentEditItem(item);
     setModalType('edit_event');
@@ -314,18 +434,21 @@ const DataCatalogManager = () => {
     e.preventDefault();
     setSubmitting(true);
     try {
+      // Làm sạch toàn bộ HTML, chỉ lưu văn bản thuần (mỗi dòng là 1 li)
+      const cleanContent = (eventForm.content || '').replace(/<[^>]*>?/gm, '').trim();
+      const cleanDesc = (eventForm.description || '').replace(/<[^>]*>?/gm, '').trim();
+
       const payload = {
-        name: eventForm.title,
-        title: eventForm.title,
+        name: eventForm.title?.trim(),
+        title: eventForm.title?.trim(),
         category: eventForm.category,
         date_display: eventForm.date_display,
-        location: eventForm.location,
+        location: eventForm.location?.trim(),
         thumbnail_url: eventForm.cover_image,
         cover_image: eventForm.cover_image,
-        description: eventForm.description,
-        content: eventForm.content,
+        description: cleanDesc,
+        content: cleanContent,
         status: eventForm.status,
-        is_featured: eventForm.is_featured,
       };
 
       if (modalType === 'create_event') {
@@ -424,6 +547,18 @@ const DataCatalogManager = () => {
             <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
             <span>Làm Mới</span>
           </button>
+
+          {activeTab === 'events' && (
+            <button
+              type="button"
+              onClick={() => setShowCategoryModal(true)}
+              className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded border border-[#D4AF37]/50 bg-[#2b080e] hover:bg-[#3d0b13] text-[#FFDF73] text-sm font-semibold tracking-wider transition cursor-pointer"
+              title="Thêm và chỉnh sửa các thể loại sự kiện"
+            >
+              <Tag className="w-4 h-4 text-[#FFDF73]" />
+              <span>Quản Lý Thể Loại ({eventCategories.length})</span>
+            </button>
+          )}
 
           <button
             type="button"
@@ -550,7 +685,7 @@ const DataCatalogManager = () => {
                   ? item.summary
                   : isCollection
                   ? item.subtitle || item.curator_statement
-                  : item.content || item.description;
+                  : item.description || parseRawContentToPlainText(item.content);
 
                 const categoryBadge = isNews
                   ? item.category
@@ -1107,22 +1242,58 @@ const DataCatalogManager = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-                      Thể Loại Sự Kiện
-                    </label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs uppercase font-bold text-[#FFDF73]">
+                        Thể Loại Sự Kiện *
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setShowCategoryModal(true)}
+                        className="text-[11px] text-[#FFDF73] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
+                      >
+                        <Tag className="w-3 h-3" />
+                        <span>Quản lý</span>
+                      </button>
+                    </div>
+
                     <select
                       value={eventForm.category}
                       onChange={(e) => setEventForm({ ...eventForm, category: e.target.value })}
                       className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
                     >
-                      <option value="Tọa đàm chuyên sâu">Tọa đàm chuyên sâu</option>
-                      <option value="Đại triển lãm">Đại triển lãm</option>
-                      <option value="Hội thảo">Hội thảo</option>
-                      <option value="Tọa đàm">Tọa đàm</option>
-                      <option value="Workshop">Workshop</option>
-                      <option value="Kỷ lục - Vinh danh">Kỷ lục - Vinh danh</option>
-                      <option value="Lễ vinh danh">Lễ vinh danh</option>
+                      {eventCategories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
+                        </option>
+                      ))}
+                      {!eventCategories.includes(eventForm.category) && eventForm.category && (
+                        <option value={eventForm.category}>{eventForm.category}</option>
+                      )}
                     </select>
+
+                    {/* Inline Thêm Thể Loại Nhanh */}
+                    <div className="mt-2 flex gap-1.5">
+                      <input
+                        type="text"
+                        value={quickCategoryInput}
+                        onChange={(e) => setQuickCategoryInput(e.target.value)}
+                        placeholder="Thêm thể loại mới tại đây..."
+                        className="flex-1 px-2.5 py-1 rounded bg-[#100203] border border-[#D4AF37]/30 text-white text-xs focus:border-[#FFDF73] focus:outline-none"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleQuickAddCategory();
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={handleQuickAddCategory}
+                        className="px-2.5 py-1 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs transition cursor-pointer shrink-0"
+                      >
+                        + Thêm
+                      </button>
+                    </div>
                   </div>
 
                   <div>
@@ -1154,54 +1325,61 @@ const DataCatalogManager = () => {
                   />
                 </div>
 
-                {/* NỘI DUNG CHI TIẾT & CÁC ĐẦU MỤC THAM LUẬN (CHỨA ĐẦY ĐỦ CHECKMARK VÀNG) */}
+                {/* NỘI DUNG CHI TIẾT & CÁC ĐẦU MỤC THAM LUẬN (CHỈ NHẬP NỘI DUNG THUẦN, MỖI DÒNG LÀ 1 LI) */}
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-                    Nội Dung Tham Luận &amp; Đầu Mục Hoạt Động (content)
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs uppercase font-bold text-[#FFDF73]">
+                      Nội Dung Thuần / Các Đầu Mục Tham Luận (Mỗi dòng là 1 &lt;li&gt;)
+                    </label>
+                    <span className="text-[11px] text-[#FFDF73]/80 italic font-mono">
+                      {eventForm.content ? eventForm.content.split('\n').filter((l) => l.trim()).length : 0} mục
+                    </span>
+                  </div>
                   <textarea
-                    rows={4}
+                    rows={5}
                     value={eventForm.content}
                     onChange={(e) => setEventForm({ ...eventForm, content: e.target.value })}
-                    placeholder="Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án, đề cử – vinh danh và kết nối hợp tác sáng tạo.&#10;(Mỗi dòng sẽ tự động hiển thị thành một gạch đầu dòng kèm dấu kiểm vàng ✓ ngoài trang Sự kiện)"
-                    className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none font-sans"
+                    placeholder={'Nội dung chính: Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án...\nĐối tượng: Nghệ sĩ, nghệ nhân, nhà nghiên cứu, trường đại học...\nKết quả kỳ vọng: Tư liệu hóa tri thức, hình thành đề xuất hợp tác thực chất...'}
+                    className="w-full px-3 py-2.5 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none font-sans leading-relaxed"
                   />
-                  <p className="text-[11px] text-[#EADBCE]/60 mt-1">
-                    Mỗi dòng sẽ tự động hiển thị thành một mục kèm biểu tượng dấu kiểm vàng (✓) trong thẻ sự kiện ngoài website.
+                  <p className="text-[11px] text-[#EADBCE]/70 mt-1">
+                    ✨ <strong>Tự động tính:</strong> Chỉ nhập nội dung thuần (không dùng HTML hay JSON). Mỗi lần bấm <strong>Enter xuống dòng</strong> sẽ tự động tính là 1 gạch đầu dòng (li) với biểu tượng vàng ngoài website. Nếu dòng có dấu hai chấm (<code className="text-[#FFDF73] font-mono">:</code>), phần nhãn sẽ tự động in đậm vàng.
                   </p>
 
-                  {/* Preview Box hiển thị trực quan các đầu mục checkmark */}
+                  {/* Preview Box hiển thị trực quan các đầu mục li */}
                   {eventForm.content && (
-                    <div className="mt-2.5 p-3 rounded-lg bg-[#140305]/90 border border-[#D4AF37]/35 text-xs space-y-1.5">
+                    <div className="mt-2.5 p-3.5 rounded-lg bg-[#140305]/95 border border-[#D4AF37]/35 text-xs space-y-2">
                       <span className="text-[10px] uppercase font-bold text-[#FFDF73] tracking-wider block">
-                        Xem trước hiển thị ngoài trang web:
+                        Xem trước hiển thị danh sách mục ngoài website:
                       </span>
-                      <ul className="space-y-1.5 text-[#FAF7F2]/90">
+                      <ul className="space-y-2 text-[#FAF7F2]">
                         {eventForm.content
                           .split('\n')
                           .filter((l) => Boolean(l.trim()))
-                          .map((line, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#FFDF73] mt-0.5 shrink-0" />
-                              <span>{line}</span>
-                            </li>
-                          ))}
+                          .map((line, idx) => {
+                            const trimmed = line.trim();
+                            const hasColon = trimmed.includes(':');
+                            const prefix = hasColon ? trimmed.slice(0, trimmed.indexOf(':') + 1) : '';
+                            const suffix = hasColon ? trimmed.slice(trimmed.indexOf(':') + 1).trim() : trimmed;
+                            return (
+                              <li key={idx} className="flex items-start gap-2.5">
+                                <span className="w-2.5 h-2.5 rounded-full border border-[#FFDF73] bg-[#d49b1a] mt-1 shrink-0 shadow-[0_0_6px_rgba(255,223,115,0.8)]" />
+                                <span className="leading-relaxed">
+                                  {hasColon ? (
+                                    <>
+                                      <strong className="text-[#FFDF73] font-serif font-bold text-[13px]">{prefix}</strong>{' '}
+                                      <span className="text-[#FAF7F2]/90">{suffix}</span>
+                                    </>
+                                  ) : (
+                                    <span>{trimmed}</span>
+                                  )}
+                                </span>
+                              </li>
+                            );
+                          })}
                       </ul>
                     </div>
                   )}
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="event_featured"
-                    checked={eventForm.is_featured}
-                    onChange={(e) => setEventForm({ ...eventForm, is_featured: e.target.checked })}
-                    className="rounded border-[#D4AF37] text-amber-500 cursor-pointer"
-                  />
-                  <label htmlFor="event_featured" className="text-sm text-[#FAF7F2] font-semibold cursor-pointer">
-                    Đánh dấu là Sự kiện Nổi bật (Featured Event)
-                  </label>
                 </div>
               </div>
 
@@ -1245,6 +1423,92 @@ const DataCatalogManager = () => {
             >
               <X className="w-4 h-4" />
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* ================= MODAL QUẢN LÝ THỂ LOẠI SỰ KIỆN ================= */}
+      {showCategoryModal && (
+        <div className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="bg-[#1e0407] border border-[#D4AF37]/50 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-5">
+            <div className="flex items-center justify-between border-b border-[#D4AF37]/25 pb-3">
+              <div className="flex items-center gap-2 text-[#FFDF73]">
+                <Tag className="w-5 h-5 text-[#FFDF73]" />
+                <h3 className="font-serif text-lg font-bold">
+                  Quản Lý Thể Loại Sự Kiện
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowCategoryModal(false)}
+                className="text-[#EADBCE]/70 hover:text-white cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-xs text-[#EADBCE]/80">
+              Các thể loại dưới đây được dùng để phân loại sự kiện trong trang quản trị và hiển thị trên thanh bộ lọc trang Sự Kiện ngoài website.
+            </p>
+
+            {/* Input thêm thể loại mới */}
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={newCategoryInput}
+                onChange={(e) => setNewCategoryInput(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddCategory(newCategoryInput);
+                  }
+                }}
+                placeholder="Nhập tên thể loại sự kiện mới..."
+                className="flex-1 px-3 py-2 rounded-lg bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => handleAddCategory(newCategoryInput)}
+                className="px-4 py-2 rounded-lg bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs uppercase tracking-wider transition cursor-pointer shrink-0"
+              >
+                + Thêm
+              </button>
+            </div>
+
+            {/* Danh sách thể loại hiện tại */}
+            <div className="space-y-2">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#FFDF73] font-bold">
+                Danh sách hiện có ({eventCategories.length}):
+              </span>
+              <div className="flex flex-wrap gap-2 max-h-60 overflow-y-auto p-1">
+                {eventCategories.map((cat) => (
+                  <span
+                    key={cat}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2e070c] border border-[#D4AF37]/40 text-xs font-serif text-[#FFDF73] tracking-wide"
+                  >
+                    <span>{cat}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteCategory(cat)}
+                      className="w-4 h-4 rounded-full hover:bg-red-900/60 flex items-center justify-center text-red-300 hover:text-red-100 transition cursor-pointer"
+                      title="Xóa thể loại này"
+                    >
+                      <X className="w-3 h-3" />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-[#D4AF37]/20 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowCategoryModal(false)}
+                className="px-4 py-2 rounded-lg bg-[#2e070c] border border-[#D4AF37]/40 text-[#FFDF73] text-xs font-bold uppercase tracking-wider hover:bg-[#3d0b11] transition cursor-pointer"
+              >
+                Đóng
+              </button>
+            </div>
           </div>
         </div>
       )}

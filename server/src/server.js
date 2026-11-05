@@ -16,9 +16,9 @@ async function startServer() {
     console.warn('⚠️ Cảnh báo kết nối Database:', err.message);
   }
 
-  app.listen(PORT, () => {
-    console.log(`🚀 Lacquer Backend Server running on http://localhost:${PORT}`);
-    console.log(`📡 Health check: http://localhost:${PORT}/api/health`);
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Lacquer Backend Server running on http://127.0.0.1:${PORT}`);
+    console.log(`📡 Health check: http://127.0.0.1:${PORT}/api/health`);
   });
 }
 

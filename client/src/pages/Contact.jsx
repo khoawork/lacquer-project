@@ -1,11 +1,35 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ContactHeroSection from '../components/contact/ContactHeroSection';
 import ContactRoutesSection from '../components/contact/ContactRoutesSection';
 import ContactFormSection from '../components/contact/ContactFormSection';
+import pageServices from '../services/pageServices';
+import { DEFAULT_PAGE_PROPS } from './admin/PageManager';
 
 export default function Contact() {
   const [selectedRoute, setSelectedRoute] = useState('');
+  const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/contact'] || null);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchPageData = async () => {
+      try {
+        const res = await pageServices.getPageBySlug('/contact');
+        if (res.data && res.data.success && isMounted) {
+          const raw = res.data.data;
+          const pageData = Array.isArray(raw)
+            ? raw.find((p) => p.slug === '/contact' || p.slug === 'contact') || raw[0]
+            : raw;
+          setPageProps(pageData?.props || null);
+        }
+      } catch (err) {
+        console.warn('Lỗi tải dữ liệu trang liên hệ từ DB:', err);
+      }
+    };
+
+    fetchPageData();
+    return () => { isMounted = false; };
+  }, []);
 
   const handleSelectRoute = (routeKey) => {
     setSelectedRoute(routeKey);
@@ -25,16 +49,17 @@ export default function Contact() {
 
       <main className="relative z-10 pt-20 pb-20">
         {/* Hero Section */}
-        <ContactHeroSection />
+        <ContactHeroSection pageProps={pageProps} />
 
         {/* 5 Participation Routes */}
-        <ContactRoutesSection onSelectRoute={handleSelectRoute} />
+        <ContactRoutesSection onSelectRoute={handleSelectRoute} pageProps={pageProps} />
 
         {/* Contact Form & Direct Project Info */}
         <ContactFormSection
           selectedRoute={selectedRoute}
           setSelectedRoute={setSelectedRoute}
           formRef={formRef}
+          pageProps={pageProps}
         />
       </main>
     </div>

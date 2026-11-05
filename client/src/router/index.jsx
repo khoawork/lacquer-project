@@ -105,6 +105,10 @@ const router = createBrowserRouter([
         element: <AdminDashboard />,
       },
       {
+        path: 'pages',
+        element: <PageManager />,
+      },
+      {
         path: 'pages/:pageKey',
         element: <PageManager />,
       },

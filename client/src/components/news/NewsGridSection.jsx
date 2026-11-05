@@ -7,9 +7,7 @@ const NewsGridSection = ({ activeCategory = 'Tất cả', pageProps = null }) =>
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const selectedNewsIds = pageProps?.selected_news_ids
-    ? pageProps.selected_news_ids.map(Number)
-    : [];
+  const selectedNewsIds = (pageProps?.featured_article_ids || pageProps?.selected_news_ids || []).map(Number);
 
   // Đọc dữ liệu bài viết trực tiếp từ cơ sở dữ liệu qua API (không hardcode trong code)
   useEffect(() => {
