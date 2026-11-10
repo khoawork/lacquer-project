@@ -96,17 +96,20 @@ export const PAGE_CONFIG = {
 // Dữ liệu props mặc định
 export const DEFAULT_PAGE_PROPS = {
   '/': {
-    hero_image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuC6q50uNbfjHPDj6-2aHqeSR8DW1g_492VREK_fAsMYMK3DQhFaFVLvrzrgBfkcJiOO2Tais7QvRuBF8ALjaz4nBsOtz2_OYNR9WdWGDVxkBf7NcORDAYbMcd2mrPyEmwkKfmDP20xLS_6bePaBtTvSZ-Ka5jNUCOMMIDzFfKoQnsM1b5MSjmOee7IfSPeNcTZstFNnDOBIGFaWlb4VwSZlLpre2zH2b53XVJdHercK7LRBB90ttJrMYIg2tBWbMCmHl44',
-    badge: '1930 • 2030 • BÁCH NIÊN KHỞI SẮC',
+    hero_video_url:
+      'https://res.cloudinary.com/ds11ggie4/video/upload/v1794232456/gemini_generated_video_2ecb6a5a_otemqr.mp4',
+    top_tagline: 'NƠI HỘI TỤ',
+    cursive_title: 'Tinh hoa nghệ thuật',
+    hero_image: '',
+    badge: 'NƠI HỘI TỤ',
     headline: 'HÀNH TRÌNH 100 NĂM SƠN MÀI HỘI HỌA VIỆT NAM',
-    subtitle: 'Bản Sắc Hội Họa & Di Sản Nghệ Thuật',
+    subtitle: 'Tinh hoa nghệ thuật',
     quote: 'Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.',
     hero_cta1_text: 'KHÁM PHÁ HÀNH TRÌNH',
     hero_cta1_link: '/journey',
     hero_cta2_text: 'THAM GIA ĐỒNG KIẾN TẠO',
     hero_cta2_link: '/contact',
-    bottom_quote: '“Một thế kỷ mở đường — Một hành trình kế tục và bừng sáng.”',
+    bottom_quote: '“Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.”',
 
     story_image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuAKoUOowWq2-6yYBMnhlPakXy635SgnT6bWlRWvwNB1UVulyrbseIHbaOXgguNg7nh3lcMgUa-pvq8bBhYTzxFH2oC3t94vfeIIvVkf8_EjNo7MCYAVq030xWTgSQ0Byy3-DQVM0RutjVNBNGjT6b59Efk8bteqtEVz2k8PMTJjiN0oXe7gHfL_bNMpRxr6hE4walNjk5MugHU4qn8YFH8DPea3lNksCS_LSBmMEa5Mmi6lTXckCeijVQ',
@@ -206,10 +209,8 @@ export const DEFAULT_PAGE_PROPS = {
     headline: 'TỪ DI SẢN ĐẾN HẠ TẦNG SÁNG TẠO',
     description:
       'Một thế kỷ sơn mài hội họa Việt Nam không chỉ được tạo nên bởi những tác phẩm. Đó là sự tích tụ của tri thức nghề, ký ức cộng đồng, thử nghiệm nghệ thuật, lao động vật chất và khát vọng định hình bản sắc Việt trong thế giới hiện đại.',
-    hero_seal:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuA24EfoXZ-0BkTAtHr86R5VGrGCuTXxzBwWBzS6BW8ubJh3WRm5JLnWAsNYz24M--l0Syg2ccpf3_D4HwB1iJ28MuZ20kXwWQEszu9acBuTPnr9YSt4UIjhexbP9D6ngfVnhiLL5KLfhCvri5KxGGaVlSkgmNhA7NvFG2HBzEPoxjMXbrjfAwSFAPToizyXoP_KDUlAFU8mFRWqBKMUGElun99GkbN1VVDtASUHjdW1Zx9NSHjWRYrDUlYL4BYBXi95rV0',
-    hero_image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuA24EfoXZ-0BkTAtHr86R5VGrGCuTXxzBwWBzS6BW8ubJh3WRm5JLnWAsNYz24M--l0Syg2ccpf3_D4HwB1iJ28MuZ20kXwWQEszu9acBuTPnr9YSt4UIjhexbP9D6ngfVnhiLL5KLfhCvri5KxGGaVlSkgmNhA7NvFG2HBzEPoxjMXbrjfAwSFAPToizyXoP_KDUlAFU8mFRWqBKMUGElun99GkbN1VVDtASUHjdW1Zx9NSHjWRYrDUlYL4BYBXi95rV0',
+    hero_seal: '',
+    hero_image: '',
     story_tag: 'KHỞI NGUỒN Ý NIỆM',
     story_headline: 'Vì sao Hành trình được hình thành?',
     story_quote: '“Nối liền đứt gãy giữa hàn lâm và làng nghề — Biến di sản tinh hoa thành tài nguyên sống động.”',
@@ -385,10 +386,8 @@ export const DEFAULT_PAGE_PROPS = {
     hero_cta_text: 'KHÁM PHÁ HÀNH TRÌNH',
     hero_cta_link: '#dong-thoi-gian',
     bottom_quote: '“Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.”',
-    hero_seal:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBuzWfwJEOsC61MhtEz7HuLQnuwRHqUTgeGCy8Rqbfy7Cp9sp3Hxfn-XRJBAhOBurqcWdfXXGxxq6IkaAFuyvVr16OuLqsT7i-_mZT9f01lzVv-Hnn2GgR63ns6M7gtuaz5rdWWYOM9cbVQqDoOQ1wkarnSAYS1fQsJhj7G_373C4LnvVu7ws4BvHxGMPut_aC1_W4EUqvFUg-F7qoBK2fIM1HUQOrdpiuZWOgrTFCp28rqI-AOL458ABeJlMAswNaqR-s',
-    hero_image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBuzWfwJEOsC61MhtEz7HuLQnuwRHqUTgeGCy8Rqbfy7Cp9sp3Hxfn-XRJBAhOBurqcWdfXXGxxq6IkaAFuyvVr16OuLqsT7i-_mZT9f01lzVv-Hnn2GgR63ns6M7gtuaz5rdWWYOM9cbVQqDoOQ1wkarnSAYS1fQsJhj7G_373C4LnvVu7ws4BvHxGMPut_aC1_W4EUqvFUg-F7qoBK2fIM1HUQOrdpiuZWOgrTFCp28rqI-AOL458ABeJlMAswNaqR-s',
+    hero_seal: '',
+    hero_image: '',
     timeline_title: 'Dòng Thời Gian Lịch Sử & Tương Lai',
     timeline_nodes: [
       {
@@ -517,22 +516,177 @@ export const DEFAULT_PAGE_PROPS = {
   },
 
   '/collection': {
-    badge: 'KHO TÀNG KIỆT TÁC • ĐỘC BẢN DI SẢN',
-    headline: 'Kho Tàng Kiệt Tác & Dòng Chảy Nghệ Thuật',
-    subHeadline:
-      'Những sáng tác độc bản kết hợp giữa kỹ nghệ truyền thống làng nghề Hạ Thái, nhựa sơn cội Phú Thọ và tư duy tạo hình hiện đại.',
-    quote: '“Mỗi tác phẩm là một lớp thời gian, mỗi sắc độ là một tầng ký ức bừng sáng.”',
+    badge: 'DI SẢN HỘI HỌA & MỸ THUẬT BÁCH NIÊN (1930–2030)',
+    headline: 'MỖI TÁC PHẨM LÀ MỘT LỚP THỜI GIAN',
+    description:
+      'Sơn mài không phô bày tất cả ngay từ đầu. Giá trị được tạo nên qua tích tụ, chờ đợi và mài lộ. Bộ sưu tập của Hành trình ghi nhận cả tác phẩm độc bản, dự án cộng đồng và thử nghiệm liên ngành – như những chứng tích sống của một thế kỷ đang tiếp diễn.',
+    hero_seal: '',
+    hero_image: '',
+    stat1_num: '99',
+    stat1_label: 'Tác Phẩm Độc Bản Cửu Cửu',
+    stat2_num: '100',
+    stat2_label: 'Mô-đun Đồng Kiến Tạo',
+    stat3_num: '01',
+    stat3_label: 'Tuyệt Phẩm Du Lãm Vespa',
+    stat4_num: 'VIETKINGS',
+    stat4_label: 'Hồ Sơ Đang Giám Định Di Sản',
     featured_collection_ids: [1, 2, 3],
+    community_badge: 'ĐỒNG KIẾN TẠO MỞ',
+    community_title: 'DỰ ÁN CỘNG ĐỒNG & XÁC LẬP KỶ LỤC',
+    community_desc:
+      'Mở rộng biên độ nghệ thuật sơn mài: từ xưởng họa cá nhân đến dấu ấn bàn tay của muôn người.',
+    community_projects: [
+      {
+        id: 1,
+        tag: 'DỰ ÁN CỘNG ĐỒNG • ĐỒNG SÁNG TÁC',
+        title: 'BÁCH HỌA LIÊN HOA',
+        desc:
+          'Không gian đồng sáng tác nơi nhiều bàn tay cùng tạo nên một tác phẩm lớn. Chương trình đề cao trải nghiệm thực hành, tính cộng đồng và khả năng biến người xem thành người tham gia trực tiếp vào tiến trình bồi đắp bề mặt sơn mài.',
+        btn_text: 'Xem hành trình đồng sáng tác',
+        link: '/contact',
+      },
+      {
+        id: 2,
+        tag: 'XÁC LẬP KỶ LỤC • ĐỀ CỬ CHÍNH THỨC',
+        title:
+          'TÁC PHẨM NHIỀU NGƯỜI CÙNG SÁNG TẠO BẰNG “THỦ CHỈ ĐẦU” TRÊN VẬT LIỆU SƠN MÀI CÔNG NGHỆ',
+        desc:
+          'Một thử nghiệm giao thoa giữa hành vi tạo dấu, chất liệu mới và tinh thần cộng đồng; được tổ chức theo quy trình kiểm chứng khoa học, tư liệu hóa và xác lập dữ liệu kỷ lục rõ ràng cùng Tổ chức Kỷ lục Việt Nam (VietKings).',
+        btn_text: 'Xem hồ sơ kiểm chứng kỷ lục',
+        link: '/contact',
+      },
+    ],
+    project1_tag: 'DỰ ÁN CỘNG ĐỒNG • ĐỒNG SÁNG TÁC',
+    project1_title: 'BÁCH HỌA LIÊN HOA',
+    project1_desc:
+      'Không gian đồng sáng tác nơi nhiều bàn tay cùng tạo nên một tác phẩm lớn. Chương trình đề cao trải nghiệm thực hành, tính cộng đồng và khả năng biến người xem thành người tham gia trực tiếp vào tiến trình bồi đắp bề mặt sơn mài.',
+    project1_btn: 'Xem hành trình đồng sáng tác',
+    project1_link: '/contact',
+    project2_tag: 'XÁC LẬP KỶ LỤC • ĐỀ CỬ CHÍNH THỨC',
+    project2_title:
+      'TÁC PHẨM NHIỀU NGƯỜI CÙNG SÁNG TẠO BẰNG “THỦ CHỈ ĐẦU” TRÊN VẬT LIỆU SƠN MÀI CÔNG NGHỆ',
+    project2_desc:
+      'Một thử nghiệm giao thoa giữa hành vi tạo dấu, chất liệu mới và tinh thần cộng đồng; được tổ chức theo quy trình kiểm chứng khoa học, tư liệu hóa và xác lập dữ liệu kỷ lục rõ ràng cùng Tổ chức Kỷ lục Việt Nam (VietKings).',
+    project2_btn: 'Xem hồ sơ kiểm chứng kỷ lục',
+    project2_link: '/contact',
+    cta_tag: 'KẾT NỐI DI SẢN BÁCH NIÊN',
+    cta_headline: 'BẠN MUỐN ĐỒNG KIẾN TẠO CÙNG CHÚNG TÔI?',
+    cta_desc:
+      'Mỗi nghệ sĩ, nhà nghiên cứu, hay người yêu mỹ thuật đều có thể đóng góp một nét son trong trang sử mới của nghệ thuật sơn mài Việt Nam.',
+    cta_image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuDRIW42qxKqqO8mE8JBoRSPJw3dMADLcoV4pAVEUfHycZibaoqtZV1AUf1mJilGhMmjBGbcD73MJB2WdRtCa9h1FcmnPFm76WT1z3DRpoQr0M598MUhsR8BknD2KLsg8wJRh5uyP0WO63s97mInG9wSUzszrjWNr_ZVj2QJExjYeykmXsAZL6Cngd7iEQeTDcXfu4oxzwVf6uJHxcWPVHAPn8JG814YEu9ZrGFyp2mny4_5TjVV_GdWWAqNCgj-mENrpz0',
+    cta_button_text: 'Đăng ký tham gia kiến tạo',
+    cta_button_link: '/contact',
+    cta_secondary_button_text: 'Liên hệ ban điều phối',
+    cta_secondary_button_link: 'mailto:info@sonmaihoihoavietnam.com',
   },
 
   '/archive': {
     badge: 'HỒ SƠ KHẢO CỨU QUỐC GIA',
-    headline: 'Kỷ Yếu Di Sản Bách Niên Sơn Mài Hội Họa',
-    subHeadline: 'Kho tri thức mở của Hành trình 100 năm',
+    headline: 'KHO TRI THỨC CỦA MỘT DI SẢN ĐANG SỐNG',
     description:
-      'Công trình số hóa và khảo cứu toàn diện quy tụ tư liệu quý, bản thảo kỹ thuật và chân dung các bậc thầy.',
+      'Kỷ yếu không chỉ ghi lại những gì đã xảy ra. Đây là không gian tập hợp, kiểm chứng và kết nối tri thức để mỗi thế hệ có thể tiếp tục nghiên cứu, thực hành và viết thêm chương mới cho sơn mài hội họa Việt Nam.',
     cover_image:
       'https://lh3.googleusercontent.com/aida-public/AB6AXuC6q50uNbfjHPDj6-2aHqeSR8DW1g_492VREK_fAsMYMK3DQhFaFVLvrzrgBfkcJiOO2Tais7QvRuBF8ALjaz4nBsOtz2_OYNR9WdWGDVxkBf7NcORDAYbMcd2mrPyEmwkKfmDP20xLS_6bePaBtTvSZ-Ka5jNUCOMMIDzFfKoQnsM1b5MSjmOee7IfSPeNcTZstFNnDOBIGFaWlb4VwSZlLpre2zH2b53XVJdHercK7LRBB90ttJrMYIg2tBWbMCmHl44',
+    stat1_num: '05',
+    stat1_label: 'Phân Hệ Tri Thức Cốt Lõi',
+    stat1_sub: 'Tiêu chuẩn viện bảo tàng',
+    stat2_num: '100+',
+    stat2_label: 'Chuyên Khảo & Nghiên Cứu',
+    stat2_sub: 'Học giả & Nghệ nhân kỳ cựu',
+    stat3_num: '07',
+    stat3_label: 'Kỳ Hành Trình Lưu Trữ Số',
+    stat3_sub: 'Hồ sơ đa phương tiện 4K',
+    stat4_num: 'VIETKINGS',
+    stat4_label: 'Chuẩn Hóa Kiểm Chứng',
+    stat4_sub: 'Xác thực kỷ lục di sản',
+
+    categories_badge: 'HỆ THỐNG LƯU TRỮ PHÂN TẦNG',
+    categories_title: '5 Phân Hệ Tri Thức Cốt Lõi',
+    categories_desc:
+      'Khung cấu trúc học thuật bao quát toàn bộ tiến trình lịch sử, kỹ nghệ truyền thống và phương hướng phát triển của nghệ thuật sơn mài Việt Nam.',
+    categories: [
+      {
+        id: 'history',
+        title: 'Lịch sử và mỹ học',
+        desc: 'Các bài nghiên cứu về tiến trình hình thành, ngôn ngữ tạo hình, hệ màu, không gian, ánh sáng và vị trí của sơn mài trong mỹ thuật Việt Nam hiện đại.',
+        btnLabel: 'Tra cứu chuyên đề',
+        link: '/archive',
+      },
+      {
+        id: 'masters',
+        title: 'Con người và truyền thừa',
+        desc: 'Chân dung họa sĩ, nghệ nhân, nhà giáo, nhà nghiên cứu, nhà sưu tập và những người góp phần duy trì mạch nghề qua các thế hệ di sản.',
+        btnLabel: 'Danh họa & Nghệ nhân',
+        link: '/archive',
+      },
+      {
+        id: 'materials',
+        title: 'Làng nghề và vật liệu',
+        desc: 'Tư liệu về vùng nguyên liệu, vóc, sơn ta, son trát, vàng quỳ, vỏ trứng, kỹ thuật ủ – mài – đánh bóng, cùng thách thức của chuỗi cung ứng bản địa.',
+        btnLabel: 'Hồ sơ làng nghề',
+        link: '/archive',
+      },
+      {
+        id: 'creativity',
+        title: 'Sáng tạo và ứng dụng',
+        desc: 'Nghiên cứu, thử nghiệm và trường hợp thực tế về sơn mài trong thiết kế nội thất, kiến trúc cảnh quan, thời trang xa xỉ, điện ảnh, truyền thông số, giáo dục mỹ cảm và sản phẩm văn hóa đương thời.',
+        btnLabel: 'Khảo sát ứng dụng đương đại',
+        link: '/archive',
+      },
+      {
+        id: 'economy',
+        title: 'Kinh tế di sản và nền tảng số',
+        desc: 'Các mô hình định danh, giám định, bản quyền sở hữu trí tuệ, lưu trữ phi tập trung, thương mại hóa có trách nhiệm và xây dựng thị trường sơn mài minh bạch.',
+        btnLabel: 'Khung pháp lý & Số hóa',
+        link: '/archive',
+      },
+    ],
+
+    volumes_badge: 'BỘ TÁC PHẨM BÁCH NIÊN KỶ YẾU',
+    volumes_title: 'Bốn Tập Chuyên Khảo Thế Kỷ (1930–2030)',
+    volumes_desc:
+      'Công trình xuất bản quy mô quốc gia quy tụ các nhà nghiên cứu mỹ thuật, nghệ nhân làng nghề và học giả uy tín trong và ngoài nước.',
+    volumes_index_btn: 'Xem mục lục tổng quát',
+    volumes: [
+      {
+        vol: 'TẬP I',
+        era: '1930 — 1954',
+        title: 'Vật liệu tự nhiên & Kỹ pháp Then cổ truyền',
+        focus: 'Từ kỹ nghệ phủ bóng dân gian đến ngôn ngữ hội họa bác học độc bản tại trường Mỹ thuật Đông Dương.',
+        pages: '380 trang',
+        papers: '24 Chuyên luận khoa học',
+        status: 'Đã hoàn tất bản thảo',
+      },
+      {
+        vol: 'TẬP II',
+        era: '1954 — 1986',
+        title: 'Các danh họa tiêu biểu và tác phẩm kinh điển',
+        focus: 'Khảo sát điền dã vùng cây sơn ta Phú Thọ, kỹ thuật ủ then Hạ Thái, Tương Bình Hiệp và chuỗi cung ứng vật liệu.',
+        pages: '420 trang',
+        papers: '32 Hồ sơ điền dã',
+        status: 'Đang biên tập phản biện',
+      },
+      {
+        vol: 'TẬP III',
+        era: '1986 — 2010',
+        title: 'Kinh tế di sản & Thị trường nghệ thuật đương đại',
+        focus: 'Hệ thống tác giả, trường phái sáng tác tiêu biểu: Nguyễn Gia Trí, Phạm Hậu, Nguyễn Tư Nghiêm, Trần Văn Cẩn...',
+        pages: '510 trang',
+        papers: '45 Hồ sơ tác phẩm bảo vật',
+        status: 'Đang thẩm định tư liệu',
+      },
+      {
+        vol: 'TẬP IV',
+        era: '2010 — 2030',
+        title: 'Hồ sơ đề cử Di sản Văn hóa Thế giới',
+        focus: 'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
+        pages: '460 trang',
+        papers: '38 Đề xuất mô hình kinh tế số',
+        status: 'Đang tiếp nhận bản thảo',
+      },
+    ],
+
     vol1_title: 'Tập I: Vật liệu tự nhiên & Kỹ pháp Then cổ truyền',
     vol1_desc: 'Từ kỹ nghệ phủ bóng dân gian đến ngôn ngữ hội họa bác học độc bản tại trường Mỹ thuật Đông Dương.',
     vol2_title: 'Tập II: Các danh họa tiêu biểu và tác phẩm kinh điển',
@@ -541,38 +695,365 @@ export const DEFAULT_PAGE_PROPS = {
     vol3_desc: 'Hệ thống tác giả, trường phái sáng tác tiêu biểu: Nguyễn Gia Trí, Phạm Hậu, Nguyễn Tư Nghiêm, Trần Văn Cẩn...',
     vol4_title: 'Tập IV: Hồ sơ đề cử Di sản Văn hóa Thế giới',
     vol4_desc: 'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
+
+    schema_badge: 'TIÊU CHUẨN DỮ LIỆU HỌC THUẬT',
+    schema_title: 'Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia',
+    schema_desc:
+      'Hệ thống chuẩn hóa thông tin đầu vào phục vụ kiểm định, tra cứu liên viện bảo tàng và bảo tồn di sản hội họa sơn mài vĩnh cửu.',
+    schema_rows: [
+      {
+        id: 1,
+        type: 'Bài nghiên cứu',
+        fields:
+          'Tiêu đề; tóm tắt; tác giả; đơn vị; từ khóa; tài liệu tham khảo; tệp tải về (PDF chuẩn OCR)',
+        status: 'Chuẩn học thuật • Đã xác thực',
+      },
+      {
+        id: 2,
+        type: 'Nhân vật',
+        fields:
+          'Họ tên; vai trò; giai đoạn hoạt động; địa phương; câu chuyện nghề; tư liệu kiểm chứng; hình ảnh lưu trữ',
+        status: 'Hồ sơ tiểu sử bảo chứng',
+      },
+      {
+        id: 3,
+        type: 'Làng nghề',
+        fields:
+          'Tên làng nghề; địa bàn tọa lạc; lịch sử sơ khởi; kỹ thuật đặc thù; quy mô nhân lực; thách thức nguyên liệu',
+        status: 'Dữ liệu điền dã xác minh',
+      },
+      {
+        id: 4,
+        type: 'Tác phẩm',
+        fields:
+          'Mã định danh độc bản; tác giả; năm sáng tác; chất liệu (sơn then, cánh gián, son trầm, vàng quỳ); kích thước; lịch sử lưu lạc',
+        status: 'Định danh số & Chip NFC',
+      },
+      {
+        id: 5,
+        type: 'Sự kiện',
+        fields:
+          'Thời gian; địa điểm; đơn vị đồng tổ chức; chương trình chi tiết; diễn giả; kết quả học thuật; tài liệu và video lưu trữ',
+        status: 'Lưu trữ đa phương tiện số',
+      },
+    ],
+
+    call_tag: 'KÊU GỌI ĐÓNG GÓP TƯ LIỆU VĂN HÓA',
+    call_headline: 'Gửi tư liệu cho Kỷ yếu 100 năm',
+    call_desc:
+      'Hành trình tiếp nhận bài nghiên cứu, hồi ức nghề, hồ sơ tác phẩm, ảnh tư liệu, video, tài liệu làng nghề và đề xuất chuyên đề. Mọi tư liệu được rà soát nguồn gốc, quyền sử dụng và giá trị học thuật trước khi chính thức lưu trữ và công bố.',
+    call_btn1_text: 'Gửi tư liệu',
+    call_btn1_link: '/contact',
+    call_btn2_text: 'Đề xuất bài viết',
+    call_btn2_link: '/contact',
+    call_btn3_text: 'Tải thể lệ (PDF)',
+    call_btn3_link: '/contact',
+    call_guarantee:
+      'Bản quyền tác giả và quyền sở hữu trí tuệ được bảo hộ theo pháp luật hiện hành',
   },
 
   '/leadership': {
-    badge: 'HỘI ĐỒNG ĐIỀU HÀNH & BẢO CHỨNG HỌC THUẬT',
-    headline: 'Ban Điều Hành & Hội Đồng Cố Vấn Chuyên Môn',
+    badge: '✦ BÁCH NIÊN TRỌNG TRÁCH • MINH BẠCH & LIÊN NGÀNH ✦',
+    headline: 'NHỮNG NGƯỜI GIỮ NHỊP CHO HÀNH TRÌNH',
     description:
-      'Quy tụ các nhà nghiên cứu mỹ thuật, nghệ nhân ưu tú, chuyên gia định giá và giám tuyển nghệ thuật hàng đầu cùng chung tay dẫn dắt Hành trình.',
-    emblem_image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuA24EfoXZ-0BkTAtHr86R5VGrGCuTXxzBwWBzS6BW8ubJh3WRm5JLnWAsNYz24M--l0Syg2ccpf3_D4HwB1iJ28MuZ20kXwWQEszu9acBuTPnr9YSt4UIjhexbP9D6ngfVnhiLL5KLfhCvri5KxGGaVlSkgmNhA7NvFG2HBzEPoxjMXbrjfAwSFAPToizyXoP_KDUlAFU8mFRWqBKMUGElun99GkbN1VVDtASUHjdW1Zx9NSHjWRYrDUlYL4BYBXi95rV0',
+      'Một hành trình liên ngành chỉ bền vững khi mỗi chủ thể hiểu rõ vai trò của mình. Ban điều hành kết nối học thuật, sáng tạo, sản xuất, truyền thông, dữ liệu và nguồn lực để mọi hoạt động cùng hướng về một mục tiêu chung.',
     core_unit_title: 'Viện Kỷ Lục Việt Nam (VietKings) & SIHUB',
-    advisory_title: 'Hội đồng Cố vấn Di sản & Mỹ thuật',
-    network_title: 'Mạng Lưới Đối Tác & Liên Kết Hệ Sinh Thái',
+    core_units: [
+      {
+        id: 1,
+        role: 'CƠ QUAN ĐIỀU PHỐI NỀN TẢNG',
+        name: 'VIỆN KỶ LỤC VIỆT NAM (VIETKINGS)',
+        desc: 'Điều phối chiến lược nền tảng; kết nối mạng lưới chuyên gia; tổ chức nghiên cứu, tư liệu hóa, đề cử và xác lập các chuyên đề kỷ lục phù hợp; góp phần lan tỏa giá trị sơn mài Việt Nam trong nước và quốc tế.',
+        tags: 'Xác thực kỷ lục, Bảo trợ dữ liệu di sản, Mạng lưới quốc tế',
+        icon: 'ShieldCheck',
+      },
+      {
+        id: 2,
+        role: 'ĐƠN VỊ CHỦ TRÌ NỘI DUNG',
+        name: 'TRUNG TÂM CÔNG NGHIỆP SÁNG TẠO',
+        desc: 'Xây dựng cấu trúc nội dung, phát triển chương trình liên ngành, kết nối công nghiệp văn hóa và triển khai các mô hình hợp tác sáng tạo.',
+        tags: 'Phát triển nội dung, Liên kết công nghiệp văn hóa, Đổi mới sáng tạo',
+        icon: 'Palette',
+      },
+    ],
+    advisory_title: 'Hội đồng chuyên môn',
+    advisory_subtitle: '“Bảo chứng chiều sâu học thuật và nghề nghiệp”',
+    advisory_desc:
+      'Hội đồng gồm đại diện mỹ thuật, lịch sử nghệ thuật, làng nghề, vật liệu, thiết kế, kiến trúc, công nghệ, kinh tế di sản và truyền thông. Nhiệm vụ chính là thẩm định nội dung, tư vấn chuyên đề, phản biện hồ sơ và đề xuất hướng phát triển.',
+    advisory_panels: [
+      {
+        id: 1,
+        icon: 'Paintbrush',
+        title: 'Mỹ Thuật & Lịch Sử Nghệ Thuật',
+        desc: 'Thẩm định giá trị học thuật, niên đại trường phái và ngôn ngữ tạo hình.',
+        status: 'Đang cập nhật',
+      },
+      {
+        id: 2,
+        icon: 'Hammer',
+        title: 'Làng Nghề & Kỹ Thuật Sơn Mài',
+        desc: 'Bảo tồn bí quyết thủ công, quy chuẩn vật liệu sơn ta và kỹ thuật cổ truyền.',
+        status: 'Đang cập nhật',
+      },
+      {
+        id: 3,
+        icon: 'Compass',
+        title: 'Thiết Kế & Kiến Trúc Ứng Dụng',
+        desc: 'Định hình không gian đương đại, ngôn ngữ tạo dáng và sản phẩm di sản.',
+        status: 'Đang cập nhật',
+      },
+      {
+        id: 4,
+        icon: 'Cpu',
+        title: 'Kinh Tế Di Sản & Công Nghệ Số',
+        desc: 'Số hóa lưu trữ, định danh số bản quyền và chuyển giao thương mại bền vững.',
+        status: 'Đang cập nhật',
+      },
+    ],
+    teams_title: 'Ban Dự Án',
+    teams_subtitle: '“Biến định hướng thành hoạt động”',
+    project_teams: [
+      {
+        id: 1,
+        num: '01',
+        icon: 'BookOpen',
+        title: '01. Nội dung – học thuật',
+        desc: 'Nghiên cứu, biên tập, diễn giả, kỷ yếu và hồ sơ chuyên đề.',
+        tag: 'Học thuật & Xuất bản',
+      },
+      {
+        id: 2,
+        num: '02',
+        icon: 'Landmark',
+        title: '02. Sáng tạo – triển lãm',
+        desc: 'Tác phẩm, không gian, nghệ sĩ, nghệ nhân và trải nghiệm công chúng.',
+        tag: 'Không gian & Trưng bày',
+      },
+      {
+        id: 3,
+        num: '03',
+        icon: 'Handshake',
+        title: '03. Đối ngoại – đối tác',
+        desc: 'Trường, viện, doanh nghiệp, nhà tài trợ và mạng lưới quốc tế.',
+        tag: 'Liên kết & Mạng lưới',
+      },
+      {
+        id: 4,
+        num: '04',
+        icon: 'Megaphone',
+        title: '04. Truyền thông – cộng đồng',
+        desc: 'Nhận diện, báo chí, mạng xã hội, giáo dục và open call.',
+        tag: 'Truyền thông di sản',
+      },
+      {
+        id: 5,
+        num: '05',
+        icon: 'Database',
+        title: '05. Công nghệ – dữ liệu',
+        desc: 'Website, kho tư liệu, mã định danh, bản quyền và lưu trữ số.',
+        tag: 'Hạ tầng số & Kho lưu trữ',
+      },
+      {
+        id: 6,
+        num: '06',
+        icon: 'Wallet',
+        title: '06. Vận hành – tài chính',
+        desc: 'Kế hoạch, ngân sách, hậu cần, pháp lý và đánh giá hiệu quả.',
+        tag: 'Quản trị & Pháp lý',
+      },
+    ],
+    network_title: 'Mạng lưới phối hợp',
+    network_subtitle: '“Cùng tạo nên hệ sinh thái”',
+    network_desc:
+      'Các đối tác có thể bao gồm không gian đổi mới sáng tạo, cơ sở đào tạo mỹ thuật, doanh nghiệp vật liệu, làng nghề, bảo tàng, phòng trưng bày, hiệp hội, cơ quan truyền thông và cộng đồng sáng tạo.',
+    network_btn_text: 'TRỞ THÀNH ĐỐI TÁC',
+    network_btn_link: 'mailto:info@sonmaihoihoavietnam.com',
+    network_partners: [
+      {
+        id: 1,
+        icon: 'Share2',
+        title: 'Không Gian Đổi Mới Sáng Tạo & Viện Nghiên Cứu',
+        status: 'Đang cập nhật',
+      },
+      {
+        id: 2,
+        icon: 'GraduationCap',
+        title: 'Cơ Sở Đào Tạo Mỹ Thuật & Thiết Kế',
+        status: 'Đang cập nhật',
+      },
+      {
+        id: 3,
+        icon: 'Store',
+        title: 'Hiệp Hội Làng Nghề & Doanh Nghiệp Vật Liệu',
+        status: 'Đang cập nhật',
+      },
+      {
+        id: 4,
+        icon: 'Image',
+        title: 'Bảo Tàng, Không Gian Trưng Bày & Truyền Thông',
+        status: 'Đang cập nhật',
+      },
+    ],
   },
 
   '/news': {
-    badge: 'BẢN TIN BÁCH NIÊN • KHO TƯ LIỆU NÓNG',
-    headline: 'Tin Tức & Tư Liệu Nghiên Cứu',
+    badge: '✦ BÁCH NIÊN KHỞI SẮC • GÓC NHÌN & TIẾNG NÓI DI SẢN ✦',
+    headline: 'NHỮNG CÂU CHUYỆN ĐANG ĐƯỢC VIẾT TIẾP',
     description:
-      'Cập nhật liên tục các diễn biến, tọa đàm, nhật ký xưởng nghề và công bố nghiên cứu mới nhất từ Hành trình 100 năm.',
+      'Tin tức của Hành trình không chỉ đưa tin sự kiện. Đây là nơi lịch sử được kể lại bằng ngôn ngữ gần gũi, người làm nghề được nhìn thấy và các ý tưởng mới được đưa vào đối thoại công chúng.',
     featured_article_ids: [1, 2, 3],
-    newsletter_headline: 'Đăng Ký Nhận Bản Tin Bách Niên',
   },
 
   '/contact': {
-    badge: 'BÁCH NIÊN KẾT NỐI • ĐỒNG HÀNH & LAN TỎA DI SẢN',
+    badge: '✦ BÁCH NIÊN KẾT NỐI • ĐỒNG HÀNH & LAN TỎA ✦',
     headline: 'MỌI HÀNH TRÌNH ĐỀU BẮT ĐẦU TỪ MỘT CUỘC GẶP',
     description:
-      'Nếu bạn có một câu chuyện, một tư liệu, một tác phẩm, một ý tưởng nghiên cứu hoặc một đề xuất hợp tác, hãy kết nối với chúng tôi.',
-    hotline: '(+84) 28 3822 8888',
-    email: 'bandoehanh@sonmaivietnam100nam.vn',
-    address: '273 Điện Biên Phủ, Phường Võ Thị Sáu, Quận 3, TP. Hồ Chí Minh',
-    officeHours: 'Thứ Hai - Thứ Bảy: 08:30 - 17:30',
+      'Nếu bạn có một câu chuyện, một tư liệu, một tác phẩm, một ý tưởng nghiên cứu hoặc một đề xuất hợp tác, hãy kết nối với chúng tôi. Không có đóng góp nào là nhỏ khi cùng hướng đến việc viết tiếp một di sản chung của nền nghệ thuật Việt Nam.',
+    routes_badge: 'PHƯƠNG THỨC KẾT NỐI',
+    routes_title: 'CÁC TUYẾN THAM GIA ĐỒNG HÀNH',
+    routes: [
+      {
+        id: 1,
+        key: 'artist',
+        icon: 'Palette',
+        badge: 'TUYẾN 01 • SÁNG TÁC',
+        title: 'Tham gia với tư cách nghệ sĩ / nghệ nhân',
+        desc: 'Đăng ký Open Studio, triển lãm, trình diễn sáng tác, workshop, chương trình lưu trú nghệ thuật hoặc đề xuất bộ sưu tập độc bản vinh danh bách niên.',
+        buttonText: 'GỬI HỒ SƠ SÁNG TẠO',
+      },
+      {
+        id: 2,
+        key: 'academic',
+        icon: 'BookOpen',
+        badge: 'TUYẾN 02 • HỌC THUẬT',
+        title: 'Tham gia với tư cách chuyên gia / nhà nghiên cứu',
+        desc: 'Đề xuất tham luận, phản biện học thuật, gửi bài viết cho Kỷ yếu bách niên, cố vấn chuyên đề di sản hoặc đóng góp tư liệu lịch sử quý giá.',
+        buttonText: 'ĐỀ XUẤT CHUYÊN MÔN',
+      },
+      {
+        id: 3,
+        key: 'business',
+        icon: 'Building2',
+        badge: 'TUYẾN 03 • ĐỒNG HÀNH DOANH NGHIỆP',
+        title: 'Hợp tác doanh nghiệp và thương hiệu',
+        desc: 'Đồng sáng tạo sản phẩm, ứng dụng sơn mài trong kiến trúc - nội thất đương đại, tài trợ di sản, licensing bản quyền hoặc bảo trợ không gian văn hóa.',
+        buttonText: 'ĐỀ XUẤT HỢP TÁC',
+      },
+      {
+        id: 4,
+        key: 'education',
+        icon: 'GraduationCap',
+        badge: 'TUYẾN 04 • GIÁO DỤC DI SẢN',
+        title: 'Trường học và cộng đồng',
+        desc: 'Tổ chức tham quan bảo tàng xưởng, lớp học chuyên đề nghệ thuật, hoạt động trải nghiệm thực hành, dự án sinh viên hoặc mạng lưới tình nguyện viên văn hóa.',
+        buttonText: 'ĐĂNG KÝ CHƯƠNG TRÌNH',
+      },
+      {
+        id: 5,
+        key: 'press',
+        icon: 'Megaphone',
+        badge: 'TUYẾN 05 • TRUYỀN THÔNG ĐẠI CHÚNG',
+        title: 'Báo chí và truyền thông',
+        desc: 'Nhận bộ tài liệu báo chí chính thức (Press Kit), hình ảnh tư liệu độ phân giải cao được cấp quyền sử dụng, đặt lịch phỏng vấn Ban cố vấn và đầu mối phát ngôn.',
+        buttonText: 'LIÊN HỆ TRUYỀN THÔNG',
+      },
+    ],
+    direct_badge: 'KÊNH CHÍNH THỨC',
+    direct_title: 'KẾT NỐI TRỰC TIẾP',
+    email: 'info@sonmaihoihoavietnam.com',
+    hotline: 'Ms. Khánh — 090 900 2207',
+    hotline_sub: 'Hỗ trợ đối tác, nghệ sĩ và tiếp nhận thông tin 24/7',
+    address: 'Hà Nội • TP. Hồ Chí Minh • Phú Thọ',
+    address_sub:
+      'Trụ sở điều phối trung tâm đang trong giai đoạn hoàn thiện chuẩn bị cho chuỗi sự kiện Khởi Sắc 2026.',
+    officeHours: 'Trong vòng 02 ngày làm việc chính thức',
+    officeHours_sub: 'Phân loại và chuyển đến Tiểu ban chuyên môn tương ứng.',
+    security_note:
+      'Mọi thông tin, hồ sơ tác phẩm và đề xuất nghiên cứu đều được bảo mật, mã hóa định danh và quản lý theo chuẩn lưu trữ của Viện Kỷ Lục Việt Nam (VietKings).',
+    // Cấu hình Form kết nối
+    form_portal_badge: 'CỔNG TIẾP NHẬN TRỰC TUYẾN',
+    form_title: 'GỬI PHẢN HỒI HOẶC YÊU CẦU TƯ VẤN',
+    form_description:
+      'Quý vị vui lòng để lại thông tin và nội dung cần tư vấn để Ban Thư ký Trung tâm hỗ trợ.',
+    form_note: 'Các trường có dấu * là bắt buộc.',
+    form_submit_text: 'GỬI THÔNG TIN',
+    form_fields: [
+      {
+        id: 'f_1',
+        label: 'Họ và tên',
+        placeholder: 'Ví dụ: Nguyễn Văn An',
+        type: 'text',
+        icon: 'User',
+        gridWidth: '6/12',
+        key: 'ho_va_ten',
+        required: true,
+      },
+      {
+        id: 'f_2',
+        label: 'Địa chỉ Email',
+        placeholder: 'name@domain.com',
+        type: 'email',
+        icon: 'Mail',
+        gridWidth: '6/12',
+        key: 'email',
+        required: true,
+      },
+      {
+        id: 'f_3',
+        label: 'Số điện thoại liên hệ',
+        placeholder: 'Ví dụ: 0912 345 678',
+        type: 'tel',
+        icon: 'Phone',
+        gridWidth: '6/12',
+        key: 'so_dien_thoai',
+        required: false,
+      },
+      {
+        id: 'f_4',
+        label: 'Lĩnh vực quan tâm',
+        placeholder: 'Vui lòng chọn lĩnh vực',
+        type: 'select',
+        icon: 'LayoutGrid',
+        gridWidth: '6/12',
+        key: 'linh_vuc',
+        required: false,
+        options: [
+          'Tư vấn tham gia Tuyến sáng tác',
+          'Đóng góp tư liệu Kỷ yếu',
+          'Hợp tác doanh nghiệp & tài trợ',
+          'Đăng ký chương trình giáo dục',
+          'Liên hệ báo chí & truyền thông',
+          'Đóng góp ý kiến khác',
+        ],
+      },
+      {
+        id: 'f_5',
+        label: 'Nội dung lời nhắn / Đề xuất chi tiết',
+        placeholder:
+          'Quý vị vui lòng mô tả chi tiết nội dung cần tư vấn hoặc đề xuất hợp tác...',
+        type: 'textarea',
+        icon: 'MessageSquare',
+        gridWidth: '12/12',
+        key: 'noi_dung',
+        required: true,
+      },
+    ],
+    form_terms_text:
+      'Tôi xác nhận thông tin cung cấp là chính xác và đồng ý cho phép Ban Điều Hành lưu trữ, xử lý thông tin để phối hợp triển khai theo quy định bảo mật của dự án.',
+    form_upload_label: 'TỆP ĐÍNH KÈM HOẶC LIÊN KẾT HỒ SƠ',
+    form_upload_hint: 'Đính kèm Portfolio, Hồ sơ năng lực hoặc Tác phẩm',
+    form_upload_subhint:
+      'Hỗ trợ PDF, DOCX, ZIP tối đa 25MB hoặc dán URL Drive',
+    form_link_placeholder:
+      'Hoặc dán liên kết Google Drive / Dropbox / Behance tại đây...',
+    form_message_label: 'NỘI DUNG MUỐN KẾT NỐI',
+    form_message_placeholder:
+      'Mô tả ngắn gọn nội dung ý tưởng, tác phẩm, tư liệu hoặc phương thức hợp tác bạn mong muốn đề xuất cùng dự án Bách niên...',
+    modal_badge: 'MÃ HỒ SƠ LƯU TRỮ',
+    modal_title: 'TIẾP NHẬN THÀNH CÔNG',
+    modal_message:
+      'Cảm ơn bạn đã kết nối. Ban Điều Hành Dự Án 100 Năm Sơn Mài Hội Họa Việt Nam đã tiếp nhận thông tin và sẽ phản hồi trong thời gian sớm nhất. Mỗi đóng góp của bạn đều là một viên gạch quý báu đắp xây di sản chung.',
+    modal_btn_text: 'GỬI THÊM YÊU CẦU KHÁC',
   },
 };
 
@@ -856,6 +1337,8 @@ const PageManager = () => {
             collectionSearch={collectionSearch}
             setCollectionSearch={setCollectionSearch}
             handleToggleCollection={handleToggleCollection}
+            handleSavePage={handleSavePage}
+            saving={saving}
           />
         );
 
@@ -864,6 +1347,8 @@ const PageManager = () => {
           <ArchivePageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handleSavePage={handleSavePage}
+            saving={saving}
           />
         );
 
@@ -872,6 +1357,8 @@ const PageManager = () => {
           <LeadershipPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handleSavePage={handleSavePage}
+            saving={saving}
           />
         );
 
@@ -884,6 +1371,8 @@ const PageManager = () => {
             newsSearch={newsSearch}
             setNewsSearch={setNewsSearch}
             handleToggleNews={handleToggleNews}
+            handleSavePage={handleSavePage}
+            saving={saving}
           />
         );
 
@@ -892,6 +1381,8 @@ const PageManager = () => {
           <ContactPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handleSavePage={handleSavePage}
+            saving={saving}
           />
         );
 

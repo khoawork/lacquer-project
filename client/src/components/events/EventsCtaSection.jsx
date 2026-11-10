@@ -2,16 +2,13 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { ArrowRight, FileText, Sparkles } from 'lucide-react';
 
-import { getImageUrl } from '../../configs/Apis';
-
 const EventsCtaSection = ({ pageProps }) => {
-  const ctaImage = pageProps?.cta_image || pageProps?.hero_seal;
   const ctaHeadline = pageProps?.cta_headline;
   const ctaDesc = pageProps?.cta_desc;
   const ctaBtnText = pageProps?.cta_button_text || 'Đăng ký Tham Luận & Tác Phẩm';
   const ctaBtnLink = pageProps?.cta_button_link || '/contact';
 
-  if (!ctaHeadline && !ctaDesc && !ctaImage) return null;
+  if (!ctaHeadline && !ctaDesc) return null;
 
   return (
     <section
@@ -34,16 +31,6 @@ const EventsCtaSection = ({ pageProps }) => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        {ctaImage && (
-          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#260508] to-[#D4AF37]/60 shadow-[0_0_35px_rgba(255,223,115,0.6)] flex items-center justify-center">
-            <img
-              alt="Centennial Emblem"
-              className="w-full h-full object-cover rounded-full brightness-110"
-              src={getImageUrl(ctaImage)}
-            />
-          </div>
-        )}
-
         {ctaHeadline && (
           <h2 className="font-serif text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
             {ctaHeadline}

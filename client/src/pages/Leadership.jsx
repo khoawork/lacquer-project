@@ -20,7 +20,19 @@ const Leadership = () => {
           const pageData = Array.isArray(raw)
             ? raw.find((p) => p.slug === '/leadership' || p.slug === 'leadership') || raw[0]
             : raw;
-          setPageProps(pageData?.props || null);
+          const defaultProps = DEFAULT_PAGE_PROPS['/leadership'] || {};
+          const dbProps = pageData?.props || {};
+          const merged = {
+            ...defaultProps,
+            ...dbProps,
+          };
+          if (!merged.badge || !merged.badge.trim()) {
+            merged.badge = defaultProps.badge || '✦ BÁCH NIÊN TRỌNG TRÁCH • MINH BẠCH & LIÊN NGÀNH ✦';
+          }
+          if (!merged.headline || merged.headline.includes('BAN ĐIỀU HÀNH & HỘI')) {
+            merged.headline = defaultProps.headline || 'NHỮNG NGƯỜI GIỮ NHỊP CHO HÀNH TRÌNH';
+          }
+          setPageProps(merged);
         }
       } catch (err) {
         console.warn('Lỗi tải dữ liệu trang ban điều hành từ DB:', err);

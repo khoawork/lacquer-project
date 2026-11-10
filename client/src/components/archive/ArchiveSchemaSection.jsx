@@ -1,49 +1,59 @@
 import React from 'react';
-import { FileText, UserCheck, Warehouse, Palette, Calendar, CheckCircle2, Shield, SearchCheck, Cpu, Video } from 'lucide-react';
+import { resolveTypeIcon, resolveStatusIcon } from './archiveIconRegistry';
 
-const ArchiveSchemaSection = () => {
-  const schemaRows = [
-    {
-      type: 'Bài nghiên cứu',
-      icon: FileText,
-      fields:
-        'Tiêu đề; tóm tắt; tác giả; đơn vị; từ khóa; tài liệu tham khảo; tệp tải về (PDF chuẩn OCR)',
-      status: 'Chuẩn học thuật • Đã xác thực',
-      statusIcon: CheckCircle2,
-    },
-    {
-      type: 'Nhân vật',
-      icon: UserCheck,
-      fields:
-        'Họ tên; vai trò; giai đoạn hoạt động; địa phương; câu chuyện nghề; tư liệu kiểm chứng; hình ảnh lưu trữ',
-      status: 'Hồ sơ tiểu sử bảo chứng',
-      statusIcon: Shield,
-    },
-    {
-      type: 'Làng nghề',
-      icon: Warehouse,
-      fields:
-        'Tên làng nghề; địa bàn tọa lạc; lịch sử sơ khởi; kỹ thuật đặc thù; quy mô nhân lực; thách thức nguyên liệu',
-      status: 'Dữ liệu điền dã xác minh',
-      statusIcon: SearchCheck,
-    },
-    {
-      type: 'Tác phẩm',
-      icon: Palette,
-      fields:
-        'Mã định danh độc bản; tác giả; năm sáng tác; chất liệu (sơn then, cánh gián, son trầm, vàng quỳ); kích thước; lịch sử lưu lạc',
-      status: 'Định danh số & Chip NFC',
-      statusIcon: Cpu,
-    },
-    {
-      type: 'Sự kiện',
-      icon: Calendar,
-      fields:
-        'Thời gian; địa điểm; đơn vị đồng tổ chức; chương trình chi tiết; diễn giả; kết quả học thuật; tài liệu và video lưu trữ',
-      status: 'Lưu trữ đa phương tiện số',
-      statusIcon: Video,
-    },
-  ];
+const DEFAULT_SCHEMA_ROWS = [
+  {
+    type: 'Bài nghiên cứu',
+    icon: 'FileText',
+    fields:
+      'Tiêu đề; tóm tắt; tác giả; đơn vị; từ khóa; tài liệu tham khảo; tệp tải về (PDF chuẩn OCR)',
+    status: 'Chuẩn học thuật • Đã xác thực',
+    status_icon: 'CheckCircle2',
+  },
+  {
+    type: 'Nhân vật',
+    icon: 'UserCheck',
+    fields:
+      'Họ tên; vai trò; giai đoạn hoạt động; địa phương; câu chuyện nghề; tư liệu kiểm chứng; hình ảnh lưu trữ',
+    status: 'Hồ sơ tiểu sử bảo chứng',
+    status_icon: 'Shield',
+  },
+  {
+    type: 'Làng nghề',
+    icon: 'Warehouse',
+    fields:
+      'Tên làng nghề; địa bàn tọa lạc; lịch sử sơ khởi; kỹ thuật đặc thù; quy mô nhân lực; thách thức nguyên liệu',
+    status: 'Dữ liệu điền dã xác minh',
+    status_icon: 'SearchCheck',
+  },
+  {
+    type: 'Tác phẩm',
+    icon: 'Palette',
+    fields:
+      'Mã định danh độc bản; tác giả; năm sáng tác; chất liệu (sơn then, cánh gián, son trầm, vàng quỳ); kích thước; lịch sử lưu lạc',
+    status: 'Định danh số & Chip NFC',
+    status_icon: 'Cpu',
+  },
+  {
+    type: 'Sự kiện',
+    icon: 'Calendar',
+    fields:
+      'Thời gian; địa điểm; đơn vị đồng tổ chức; chương trình chi tiết; diễn giả; kết quả học thuật; tài liệu và video lưu trữ',
+    status: 'Lưu trữ đa phương tiện số',
+    status_icon: 'Video',
+  },
+];
+
+const ArchiveSchemaSection = ({ pageProps = null }) => {
+  const badge = pageProps?.schema_badge || 'Tiêu chuẩn dữ liệu học thuật';
+  const title = pageProps?.schema_title || 'Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia';
+  const desc =
+    pageProps?.schema_desc ||
+    'Hệ thống chuẩn hóa thông tin đầu vào phục vụ kiểm định, tra cứu liên viện bảo tàng và bảo tồn di sản hội họa sơn mài vĩnh cửu.';
+
+  const rawRows = pageProps?.schema_rows;
+  const schemaRows =
+    Array.isArray(rawRows) && rawRows.length > 0 ? rawRows : DEFAULT_SCHEMA_ROWS;
 
   return (
     <section
@@ -57,15 +67,21 @@ const ArchiveSchemaSection = () => {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full mb-3 bg-[#3d0c0f] border border-[#D4AF37]/35 text-[#FFDF73] text-[12px] uppercase tracking-widest font-bold">
-            <span>Tiêu chuẩn dữ liệu học thuật</span>
-          </div>
-          <h2 className="font-serif text-[32px] sm:text-[38px] md:text-[44px] text-gold-gradient font-bold uppercase leading-tight mb-3">
-            Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia
-          </h2>
-          <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/90">
-            Hệ thống chuẩn hóa thông tin đầu vào phục vụ kiểm định, tra cứu liên viện bảo tàng và bảo tồn di sản hội họa sơn mài vĩnh cửu.
-          </p>
+          {badge && (
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full mb-3 bg-[#3d0c0f] border border-[#D4AF37]/35 text-[#FFDF73] text-[12px] uppercase tracking-widest font-bold">
+              <span>{badge}</span>
+            </div>
+          )}
+          {title && (
+            <h2 className="font-serif text-[32px] sm:text-[38px] md:text-[44px] text-gold-gradient font-bold uppercase leading-tight mb-3">
+              {title}
+            </h2>
+          )}
+          {desc && (
+            <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/90">
+              {desc}
+            </p>
+          )}
         </div>
 
         {/* Museum Archival Data Table Component */}
@@ -107,11 +123,11 @@ const ArchiveSchemaSection = () => {
             </thead>
             <tbody className="divide-y divide-[#D4AF37]/15">
               {schemaRows.map((row, idx) => {
-                const TypeIcon = row.icon;
-                const StatusIcon = row.statusIcon;
+                const TypeIcon = resolveTypeIcon(row.icon, row.type, idx);
+                const StatusIcon = resolveStatusIcon(row.status_icon, row.status);
                 return (
                   <tr
-                    key={idx}
+                    key={row.id || idx}
                     className="hover:bg-[#451016]/40 transition-colors"
                   >
                     <td className="py-5 px-6 font-serif text-[17px] md:text-[18px] font-bold text-[#FFDF73] align-top">
@@ -144,4 +160,3 @@ const ArchiveSchemaSection = () => {
 
 export { ArchiveSchemaSection };
 export default ArchiveSchemaSection;
-

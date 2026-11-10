@@ -1,13 +1,32 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { Award } from 'lucide-react';
+import { getImageUrl } from '../../configs/Apis';
 
 export default function ArchiveHeroSection({ pageProps }) {
-  const badge = pageProps?.badge;
-  const headline = pageProps?.headline;
-  const description = pageProps?.description;
+  const badge = pageProps?.badge || 'HỒ SƠ KHẢO CỨU QUỐC GIA';
+  const headline = pageProps?.headline || 'KHO TRI THỨC CỦA MỘT DI SẢN ĐANG SỐNG';
+  const description =
+    pageProps?.description ||
+    'Kỷ yếu không chỉ ghi lại những gì đã xảy ra. Đây là không gian tập hợp, kiểm chứng và kết nối tri thức để mỗi thế hệ có thể tiếp tục nghiên cứu, thực hành và viết thêm chương mới cho sơn mài hội họa Việt Nam.';
+  const coverImage = pageProps?.cover_image;
 
-  if (!headline && !description && !badge) return null;
+  const stat1Num = pageProps?.stat1_num || '05';
+  const stat1Label = pageProps?.stat1_label || 'Phân Hệ Tri Thức Cốt Lõi';
+  const stat1Sub = pageProps?.stat1_sub || 'Tiêu chuẩn viện bảo tàng';
+
+  const stat2Num = pageProps?.stat2_num || '100+';
+  const stat2Label = pageProps?.stat2_label || 'Chuyên Khảo & Nghiên Cứu';
+  const stat2Sub = pageProps?.stat2_sub || 'Học giả & Nghệ nhân kỳ cựu';
+
+  const stat3Num = pageProps?.stat3_num || '07';
+  const stat3Label = pageProps?.stat3_label || 'Kỳ Hành Trình Lưu Trữ Số';
+  const stat3Sub = pageProps?.stat3_sub || 'Hồ sơ đa phương tiện 4K';
+
+  const stat4Num = pageProps?.stat4_num || 'VIETKINGS';
+  const stat4Label = pageProps?.stat4_label || 'Chuẩn Hóa Kiểm Chứng';
+  const stat4Sub = pageProps?.stat4_sub || 'Xác thực kỷ lục di sản';
+
   return (
     <section
       className="relative w-full overflow-hidden pt-16 pb-24 text-stone-100 select-none"
@@ -66,6 +85,17 @@ export default function ArchiveHeroSection({ pageProps }) {
           </p>
         )}
 
+        {/* Optional Cover Image Preview */}
+        {coverImage && (
+          <div className="mb-12 max-w-md w-full rounded-2xl p-2 bg-[#200508]/80 border border-[#D4AF37]/35 shadow-[0_16px_40px_rgba(0,0,0,0.8)]">
+            <img
+              src={getImageUrl(coverImage)}
+              alt="Bìa Kỷ Yếu"
+              className="w-full h-auto rounded-xl object-cover filter contrast-105"
+            />
+          </div>
+        )}
+
         {/* Archive Metrics Bar */}
         <div
           className="w-full max-w-5xl grid grid-cols-2 md:grid-cols-4 gap-4 p-5 sm:p-6 rounded-xl backdrop-blur-md shadow-[0_20px_45px_rgba(0,0,0,0.7)]"
@@ -79,39 +109,39 @@ export default function ArchiveHeroSection({ pageProps }) {
           {/* Metric 1 */}
           <div className="flex flex-col items-center justify-center py-2 px-3 text-center border-r border-[#D4AF37]/20">
             <span className="font-serif text-[36px] md:text-[44px] leading-tight text-gold-gradient font-bold tracking-tight">
-              05
+              {stat1Num}
             </span>
             <span className="font-serif uppercase tracking-[0.14em] text-[#FAF7F2] text-[12px] md:text-[13px] mt-1 font-bold">
-              Phân Hệ Tri Thức Cốt Lõi
+              {stat1Label}
             </span>
             <span className="font-serif text-[11px] text-[#EADBCE]/80 mt-0.5">
-              Tiêu chuẩn viện bảo tàng
+              {stat1Sub}
             </span>
           </div>
 
           {/* Metric 2 */}
           <div className="flex flex-col items-center justify-center py-2 px-3 text-center md:border-r border-[#D4AF37]/20">
             <span className="font-serif text-[36px] md:text-[44px] leading-tight text-gold-gradient font-bold tracking-tight">
-              100+
+              {stat2Num}
             </span>
             <span className="font-serif uppercase tracking-[0.14em] text-[#FAF7F2] text-[12px] md:text-[13px] mt-1 font-bold">
-              Chuyên Khảo & Nghiên Cứu
+              {stat2Label}
             </span>
             <span className="font-serif text-[11px] text-[#EADBCE]/80 mt-0.5">
-              Học giả & Nghệ nhân kỳ cựu
+              {stat2Sub}
             </span>
           </div>
 
           {/* Metric 3 */}
           <div className="flex flex-col items-center justify-center py-2 px-3 text-center border-r border-[#D4AF37]/20">
             <span className="font-serif text-[36px] md:text-[44px] leading-tight text-gold-gradient font-bold tracking-tight">
-              07
+              {stat3Num}
             </span>
             <span className="font-serif uppercase tracking-[0.14em] text-[#FAF7F2] text-[12px] md:text-[13px] mt-1 font-bold">
-              Kỳ Hành Trình Lưu Trữ Số
+              {stat3Label}
             </span>
             <span className="font-serif text-[11px] text-[#EADBCE]/80 mt-0.5">
-              Hồ sơ đa phương tiện 4K
+              {stat3Sub}
             </span>
           </div>
 
@@ -120,14 +150,14 @@ export default function ArchiveHeroSection({ pageProps }) {
             <div className="flex items-center gap-1.5 h-[52px]">
               <Award className="w-6 h-6 text-[#FFDF73]" />
               <span className="font-serif text-[24px] md:text-[26px] text-gold-gradient font-bold tracking-widest">
-                VIETKINGS
+                {stat4Num}
               </span>
             </div>
             <span className="font-serif uppercase tracking-[0.14em] text-[#FAF7F2] text-[12px] md:text-[13px] font-bold">
-              Chuẩn Hóa Kiểm Chứng
+              {stat4Label}
             </span>
             <span className="font-serif text-[11px] text-[#EADBCE]/80 mt-0.5">
-              Xác thực kỷ lục di sản
+              {stat4Sub}
             </span>
           </div>
         </div>

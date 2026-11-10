@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import NewsHeroSection from "../components/news/NewsHeroSection";
 import NewsFilterSection from "../components/news/NewsFilterSection";
 import NewsGridSection from "../components/news/NewsGridSection";
-import NewsNewsletterSection from "../components/news/NewsNewsletterSection";
 import pageServices from "../services/pageServices";
 import { DEFAULT_PAGE_PROPS } from "./admin/PageManager";
 
 export default function News() {
   const [activeCategory, setActiveCategory] = useState("Tất cả");
   const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/news'] || null);
+  const [articles, setArticles] = useState([]);
 
   // Đọc cấu hình trang tin tức trực tiếp từ DB
   useEffect(() => {
@@ -49,13 +49,15 @@ export default function News() {
         <NewsFilterSection
           activeCategory={activeCategory}
           setActiveCategory={setActiveCategory}
+          articles={articles}
         />
 
         {/* Articles Grid */}
-        <NewsGridSection activeCategory={activeCategory} pageProps={pageProps} />
-
-        {/* Newsletter Subscription */}
-        <NewsNewsletterSection />
+        <NewsGridSection
+          activeCategory={activeCategory}
+          pageProps={pageProps}
+          onArticlesLoaded={setArticles}
+        />
       </main>
     </div>
   );

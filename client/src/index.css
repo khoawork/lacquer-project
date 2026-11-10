@@ -40,6 +40,10 @@ h1, h2, h3, h4, .font-serif, [class*="font-display"] {
   text-wrap: balance;
 }
 
+.font-cursive, .font-script {
+  font-family: 'Alex Brush', 'Pinyon Script', 'Playfair Display', cursive, serif;
+}
+
 p, li, blockquote, .font-body {
   font-family: 'Lora', Georgia, serif;
   text-wrap: pretty;
@@ -131,7 +135,7 @@ p, li, blockquote, .font-body {
 .nav-link-item::after {
   content: '';
   position: absolute;
-  bottom: -4px;
+  bottom: 0px;
   left: 0;
   width: 0%;
   height: 2px;

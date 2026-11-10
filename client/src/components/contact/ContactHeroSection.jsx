@@ -2,9 +2,11 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 
 const ContactHeroSection = ({ pageProps }) => {
-  const badgeText = pageProps?.badge;
-  const headline = pageProps?.headline;
-  const description = pageProps?.description;
+  const badgeText = pageProps?.badge || '✦ BÁCH NIÊN KẾT NỐI • ĐỒNG HÀNH & LAN TỎA ✦';
+  const headline = pageProps?.headline || 'MỌI HÀNH TRÌNH ĐỀU BẮT ĐẦU TỪ MỘT CUỘC GẶP';
+  const description =
+    pageProps?.description ||
+    'Nếu bạn có một câu chuyện, một tư liệu, một tác phẩm, một ý tưởng nghiên cứu hoặc một đề xuất hợp tác, hãy kết nối với chúng tôi. Không có đóng góp nào là nhỏ khi cùng hướng đến việc viết tiếp một di sản chung của nền nghệ thuật Việt Nam.';
 
   if (!headline && !description && !badgeText) return null;
 

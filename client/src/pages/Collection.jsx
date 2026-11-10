@@ -48,7 +48,7 @@ const Collection = () => {
       <CuratedCollectionsSection pageProps={pageProps} />
 
       {/* 3. COMMUNITY & RECORD BREAKING PROJECTS */}
-      <CollectionCommunitySection />
+      <CollectionCommunitySection pageProps={pageProps} />
 
       {/* 4. IMMERSIVE CALL-TO-ACTION */}
       <CollectionCtaSection pageProps={pageProps} />

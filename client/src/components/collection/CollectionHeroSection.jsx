@@ -2,15 +2,12 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { Award, Layers, Sparkles, CheckCircle2 } from 'lucide-react';
 
-import { getImageUrl } from '../../configs/Apis';
-
 const CollectionHeroSection = ({ pageProps = null }) => {
-  const logoSeal = pageProps?.hero_image || pageProps?.hero_seal;
   const badgeText = pageProps?.badge;
   const headlineText = pageProps?.headline;
   const descText = pageProps?.description;
 
-  if (!headlineText && !descText && !badgeText && !logoSeal) return null;
+  if (!headlineText && !descText && !badgeText) return null;
 
   return (
     <section
@@ -38,17 +35,6 @@ const CollectionHeroSection = ({ pageProps = null }) => {
 
       {/* Đốm sao vàng kim bay lơ lửng đồng bộ chuẩn với trang Hành trình */}
       <FloatingSparkles size={4.5} />
-
-      {/* Watermark Artistic Heritage Logo Background */}
-      {logoSeal && (
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.11] max-w-xl w-full flex items-center justify-center">
-          <img
-            alt=""
-            className="w-[480px] h-[480px] object-contain rounded-full filter contrast-125"
-            src={getImageUrl(logoSeal)}
-          />
-        </div>
-      )}
 
       <div className="relative max-w-5xl mx-auto flex flex-col items-center text-center z-10">
         {/* Archival Badge */}
@@ -91,28 +77,28 @@ const CollectionHeroSection = ({ pageProps = null }) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-[#D4AF37]/25">
             <div className="flex flex-col items-center justify-center p-2 text-center">
               <span className="font-serif text-[34px] md:text-[40px] font-bold text-gold-gradient mb-1 tracking-tight">
-                99
+                {pageProps?.stat1_num || '99'}
               </span>
               <span className="font-serif text-[#EADBCE] uppercase text-[12px] md:text-[13px] tracking-wider font-semibold">
-                Tác Phẩm Độc Bản Cửu Cửu
+                {pageProps?.stat1_label || 'Tác Phẩm Độc Bản Cửu Cửu'}
               </span>
             </div>
 
             <div className="flex flex-col items-center justify-center p-2 text-center pt-4 md:pt-2">
               <span className="font-serif text-[34px] md:text-[40px] font-bold text-gold-gradient mb-1 tracking-tight">
-                100
+                {pageProps?.stat2_num || '100'}
               </span>
               <span className="font-serif text-[#EADBCE] uppercase text-[12px] md:text-[13px] tracking-wider font-semibold">
-                Mô-đun Đồng Kiến Tạo
+                {pageProps?.stat2_label || 'Mô-đun Đồng Kiến Tạo'}
               </span>
             </div>
 
             <div className="flex flex-col items-center justify-center p-2 text-center pt-4 md:pt-2">
               <span className="font-serif text-[34px] md:text-[40px] font-bold text-gold-gradient mb-1 tracking-tight">
-                01
+                {pageProps?.stat3_num || '01'}
               </span>
               <span className="font-serif text-[#EADBCE] uppercase text-[12px] md:text-[13px] tracking-wider font-semibold">
-                Tuyệt Phẩm Du Lãm Vespa
+                {pageProps?.stat3_label || 'Tuyệt Phẩm Du Lãm Vespa'}
               </span>
             </div>
 
@@ -120,11 +106,11 @@ const CollectionHeroSection = ({ pageProps = null }) => {
               <div className="flex items-center gap-1.5 text-[#FFDF73] mb-1">
                 <Award className="w-6 h-6 text-[#FFDF73]" />
                 <span className="font-serif text-[22px] md:text-[24px] font-bold tracking-wide">
-                  VIETKINGS
+                  {pageProps?.stat4_num || 'VIETKINGS'}
                 </span>
               </div>
               <span className="font-serif text-[#EADBCE] uppercase text-[12px] md:text-[13px] tracking-wider font-semibold">
-                Hồ Sơ Đang Giám Định Di Sản
+                {pageProps?.stat4_label || 'Hồ Sơ Đang Giám Định Di Sản'}
               </span>
             </div>
           </div>

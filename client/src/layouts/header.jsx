@@ -6,7 +6,18 @@ import siteServices from '../services/siteServices';
 
 const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const isHomePage = location.pathname === '/' || location.pathname === '';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 30);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const LOGO_URL =
     'https://lh3.googleusercontent.com/aida-public/AB6AXuDRIW42qxKqqO8mE8JBoRSPJw3dMADLcoV4pAVEUfHycZibaoqtZV1AUf1mJilGhMmjBGbcD73MJB2WdRtCa9h1FcmnPFm76WT1z3DRpoQr0M598MUhsR8BknD2KLsg8wJRh5uyP0WO63s97mInG9wSUzszrjWNr_ZVj2QJExjYeykmXsAZL6Cngd7iEQeTDcXfu4oxzwVf6uJHxcWPVHAPn8JG814YEu9ZrGFyp2mny4_5TjVV_GdWWAqNCgj-mENrpz0';
@@ -110,12 +121,31 @@ const Header = () => {
 
   return (
     <header
-      className="sticky top-0 w-full z-50 transition-all duration-300 shadow-[0_4px_28px_rgba(0,0,0,0.7)]"
-      style={{
-        background: 'rgba(40, 9, 13, 0.97)',
-        borderBottom: '1px solid rgba(212, 175, 55, 0.35)',
-        backdropFilter: 'blur(16px)',
-      }}
+      className={`${
+        isHomePage ? 'fixed top-0 left-0' : 'sticky top-0'
+      } w-full z-50 transition-all duration-300`}
+      style={
+        isHomePage
+          ? {
+              background:
+                !isScrolled && !mobileOpen
+                  ? 'linear-gradient(to bottom, rgba(28, 6, 9, 0.92) 0%, rgba(28, 6, 9, 0.35) 60%, transparent 100%)'
+                  : 'rgba(32, 7, 11, 0.96)',
+              borderBottom:
+                !isScrolled && !mobileOpen
+                  ? '1px solid transparent'
+                  : '1px solid rgba(212, 175, 55, 0.35)',
+              backdropFilter: !isScrolled && !mobileOpen ? 'none' : 'blur(16px)',
+              boxShadow:
+                !isScrolled && !mobileOpen ? 'none' : '0 4px 28px rgba(0,0,0,0.7)',
+            }
+          : {
+              background: 'rgba(40, 9, 13, 0.97)',
+              borderBottom: '1px solid rgba(212, 175, 55, 0.35)',
+              backdropFilter: 'blur(16px)',
+              boxShadow: '0 4px 28px rgba(0,0,0,0.7)',
+            }
+      }
     >
       <div className="h-16 sm:h-18 w-full max-w-[1600px] mx-auto px-3 sm:px-5 lg:px-8 flex items-center justify-between gap-2 xl:gap-4 flex-nowrap overflow-hidden">
         
@@ -151,7 +181,7 @@ const Header = () => {
                 key={item.name}
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
-                className={`nav-link-item font-serif text-[11.5px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.08em] whitespace-nowrap py-1 shrink-0 transition-all duration-300 ${
+                className={`nav-link-item font-serif text-[11.5px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.08em] whitespace-nowrap py-1.5 shrink-0 transition-all duration-300 ${
                   active
                     ? 'active text-[#FFDF73] font-bold drop-shadow-[0_0_12px_rgba(255,223,115,0.85)]'
                     : 'text-[#EADBCE] hover:text-[#FFDF73] font-semibold'

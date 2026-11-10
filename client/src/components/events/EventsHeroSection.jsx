@@ -1,12 +1,7 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
-import { getImageUrl } from '../../configs/Apis';
 
 const EventsHeroSection = ({ pageProps = null }) => {
-  const heroSeal =
-    pageProps?.hero_image ||
-    pageProps?.hero_seal ||
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuCW2NGrEf3lfKTe7pxCmevWbwQ0drNpFQaZVy43uDF67MZdCLPfAhtv21Shw5iLaEqLx59sBzfChDSs94NDlOUrMUJPRM5Q3aT1E2n8H8JVJIhmGjrgjZQHMSGa38tuEocMJ0AkoKwSedVcJ6czgDFojWj2VrWGXAZuivXOY_msTjKc4RdDzNvMphFBEMPutqx7rc-7VV4i815sYYfRfu7Itz-O_koLFueJ_Xx4CHitwlZXEs6carZDwg';
   const badgeText = pageProps?.badge || 'SỰ KIỆN & HOẠT ĐỘNG DI SẢN • 1930–2030';
   const headlineText = pageProps?.headline || 'NƠI DI SẢN ĐƯỢC THỰC HÀNH';
   const descText =
@@ -35,22 +30,6 @@ const EventsHeroSection = ({ pageProps = null }) => {
             'radial-gradient(circle, rgba(120, 28, 36, 0.42) 0%, rgba(68, 14, 20, 0.28) 55%, transparent 80%)',
         }}
       />
-
-      {/* Watermarked Centenary Emblem */}
-      {heroSeal && (
-        <div className="relative mb-6 group">
-          <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-b from-[#FFDF73] via-[#D4AF37] to-transparent shadow-[0_0_24px_rgba(212,175,55,0.4)] flex items-center justify-center">
-            <div className="w-full h-full rounded-full overflow-hidden bg-[#160405] flex items-center justify-center border border-[#D4AF37]/50">
-              <img
-                alt="Logo Kỷ nguyên Sơn Mài Hội hoạ Việt Nam 1930-2030"
-                className="w-full h-full object-cover opacity-95 transition-transform duration-700 group-hover:scale-105"
-                src={getImageUrl(heroSeal)}
-              />
-            </div>
-          </div>
-          <div className="absolute -inset-2 rounded-full bg-[#D4AF37]/25 blur-md -z-10 animate-pulse" />
-        </div>
-      )}
 
       {/* Eyebrow Pill */}
       {badgeText && (

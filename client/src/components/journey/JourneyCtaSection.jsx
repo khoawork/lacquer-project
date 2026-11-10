@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
-import { getImageUrl } from '../../configs/Apis';
 
 const JourneyCtaSection = ({ pageProps }) => {
-  const ctaImage = pageProps?.cta_image || pageProps?.hero_seal;
   const ctaTag = pageProps?.cta_tag;
   const ctaHeadline = pageProps?.cta_headline;
   const ctaDesc = pageProps?.cta_desc;
@@ -13,7 +11,7 @@ const JourneyCtaSection = ({ pageProps }) => {
   const ctaBtn2Text = pageProps?.cta_btn2_text || 'Đề xuất hợp tác';
   const ctaBtn2Link = pageProps?.cta_btn2_link || '/contact';
 
-  if (!ctaHeadline && !ctaDesc && !ctaImage) return null;
+  if (!ctaHeadline && !ctaDesc) return null;
 
   return (
     <section className="relative z-10 w-full py-20 px-4 sm:px-6 lg:px-12 text-center overflow-hidden">
@@ -24,16 +22,6 @@ const JourneyCtaSection = ({ pageProps }) => {
       </div>
 
       <div className="max-w-4xl mx-auto space-y-7 relative z-10">
-        {ctaImage && (
-          <div className="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-[#3e0808] to-[#1c0303] border-2 border-[#FFDF73]/70 flex items-center justify-center p-1.5 shadow-[0_0_35px_rgba(212,175,55,0.45)] overflow-hidden">
-            <img
-              alt="Huy hiệu Sơn Mài"
-              className="w-full h-full object-cover rounded-full"
-              src={getImageUrl(ctaImage)}
-            />
-          </div>
-        )}
-
         <div className="space-y-3">
           {ctaTag && (
             <span className="font-serif text-[15px] md:text-[16px] tracking-[0.28em] text-[#FFDF73] uppercase font-bold whitespace-nowrap block">

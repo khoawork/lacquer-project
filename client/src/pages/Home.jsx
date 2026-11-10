@@ -26,7 +26,11 @@ const Home = () => {
             : res.data.data;
 
           console.log('Dữ liệu trang chủ từ DB:', pageData); // Debugging line to check the data received
-          setPageProps(pageData?.props || null);
+          const merged = {
+            ...(DEFAULT_PAGE_PROPS['/'] || {}),
+            ...(pageData?.props || {}),
+          };
+          setPageProps(merged);
         }
       } catch (err) {
         console.warn('Lỗi khi tải dữ liệu trang chủ từ cơ sở dữ liệu:', err.message);

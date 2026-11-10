@@ -1,16 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
-import { getImageUrl } from '../../configs/Apis';
 
 const AboutCtaSection = ({ pageProps }) => {
-  const ctaImage = pageProps?.cta_image;
   const ctaHeadline = pageProps?.cta_headline;
   const ctaDesc = pageProps?.cta_desc;
   const ctaBtnText = pageProps?.cta_button_text || 'Trở thành một phần của Hành trình';
   const ctaBtnLink = pageProps?.cta_button_link || '/contact';
 
-  if (!ctaHeadline && !ctaDesc && !ctaImage) return null;
+  if (!ctaHeadline && !ctaDesc) return null;
 
   return (
     <section
@@ -33,15 +31,6 @@ const AboutCtaSection = ({ pageProps }) => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        {ctaImage && (
-          <div className="w-20 h-20 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/40 via-[#1e0404] to-[#D4AF37]/50 shadow-[0_0_30px_rgba(212,175,55,0.5)] flex items-center justify-center">
-            <img
-              alt="Centennial Emblem"
-              className="w-full h-full object-cover rounded-full"
-              src={getImageUrl(ctaImage)}
-            />
-          </div>
-        )}
         <h2 className="font-serif text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
           {ctaHeadline}
         </h2>

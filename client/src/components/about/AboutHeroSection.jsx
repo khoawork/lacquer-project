@@ -1,14 +1,12 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
-import { getImageUrl } from '../../configs/Apis';
 
 const AboutHeroSection = ({ pageProps }) => {
-  const heroSeal = pageProps?.hero_image || pageProps?.hero_seal;
   const badgeText = pageProps?.badge;
   const headline = pageProps?.headline;
   const description = pageProps?.description;
 
-  if (!headline && !description && !badgeText && !heroSeal) return null;
+  if (!headline && !description && !badgeText) return null;
 
   return (
     <section
@@ -37,20 +35,6 @@ const AboutHeroSection = ({ pageProps }) => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-        {/* Centennial Emblem Seal with Gold Glow & Ring */}
-        {heroSeal && (
-          <div className="mb-6 relative group">
-            <div className="w-28 h-28 md:w-36 md:h-36 rounded-full p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#3a090e] to-[#D4AF37]/60 shadow-[0_0_40px_rgba(255,223,115,0.6)] group-hover:shadow-[0_0_65px_rgba(255,223,115,0.85)] transition-all duration-500 flex items-center justify-center">
-              <img
-                alt="Logo Kỷ nguyên Sơn Mài Hội hoạ Việt Nam"
-                className="w-full h-full object-cover rounded-full brightness-110 drop-shadow-[0_0_15px_rgba(255,223,115,0.7)] transition-transform duration-700 group-hover:scale-105"
-                src={getImageUrl(heroSeal)}
-              />
-            </div>
-            <div className="absolute -inset-3 rounded-full border border-[#D4AF37]/50 pointer-events-none group-hover:scale-105 transition-transform duration-500" />
-          </div>
-        )}
-
         {/* Centennial Badge */}
         {badgeText && (
           <div

@@ -65,27 +65,48 @@ const HomePageEditor = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy Hiệu Đầu Trang (badge)
+              Đường Dẫn Video Nền (hero_video_url)
             </label>
             <input
               type="text"
-              value={parsedProps.badge || ''}
-              onChange={(e) => handlePropChange('badge', e.target.value)}
+              placeholder="https://res.cloudinary.com/.../hero.mp4"
+              value={parsedProps.hero_video_url || ''}
+              onChange={(e) => handlePropChange('hero_video_url', e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
             />
           </div>
 
           <div>
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Phụ Đề / Dòng Dẫn (subtitle)
+              Tagline Trên Cùng (top_tagline)
             </label>
             <input
               type="text"
-              value={parsedProps.subtitle || ''}
-              onChange={(e) => handlePropChange('subtitle', e.target.value)}
+              placeholder="NƠI HỘI TỤ"
+              value={parsedProps.top_tagline || parsedProps.badge || ''}
+              onChange={(e) => {
+                handlePropChange('top_tagline', e.target.value);
+                handlePropChange('badge', e.target.value);
+              }}
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
+              Chữ Thư Pháp Uốn Lượn (cursive_title)
+            </label>
+            <input
+              type="text"
+              placeholder="Tinh hoa nghệ thuật"
+              value={parsedProps.cursive_title || parsedProps.subtitle || ''}
+              onChange={(e) => {
+                handlePropChange('cursive_title', e.target.value);
+                handlePropChange('subtitle', e.target.value);
+              }}
+              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm font-cursive text-lg focus:border-[#FFDF73] focus:outline-none"
             />
           </div>
 

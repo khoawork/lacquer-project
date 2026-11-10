@@ -1,17 +1,17 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 import { ArrowRight, Mail } from 'lucide-react';
-import { getImageUrl } from '../../configs/Apis';
 
 const CollectionCtaSection = ({ pageProps }) => {
-  const ctaImage = pageProps?.cta_image || pageProps?.hero_image;
   const ctaTag = pageProps?.cta_tag;
   const ctaHeadline = pageProps?.cta_headline;
   const ctaDesc = pageProps?.cta_desc;
   const ctaBtnText = pageProps?.cta_button_text || 'Đăng ký tham gia kiến tạo';
   const ctaBtnLink = pageProps?.cta_button_link || '/contact';
+  const ctaSecBtnText = pageProps?.cta_secondary_button_text || 'Liên hệ ban điều phối';
+  const ctaSecBtnLink = pageProps?.cta_secondary_button_link || 'mailto:info@sonmaihoihoavietnam.com';
 
-  if (!ctaHeadline && !ctaDesc && !ctaImage) return null;
+  if (!ctaHeadline && !ctaDesc) return null;
 
   return (
     <section
@@ -35,16 +35,6 @@ const CollectionCtaSection = ({ pageProps }) => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative max-w-3xl mx-auto space-y-6 z-10">
-        {ctaImage && (
-          <div className="w-20 h-20 md:w-24 md:h-24 rounded-full mx-auto p-1 bg-gradient-to-br from-[#FFDF73]/50 via-[#260508] to-[#D4AF37]/60 shadow-[0_0_35px_rgba(255,223,115,0.6)] flex items-center justify-center">
-            <img
-              alt="Centennial Emblem"
-              className="w-full h-full object-cover rounded-full brightness-110"
-              src={getImageUrl(ctaImage)}
-            />
-          </div>
-        )}
-
         {ctaTag && (
           <span className="font-serif text-[#FFDF73] tracking-[0.25em] uppercase block text-[13px] md:text-[14px] font-bold">
             {ctaTag}
@@ -73,10 +63,10 @@ const CollectionCtaSection = ({ pageProps }) => {
           </a>
           <a
             className="btn-gold-outline px-5 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center gap-2"
-            href="mailto:info@sonmaihoihoavietnam.com"
+            href={ctaSecBtnLink}
           >
             <Mail className="w-4 h-4" />
-            <span>Liên hệ ban điều phối</span>
+            <span>{ctaSecBtnText}</span>
           </a>
         </div>
       </div>

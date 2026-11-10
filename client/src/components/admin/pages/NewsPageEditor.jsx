@@ -1,5 +1,5 @@
 import React from 'react';
-import { Newspaper, Search, Check, Layers } from 'lucide-react';
+import { Newspaper, Search, Check, Layers, Save } from 'lucide-react';
 import { getImageUrl } from '../../../configs/Apis';
 
 const NewsPageEditor = ({
@@ -9,6 +9,8 @@ const NewsPageEditor = ({
   newsSearch = '',
   setNewsSearch,
   handleToggleNews,
+  handleSavePage,
+  saving = false,
 }) => {
   const selectedNewsIds = (parsedProps.featured_article_ids || []).map(Number);
 
@@ -23,7 +25,35 @@ const NewsPageEditor = ({
   });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 select-none">
+      {/* Top Save Action Bar */}
+      {handleSavePage && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-gradient-to-r from-[#2a080c] via-[#1a0407] to-[#120204] border border-[#D4AF37]/40 shadow-xl">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-[#3d090f] border border-[#D4AF37]/50 flex items-center justify-center text-[#FFDF73] shadow-[0_0_12px_rgba(255,223,115,0.3)]">
+              <Newspaper className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="font-serif text-base font-bold text-[#FFDF73]">
+                Quản Trị Nội Dung: Trang Tin Tức &amp; Tư Liệu
+              </h4>
+              <p className="text-xs text-[#EADBCE]/70">
+                Cập nhật tiêu đề mở đầu, dẫn nhập và chọn danh sách bài viết nổi bật.
+              </p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={handleSavePage}
+            disabled={saving}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#D4AF37] via-[#FFDF73] to-[#AA7C11] text-[#120204] text-xs font-bold uppercase tracking-wider shadow-lg hover:brightness-110 active:scale-95 transition disabled:opacity-50 cursor-pointer"
+          >
+            <Save className="w-4 h-4" />
+            <span>{saving ? 'Đang lưu...' : 'Lưu Thay Đổi'}</span>
+          </button>
+        </div>
+      )}
+
       {/* SECTION 1: HERO */}
       <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-4">
         <div className="flex items-center gap-2.5 border-b border-[#D4AF37]/25 pb-3">
@@ -35,7 +65,7 @@ const NewsPageEditor = ({
               Phần 1: Khung Đầu Trang Tin Tức (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
-              Tiêu đề, phân loại chuyên trang tin tức và tiêu đề bản tin bách niên.
+              Tiêu đề, huy hiệu và đoạn mô tả dẫn nhập trang tin tức.
             </p>
           </div>
         </div>
@@ -49,6 +79,7 @@ const NewsPageEditor = ({
               type="text"
               value={parsedProps.badge || ''}
               onChange={(e) => handlePropChange('badge', e.target.value)}
+              placeholder="VD: ✦ BÁCH NIÊN KHỞI SẮC • GÓC NHÌN & TIẾNG NÓI DI SẢN ✦"
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
             />
           </div>
@@ -60,6 +91,7 @@ const NewsPageEditor = ({
               type="text"
               value={parsedProps.headline || ''}
               onChange={(e) => handlePropChange('headline', e.target.value)}
+              placeholder="VD: NHỮNG CÂU CHUYỆN ĐANG ĐƯỢC VIẾT TIẾP"
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm font-bold focus:border-[#FFDF73] focus:outline-none"
             />
           </div>
@@ -71,18 +103,8 @@ const NewsPageEditor = ({
               rows={3}
               value={parsedProps.description || ''}
               onChange={(e) => handlePropChange('description', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-[#FAF7F2] text-sm focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Tiêu đề đăng ký nhận bản tin (newsletter_headline)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.newsletter_headline || ''}
-              onChange={(e) => handlePropChange('newsletter_headline', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
+              placeholder="VD: Tin tức của Hành trình không chỉ đưa tin sự kiện. Đây là nơi lịch sử được kể lại bằng ngôn ngữ gần gũi, người làm nghề được nhìn thấy và các ý tưởng mới được đưa vào đối thoại công chúng."
+              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-[#FAF7F2] text-sm focus:border-[#FFDF73] focus:outline-none leading-relaxed"
             />
           </div>
         </div>
@@ -181,6 +203,21 @@ const NewsPageEditor = ({
           </div>
         )}
       </div>
+
+      {/* Bottom Save Action Bar */}
+      {handleSavePage && (
+        <div className="flex justify-end pt-4 pb-8">
+          <button
+            type="button"
+            onClick={handleSavePage}
+            disabled={saving}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] via-[#FFDF73] to-[#AA7C11] text-[#120204] text-sm font-bold uppercase tracking-wider shadow-2xl hover:brightness-110 active:scale-95 transition disabled:opacity-50 cursor-pointer"
+          >
+            <Save className="w-5 h-5" />
+            <span>{saving ? 'Đang lưu hệ thống...' : 'Lưu Tất Cả Thay Đổi Trang Tin Tức'}</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 };

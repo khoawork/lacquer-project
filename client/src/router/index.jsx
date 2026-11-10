@@ -14,6 +14,7 @@ import Collection from '../pages/Collection';
 import Archive from '../pages/Archive';
 import Leadership from '../pages/Leadership';
 import News from '../pages/News';
+import NewsDetail from '../pages/NewsDetail';
 import Contact from '../pages/Contact';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
@@ -78,8 +79,16 @@ const router = createBrowserRouter([
         element: <News />,
       },
       {
+        path: 'news/:id',
+        element: <NewsDetail />,
+      },
+      {
         path: 'tin-tuc',
         element: <News />,
+      },
+      {
+        path: 'tin-tuc/:id',
+        element: <NewsDetail />,
       },
       {
         path: 'contact',

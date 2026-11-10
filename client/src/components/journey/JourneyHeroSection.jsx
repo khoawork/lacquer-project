@@ -1,9 +1,7 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
-import { getImageUrl } from '../../configs/Apis';
 
 const JourneyHeroSection = ({ pageProps }) => {
-  const heroSeal = pageProps?.hero_seal || pageProps?.hero_image;
   const badge = pageProps?.badge;
   const subtitle = pageProps?.subtitle;
   const headline = pageProps?.headline;
@@ -29,23 +27,6 @@ const JourneyHeroSection = ({ pageProps }) => {
         <div className="ambient-glow-disc absolute top-[10%] left-[-10%] w-[550px] h-[550px] bg-[#681010]/35 rounded-full blur-[160px]" />
         <div className="ambient-glow-disc absolute bottom-[10%] right-[-10%] w-[550px] h-[550px] bg-[#4a0808]/40 rounded-full blur-[160px]" />
       </div>
-
-      {/* Watermark Heritage Seal Overlay */}
-      {heroSeal && (
-        <div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden -z-10"
-          style={{ opacity: 0.2 }}
-        >
-          <div className="relative w-[520px] h-[520px] md:w-[680px] md:h-[680px] rounded-full overflow-hidden flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.45)] border border-[#D4AF37]/35 p-2">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#3a0808]/70 via-transparent to-[#D4AF37]/20 rounded-full" />
-            <img
-              alt="Kỷ nguyên Sơn Mài Biểu Trưng"
-              className="w-full h-full object-cover rounded-full filter drop-shadow-[0_0_50px_rgba(212,175,55,0.6)]"
-              src={getImageUrl(heroSeal)}
-            />
-          </div>
-        </div>
-      )}
 
       {/* Eyebrow Badge */}
       {badge && (
