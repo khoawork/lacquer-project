@@ -14,6 +14,7 @@ import Collection from '../pages/Collection';
 import Archive from '../pages/Archive';
 import Leadership from '../pages/Leadership';
 import News from '../pages/News';
+import NewsDetail from '../pages/NewsDetail';
 import Contact from '../pages/Contact';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
@@ -22,6 +23,11 @@ import NotFound from '../pages/NotFound';
 import AdminDashboard from '../pages/admin/Dashboard';
 import AdminProducts from '../pages/admin/Products';
 import AdminOrders from '../pages/admin/Orders';
+import PageManager from '../pages/admin/PageManager';
+import FormsManager from '../pages/admin/FormsManager';
+import SettingsManager from '../pages/admin/SettingsManager';
+import MenuManager from '../pages/admin/MenuManager';
+import DataCatalogManager from '../pages/admin/DataCatalogManager';
 
 const router = createBrowserRouter([
   {
@@ -73,8 +79,16 @@ const router = createBrowserRouter([
         element: <News />,
       },
       {
+        path: 'news/:id',
+        element: <NewsDetail />,
+      },
+      {
         path: 'tin-tuc',
         element: <News />,
+      },
+      {
+        path: 'tin-tuc/:id',
+        element: <NewsDetail />,
       },
       {
         path: 'contact',
@@ -93,6 +107,38 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        element: <AdminDashboard />,
+      },
+      {
+        path: 'dashboard',
+        element: <AdminDashboard />,
+      },
+      {
+        path: 'pages',
+        element: <PageManager />,
+      },
+      {
+        path: 'pages/:pageKey',
+        element: <PageManager />,
+      },
+      {
+        path: 'system/forms',
+        element: <FormsManager />,
+      },
+      {
+        path: 'system/settings',
+        element: <SettingsManager />,
+      },
+      {
+        path: 'system/menus',
+        element: <MenuManager />,
+      },
+      {
+        path: 'system/categories',
+        element: <DataCatalogManager />,
+      },
+      {
+        path: 'system/users',
         element: <AdminDashboard />,
       },
       {

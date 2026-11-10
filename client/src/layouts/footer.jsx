@@ -21,13 +21,13 @@ const Footer = () => {
                 />
               </div>
               <div>
-                <h3 className="font-serif text-[20px] md:text-[22px] font-bold uppercase tracking-wide text-gold-gradient leading-snug">
+                <h3 className="font-sans text-[20px] md:text-[22px] font-bold uppercase tracking-wide text-gold-gradient leading-snug">
                   Hành trình 100 năm Sơn mài Hội họa Việt Nam (1930–2030)
                 </h3>
               </div>
             </div>
 
-            <p className="font-serif text-[17px] md:text-[18px] italic text-[#EADBCE] leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+            <p className="font-sans text-[17px] md:text-[18px] italic text-[#EADBCE] leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
               “Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.”
             </p>
 
@@ -39,12 +39,12 @@ const Footer = () => {
           {/* Phân khu 2: Đơn vị bảo trợ & Chủ trì / Credits (lg:col-span-4) */}
           <div className="lg:col-span-4 space-y-4">
             <div className="space-y-1">
-              <span className="font-serif text-[13px] tracking-[0.25em] text-[#D4AF37] uppercase font-bold whitespace-nowrap">
+              <span className="font-sans text-[13px] tracking-[0.25em] text-[#D4AF37] uppercase font-bold whitespace-nowrap">
                 ĐƠN VỊ TỔ CHỨC & ĐIỀU PHỐI
               </span>
               <div className="w-10 h-0.5 bg-[#D4AF37]/50 mt-1"></div>
             </div>
-            <div className="space-y-3 font-serif">
+            <div className="space-y-3 font-sans">
               <div className="p-3 rounded-lg bg-[#180303] border border-[#D4AF37]/25 space-y-1">
                 <span className="text-[12px] uppercase tracking-wider text-[#FFDF73] font-semibold block">
                   Điều phối nền tảng:
@@ -67,7 +67,7 @@ const Footer = () => {
           {/* Phân khu 3: Thông tin liên hệ chính thức / Contact (lg:col-span-3) */}
           <div className="lg:col-span-3 space-y-4">
             <div className="space-y-1">
-              <span className="font-serif text-[13px] tracking-[0.25em] text-[#D4AF37] uppercase font-bold whitespace-nowrap">
+              <span className="font-sans text-[13px] tracking-[0.25em] text-[#D4AF37] uppercase font-bold whitespace-nowrap">
                 LIÊN HỆ CHÍNH THỨC
               </span>
               <div className="w-10 h-0.5 bg-[#D4AF37]/50 mt-1"></div>
@@ -76,7 +76,7 @@ const Footer = () => {
               <div className="flex items-start gap-2.5 text-[#FAF7F2]">
                 <Mail className="w-5 h-5 text-[#FFDF73] flex-shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-serif text-[12px] uppercase tracking-wider text-[#EADBCE]">
+                  <div className="font-sans text-[12px] uppercase tracking-wider text-[#EADBCE]">
                     Thư điện tử:
                   </div>
                   <a
@@ -91,7 +91,7 @@ const Footer = () => {
               <div className="flex items-start gap-2.5 text-[#FAF7F2]">
                 <Phone className="w-5 h-5 text-[#FFDF73] flex-shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-serif text-[12px] uppercase tracking-wider text-[#EADBCE]">
+                  <div className="font-sans text-[12px] uppercase tracking-wider text-[#EADBCE]">
                     Đường dây nóng:
                   </div>
                   <div className="text-[#FAF7F2] font-semibold">
@@ -103,7 +103,7 @@ const Footer = () => {
               <div className="flex items-start gap-2.5 text-[#FAF7F2]">
                 <MapPin className="w-5 h-5 text-[#FFDF73] flex-shrink-0 mt-0.5" />
                 <div>
-                  <div className="font-serif text-[12px] uppercase tracking-wider text-[#EADBCE]">
+                  <div className="font-sans text-[12px] uppercase tracking-wider text-[#EADBCE]">
                     Địa bàn điều phối:
                   </div>
                   <div className="text-[#FAF7F2]">
@@ -118,10 +118,10 @@ const Footer = () => {
 
         {/* Phân khu 4: Chân trang bản quyền pháp lý / Copyright Bottom Bar */}
         <div className="mt-14 pt-8 border-t border-[#D4AF37]/25 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-          <p className="font-serif text-[14px] md:text-[15px] text-[#EADBCE] tracking-wide leading-relaxed">
+          <p className="font-sans text-[14px] md:text-[15px] text-[#EADBCE] tracking-wide leading-relaxed">
             © 2026 Hành trình 100 năm Sơn mài Hội họa Việt Nam. Bảo lưu mọi quyền. Nội dung và hình ảnh chỉ được sử dụng khi có sự đồng ý của đơn vị quản lý.
           </p>
-          <div className="flex items-center gap-6 text-[#FFDF73] font-serif text-[13px] tracking-wider uppercase whitespace-nowrap">
+          <div className="flex items-center gap-6 text-[#FFDF73] font-sans text-[13px] tracking-wider uppercase whitespace-nowrap">
             <a className="hover:underline" href="#dieu-khoan">
               Điều khoản bảo mật
             </a>

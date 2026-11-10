@@ -2,83 +2,142 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FloatingSparkles from '../common/FloatingSparkles';
 
-const HeroSection = () => {
+const DEFAULT_VIDEO_URL =
+  'https://res.cloudinary.com/ds11ggie4/video/upload/v1794319913/sonmai_uccrps.mp4';
+const LEGACY_VIDEO_URL =
+  'https://res.cloudinary.com/ds11ggie4/video/upload/v1792383491/forum/hero/8dcdbac5197b45a69bab73039d17c28f.mp4';
+
+const HeroSection = ({ pageProps }) => {
+  const videoUrl =
+    !pageProps?.hero_video_url || pageProps.hero_video_url === LEGACY_VIDEO_URL
+      ? DEFAULT_VIDEO_URL
+      : pageProps.hero_video_url;
+
+  const topTagline = pageProps?.top_tagline || pageProps?.badge || 'NƠI HỘI TỤ';
+  const cursiveTitle = pageProps?.cursive_title || 'Tinh hoa nghệ thuật';
+  const headlineText = pageProps?.headline || 'HÀNH TRÌNH 100 NĂM SƠN MÀI HỘI HỌA VIỆT NAM';
+  const cta1Text = pageProps?.hero_cta1_text || 'KHÁM PHÁ HÀNH TRÌNH';
+  const cta1Link = pageProps?.hero_cta1_link || '/journey';
+  const cta2Text = pageProps?.hero_cta2_text || 'THAM GIA ĐỒNG KIẾN TẠO';
+  const cta2Link = pageProps?.hero_cta2_link || '/contact';
+  const bottomQuoteText = pageProps?.bottom_quote || pageProps?.quote || '“Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.”';
+
+  // Render tiêu đề 3 dòng hoành tráng chuẩn nhận diện mỹ thuật ban đầu
+  const renderHeadline = () => {
+    if (!headlineText) {
+      return (
+        <>
+          <span className="block">HÀNH TRÌNH 100</span>
+          <span className="block">NĂM SƠN MÀI HỘI</span>
+          <span className="block">HỌA VIỆT NAM</span>
+        </>
+      );
+    }
+
+    if (headlineText.includes('\n')) {
+      return headlineText.split('\n').map((line, idx) => (
+        <span key={idx} className="block">
+          {line}
+        </span>
+      ));
+    }
+
+    if (headlineText.trim() === 'HÀNH TRÌNH 100 NĂM SƠN MÀI HỘI HỌA VIỆT NAM') {
+      return (
+        <>
+          <span className="block">HÀNH TRÌNH 100</span>
+          <span className="block">NĂM SƠN MÀI HỘI</span>
+          <span className="block">HỌA VIỆT NAM</span>
+        </>
+      );
+    }
+
+    return headlineText;
+  };
+
   return (
-    <section
-      className="relative w-full min-h-[calc(100vh-80px)] flex flex-col justify-between items-center text-center px-5 md:px-12 pt-20 pb-14 overflow-hidden"
-      style={{
-        background: 'radial-gradient(circle at 50% 30%, rgb(54, 13, 19) 0%, rgb(37, 8, 12) 55%, rgb(22, 4, 6) 100%)',
-      }}
-    >
-      {/* Floating Sparkles & Center Ambient Glow */}
-      <FloatingSparkles size={4.5} />
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-[#D4AF37]/10 rounded-full blur-[140px] ambient-glow-disc" />
-      </div>
+    <section className="relative w-full min-h-screen flex flex-col justify-between items-center text-center overflow-hidden bg-[#0c121e]">
+      {/* 1. Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+        src={videoUrl}
+      />
 
-      {/* Center Lacquer Bloom Graphic with Gold Glow Halo */}
-      <div className="absolute inset-0 flex items-center justify-center opacity-25 pointer-events-none">
-        <div className="relative w-[550px] h-[550px] md:w-[680px] md:h-[680px] rounded-full overflow-hidden flex items-center justify-center shadow-[0_0_120px_rgba(212,175,55,0.45)] border border-[#D4AF37]/35 p-2">
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#3a0808]/70 via-transparent to-[#D4AF37]/20 rounded-full" />
-          <img
-            alt="Kỷ nguyên Sơn Mài Biểu Trưng"
-            className="w-full h-full object-cover rounded-full filter drop-shadow-[0_0_50px_rgba(212,175,55,0.6)]"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6q50uNbfjHPDj6-2aHqeSR8DW1g_492VREK_fAsMYMK3DQhFaFVLvrzrgBfkcJiOO2Tais7QvRuBF8ALjaz4nBsOtz2_OYNR9WdWGDVxkBf7NcORDAYbMcd2mrPyEmwkKfmDP20xLS_6bePaBtTvSZ-Ka5jNUCOMMIDzFfKoQnsM1b5MSjmOee7IfSPeNcTZstFNnDOBIGFaWlb4VwSZlLpre2zH2b53XVJdHercK7LRBB90ttJrMYIg2tBWbMCmHl44"
-          />
-        </div>
-      </div>
+      {/* 2. Atmospheric Neutral Overlay để tôn lên sắc xanh ánh sáng & màu vàng kim chuẩn ảnh mẫu */}
+      <div
+        className="absolute inset-0 pointer-events-none z-[1]"
+        style={{
+          background:
+            'radial-gradient(ellipse at 50% 50%, rgba(12, 18, 30, 0.22) 0%, rgba(14, 20, 32, 0.52) 60%, rgba(10, 12, 18, 0.78) 100%)',
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0b101d]/65 via-transparent to-[#0a0c14]/75 pointer-events-none z-[1]" />
 
-      {/* Top Badge Milestone */}
-      <div className="relative z-10 flex flex-col items-center mt-3">
-        <div className="inline-flex items-center gap-2.5 px-6 py-1.5 rounded-full bg-[#2d0707]/90 border border-[#D4AF37]/45 backdrop-blur-md shadow-[0_0_20px_rgba(212,175,55,0.25)]">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#FFDF73] animate-pulse shadow-[0_0_12px_#FFDF73]" />
-          <span className="font-serif text-[14px] md:text-[16px] tracking-[0.28em] text-[#FFDF73] uppercase font-bold whitespace-nowrap">
-            1930 • 2030 • BÁCH NIÊN KHỞI SẮC
+      {/* 3. Floating Sparkles */}
+      <FloatingSparkles size={4} />
+
+      {/* 4. Main Content Wrapper */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto flex-1 flex flex-col justify-between items-center px-4 sm:px-6 pt-20 sm:pt-24 pb-8 sm:pb-12">
+        
+        {/* Top Tagline: ── NƠI HỘI TỤ ── */}
+        <div className="flex items-center justify-center gap-3 sm:gap-5 pt-2">
+          <div className="w-10 sm:w-16 h-px bg-gradient-to-r from-transparent to-[#D4AF37]" />
+          <span className="font-sans text-[12px] sm:text-[14px] md:text-[15px] tracking-[0.35em] text-[#E5C158] uppercase font-bold drop-shadow-[0_0_10px_rgba(229,193,88,0.45)]">
+            {topTagline}
           </span>
+          <div className="w-10 sm:w-16 h-px bg-gradient-to-l from-transparent to-[#D4AF37]" />
         </div>
-      </div>
 
-      {/* Center Hero Narrative */}
-      <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center my-auto py-6">
-        <p className="font-serif text-[20px] md:text-[24px] italic text-[#FFE599] tracking-[0.18em] uppercase mb-3 font-semibold text-center whitespace-nowrap">
-          Bản Sắc Hội Họa &amp; Di Sản Nghệ Thuật
-        </p>
-        <h1 className="font-serif text-[38px] sm:text-[52px] md:text-[68px] lg:text-[76px] font-bold text-gold-gradient uppercase tracking-wide max-w-5xl leading-[1.12] drop-shadow-[0_4px_30px_rgba(212,175,55,0.35)] text-center">
-          HÀNH TRÌNH 100 NĂM SƠN MÀI HỘI HỌA VIỆT NAM
-        </h1>
-        <div className="w-36 h-[2px] bg-gradient-to-r from-transparent via-[#FFDF73] to-transparent my-6 opacity-85 shadow-[0_0_10px_#FFDF73]" />
-        <p className="font-body text-[18px] md:text-[21px] text-[#FAF7F2] max-w-3xl leading-[1.85] font-normal text-center drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-          Từ những lớp sơn then, son thắm được tích tụ và mài lộ qua thời gian, một ngôn ngữ hội họa mang bản sắc Việt đã thành hình. Hành trình 1930–2030 kết nối quá khứ, hiện tại và tương lai để di sản không chỉ được gìn giữ, mà tiếp tục sống, sáng tạo và sinh dưỡng những giá trị mới.
-        </p>
+        {/* Center Hero Block: Tinh hoa nghệ thuật uốn lượn uốn trên Tiêu đề hoành tráng */}
+        <div className="flex flex-col items-center justify-center text-center my-auto py-6 sm:py-8">
+          {/* Cursive script: "Tinh hoa nghệ thuật" (nguyên bản ban đầu) */}
+          <p className="font-cursive text-[52px] sm:text-[76px] md:text-[96px] lg:text-[112px] text-transparent bg-clip-text bg-gradient-to-b from-[#FFFDF0] via-[#FFEBB0] to-[#E5C158] drop-shadow-[0_4px_24px_rgba(255,235,176,0.45)] leading-[0.95] tracking-normal select-none -mb-3 sm:-mb-5 md:-mb-7">
+            {cursiveTitle}
+          </p>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-5 mt-8 w-full max-w-xl">
-          <Link
-            to="/journey"
-            className="btn-gold w-full sm:w-auto px-9 py-4 rounded text-[16px] uppercase tracking-[0.18em] text-center font-bold whitespace-nowrap inline-block"
-          >
-            KHÁM PHÁ HÀNH TRÌNH
-          </Link>
-          <Link
-            to="/contact"
-            className="btn-gold-outline w-full sm:w-auto px-9 py-4 rounded text-[16px] uppercase tracking-[0.18em] text-center font-bold whitespace-nowrap inline-block"
-          >
-            THAM GIA ĐỒNG KIẾN TẠO
-          </Link>
+          {/* Monumental Main Headline */}
+          <h1 className="font-sans text-[34px] sm:text-[54px] md:text-[70px] lg:text-[86px] font-black tracking-[0.04em] leading-[1.08] text-center max-w-5xl uppercase drop-shadow-[0_4px_32px_rgba(212,175,55,0.45)]">
+            <span className="bg-gradient-to-b from-[#FFFFFF] via-[#FFE79A] to-[#C99824] bg-clip-text text-transparent filter drop-shadow-[0_2px_14px_rgba(255,223,115,0.5)]">
+              {renderHeadline()}
+            </span>
+          </h1>
+
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 sm:mt-12 w-full max-w-2xl">
+            <Link
+              to={cta1Link}
+              className="w-full sm:w-auto min-w-[220px] sm:min-w-[250px] px-8 sm:px-11 py-3.5 sm:py-4 rounded-none sm:rounded bg-gradient-to-r from-[#DFB743] via-[#F3DE7E] to-[#C99824] hover:brightness-110 text-[#1b0609] font-bold text-sm sm:text-[15px] uppercase tracking-[0.2em] shadow-[0_4px_24px_rgba(212,175,55,0.5)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center justify-center text-center whitespace-nowrap"
+            >
+              {cta1Text}
+            </Link>
+            <Link
+              to={cta2Link}
+              className="w-full sm:w-auto min-w-[220px] sm:min-w-[250px] px-8 sm:px-11 py-3.5 sm:py-4 rounded-none sm:rounded bg-[#120508]/85 hover:bg-[#220a0d] border border-[#D4AF37]/80 hover:border-[#FFDF73] text-[#FFDF73] font-bold text-sm sm:text-[15px] uppercase tracking-[0.2em] shadow-[0_4px_22px_rgba(0,0,0,0.65)] backdrop-blur-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 inline-flex items-center justify-center text-center whitespace-nowrap"
+            >
+              {cta2Text}
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* Bottom Emblem Quote */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto flex items-center justify-between gap-4 py-3">
-        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-[#D4AF37]/50 to-[#D4AF37]" />
-        <p className="font-serif text-[18px] md:text-[22px] italic text-[#FFDF73] tracking-wide font-medium text-center px-4 whitespace-nowrap drop-shadow-[0_0_12px_rgba(255,223,115,0.4)]">
-          “Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.”
-        </p>
-        <div className="h-px flex-1 bg-gradient-to-l from-transparent via-[#D4AF37]/50 to-[#D4AF37]" />
+        {/* Bottom Quote: ── “Đánh thức cội nguồn di sản — Khơi nguồn mạch ngầm sáng tạo.” ── */}
+        {bottomQuoteText && (
+          <div className="w-full max-w-4xl mx-auto flex items-center justify-center gap-3 sm:gap-6 pt-2 pb-2 opacity-90 hover:opacity-100 transition-opacity">
+            <div className="h-px flex-1 max-w-[100px] sm:max-w-[180px] bg-gradient-to-r from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
+            <p className="text-[14px] sm:text-[16px] md:text-[17px] italic text-[#FFEBB0] tracking-wide font-medium text-center drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)]">
+              {bottomQuoteText}
+            </p>
+            <div className="h-px flex-1 max-w-[100px] sm:max-w-[180px] bg-gradient-to-l from-transparent via-[#D4AF37]/60 to-[#D4AF37]" />
+          </div>
+        )}
+
       </div>
     </section>
   );
 };
 
 export default HeroSection;
-

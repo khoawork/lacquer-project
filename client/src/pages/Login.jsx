@@ -14,7 +14,7 @@ const Login = () => {
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md border border-stone-200 mt-10">
-      <h2 className="text-2xl font-bold font-serif text-center text-stone-900 mb-6">Đăng Nhập</h2>
+      <h2 className="text-2xl font-bold font-sans text-center text-stone-900 mb-6">Đăng Nhập</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-stone-700 mb-1">Email</label>

@@ -1,93 +1,70 @@
 import React from 'react';
-import { Clock, Building2, MapPin, Sparkles, ArrowRight, Download, CheckCircle, Calendar } from 'lucide-react';
+import { getImageUrl } from '../../configs/Apis';
 
-const EventsProgramSection = () => {
-  const BANNER_BG =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuAk9UadPB6Ai1dAdE5R0qsQCARUuFoxFXYN5lYL6e7giPVY2rL4L2QIb44QNIzDGrUEI-Sh_TwXJsJW_9CP3KNnJMrfz0Nj5GOrzkbjGLU-KeG3vzzgpln6w3jlB_Rw02IeaF-Bc_o22kuepOM8h4sGLJHLOVeM1cSrduIChr772u0YXzIIyTdTXlp62DlBD6PdZaLfFWx2ELqdJ2HmEtuvZWmT3heQFFwc2n8LHxDI';
-
-  const scheduleItems = [
-    {
-      time: '08:30 – 11:30',
-      title: 'Phiên 1: Khai mạc & Tham luận Cội nguồn: Nhựa Sơn Ta & Kỹ nghệ Bách Niên',
-      desc: 'Báo cáo khoa học về đặc tính hóa - sinh của nhựa sơn cội Phú Thọ, kỹ thuật ủ then, đánh bóng và nghệ thuật mài truyền thống dưới góc nhìn bảo tồn di sản.',
-      speakers: 'Các nghệ nhân tiêu biểu làng nghề Hạ Thái & Hội đồng Cố vấn Viện Kỷ Lục',
-    },
-    {
-      time: '13:30 – 15:30',
-      title: 'Phiên 2: Đối thoại Bàn tròn: Sơn Mài Đương Đại & Kinh Tế Sáng Tạo Số',
-      desc: 'Thảo luận mở về cách thức đưa nghệ thuật sơn mài hội họa bác học tiếp cận thị trường nghệ thuật quốc tế, tích hợp công nghệ định danh số và bảo chứng nguyên bản.',
-      speakers: 'Nhà giám tuyển độc lập, Giảng viên Đại học Mỹ thuật & Đại diện Doanh nghiệp Sáng tạo',
-    },
-    {
-      time: '16:00 – 17:30',
-      title: 'Phiên 3: Công bố Vinh Danh & Ký kết Liên minh Bảo tồn Sơn Mài 2026–2030',
-      desc: 'Nghi thức khởi động mạng lưới hợp tác bảo trợ thế hệ họa sĩ trẻ, trao kỷ niệm chương bách niên và công bố kế hoạch xuất bản Kỷ yếu Bách Niên toàn quốc.',
-      speakers: 'Ban điều hành Hành trình 100 năm & Các đơn vị đồng hành',
-    },
-  ];
+const EventsProgramSection = ({ pageProps = null }) => {
+  const badge = pageProps?.program_badge;
+  const title =
+    pageProps?.program_title ||
+    pageProps?.highlight_theme;
+  const desc = pageProps?.program_desc ;
+     const bgImg =pageProps?.program_image;
+  const time = pageProps?.program_time;
+  const date = pageProps?.program_date ;
+  const location = pageProps?.program_location || pageProps?.location ;
+  const address = pageProps?.program_address ;
+  const gpsTitle = pageProps?.program_gps_title ;
+  const gpsSub =
+    pageProps?.program_gps_sub;
 
   return (
     <section
-      className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-12 mb-20 scroll-mt-28 relative z-10"
+      className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-20 scroll-mt-28 relative z-10"
       id="chuong-trinh-chi-tiet"
     >
-      {/* Decorative Section Header */}
-      <div className="flex flex-col items-center text-center mb-10">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D4AF37]/40 mb-3 bg-[#24080b]/90 text-[#FFDF73] text-[12px] uppercase tracking-widest font-bold">
-          <Sparkles className="w-3.5 h-3.5 text-[#FFDF73]" />
-          <span>Mô hình chuẩn hóa</span>
-        </div>
-        <h3 className="font-serif text-3xl md:text-4xl text-gold-gradient font-bold tracking-tight">
-          Chương Trình Chi Tiết & Khung Vận Hành
-        </h3>
-        <p className="font-body text-[16px] text-[#FAF7F2]/90 max-w-2xl mt-2">
-          Cấu trúc phiên làm việc chính thức được thiết kế nhằm bảo đảm tính học thuật nghiêm cẩn và khả năng kết nối thực tiễn cao nhất.
-        </p>
-      </div>
-
-      {/* Main Container Card */}
-      <div
-        className="w-full rounded-2xl card-lacquer shadow-2xl overflow-hidden p-5 sm:p-7 md:p-10 space-y-10 border border-[#D4AF37]/40 relative"
-      >
+      {/* The 7-Module Container */}
+      <div className="w-full rounded-2xl card-lacquer shadow-2xl overflow-hidden p-5 md:p-8 space-y-10 border border-[#D4AF37]/40 relative">
         {/* Background subtle amber glow */}
         <div
           className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[650px] h-[350px] rounded-full blur-[130px] pointer-events-none -z-10"
           style={{
-            background: 'radial-gradient(circle, rgba(160, 36, 48, 0.28) 0%, transparent 75%)',
+            background:
+              'radial-gradient(circle, rgba(160, 36, 48, 0.28) 0%, transparent 75%)',
           }}
         />
 
         {/* MODULE 1: ARTISTIC BANNER & HEADER AREA */}
         <div
-          className="relative w-full rounded-xl overflow-hidden shadow-2xl p-6 sm:p-8 md:p-12 border border-[#D4AF37]/45"
+          className="relative w-full rounded-xl overflow-hidden shadow-2xl p-8 md:p-12 border border-[#D4AF37]/45"
           style={{
             background:
               'linear-gradient(135deg, rgba(56, 14, 20, 0.95) 0%, rgba(26, 6, 9, 0.98) 100%)',
           }}
         >
-          {/* Subtle Lacquer Texture Overlay */}
           <div
             className="absolute inset-0 bg-cover bg-center opacity-35 mix-blend-luminosity"
-            style={{ backgroundImage: `url('${BANNER_BG}')` }}
+            style={{ backgroundImage: `url('${getImageUrl(bgImg)}')` }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#180406] via-[#180406]/85 to-transparent" />
-
           <div className="relative z-10 max-w-3xl">
-            <div
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 text-[#FFDF73] font-serif text-[12px] uppercase tracking-widest mb-4 font-bold"
-              style={{ background: 'rgba(38, 10, 14, 0.85)' }}
-            >
-              <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse" />
-              Mở cổng đăng ký trực tuyến
-            </div>
-
-            <h4 className="font-serif text-[28px] sm:text-[36px] md:text-[44px] leading-tight text-gold-gradient mb-4 font-bold">
-              Đại Hội Thảo & Giám Tuyển: Kỷ Nguyên Đương Đại Của Sơn Mài Việt Nam
-            </h4>
-
-            <p className="font-body text-[15px] sm:text-[17px] text-[#FAF7F2] max-w-2xl leading-relaxed">
-              Phiên chuyên môn cao cấp quy tụ các nghệ sĩ bậc thầy, chuyên gia phục chế vật liệu son tự nhiên Phú Thọ và các nhà đầu tư văn hóa tiên phong.
-            </p>
+            {badge && (
+              <div
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 text-[#FFDF73] font-sans text-[12px] uppercase tracking-widest mb-4 font-bold"
+                style={{ background: 'rgba(38, 10, 14, 0.85)' }}
+              >
+                <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse" />
+                <span>{badge}</span>
+              </div>
+            )}
+            {title && (
+              <h4 className="font-sans text-[30px] sm:text-[34px] md:text-[46px] leading-[40px] md:leading-[54px] text-gold-gradient mb-4 font-bold">
+                {title}
+              </h4>
+            )}
+            {desc && (
+              <p className="font-body text-[16px] md:text-[17px] text-[#FAF7F2] max-w-2xl leading-relaxed">
+                {desc}
+              </p>
+            )}
           </div>
         </div>
 
@@ -104,18 +81,18 @@ const EventsProgramSection = () => {
               className="w-11 h-11 rounded-full border border-[#D4AF37]/50 text-[#FFDF73] flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(212,175,55,0.3)]"
               style={{ background: 'rgba(56, 14, 20, 0.9)' }}
             >
-              <Clock className="w-5 h-5 text-[#FFDF73]" />
+              <span className="material-symbols-outlined text-[22px]">
+                schedule
+              </span>
             </div>
             <div>
-              <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+              <span className="font-sans text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Thời gian tổ chức
               </span>
-              <span className="font-serif text-[19px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
-                08:30 – 17:30
+              <span className="font-sans text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+                {time}
               </span>
-              <span className="font-body text-[13px] sm:text-[14px] text-[#EADBCE]">
-                Thứ Bảy, 14 Tháng 11, 2026
-              </span>
+              <span className="font-body text-[14px] text-[#EADBCE]">{date}</span>
             </div>
           </div>
 
@@ -130,17 +107,19 @@ const EventsProgramSection = () => {
               className="w-11 h-11 rounded-full border border-[#D4AF37]/50 text-[#FFDF73] flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(212,175,55,0.3)]"
               style={{ background: 'rgba(56, 14, 20, 0.9)' }}
             >
-              <Building2 className="w-5 h-5 text-[#FFDF73]" />
+              <span className="material-symbols-outlined text-[22px]">
+                apartment
+              </span>
             </div>
             <div>
-              <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+              <span className="font-sans text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Địa điểm thực hiện
               </span>
-              <span className="font-serif text-[19px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
-                Hội trường Di Sản SIHUB
+              <span className="font-sans text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+                {location}
               </span>
-              <span className="font-body text-[13px] sm:text-[14px] text-[#EADBCE]">
-                273 Điện Biên Phủ, Quận 3, TP.HCM
+              <span className="font-body text-[14px] text-[#EADBCE]">
+                {address}
               </span>
             </div>
           </div>
@@ -156,96 +135,21 @@ const EventsProgramSection = () => {
               className="w-11 h-11 rounded-full border border-[#D4AF37]/50 text-[#FFDF73] flex items-center justify-center shrink-0 shadow-[0_0_12px_rgba(212,175,55,0.3)]"
               style={{ background: 'rgba(56, 14, 20, 0.9)' }}
             >
-              <MapPin className="w-5 h-5 text-[#FFDF73]" />
+              <span className="material-symbols-outlined text-[22px]">
+                pin_drop
+              </span>
             </div>
             <div>
-              <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+              <span className="font-sans text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Bản đồ định vị GPS
               </span>
-              <span className="font-serif text-[19px] sm:text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
-                Tọa độ kết nối mở
+              <span className="font-sans text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+                {gpsTitle}
               </span>
-              <span className="font-body text-[13px] sm:text-[14px] text-[#EADBCE]">
-                SIHUB Hub — Tầng 2 Gallery
+              <span className="font-body text-[14px] text-[#EADBCE]">
+                {gpsSub}
               </span>
             </div>
-          </div>
-        </div>
-
-        {/* MODULE 3: DETAILED CONFERENCE AGENDA */}
-        <div className="space-y-4">
-          <h5 className="font-serif text-[20px] md:text-[22px] text-gold-gradient font-bold uppercase tracking-wider flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-[#FFDF73]" />
-            Lịch trình phiên làm việc
-          </h5>
-
-          <div className="space-y-3">
-            {scheduleItems.map((item, idx) => (
-              <div
-                key={idx}
-                className="p-5 rounded-xl border border-[#D4AF37]/25 flex flex-col md:flex-row md:items-center justify-between gap-4 group hover:border-[#FFDF73]/50 transition-colors"
-                style={{ background: 'rgba(28, 7, 10, 0.75)' }}
-              >
-                <div className="space-y-1 md:max-w-3xl">
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif text-[13px] md:text-[14px] px-2.5 py-1 rounded bg-[#450e14] text-[#FFDF73] font-bold border border-[#D4AF37]/30">
-                      {item.time}
-                    </span>
-                    <h6 className="font-serif text-[16px] md:text-[18px] text-[#FAF7F2] font-bold group-hover:text-[#FFDF73] transition-colors">
-                      {item.title}
-                    </h6>
-                  </div>
-                  <p className="font-body text-[14px] md:text-[15px] text-[#FAF7F2]/80 leading-relaxed pt-1">
-                    {item.desc}
-                  </p>
-                  <div className="font-serif text-[12px] md:text-[13px] text-[#FFDF73] font-semibold flex items-center gap-1.5 pt-1">
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span>Diễn giả: {item.speakers}</span>
-                  </div>
-                </div>
-
-                <div className="flex-shrink-0 self-start md:self-center">
-                  <span className="inline-flex items-center gap-1 text-[12px] font-serif uppercase tracking-wider text-[#EADBCE] px-3 py-1 rounded border border-[#D4AF37]/20">
-                    <CheckCircle className="w-3.5 h-3.5 text-[#FFDF73]" />
-                    Đã ấn định
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* MODULE 4: REGISTRATION CALLOUT */}
-        <div
-          className="p-6 md:p-8 rounded-xl border border-[#D4AF37]/35 flex flex-col sm:flex-row items-center justify-between gap-6"
-          style={{ background: 'linear-gradient(135deg, rgba(45, 11, 15, 0.9) 0%, rgba(20, 5, 7, 0.95) 100%)' }}
-        >
-          <div className="space-y-1 text-center sm:text-left">
-            <h6 className="font-serif text-[20px] md:text-[22px] text-gold-gradient font-bold">
-              Đăng ký tham dự Đại Hội Thảo & Giám Tuyển
-            </h6>
-            <p className="font-body text-[14px] md:text-[15px] text-[#FAF7F2]/85">
-              Số lượng khách mời giới hạn 150 đại biểu nhằm đảm bảo chất lượng đối thoại học thuật.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              className="btn-gold inline-flex items-center gap-2 px-6 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer"
-              onClick={() => alert('Cổng đăng ký phiên chính đã tiếp nhận yêu cầu của quý vị!')}
-            >
-              <span>Đăng ký tham dự</span>
-              <ArrowRight className="w-4 h-4 font-bold" />
-            </button>
-            <button
-              type="button"
-              className="btn-gold-outline inline-flex items-center gap-2 px-5 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer"
-              onClick={() => alert('Tài liệu tóm tắt chương trình đang được chuẩn bị tải về.')}
-            >
-              <Download className="w-4 h-4" />
-              <span>Tải Brochure PDF</span>
-            </button>
           </div>
         </div>
       </div>
@@ -254,4 +158,3 @@ const EventsProgramSection = () => {
 };
 
 export default EventsProgramSection;
-
