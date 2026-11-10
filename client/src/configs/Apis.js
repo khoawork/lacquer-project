@@ -35,6 +35,10 @@ const getBaseUrl = () => {
   if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
     return import.meta.env.VITE_API_URL;
   }
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SERVER_URL) {
+    const serverUrl = import.meta.env.VITE_SERVER_URL.replace(/\/+$/, '');
+    return `${serverUrl}/api`;
+  }
   if (typeof process !== 'undefined' && process.env && process.env.REACT_APP_API_URL) {
     return process.env.REACT_APP_API_URL;
   }
