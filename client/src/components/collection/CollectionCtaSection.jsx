@@ -36,19 +36,19 @@ const CollectionCtaSection = ({ pageProps }) => {
 
       <div className="relative max-w-3xl mx-auto space-y-6 z-10">
         {ctaTag && (
-          <span className="font-serif text-[#FFDF73] tracking-[0.25em] uppercase block text-[13px] md:text-[14px] font-bold">
+          <span className="font-sans text-[#FFDF73] tracking-[0.25em] uppercase block text-[13px] md:text-[14px] font-bold">
             {ctaTag}
           </span>
         )}
 
         {ctaHeadline && (
-          <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient uppercase font-bold leading-tight">
+          <h2 className="font-sans text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient uppercase font-bold leading-tight">
             {ctaHeadline}
           </h2>
         )}
 
         {ctaDesc && (
-          <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/90 leading-relaxed max-w-2xl mx-auto">
+          <p className="font-body text-[17px] md:text-[18px] text-[#FAF7F2]/90 leading-relaxed max-w-2xl mx-auto">
             {ctaDesc}
           </p>
         )}

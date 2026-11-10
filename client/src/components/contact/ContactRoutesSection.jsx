@@ -2,56 +2,13 @@ import React from 'react';
 import { ArrowRight, Palette } from 'lucide-react';
 import { resolveLeadershipIcon } from '../leadership/leadershipIconRegistry';
 
-const DEFAULT_ROUTES = [
-  {
-    key: 'artist',
-    icon: 'Palette',
-    badge: 'TUYẾN 01 • SÁNG TÁC',
-    title: 'Tham gia với tư cách nghệ sĩ / nghệ nhân',
-    desc: 'Đăng ký Open Studio, triển lãm, trình diễn sáng tác, workshop, chương trình lưu trú nghệ thuật hoặc đề xuất bộ sưu tập độc bản vinh danh bách niên.',
-    buttonText: 'GỬI HỒ SƠ SÁNG TẠO',
-  },
-  {
-    key: 'academic',
-    icon: 'BookOpen',
-    badge: 'TUYẾN 02 • HỌC THUẬT',
-    title: 'Tham gia với tư cách chuyên gia / nhà nghiên cứu',
-    desc: 'Đề xuất tham luận, phản biện học thuật, gửi bài viết cho Kỷ yếu bách niên, cố vấn chuyên đề di sản hoặc đóng góp tư liệu lịch sử quý giá.',
-    buttonText: 'ĐỀ XUẤT CHUYÊN MÔN',
-  },
-  {
-    key: 'business',
-    icon: 'Building2',
-    badge: 'TUYẾN 03 • ĐỒNG HÀNH DOANH NGHIỆP',
-    title: 'Hợp tác doanh nghiệp và thương hiệu',
-    desc: 'Đồng sáng tạo sản phẩm, ứng dụng sơn mài trong kiến trúc - nội thất đương đại, tài trợ di sản, licensing bản quyền hoặc bảo trợ không gian văn hóa.',
-    buttonText: 'ĐỀ XUẤT HỢP TÁC',
-  },
-  {
-    key: 'education',
-    icon: 'GraduationCap',
-    badge: 'TUYẾN 04 • GIÁO DỤC DI SẢN',
-    title: 'Trường học và cộng đồng',
-    desc: 'Tổ chức tham quan bảo tàng xưởng, lớp học chuyên đề nghệ thuật, hoạt động trải nghiệm thực hành, dự án sinh viên hoặc mạng lưới tình nguyện viên văn hóa.',
-    buttonText: 'ĐĂNG KÝ CHƯƠNG TRÌNH',
-  },
-  {
-    key: 'press',
-    icon: 'Megaphone',
-    badge: 'TUYẾN 05 • TRUYỀN THÔNG ĐẠI CHÚNG',
-    title: 'Báo chí và truyền thông',
-    desc: 'Nhận bộ tài liệu báo chí chính thức (Press Kit), hình ảnh tư liệu độ phân giải cao được cấp quyền sử dụng, đặt lịch phỏng vấn Ban cố vấn và đầu mối phát ngôn.',
-    buttonText: 'LIÊN HỆ TRUYỀN THÔNG',
-  },
-];
-
 export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
   const routesBadge = pageProps?.routes_badge || 'PHƯƠNG THỨC KẾT NỐI';
   const routesTitle = pageProps?.routes_title || 'CÁC TUYẾN THAM GIA ĐỒNG HÀNH';
   const routes =
     Array.isArray(pageProps?.routes) && pageProps.routes.length > 0
       ? pageProps.routes
-      : DEFAULT_ROUTES;
+      : [];
 
   const renderRouteCard = (route) => {
     const IconComponent = resolveLeadershipIcon(route.icon, Palette);
@@ -75,11 +32,11 @@ export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
           </div>
           <div>
             {route.badge && (
-              <span className="font-serif text-[11px] md:text-xs uppercase tracking-widest block mb-1 font-semibold text-[#FFDF73]">
+              <span className="font-sans text-[11px] md:text-xs uppercase tracking-widest block mb-1 font-semibold text-[#FFDF73]">
                 {route.badge}
               </span>
             )}
-            <h3 className="font-serif text-xl sm:text-2xl font-semibold text-[#FAF7F2] leading-snug">
+            <h3 className="font-sans text-xl sm:text-2xl font-semibold text-[#FAF7F2] leading-snug">
               {route.title}
             </h3>
           </div>
@@ -98,7 +55,7 @@ export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
           <button
             type="button"
             onClick={() => onSelectRoute && onSelectRoute(route.key || 'contact')}
-            className="inline-flex items-center gap-2 font-serif text-xs md:text-sm font-semibold tracking-wider uppercase px-4 py-2 rounded transition-all duration-200 text-[#FFDF73] hover:bg-[#E9C349] hover:text-[#241a00] cursor-pointer"
+            className="inline-flex items-center gap-2 font-sans text-xs md:text-sm font-semibold tracking-wider uppercase px-4 py-2 rounded transition-all duration-200 text-[#FFDF73] hover:bg-[#E9C349] hover:text-[#241a00] cursor-pointer"
             style={{ border: '1px solid rgba(212, 175, 55, 0.45)' }}
           >
             <span>{route.buttonText || 'GỬI ĐỀ XUẤT'}</span>
@@ -124,19 +81,23 @@ export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex flex-col items-center text-center mb-12">
           {routesBadge && (
-            <span className="font-serif text-xs md:text-sm text-[#FFDF73] tracking-[0.25em] uppercase mb-1 font-semibold">
+            <span className="font-sans text-xs md:text-sm text-[#FFDF73] tracking-[0.25em] uppercase mb-1 font-semibold">
               {routesBadge}
             </span>
           )}
           <h2
-            className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#FFDF73] tracking-wide font-bold"
+            className="font-sans text-3xl sm:text-4xl md:text-5xl text-[#FFDF73] tracking-wide font-bold"
             style={{ textShadow: '0 0 20px rgba(233, 195, 73, 0.3)' }}
           >
             {routesTitle}
           </h2>
         </div>
 
-        {isFiveRoutes ? (
+        {routes.length === 0 ? (
+          <div className="p-10 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/70 max-w-xl mx-auto my-8">
+            Chưa có dữ liệu
+          </div>
+        ) : isFiveRoutes ? (
           <>
             {/* Top 3 Routes */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

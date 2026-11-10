@@ -1,16 +1,6 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { ChevronDown, Check, Filter } from 'lucide-react';
 
-const DEFAULT_CATEGORIES = [
-  'Tất cả',
-  'Dòng chảy 100 năm',
-  'Người giữ lửa',
-  'Từ xưởng đến đời sống',
-  'Nhật ký Hành trình',
-  'Sơn mài 2.0',
-  'Góc nhìn quốc tế',
-];
-
 const NewsFilterSection = ({
   activeCategory = 'Tất cả',
   onSelectCategory,
@@ -41,9 +31,6 @@ const NewsFilterSection = ({
       new Set(articles.map((a) => a.category?.trim()).filter(Boolean))
     );
     const combined = ['Tất cả'];
-    DEFAULT_CATEGORIES.slice(1).forEach((cat) => {
-      if (!combined.includes(cat)) combined.push(cat);
-    });
     dbCats.forEach((cat) => {
       if (!combined.includes(cat)) combined.push(cat);
     });
@@ -68,7 +55,7 @@ const NewsFilterSection = ({
         {/* Left: Active Category / Count Indicator */}
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rotate-45 bg-[#FFDF73] shadow-[0_0_8px_rgba(255,223,115,0.7)]" />
-          <span className="font-serif text-base md:text-lg font-bold text-gold-gradient uppercase tracking-wide">
+          <span className="font-sans text-base md:text-lg font-bold text-gold-gradient uppercase tracking-wide">
             {activeCategory === 'Tất cả' ? 'Tất cả bài viết' : activeCategory}
           </span>
           {typeof countByCategory[activeCategory] === 'number' && (
@@ -84,7 +71,7 @@ const NewsFilterSection = ({
             type="button"
             onClick={() => setIsOpen((prev) => !prev)}
             aria-expanded={isOpen}
-            className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#1c0508] hover:bg-[#2c080d] border border-[#D4AF37]/40 hover:border-[#FFDF73] text-[#FAF7F2] text-xs md:text-sm font-serif font-bold uppercase tracking-wider transition-all cursor-pointer shadow-lg active:scale-95"
+            className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#1c0508] hover:bg-[#2c080d] border border-[#D4AF37]/40 hover:border-[#FFDF73] text-[#FAF7F2] text-xs md:text-sm font-sans font-bold uppercase tracking-wider transition-all cursor-pointer shadow-lg active:scale-95"
           >
             <Filter className="w-4 h-4 text-[#FFDF73]" />
             <span className="text-[#EADBCE]/70 normal-case font-sans font-normal text-xs">
@@ -124,7 +111,7 @@ const NewsFilterSection = ({
                         handleSelect(cat);
                         setIsOpen(false);
                       }}
-                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-serif uppercase tracking-wider text-left transition cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-sans uppercase tracking-wider text-left transition cursor-pointer ${
                         isSelected
                           ? 'bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] font-bold shadow-md'
                           : 'text-[#FAF7F2]/85 hover:bg-[#2b080d] hover:text-[#FFDF73]'

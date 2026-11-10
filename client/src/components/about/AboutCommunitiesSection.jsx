@@ -12,7 +12,7 @@ const AboutCommunitiesSection = ({ pageProps }) => {
 
   return (
     <section
-      className="relative w-full py-16 lg:py-24"
+      className="relative w-full py-12 lg:py-20"
       style={{
         background:
           'linear-gradient(rgba(22, 5, 7, 0.98) 0%, rgba(36, 10, 14, 0.92) 50%, rgba(18, 4, 6, 0.98) 100%)',
@@ -20,14 +20,14 @@ const AboutCommunitiesSection = ({ pageProps }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div className="text-center max-w-5xl mx-auto mb-16 space-y-3">
           {commTag && (
-            <span className="font-serif text-[13px] uppercase tracking-[0.25em] text-[#FFDF73] font-bold">
+            <span className="font-sans text-[13px] uppercase tracking-[0.25em] text-[#FFDF73] font-bold">
               {commTag}
             </span>
           )}
           {commTitle && (
-            <h2 className="font-serif text-3xl lg:text-[44px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight">
+            <h2 className="font-sans text-3xl lg:text-[44px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight py-4">
               {commTitle}
             </h2>
           )}
@@ -59,10 +59,10 @@ const AboutCommunitiesSection = ({ pageProps }) => {
                   </span>
                 </div>
                 <div>
-                  <h3 className="font-serif text-[20px] text-[#FFDF73] font-bold mb-2">
+                  <h3 className="font-sans text-[20px] text-[#FFDF73] font-bold mb-2">
                     {comm.title}
                   </h3>
-                  <p className="font-body text-[15px] text-[#FAF7F2] leading-relaxed">
+                  <p className="font-body text-[17px] text-[#FAF7F2] leading-relaxed text-justify">
                     {comm.desc}
                   </p>
                 </div>

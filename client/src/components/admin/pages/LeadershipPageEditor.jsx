@@ -501,7 +501,7 @@ const LeadershipPageEditor = ({
               <Users className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-serif text-base font-bold text-[#FFDF73]">
+              <h4 className="font-sans text-base font-bold text-[#FFDF73]">
                 Quản Trị Nội Dung: Ban Điều Hành &amp; Hội Đồng Cố Vấn
               </h4>
               <p className="text-xs text-[#EADBCE]/70">
@@ -528,7 +528,7 @@ const LeadershipPageEditor = ({
             <Handshake className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang Ban Điều Hành (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -585,7 +585,7 @@ const LeadershipPageEditor = ({
               <Shield className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 2: Cơ Quan Điều Phối Nền Tảng &amp; Chủ Trì ({coreUnits.length} đơn vị)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -620,7 +620,7 @@ const LeadershipPageEditor = ({
                     <div className="w-7 h-7 rounded bg-[#200508] border border-[#D4AF37]/40 flex items-center justify-center text-[#FFDF73]">
                       <UnitIcon className="w-4 h-4" />
                     </div>
-                    <span className="font-serif text-sm font-bold text-[#FFDF73]">
+                    <span className="font-sans text-sm font-bold text-[#FFDF73]">
                       {unit.name || `Cơ quan #${idx + 1}`}
                     </span>
                   </div>
@@ -733,7 +733,7 @@ const LeadershipPageEditor = ({
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 3: Hội Đồng Chuyên Môn &amp; Lĩnh Vực Thẩm Định ({advisoryPanels.length} lĩnh vực)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -812,7 +812,7 @@ const LeadershipPageEditor = ({
                         #{idx + 1}
                       </span>
                       <PanelIcon className="w-4 h-4 text-[#FFDF73]" />
-                      <span className="font-serif text-xs font-bold text-[#FFDF73] truncate">
+                      <span className="font-sans text-xs font-bold text-[#FFDF73] truncate">
                         {panel.title}
                       </span>
                     </div>
@@ -914,7 +914,7 @@ const LeadershipPageEditor = ({
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 4: Ban Dự Án Thực Thi ({projectTeams.length} ban chức năng)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -982,7 +982,7 @@ const LeadershipPageEditor = ({
                           {team.num || `#${idx + 1}`}
                         </span>
                         <TeamIcon className="w-4 h-4 text-[#FFDF73]" />
-                        <span className="font-serif text-xs font-bold text-[#FFDF73] truncate">
+                        <span className="font-sans text-xs font-bold text-[#FFDF73] truncate">
                           {team.title}
                         </span>
                       </div>
@@ -1098,7 +1098,7 @@ const LeadershipPageEditor = ({
               <Globe className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 5: Mạng Lưới Phối Hợp &amp; Đối Tác ({networkPartners.length} nhóm)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">

@@ -101,24 +101,7 @@ const getEventBreakdownList = (evt) => {
     }
   }
 
-  // 3. Chuẩn hóa 3 điểm cốt lõi nếu content chưa có hoặc không đủ
-  return [
-    {
-      bold: 'Nội dung chính:',
-      text:
-        'Tham luận chuyên đề, đối thoại liên ngành, giới thiệu tác phẩm/dự án, đề cử – vinh danh và kết nối hợp tác sáng tạo.',
-    },
-    {
-      bold: 'Đối tượng:',
-      text:
-        'Nghệ sĩ, nghệ nhân, nhà nghiên cứu, trường đại học, doanh nghiệp sáng tạo, đơn vị công nghệ và công chúng yêu mỹ thuật.',
-    },
-    {
-      bold: 'Kết quả kỳ vọng:',
-      text:
-        'Tư liệu hóa tri thức, hình thành đề xuất hợp tác thực chất và bổ sung hệ dữ liệu cho Kỷ yếu 100 năm.',
-    },
-  ];
+  return [];
 };
 
 const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) => {
@@ -193,7 +176,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
   return (
     <section className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-24 relative z-10">
       {filteredEvents.length === 0 ? (
-        <div className="p-10 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-serif bg-[#180406]/70 space-y-2">
+        <div className="p-10 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/70 space-y-2">
           <span className="material-symbols-outlined text-[#FFDF73] text-4xl block mx-auto">
             event_busy
           </span>
@@ -216,11 +199,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
             const breakdownList = getEventBreakdownList(evt);
 
             const eventTitle =
-              evt.name && evt.name.trim().length > 2
-                ? evt.name.trim()
-                : evt.title && evt.title.trim().length > 2
-                ? evt.title.trim()
-                : 'Hành trình lần 7';
+              evt.name?.trim() || evt.title?.trim() || 'Sự kiện chưa đặt tên';
 
             const eventDesc =
               evt.description && evt.description.trim()
@@ -267,7 +246,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                 <div className="relative z-10">
                   {/* Nếu là sự kiện nổi bật: Huy hiệu vàng óng */}
                   {isHighlighted && (
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-gradient-to-r from-[#d49b1a] via-[#f3df79] to-[#d49b1a] text-black font-serif font-bold text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(255,223,115,0.45)] mb-4 w-fit">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-gradient-to-r from-[#d49b1a] via-[#f3df79] to-[#d49b1a] text-black font-sans font-bold text-xs uppercase tracking-widest shadow-[0_0_15px_rgba(255,223,115,0.45)] mb-4 w-fit">
                       <span className="material-symbols-outlined text-[15px]" style={{ fontVariationSettings: "'FILL' 1" }}>
                         star
                       </span>
@@ -278,7 +257,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                   {/* Header Status Badge & Meta (Đọc từ DB) */}
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
                     <div
-                      className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md font-serif text-[12px] md:text-[13px] uppercase tracking-wider font-bold shadow-md ${
+                      className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-md font-sans text-[12px] md:text-[13px] uppercase tracking-wider font-bold shadow-md ${
                         !isCompleted
                           ? 'btn-gold'
                           : 'bg-[#2a0b0f]/85 text-[#EADBCE] border border-[#D4AF37]/30'
@@ -294,7 +273,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                     </div>
 
                     <div
-                      className="flex items-center gap-2 text-[#FFDF73] font-serif text-[13px] md:text-[14px] uppercase tracking-widest px-3.5 py-1.5 rounded-md border border-[#D4AF37]/30"
+                      className="flex items-center gap-2 text-[#FFDF73] font-sans text-[13px] md:text-[14px] uppercase tracking-widest px-3.5 py-1.5 rounded-md border border-[#D4AF37]/30"
                       style={{ background: 'rgba(22, 5, 8, 0.85)' }}
                     >
                       <span className="material-symbols-outlined text-[16px] text-[#FFDF73]">
@@ -305,13 +284,13 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                   </div>
 
                   {/* Title (Đọc từ DB: name hoặc title) */}
-                  <h2 className="font-serif text-[26px] md:text-[32px] text-gold-gradient mb-3 leading-tight font-bold group-hover:filter group-hover:brightness-110 transition-all">
+                  <h2 className="font-sans text-[26px] md:text-[32px] text-gold-gradient mb-3 leading-tight font-bold group-hover:filter group-hover:brightness-110 transition-all">
                     {eventTitle}
                   </h2>
 
                   {/* Subtitle / Description (Đọc từ DB có viền vàng bên trái chuẩn ảnh 2) */}
                   {eventDesc && (
-                    <p className="font-body text-[15px] md:text-[16px] italic text-[#FAF7F2] mb-6 border-l-2 pl-4 border-[#D4AF37] leading-relaxed">
+                    <p className="font-body text-[15px] md:text-[16px] text-justify italic text-[#FAF7F2] mb-6 border-l-2 pl-4 border-[#D4AF37] leading-relaxed">
                       {eventDesc}
                     </p>
                   )}
@@ -329,11 +308,11 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                           </span>
                           <span className="leading-relaxed">
                             {item.bold ? (
-                              <strong className="text-[#FFDF73] font-semibold font-serif text-[16px] mr-1.5">
+                              <strong className="text-[#FFDF73] font-semibold font-sans text-[16px] mr-1.5">
                                 {item.bold}
                               </strong>
                             ) : null}
-                            <span className="text-[#FAF7F2]/95">{item.text}</span>
+                            <span className="text-[#FAF7F2]/95 text-justify">{item.text}</span>
                           </span>
                         </li>
                       ))}
@@ -346,42 +325,36 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                     - Sự kiện CÒN LẠI: nút "Xem chương trình" mở Modal chi tiết và "Đăng ký tham dự"
                 */}
                 {isCompleted ? (
-                  <div
-                    className="pt-6 mt-4 p-4 rounded-xl border border-[#D4AF37]/25 flex items-center justify-between relative z-10"
-                    style={{ background: 'rgba(26, 6, 9, 0.7)' }}
-                  >
-                    <span className="font-serif text-[13px] text-[#EADBCE] uppercase tracking-wider font-semibold">
+                  <div className="flex items-center justify-between gap-4 pt-5 mt-auto border-t border-[#D4AF37]/20 relative z-10">
+                    <span className="font-sans text-xs sm:text-[13px] text-[#EADBCE]/85 uppercase tracking-wider font-semibold">
                       Hồ sơ tư liệu hoàn tất
                     </span>
                     <button
                       type="button"
                       onClick={() => setSelectedEventModal(evt)}
-                      className="btn-gold-outline inline-flex items-center gap-2 px-5 py-2.5 rounded-md text-[13px] uppercase tracking-wider font-bold transition-all cursor-pointer"
+                      className="btn-gold-outline inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-sans text-xs uppercase tracking-wider font-bold transition-all cursor-pointer shadow-sm hover:-translate-y-0.5 active:translate-y-0"
                     >
-                      <span className="material-symbols-outlined text-[16px]">folder_open</span>
+                      <span className="material-symbols-outlined text-[17px]">folder_open</span>
                       <span>Xem hồ sơ</span>
                     </button>
                   </div>
                 ) : (
-                  <div
-                    className="flex flex-wrap sm:flex-nowrap items-center gap-3 pt-6 mt-4 p-4 rounded-xl border border-[#D4AF37]/25 relative z-10"
-                    style={{ background: 'rgba(26, 6, 9, 0.7)' }}
-                  >
+                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-5 mt-auto border-t border-[#D4AF37]/20 relative z-10">
                     <button
                       type="button"
                       onClick={() => setSelectedEventModal(evt)}
-                      className="btn-gold flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-md text-[13px] md:text-[14px] uppercase tracking-wider font-bold transition-all cursor-pointer whitespace-nowrap text-center"
+                      className="w-full sm:flex-1 h-11 md:h-12 inline-flex items-center justify-center gap-2 px-5 rounded-lg bg-gradient-to-r from-[#DFB743] via-[#F3DE7E] to-[#C99824] hover:brightness-110 text-[#160305] font-sans font-bold text-xs sm:text-[13px] uppercase tracking-[0.14em] shadow-[0_4px_18px_rgba(212,175,55,0.4)] transition-all transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer whitespace-nowrap text-center"
                     >
                       <span>Xem chương trình</span>
-                      <span className="material-symbols-outlined text-[17px]">
+                      <span className="material-symbols-outlined text-[18px]">
                         arrow_forward
                       </span>
                     </button>
                     <Link
                       to="/contact"
-                      className="btn-gold-outline flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-md text-[13px] md:text-[14px] tracking-wider uppercase font-bold transition-all whitespace-nowrap text-center"
+                      className="w-full sm:flex-1 h-11 md:h-12 inline-flex items-center justify-center gap-2 px-5 rounded-lg bg-[#1a0407]/90 hover:bg-[#2c080d] border border-[#D4AF37]/80 hover:border-[#FFDF73] text-[#FFDF73] hover:text-[#FFF5D0] font-sans font-bold text-xs sm:text-[13px] uppercase tracking-[0.14em] shadow-[0_4px_16px_rgba(0,0,0,0.6)] backdrop-blur-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 whitespace-nowrap text-center"
                     >
-                      <span className="material-symbols-outlined text-[17px]">
+                      <span className="material-symbols-outlined text-[18px]">
                         how_to_reg
                       </span>
                       <span>Đăng ký tham dự</span>
@@ -483,7 +456,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                     <div className="relative z-10 max-w-3xl space-y-3">
                       {/* Badge */}
                       <div
-                        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 text-[#FFDF73] font-serif text-[11px] sm:text-[12px] uppercase tracking-widest font-bold"
+                        className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 text-[#FFDF73] font-sans text-[11px] sm:text-[12px] uppercase tracking-widest font-bold"
                         style={{ background: 'rgba(38, 10, 14, 0.9)' }}
                       >
                         <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse" />
@@ -491,7 +464,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                       </div>
 
                       {/* Title */}
-                      <h3 className="font-serif text-[28px] sm:text-[34px] md:text-[40px] leading-tight text-gold-gradient font-bold">
+                      <h3 className="font-sans text-[28px] sm:text-[34px] md:text-[40px] leading-tight text-gold-gradient font-bold">
                         {modalTitle}
                       </h3>
 
@@ -521,10 +494,10 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                         <span className="material-symbols-outlined text-[22px]">schedule</span>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="font-serif text-[11px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+                        <span className="font-sans text-[11px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                           Thời gian tổ chức
                         </span>
-                        <span className="font-serif text-[18px] text-[#FAF7F2] font-bold block mt-1 leading-snug">
+                        <span className="font-sans text-[18px] text-[#FAF7F2] font-bold block mt-1 leading-snug">
                           {modalTime}
                         </span>
                         <span className="font-body text-xs text-[#EADBCE]/85 block mt-1 leading-relaxed">
@@ -548,10 +521,10 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                         <span className="material-symbols-outlined text-[22px]">apartment</span>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="font-serif text-[11px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+                        <span className="font-sans text-[11px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                           Địa điểm thực hiện
                         </span>
-                        <span className="font-serif text-[18px] text-[#FAF7F2] font-bold block mt-1 leading-snug">
+                        <span className="font-sans text-[18px] text-[#FAF7F2] font-bold block mt-1 leading-snug">
                           {modalLocation.venue}
                         </span>
                         <span className="font-body text-xs text-[#EADBCE]/85 block mt-1 leading-relaxed">
@@ -575,10 +548,10 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                         <span className="material-symbols-outlined text-[22px]">pin_drop</span>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <span className="font-serif text-[11px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+                        <span className="font-sans text-[11px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                           Bản đồ định vị GPS
                         </span>
-                        <span className="font-serif text-[18px] text-[#FAF7F2] font-bold block mt-1 leading-snug">
+                        <span className="font-sans text-[18px] text-[#FAF7F2] font-bold block mt-1 leading-snug">
                           {modalLocation.gpsTitle}
                         </span>
                         <span className="font-body text-xs text-[#EADBCE]/85 block mt-1 leading-relaxed">
@@ -599,7 +572,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                     >
                       <div className="flex items-center gap-2 border-b border-[#D4AF37]/25 pb-2.5">
                         <span className="w-2 h-2 rounded-full bg-[#FFDF73]" />
-                        <span className="font-serif text-xs uppercase tracking-widest text-[#FFDF73] font-bold">
+                        <span className="font-sans text-xs uppercase tracking-widest text-[#FFDF73] font-bold">
                           Nội dung chi tiết chương trình
                         </span>
                       </div>
@@ -614,11 +587,11 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
                             </span>
                             <span className="leading-relaxed">
                               {item.bold ? (
-                                <strong className="text-[#FFDF73] font-serif font-bold text-[15px] mr-1.5">
+                                <strong className="text-[#FFDF73] font-sans font-bold text-[15px] mr-1.5">
                                   {item.bold}
                                 </strong>
                               ) : null}
-                              <span className="text-[#FAF7F2]/95">{item.text}</span>
+                              <span className="text-[#FAF7F2]/95 text-justify">{item.text}</span>
                             </span>
                           </li>
                         ))}

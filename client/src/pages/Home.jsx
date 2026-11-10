@@ -8,32 +8,30 @@ import FeaturedArtworksSection from '../components/home/FeaturedArtworksSection'
 import MonographArchiveSection from '../components/home/MonographArchiveSection';
 import CoCreationCtaSection from '../components/home/CoCreationCtaSection';
 import pageServices from '../services/pageServices';
-import { DEFAULT_PAGE_PROPS } from './admin/PageManager';
 
 const Home = () => {
-  const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/'] || null);
+  const [pageProps, setPageProps] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // Đọc dữ liệu trang chủ trực tiếp từ bảng Page trong DB (slug chỉ nằm trong page)
+  // Đọc dữ liệu trang chủ trực tiếp từ bảng Page trong DB
   useEffect(() => {
     let isMounted = true;
     const fetchPageData = async () => {
       try {
+        setLoading(true);
         const res = await pageServices.getPageBySlug('/');
         if (res.data && res.data.success && isMounted) {
-          // Xử lý linh hoạt khi dữ liệu trả về là đối tượng đơn hoặc mảng
           const pageData = Array.isArray(res.data.data)
             ? res.data.data.find((p) => p.slug === '/' || p.slug === 'home' || p.id === 1) || res.data.data[0]
             : res.data.data;
 
-          console.log('Dữ liệu trang chủ từ DB:', pageData); // Debugging line to check the data received
-          const merged = {
-            ...(DEFAULT_PAGE_PROPS['/'] || {}),
-            ...(pageData?.props || {}),
-          };
-          setPageProps(merged);
+          setPageProps(pageData?.props || null);
         }
       } catch (err) {
         console.warn('Lỗi khi tải dữ liệu trang chủ từ cơ sở dữ liệu:', err.message);
+        if (isMounted) setPageProps(null);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
 
@@ -43,8 +41,29 @@ const Home = () => {
     };
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#100202] text-[#FFDF73] flex flex-col items-center justify-center font-sans">
+        <span className="material-symbols-outlined text-4xl animate-spin mb-3">progress_activity</span>
+        <p className="text-sm tracking-widest uppercase">Đang tải dữ liệu trang chủ...</p>
+      </div>
+    );
+  }
+
+  if (!pageProps) {
+    return (
+      <div className="min-h-screen bg-[#100202] text-[#FAF7F2] flex items-center justify-center p-6 font-sans">
+        <div className="p-10 rounded-2xl border border-[#D4AF37]/30 bg-[#1a0407]/90 max-w-md w-full text-center space-y-3 shadow-2xl">
+          <span className="material-symbols-outlined text-[#FFDF73] text-5xl">folder_off</span>
+          <h3 className="text-xl font-bold text-[#FFDF73]">Chưa có dữ liệu</h3>
+          <p className="text-sm text-[#EADBCE]/70">Dữ liệu trang chủ hiện chưa sẵn sàng trong hệ thống.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col w-full select-none relative overflow-x-hidden bg-[#100202] text-[#FAF7F2]">
+    <div className="flex flex-col w-full select-none relative overflow-x-clip bg-[#100202] text-[#FAF7F2]">
       {/* Ambient Lacquer Glows in Background */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-[12%] left-1/2 -translate-x-1/2 w-[1100px] h-[750px] bg-[#3a0808]/25 rounded-full blur-[160px] ambient-glow-disc" />
@@ -53,11 +72,17 @@ const Home = () => {
         <div className="absolute top-[70%] left-[25%] w-[600px] h-[600px] bg-[#D4AF37]/10 rounded-full blur-[150px] ambient-glow-disc" />
       </div>
 
-      {/* 1. HERO SECTION (100VH + Golden Sparkles + Watermark Logo) */}
-      <HeroSection pageProps={pageProps} />
+      {/* 1. HERO SECTION PINNED: Video ghim cố định ở đỉnh màn hình */}
+      <div className="relative w-full h-[120vh]">
+        <div className="sticky top-0 w-full h-screen overflow-hidden z-0">
+          <HeroSection pageProps={pageProps} />
+        </div>
+      </div>
 
-      {/* 2. GIỚI THIỆU - Một thế kỷ, một hành trình đang tiếp diễn */}
-      <HeritageStorySection pageProps={pageProps} />
+      {/* 2. GIỚI THIỆU: Cuộn trồi lên phủ 1/5 video (~20vh) rồi mới kéo toàn bộ trang đi */}
+      <div className="relative z-10 -mt-[20vh] shadow-[0_-25px_60px_rgba(0,0,0,0.95)]">
+        <HeritageStorySection pageProps={pageProps} />
+      </div>
 
       {/* 3. BỐN TRỤC MỞ - Bốn hướng mở của hành trình */}
       <PillarsSection pageProps={pageProps} />

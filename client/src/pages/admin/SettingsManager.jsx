@@ -156,7 +156,7 @@ const SettingsManager = () => {
             <Sliders className="w-4 h-4 text-[#FFDF73]" />
             <span>Cấu hình Hệ Thống & Nhận Diện</span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
+          <h1 className="font-sans text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
             Quản Lý Logo, Footer & Điều Hướng
           </h1>
           <p className="text-sm text-[#EADBCE]/80 mt-1">
@@ -228,7 +228,7 @@ const SettingsManager = () => {
               background: 'linear-gradient(180deg, rgba(38, 8, 12, 0.95) 0%, rgba(22, 4, 6, 0.98) 100%)',
             }}
           >
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
               Thông Tin Thương Hiệu Chính
             </h3>
 
@@ -287,7 +287,7 @@ const SettingsManager = () => {
               background: 'linear-gradient(180deg, rgba(38, 8, 12, 0.95) 0%, rgba(22, 4, 6, 0.98) 100%)',
             }}
           >
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
               Nội Dung Chân Trang (Footer)
             </h3>
 
@@ -330,7 +330,7 @@ const SettingsManager = () => {
             background: 'linear-gradient(180deg, rgba(38, 8, 12, 0.95) 0%, rgba(22, 4, 6, 0.98) 100%)',
           }}
         >
-          <h3 className="font-serif text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
+          <h3 className="font-sans text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
             Thông Tin Đường Dây Nóng & Trụ Sở
           </h3>
 
@@ -411,7 +411,7 @@ const SettingsManager = () => {
             background: 'linear-gradient(180deg, rgba(38, 8, 12, 0.95) 0%, rgba(22, 4, 6, 0.98) 100%)',
           }}
         >
-          <h3 className="font-serif text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
+          <h3 className="font-sans text-lg font-bold text-[#FFDF73] border-b border-[#D4AF37]/20 pb-2">
             Liên Kết Truyền Thông & Mạng Xã Hội
           </h3>
 
@@ -442,7 +442,7 @@ const SettingsManager = () => {
           }}
         >
           <div className="space-y-2">
-            <h3 className="font-serif text-xl font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-xl font-bold text-[#FFDF73]">
               Quản Lý Menu Chính &amp; Sắp Xếp Theo Slug
             </h3>
             <p className="text-sm text-[#EADBCE]/80 leading-relaxed max-w-2xl">

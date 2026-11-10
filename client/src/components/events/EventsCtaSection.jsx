@@ -32,13 +32,13 @@ const EventsCtaSection = ({ pageProps }) => {
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
         {ctaHeadline && (
-          <h2 className="font-serif text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
+          <h2 className="font-sans text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
             {ctaHeadline}
           </h2>
         )}
 
         {ctaDesc && (
-          <p className="font-body text-[17px] md:text-[19px] text-[#FAF7F2] max-w-2xl mx-auto leading-relaxed">
+          <p className="font-body text-[19px] md:text-[20px] text-[#FAF7F2] max-w-2xl mx-auto leading-relaxed">
             {ctaDesc}
           </p>
         )}
@@ -66,7 +66,7 @@ const EventsCtaSection = ({ pageProps }) => {
         </div>
 
         {/* Chân thẻ các trụ cột */}
-        <div className="pt-6 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-[#FFDF73] font-serif text-[13px] md:text-[14px] uppercase tracking-widest font-semibold">
+        <div className="pt-6 flex flex-wrap items-center justify-center gap-4 md:gap-6 text-[#FFDF73] font-sans text-[13px] md:text-[14px] uppercase tracking-widest font-semibold">
           <span>Tọa đàm chuyên sâu</span>
           <span className="text-[#D4AF37]/60">•</span>
           <span>Trưng bày di sản</span>

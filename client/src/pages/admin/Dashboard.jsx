@@ -39,15 +39,15 @@ const AdminDashboard = () => {
         }}
       >
         <div className="relative z-10 max-w-3xl space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#180305] border border-[#D4AF37]/40 text-[#FFDF73] text-xs font-serif font-bold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#180305] border border-[#D4AF37]/40 text-[#FFDF73] text-xs font-sans font-bold uppercase tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Hệ Thống CMS Quản Trị Trung Tâm</span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-4xl text-gold-gradient font-bold">
+          <h1 className="font-sans text-2xl sm:text-4xl text-gold-gradient font-bold">
             Bảng Điều Khiển — Hành Trình 100 Năm Sơn Mài
           </h1>
           <p className="font-body text-xs sm:text-sm text-[#FAF7F2]/80 leading-relaxed">
-            Hệ thống cho phép Ban Điều Hành chỉnh sửa toàn quyền từng trang nội dung theo mô hình chuẩn: <code className="text-[#FFDF73]">Page (id, name, slug, props: JSON)</code>. Slug chỉ nằm trong page.
+            Hệ thống cho phép Ban Điều Hành chỉnh sửa toàn quyền từng trang nội dung với giao diện trực quan, thân thiện và đồng bộ tức thì trên toàn website.
           </p>
         </div>
       </div>
@@ -55,34 +55,34 @@ const AdminDashboard = () => {
       {/* 4 Metrics Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="p-5 rounded-xl border border-[#D4AF37]/30 bg-[#220508]/80 shadow-lg space-y-1">
-          <span className="text-xs font-serif font-semibold text-[#EADBCE] uppercase tracking-wider">
+          <span className="text-xs font-sans font-semibold text-[#EADBCE] uppercase tracking-wider">
             Trang Quản Trị
           </span>
-          <div className="text-2xl font-bold font-serif text-[#FFDF73]">9 Trang</div>
+          <div className="text-2xl font-bold font-sans text-[#FFDF73]">9 Trang</div>
           <span className="text-[11px] text-[#FAF7F2]/60">Chỉnh sửa toàn quyền nội dung</span>
         </div>
 
         <div className="p-5 rounded-xl border border-[#D4AF37]/30 bg-[#220508]/80 shadow-lg space-y-1">
-          <span className="text-xs font-serif font-semibold text-[#EADBCE] uppercase tracking-wider">
+          <span className="text-xs font-sans font-semibold text-[#EADBCE] uppercase tracking-wider">
             Kỳ Sự Kiện Di Sản
           </span>
-          <div className="text-2xl font-bold font-serif text-[#FFDF73]">12+ Kỳ</div>
+          <div className="text-2xl font-bold font-sans text-[#FFDF73]">12+ Kỳ</div>
           <span className="text-[11px] text-[#FAF7F2]/60">Tọa đàm, triển lãm &amp; showcase</span>
         </div>
 
         <div className="p-5 rounded-xl border border-[#D4AF37]/30 bg-[#220508]/80 shadow-lg space-y-1">
-          <span className="text-xs font-serif font-semibold text-[#EADBCE] uppercase tracking-wider">
+          <span className="text-xs font-sans font-semibold text-[#EADBCE] uppercase tracking-wider">
             Bộ Sưu Tập Bách Niên
           </span>
-          <div className="text-2xl font-bold font-serif text-[#FFDF73]">03 Độc Bản</div>
+          <div className="text-2xl font-bold font-sans text-[#FFDF73]">03 Độc Bản</div>
           <span className="text-[11px] text-[#FAF7F2]/60">Cửu Cửu, Bách Thụ, Du Lãm</span>
         </div>
 
         <div className="p-5 rounded-xl border border-[#D4AF37]/30 bg-[#220508]/80 shadow-lg space-y-1">
-          <span className="text-xs font-serif font-semibold text-[#EADBCE] uppercase tracking-wider">
+          <span className="text-xs font-sans font-semibold text-[#EADBCE] uppercase tracking-wider">
             Hồ Sơ Đề Xuất
           </span>
-          <div className="text-2xl font-bold font-serif text-[#FFDF73]">48 Tiếp Nhận</div>
+          <div className="text-2xl font-bold font-sans text-[#FFDF73]">48 Tiếp Nhận</div>
           <span className="text-[11px] text-[#FAF7F2]/60">Đã mã hóa #SMVN-2026</span>
         </div>
       </div>
@@ -90,7 +90,7 @@ const AdminDashboard = () => {
       {/* Pages Management Grid */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-[#D4AF37]/25 pb-3">
-          <h2 className="font-serif text-lg font-bold text-[#FFDF73] uppercase tracking-wider flex items-center gap-2">
+          <h2 className="font-sans text-lg font-bold text-[#FFDF73] uppercase tracking-wider flex items-center gap-2">
             <Layers className="w-5 h-5 text-[#FFDF73]" />
             <span>Nội Dung Website: 9 Trang Quản Lý Toàn Quyền</span>
           </h2>
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
                     </span>
                   </div>
 
-                  <h3 className="font-serif text-lg font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
+                  <h3 className="font-sans text-lg font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
                     {p.name}
                   </h3>
                   <p className="font-body text-xs text-[#EADBCE]/70 mt-1 line-clamp-2">

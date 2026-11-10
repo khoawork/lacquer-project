@@ -69,7 +69,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
             <Compass className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang Hành Trình (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -187,7 +187,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
               <Calendar className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 2: Dòng Thời Gian Lịch Sử & Tương Lai (Timeline Nodes)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -312,7 +312,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
             <Quote className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 3: Trích Dẫn Trọng Tâm (Key Quote Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -329,7 +329,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
             rows={3}
             value={parsedProps.key_quote || ''}
             onChange={(e) => handlePropChange('key_quote', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-[#FFDF73] font-serif text-base focus:border-[#FFDF73] focus:outline-none"
+            className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-[#FFDF73] font-sans text-base focus:border-[#FFDF73] focus:outline-none"
           />
         </div>
       </div>
@@ -342,7 +342,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 4: Chuỗi Chuyên Đề & Chuyên Đề Đặc Biệt
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -375,7 +375,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
 
         {/* 6 Symposia list */}
         <div className="space-y-4">
-          <span className="text-xs font-serif uppercase tracking-widest text-[#FFDF73] font-bold block">
+          <span className="text-xs font-sans uppercase tracking-widest text-[#FFDF73] font-bold block">
             Danh sách chuyên đề ({symposia.length})
           </span>
           {symposia.map((item, idx) => (
@@ -453,7 +453,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
 
         {/* Featured Symposium (Lần 7) */}
         <div className="p-5 rounded-xl bg-[#240608] border border-[#D4AF37]/50 space-y-4">
-          <div className="flex items-center gap-2 text-xs font-serif uppercase tracking-widest text-[#FFDF73] font-bold">
+          <div className="flex items-center gap-2 text-xs font-sans uppercase tracking-widest text-[#FFDF73] font-bold">
             <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse" />
             <span>Khung Chuyên Đề Đặc Biệt (Lần 7)</span>
           </div>
@@ -529,7 +529,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
             <Megaphone className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 5: Khung Kêu Gọi Đồng Hành (CTA Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -539,20 +539,7 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Nhãn thẻ (cta_tag)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.cta_tag || ''}
-              onChange={(e) => handlePropChange('cta_tag', e.target.value)}
-              placeholder="✦ THAM GIA KIẾN TẠO THẾ KỶ ✦"
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề lớn (cta_headline)
             </label>

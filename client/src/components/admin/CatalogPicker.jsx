@@ -116,7 +116,7 @@ const CatalogPicker = ({
         <div>
           <div className="flex items-center gap-2">
             <Icon className={`w-4 h-4 ${meta.color}`} />
-            <h4 className="font-serif text-sm sm:text-base font-bold text-[#FFDF73]">
+            <h4 className="font-sans text-sm sm:text-base font-bold text-[#FFDF73]">
               {title || `Chọn ${meta.singular} để hiển thị`}
             </h4>
           </div>
@@ -229,7 +229,7 @@ const CatalogPicker = ({
                 <div className="flex-1 min-w-0 pr-1">
                   <div className="flex items-center gap-1.5">
                     <span className="text-[10px] font-mono text-[#FFDF73] font-bold">#{item.id}</span>
-                    <p className="font-serif text-xs font-semibold text-white truncate">{titleText}</p>
+                    <p className="font-sans text-xs font-semibold text-white truncate">{titleText}</p>
                   </div>
                   {subText && (
                     <p className="text-[10px] text-[#EADBCE]/70 truncate mt-0.5">{subText}</p>

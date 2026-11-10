@@ -11,35 +11,9 @@ const CollectionCommunitySection = ({ pageProps = null }) => {
     pageProps?.community_desc ||
     'Mở rộng biên độ nghệ thuật sơn mài: từ xưởng họa cá nhân đến dấu ấn bàn tay của muôn người.';
 
-  // Đọc danh sách dự án động từ community_projects, nếu chưa có thì fallback về project1 / project2
+  // Đọc danh sách dự án động từ community_projects
   const rawProjects = pageProps?.community_projects;
-  const projects =
-    Array.isArray(rawProjects) && rawProjects.length > 0
-      ? rawProjects
-      : [
-          {
-            id: 1,
-            tag: pageProps?.project1_tag || 'DỰ ÁN CỘNG ĐỒNG • ĐỒNG SÁNG TÁC',
-            title: pageProps?.project1_title || 'BÁCH HỌA LIÊN HOA',
-            desc:
-              pageProps?.project1_desc ||
-              'Không gian đồng sáng tác nơi nhiều bàn tay cùng tạo nên một tác phẩm lớn. Chương trình đề cao trải nghiệm thực hành, tính cộng đồng và khả năng biến người xem thành người tham gia trực tiếp vào tiến trình bồi đắp bề mặt sơn mài.',
-            btn_text: pageProps?.project1_btn || 'Xem hành trình đồng sáng tác',
-            link: pageProps?.project1_link || '/journey',
-          },
-          {
-            id: 2,
-            tag: pageProps?.project2_tag || 'XÁC LẬP KỶ LỤC • ĐỀ CỬ CHÍNH THỨC',
-            title:
-              pageProps?.project2_title ||
-              'TÁC PHẨM NHIỀU NGƯỜI CÙNG SÁNG TẠO BẰNG “THỦ CHỈ ĐẦU” TRÊN VẬT LIỆU SƠN MÀI CÔNG NGHỆ',
-            desc:
-              pageProps?.project2_desc ||
-              'Một thử nghiệm giao thoa giữa hành vi tạo dấu, chất liệu mới và tinh thần cộng đồng; được tổ chức theo quy trình kiểm chứng khoa học, tư liệu hóa và xác lập dữ liệu kỷ lục rõ ràng cùng Tổ chức Kỷ lục Việt Nam (VietKings).',
-            btn_text: pageProps?.project2_btn || 'Xem hồ sơ kiểm chứng kỷ lục',
-            link: pageProps?.project2_link || '/events',
-          },
-        ];
+  const projects = Array.isArray(rawProjects) ? rawProjects : [];
 
   const renderActionButton = (text, link, icon) => {
     const isExternal =
@@ -80,16 +54,9 @@ const CollectionCommunitySection = ({ pageProps = null }) => {
       }}
     >
       <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          {badge && (
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full mb-3 bg-[#3d0c0f] border border-[#D4AF37]/35 text-[#FFDF73] text-[12px] uppercase tracking-widest font-bold">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>{badge}</span>
-            </div>
-          )}
-
+        <div className="text-center max-w-4xl mx-auto mb-16">
           {title && (
-            <h2 className="font-serif text-[30px] sm:text-[36px] md:text-[42px] text-gold-gradient uppercase font-bold mb-4">
+            <h2 className="font-sans text-[30px] sm:text-[36px] md:text-[42px] text-gold-gradient uppercase font-bold mb-4">
               {title}
             </h2>
           )}
@@ -102,52 +69,58 @@ const CollectionCommunitySection = ({ pageProps = null }) => {
         </div>
 
         {/* Dynamic Project Grid */}
-        <div className={`grid ${gridClass} gap-8 md:gap-10`}>
-          {projects.map((proj, idx) => {
-            const IconComp = PROJECT_ICONS[idx % PROJECT_ICONS.length] || Users;
-            return (
-              <div
-                key={proj.id || idx}
-                className="p-8 md:p-10 rounded-2xl relative flex flex-col justify-between card-lacquer group transition-transform duration-300 hover:-translate-y-1"
-                style={{
-                  background: 'rgba(26, 5, 7, 0.88)',
-                  border: '1px solid rgba(212, 175, 55, 0.35)',
-                }}
-              >
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="px-3.5 py-1 rounded font-serif text-[#FFDF73] uppercase text-[12px] font-bold"
-                      style={{
-                        background: 'rgb(61, 12, 15)',
-                        border: '1px solid rgba(212, 175, 55, 0.3)',
-                      }}
-                    >
-                      {proj.tag}
-                    </span>
-                    <IconComp className="w-7 h-7 text-[#FFDF73] shrink-0" />
+        {projects.length === 0 ? (
+          <div className="p-10 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/70 max-w-xl mx-auto my-8">
+            Chưa có dữ liệu
+          </div>
+        ) : (
+          <div className={`grid ${gridClass} gap-8 md:gap-10`}>
+            {projects.map((proj, idx) => {
+              const IconComp = PROJECT_ICONS[idx % PROJECT_ICONS.length] || Users;
+              return (
+                <div
+                  key={proj.id || idx}
+                  className="p-8 md:p-10 rounded-2xl relative flex flex-col justify-between card-lacquer group transition-transform duration-300 hover:-translate-y-1"
+                  style={{
+                    background: 'rgba(26, 5, 7, 0.88)',
+                    border: '1px solid rgba(212, 175, 55, 0.35)',
+                  }}
+                >
+                  <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                      <span
+                        className="px-3.5 py-1 rounded font-sans text-[#FFDF73] uppercase text-[12px] font-bold"
+                        style={{
+                          background: 'rgb(61, 12, 15)',
+                          border: '1px solid rgba(212, 175, 55, 0.3)',
+                        }}
+                      >
+                        {proj.tag}
+                      </span>
+                      <IconComp className="w-7 h-7 text-[#FFDF73] shrink-0" />
+                    </div>
+
+                    <h3 className="font-sans text-[22px] sm:text-[26px] text-gold-gradient uppercase tracking-wide font-bold leading-snug">
+                      {proj.title}
+                    </h3>
+
+                    <p className="font-body text-[17px] sm:text-[18px] text-[#FAF7F2]/95 leading-relaxed text-justify">
+                      {proj.desc}
+                    </p>
                   </div>
 
-                  <h3 className="font-serif text-[22px] sm:text-[26px] text-gold-gradient uppercase tracking-wide font-bold leading-snug">
-                    {proj.title}
-                  </h3>
-
-                  <p className="font-body text-[15px] sm:text-[16px] text-[#FAF7F2]/95 leading-relaxed">
-                    {proj.desc}
-                  </p>
+                  <div className="pt-8">
+                    {renderActionButton(
+                      proj.btn_text || 'Xem chi tiết',
+                      proj.link || '/contact',
+                      <ArrowRight className="w-4 h-4 font-bold" />
+                    )}
+                  </div>
                 </div>
-
-                <div className="pt-8">
-                  {renderActionButton(
-                    proj.btn_text || 'Xem chi tiết',
-                    proj.link || '/contact',
-                    <ArrowRight className="w-4 h-4 font-bold" />
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -458,7 +458,7 @@ const ArchivePageEditor = ({
           <span className="text-[11px] font-mono text-[#FFDF73] uppercase tracking-wider block">
             CẤU HÌNH TRANG HỆ THỐNG
           </span>
-          <h2 className="font-serif text-xl font-bold text-white">
+          <h2 className="font-sans text-xl font-bold text-white">
             Trang Kỷ Yếu Di Sản Bách Niên (/archive)
           </h2>
           <p className="text-xs text-[#EADBCE]/70">
@@ -486,7 +486,7 @@ const ArchivePageEditor = ({
             <BookOpen className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang &amp; 4 Chỉ Số Di Sản (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -701,7 +701,7 @@ const ArchivePageEditor = ({
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 2: 5 Phân Hệ Tri Thức Cốt Lõi (Categories)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -711,20 +711,7 @@ const ArchivePageEditor = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu phân hệ (categories_badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.categories_badge || ''}
-              onChange={(e) => handlePropChange('categories_badge', e.target.value)}
-              placeholder="VD: HỆ THỐNG LƯU TRỮ PHÂN TẦNG"
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề phân hệ (categories_title)
             </label>
@@ -812,7 +799,7 @@ const ArchivePageEditor = ({
               <BookMarked className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 3: Bốn Tập Chuyên Khảo Thế Kỷ (1930–2030)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -832,20 +819,7 @@ const ArchivePageEditor = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu bộ tác phẩm (volumes_badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.volumes_badge || ''}
-              onChange={(e) => handlePropChange('volumes_badge', e.target.value)}
-              placeholder="VD: BỘ TÁC PHẨM BÁCH NIÊN KỶ YẾU"
-              className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-xs focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề khối (volumes_title)
@@ -872,7 +846,7 @@ const ArchivePageEditor = ({
             />
           </div>
 
-          <div className="md:col-span-3">
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Mô tả khối (volumes_desc)
             </label>
@@ -899,7 +873,7 @@ const ArchivePageEditor = ({
                     <span className="px-2 py-0.5 rounded bg-[#3d090f] border border-[#D4AF37]/40 text-[#FFDF73] text-xs font-bold font-mono">
                       {vol.vol || `TẬP ${idx + 1}`}
                     </span>
-                    <span className="font-serif text-sm font-bold text-[#FFDF73] truncate max-w-[180px]">
+                    <span className="font-sans text-sm font-bold text-[#FFDF73] truncate max-w-[180px]">
                       {vol.title || `Tập #${idx + 1}`}
                     </span>
                   </div>
@@ -1036,7 +1010,7 @@ const ArchivePageEditor = ({
               <FileText className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 4: Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia (Data Schema)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -1057,20 +1031,7 @@ const ArchivePageEditor = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu chuẩn (schema_badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.schema_badge || ''}
-              onChange={(e) => handlePropChange('schema_badge', e.target.value)}
-              placeholder="VD: TIÊU CHUẨN DỮ LIỆU HỌC THUẬT"
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề khung chuẩn (schema_title)
             </label>
@@ -1121,10 +1082,10 @@ const ArchivePageEditor = ({
                       <div className="w-7 h-7 rounded bg-[#200508] border border-[#D4AF37]/40 flex items-center justify-center text-[#FFDF73]">
                         <TypeIcon className="w-4 h-4" />
                       </div>
-                      <span className="font-serif text-sm font-bold text-[#FFDF73]">
+                      <span className="font-sans text-sm font-bold text-[#FFDF73]">
                         {row.type || `Loại tư liệu #${idx + 1}`}
                       </span>
-                      <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] px-2.5 py-0.5 rounded bg-[#2b070b] border border-[#D4AF37]/25 text-[#FFDF73] font-serif font-bold">
+                      <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] px-2.5 py-0.5 rounded bg-[#2b070b] border border-[#D4AF37]/25 text-[#FFDF73] font-sans font-bold">
                         <StatusIcon className="w-3 h-3 text-[#FFDF73]" />
                         {row.status}
                       </span>
@@ -1246,7 +1207,7 @@ const ArchivePageEditor = ({
             <Upload className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 5: Kêu Gọi Đóng Góp Tư Liệu Văn Hóa (Cổng Tiếp Nhận Tư Liệu)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">

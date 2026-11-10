@@ -529,7 +529,7 @@ const DataCatalogManager = () => {
             <Database className="w-4 h-4 text-[#FFDF73]" />
             <span>Hệ Thống &bull; Danh Mục Dữ Liệu Đồng Bộ</span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
+          <h1 className="font-sans text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
             Quản Lý Danh Mục Dữ Liệu
           </h1>
           <p className="text-sm text-[#EADBCE]/80 mt-1">
@@ -599,7 +599,7 @@ const DataCatalogManager = () => {
       <div className="flex items-center gap-2 border-b border-[#D4AF37]/30 pb-1 overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveTab('news')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-t-lg font-serif text-sm uppercase tracking-wider font-bold transition-all border-b-2 whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-t-lg font-sans text-sm uppercase tracking-wider font-bold transition-all border-b-2 whitespace-nowrap cursor-pointer ${
             activeTab === 'news'
               ? 'bg-[#3a060b] text-[#FFDF73] border-[#FFDF73] shadow-[0_-2px_12px_rgba(255,223,115,0.25)]'
               : 'text-[#EADBCE]/70 border-transparent hover:text-[#FFDF73] hover:bg-[#250508]'
@@ -611,7 +611,7 @@ const DataCatalogManager = () => {
 
         <button
           onClick={() => setActiveTab('collections')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-t-lg font-serif text-sm uppercase tracking-wider font-bold transition-all border-b-2 whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-t-lg font-sans text-sm uppercase tracking-wider font-bold transition-all border-b-2 whitespace-nowrap cursor-pointer ${
             activeTab === 'collections'
               ? 'bg-[#3a060b] text-[#FFDF73] border-[#FFDF73] shadow-[0_-2px_12px_rgba(255,223,115,0.25)]'
               : 'text-[#EADBCE]/70 border-transparent hover:text-[#FFDF73] hover:bg-[#250508]'
@@ -623,7 +623,7 @@ const DataCatalogManager = () => {
 
         <button
           onClick={() => setActiveTab('events')}
-          className={`flex items-center gap-2 px-5 py-2.5 rounded-t-lg font-serif text-sm uppercase tracking-wider font-bold transition-all border-b-2 whitespace-nowrap cursor-pointer ${
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-t-lg font-sans text-sm uppercase tracking-wider font-bold transition-all border-b-2 whitespace-nowrap cursor-pointer ${
             activeTab === 'events'
               ? 'bg-[#3a060b] text-[#FFDF73] border-[#FFDF73] shadow-[0_-2px_12px_rgba(255,223,115,0.25)]'
               : 'text-[#EADBCE]/70 border-transparent hover:text-[#FFDF73] hover:bg-[#250508]'
@@ -658,7 +658,7 @@ const DataCatalogManager = () => {
       <div className="rounded-2xl border border-[#D4AF37]/35 overflow-hidden shadow-2xl bg-[#1e0407]">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="bg-[#2e070b] text-[#FFDF73] text-xs uppercase tracking-wider font-serif border-b border-[#D4AF37]/30">
+            <thead className="bg-[#2e070b] text-[#FFDF73] text-xs uppercase tracking-wider font-sans border-b border-[#D4AF37]/30">
               <tr>
                 <th className="py-4 px-4 w-16">ID</th>
                 <th className="py-4 px-4 w-32">Hình Ảnh</th>
@@ -684,7 +684,7 @@ const DataCatalogManager = () => {
                 const secondaryText = isNews
                   ? item.summary
                   : isCollection
-                  ? item.subtitle || item.curator_statement
+                  ? item.curator_statement || item.description
                   : item.description || parseRawContentToPlainText(item.content);
 
                 const categoryBadge = isNews
@@ -731,7 +731,7 @@ const DataCatalogManager = () => {
 
                     {/* 3. Title & Description */}
                     <td className="py-4 px-4 max-w-xs md:max-w-md">
-                      <div className="font-semibold text-white font-serif text-[15px] line-clamp-1">
+                      <div className="font-semibold text-white font-sans text-[15px] line-clamp-1">
                         {primaryTitle}
                       </div>
                       <div className="text-xs text-[#EADBCE]/70 line-clamp-2 mt-0.5">
@@ -763,7 +763,7 @@ const DataCatalogManager = () => {
 
                       {isCollection && (
                         <>
-                          <div className="flex items-center gap-1.5 text-[#FFDF73] font-serif font-semibold">
+                          <div className="flex items-center gap-1.5 text-[#FFDF73] font-sans font-semibold">
                             <span>Niên đại: {item.year || '1930 - 2030'}</span>
                           </div>
                           <div className="flex items-center gap-1.5 text-[#EADBCE]/75 text-[11px]">
@@ -775,7 +775,7 @@ const DataCatalogManager = () => {
 
                       {isEvent && (
                         <>
-                          <div className="flex items-center gap-1.5 text-[#FFDF73] font-serif font-semibold">
+                          <div className="flex items-center gap-1.5 text-[#FFDF73] font-sans font-semibold">
                             <span>{item.date_display || 'Thứ Bảy, 14/11/2026'}</span>
                           </div>
                           <div className="flex items-center gap-1.5 text-[#EADBCE]/75 text-[11px] line-clamp-1">
@@ -862,7 +862,7 @@ const DataCatalogManager = () => {
                   <td colSpan={7} className="py-12 text-center text-[#EADBCE]/60">
                     <div className="flex flex-col items-center justify-center space-y-2">
                       <Database className="w-8 h-8 text-[#D4AF37]/50" />
-                      <p className="font-serif text-base">
+                      <p className="font-sans text-base">
                         {searchTerm ? 'Không tìm thấy kết quả phù hợp' : 'Chưa có bản ghi nào trong bảng này'}
                       </p>
                       <button
@@ -889,7 +889,7 @@ const DataCatalogManager = () => {
           <div className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header cố định */}
             <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#28060a]">
-              <h2 className="font-serif text-lg sm:text-xl font-bold text-[#FFDF73]">
+              <h2 className="font-sans text-lg sm:text-xl font-bold text-[#FFDF73]">
                 {modalType === 'create_news' ? 'Thêm Bài Viết Tin Tức Mới' : `Chỉnh Sửa Tin Tức #${currentEditItem?.id}`}
               </h2>
               <button
@@ -1025,7 +1025,7 @@ const DataCatalogManager = () => {
           <div className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header cố định */}
             <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#28060a]">
-              <h2 className="font-serif text-lg sm:text-xl font-bold text-[#FFDF73]">
+              <h2 className="font-sans text-lg sm:text-xl font-bold text-[#FFDF73]">
                 {modalType === 'create_collection'
                   ? 'Thêm Bộ Sưu Tập Mới'
                   : `Chỉnh Sửa Bộ Sưu Tập #${currentEditItem?.id}`}
@@ -1063,19 +1063,6 @@ const DataCatalogManager = () => {
                   value={collectionForm.cover_image}
                   onChange={(imgUrl) => setCollectionForm({ ...collectionForm, cover_image: imgUrl })}
                 />
-
-                <div>
-                  <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-                    Phụ Đề / Tóm Lược
-                  </label>
-                  <input
-                    type="text"
-                    value={collectionForm.subtitle}
-                    onChange={(e) => setCollectionForm({ ...collectionForm, subtitle: e.target.value })}
-                    className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-                    placeholder="VD: 99 kiệt tác sơn mài hội họa bác học"
-                  />
-                </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -1162,7 +1149,7 @@ const DataCatalogManager = () => {
           <div className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header cố định */}
             <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#28060a]">
-              <h2 className="font-serif text-lg sm:text-xl font-bold text-[#FFDF73]">
+              <h2 className="font-sans text-lg sm:text-xl font-bold text-[#FFDF73]">
                 {modalType === 'create_event' ? 'Thêm Sự Kiện Mới' : `Chỉnh Sửa Sự Kiện #${currentEditItem?.id}`}
               </h2>
               <button
@@ -1367,7 +1354,7 @@ const DataCatalogManager = () => {
                                 <span className="leading-relaxed">
                                   {hasColon ? (
                                     <>
-                                      <strong className="text-[#FFDF73] font-serif font-bold text-[13px]">{prefix}</strong>{' '}
+                                      <strong className="text-[#FFDF73] font-sans font-bold text-[13px]">{prefix}</strong>{' '}
                                       <span className="text-[#FAF7F2]/90">{suffix}</span>
                                     </>
                                   ) : (
@@ -1434,7 +1421,7 @@ const DataCatalogManager = () => {
             <div className="flex items-center justify-between border-b border-[#D4AF37]/25 pb-3">
               <div className="flex items-center gap-2 text-[#FFDF73]">
                 <Tag className="w-5 h-5 text-[#FFDF73]" />
-                <h3 className="font-serif text-lg font-bold">
+                <h3 className="font-sans text-lg font-bold">
                   Quản Lý Thể Loại Sự Kiện
                 </h3>
               </div>
@@ -1484,7 +1471,7 @@ const DataCatalogManager = () => {
                 {eventCategories.map((cat) => (
                   <span
                     key={cat}
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2e070c] border border-[#D4AF37]/40 text-xs font-serif text-[#FFDF73] tracking-wide"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2e070c] border border-[#D4AF37]/40 text-xs font-sans text-[#FFDF73] tracking-wide"
                   >
                     <span>{cat}</span>
                     <button

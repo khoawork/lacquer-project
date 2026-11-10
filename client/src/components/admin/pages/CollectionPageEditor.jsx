@@ -134,7 +134,7 @@ const CollectionPageEditor = ({
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang &amp; 4 Chỉ Số Di Sản (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -287,7 +287,7 @@ const CollectionPageEditor = ({
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 2: Chọn Danh Sách Bộ Sưu Tập Hiển Thị
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -373,9 +373,6 @@ const CollectionPageEditor = ({
                   <div className="flex-1 min-w-0">
                     <span className="text-[10px] font-mono text-[#FFDF73]">#{col.id}</span>
                     <h4 className="text-xs font-bold text-white line-clamp-1">{col.name || col.title}</h4>
-                    <p className="text-[11px] text-[#EADBCE]/70 line-clamp-1">
-                      {col.code || col.technique || 'Bộ sưu tập'}
-                    </p>
                   </div>
                 </div>
               );
@@ -392,7 +389,7 @@ const CollectionPageEditor = ({
               <Users className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 3: Dự Án Cộng Đồng &amp; Xác Lập Kỷ Lục
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -414,19 +411,7 @@ const CollectionPageEditor = ({
 
         {/* Header thông tin khối */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu phần (community_badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.community_badge || ''}
-              onChange={(e) => handlePropChange('community_badge', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-              placeholder="VD: ĐỒNG KIẾN TẠO MỞ"
-            />
-          </div>
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề phần (community_title)
             </label>
@@ -478,7 +463,7 @@ const CollectionPageEditor = ({
                       <span className="w-6 h-6 rounded-full bg-[#3d090f] border border-[#D4AF37]/40 text-[#FFDF73] text-xs font-bold flex items-center justify-center">
                         #{idx + 1}
                       </span>
-                      <span className="font-serif text-sm font-bold text-[#FFDF73] uppercase tracking-wide truncate max-w-[200px]">
+                      <span className="font-sans text-sm font-bold text-[#FFDF73] uppercase tracking-wide truncate max-w-[200px]">
                         {project.title || `Dự án #${idx + 1}`}
                       </span>
                     </div>
@@ -605,7 +590,7 @@ const CollectionPageEditor = ({
             <Send className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 4: Kết Nối Di Sản Bách Niên (Khung Kêu Gọi Đồng Kiến Tạo)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">

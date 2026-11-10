@@ -55,7 +55,7 @@ const HomePageEditor = ({
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang (Hero Banner 100vh)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -118,7 +118,7 @@ const HomePageEditor = ({
               type="text"
               value={parsedProps.headline || ''}
               onChange={(e) => handlePropChange('headline', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-base font-serif font-bold focus:border-[#FFDF73] focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-base font-sans font-bold focus:border-[#FFDF73] focus:outline-none"
             />
           </div>
 
@@ -209,7 +209,7 @@ const HomePageEditor = ({
             <FileText className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 2: Câu Chuyện Di Sản (Heritage Story)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -227,7 +227,7 @@ const HomePageEditor = ({
               type="text"
               value={parsedProps.story_headline || ''}
               onChange={(e) => handlePropChange('story_headline', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm font-serif font-bold focus:border-[#FFDF73] focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm font-sans font-bold focus:border-[#FFDF73] focus:outline-none"
             />
           </div>
 
@@ -339,6 +339,69 @@ const HomePageEditor = ({
                 </div>
               </div>
             </div>
+
+            {/* Quản lý Con Dấu Tròn Di Sản (Decorative Stamp Accent) */}
+            <div className="p-4 rounded-xl bg-[#140204] border border-[#D4AF37]/30 mt-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] uppercase font-bold text-[#FFDF73] tracking-wider block">
+                  Con Dấu / Huy Hiệu Tròn Di Sản (Decorative Stamp Accent)
+                </span>
+                <span className="text-[10px] text-[#EADBCE]/60 italic">
+                  Hiển thị ở góc dưới ảnh minh họa
+                </span>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-center">
+                <div>
+                  <label className="block text-[10px] uppercase font-semibold text-[#EADBCE]/80 mb-1">
+                    Dòng 1 (story_stamp_line1)
+                  </label>
+                  <input
+                    type="text"
+                    value={parsedProps.story_stamp_line1 ?? 'DI SẢN'}
+                    onChange={(e) => handlePropChange('story_stamp_line1', e.target.value)}
+                    placeholder="vd: DI SẢN"
+                    className="w-full px-3 py-1.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-xs font-bold focus:border-[#FFDF73] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase font-semibold text-[#EADBCE]/80 mb-1">
+                    Dòng 2 (story_stamp_line2)
+                  </label>
+                  <input
+                    type="text"
+                    value={parsedProps.story_stamp_line2 ?? '1930–2030'}
+                    onChange={(e) => handlePropChange('story_stamp_line2', e.target.value)}
+                    placeholder="vd: 1930–2030"
+                    className="w-full px-3 py-1.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-xs font-bold focus:border-[#FFDF73] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase font-semibold text-[#EADBCE]/80 mb-1">
+                    Dòng 3 (story_stamp_line3)
+                  </label>
+                  <input
+                    type="text"
+                    value={parsedProps.story_stamp_line3 ?? 'VIỆT NAM'}
+                    onChange={(e) => handlePropChange('story_stamp_line3', e.target.value)}
+                    placeholder="vd: VIỆT NAM"
+                    className="w-full px-3 py-1.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-xs font-bold focus:border-[#FFDF73] focus:outline-none"
+                  />
+                </div>
+                {/* Mini Preview của Con Dấu Tròn */}
+                <div className="flex flex-col items-center justify-center">
+                  <div className="w-18 h-18 sm:w-20 sm:h-20 rounded-full bg-[#3d0909] border border-[#FFDF73]/70 flex items-center justify-center shadow-[0_0_15px_rgba(212,175,55,0.35)] text-[#FFDF73] p-1 text-center">
+                    <span className="font-sans text-[8.5px] uppercase tracking-[0.16em] font-bold leading-tight whitespace-nowrap">
+                      {parsedProps.story_stamp_line1 ?? 'DI SẢN'}
+                      <br />
+                      {parsedProps.story_stamp_line2 ?? '1930–2030'}
+                      <br />
+                      {parsedProps.story_stamp_line3 ?? 'VIỆT NAM'}
+                    </span>
+                  </div>
+                  <span className="text-[9px] text-[#EADBCE]/60 mt-1">Xem trước</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -350,7 +413,7 @@ const HomePageEditor = ({
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 3: Bốn Hướng Mở Của Hành Trình (4 Pillars)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -440,7 +503,7 @@ const HomePageEditor = ({
             <Layers className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 4: Mô Hình Vận Hành (LAB &bull; STUDIO &bull; SHOWCASE &bull; MARKET)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -519,7 +582,7 @@ const HomePageEditor = ({
               <Calendar className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 5: Chọn Sự Kiện Hiển Thị Ngoài Trang Chủ
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -612,7 +675,7 @@ const HomePageEditor = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className="text-[10px] font-mono text-[#FFDF73] font-bold block">#{evt.id}</span>
-                  <h4 className="text-xs font-serif font-bold text-white line-clamp-1">{evt.name || evt.title}</h4>
+                  <h4 className="text-xs font-sans font-bold text-white line-clamp-1">{evt.name || evt.title}</h4>
                   <p className="text-[11px] text-[#EADBCE]/70 line-clamp-1 mt-0.5">{evt.category || 'Sự kiện'}</p>
                 </div>
               </div>
@@ -629,7 +692,7 @@ const HomePageEditor = ({
               <Palette className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 6: Chọn Bộ Sưu Tập Hiển Thị Ngoài Trang Chủ
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -722,8 +785,7 @@ const HomePageEditor = ({
                 </div>
                 <div className="flex-1 min-w-0">
                   <span className="text-[10px] font-mono text-[#FFDF73] font-bold block">#{col.id}</span>
-                  <h4 className="text-xs font-serif font-bold text-white line-clamp-1">{col.name || col.title}</h4>
-                  <p className="text-[11px] text-[#EADBCE]/70 line-clamp-1 mt-0.5">{col.code || 'Bộ sưu tập'}</p>
+                  <h4 className="text-xs font-sans font-bold text-white line-clamp-1">{col.name || col.title}</h4>
                 </div>
               </div>
             );
@@ -736,16 +798,7 @@ const HomePageEditor = ({
         <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-3">
           <div className="flex items-center gap-2 border-b border-[#D4AF37]/25 pb-2">
             <BookOpen className="w-4 h-4 text-[#FFDF73]" />
-            <h3 className="font-serif text-base font-bold text-[#FFDF73]">Phần 7: Kỷ Yếu Bách Niên (Monograph)</h3>
-          </div>
-          <div>
-            <label className="block text-[10px] uppercase font-bold text-[#FFDF73] mb-1">Nhãn ấn phẩm (archive_tag)</label>
-            <input
-              type="text"
-              value={parsedProps.archive_tag || ''}
-              onChange={(e) => handlePropChange('archive_tag', e.target.value)}
-              className="w-full px-2.5 py-1.5 rounded bg-[#100203] border border-[#D4AF37]/30 text-white text-xs"
-            />
+            <h3 className="font-sans text-base font-bold text-[#FFDF73]">Phần 7: Kỷ Yếu Bách Niên (Monograph)</h3>
           </div>
           <div>
             <label className="block text-[10px] uppercase font-bold text-[#FFDF73] mb-1">Tiêu đề (archive_headline)</label>
@@ -770,16 +823,7 @@ const HomePageEditor = ({
         <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-3">
           <div className="flex items-center gap-2 border-b border-[#D4AF37]/25 pb-2">
             <Handshake className="w-4 h-4 text-[#FFDF73]" />
-            <h3 className="font-serif text-base font-bold text-[#FFDF73]">Phần 8: Kêu Gọi Đồng Kiến Tạo (CTA)</h3>
-          </div>
-          <div>
-            <label className="block text-[10px] uppercase font-bold text-[#FFDF73] mb-1">Nhãn thẻ (cta_tag)</label>
-            <input
-              type="text"
-              value={parsedProps.cta_tag || ''}
-              onChange={(e) => handlePropChange('cta_tag', e.target.value)}
-              className="w-full px-2.5 py-1.5 rounded bg-[#100203] border border-[#D4AF37]/30 text-white text-xs"
-            />
+            <h3 className="font-sans text-base font-bold text-[#FFDF73]">Phần 8: Kêu Gọi Đồng Kiến Tạo (CTA)</h3>
           </div>
           <div>
             <label className="block text-[10px] uppercase font-bold text-[#FFDF73] mb-1">Tiêu đề (cta_headline)</label>

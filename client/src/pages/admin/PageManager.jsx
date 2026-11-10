@@ -5,10 +5,8 @@ import {
   Eye,
   CheckCircle,
   AlertCircle,
-  Code,
   Layers,
   RefreshCw,
-  Edit3,
 } from 'lucide-react';
 import pageServices from '../../services/pageServices';
 import eventServices from '../../services/eventServices';
@@ -26,7 +24,6 @@ import LeadershipPageEditor from '../../components/admin/pages/LeadershipPageEdi
 import NewsPageEditor from '../../components/admin/pages/NewsPageEditor';
 import ContactPageEditor from '../../components/admin/pages/ContactPageEditor';
 
-// Cấu hình 9 trang hệ thống được điều hướng trực tiếp từ Navigation bên trái
 export const PAGE_CONFIG = {
   home: {
     key: 'home',
@@ -97,7 +94,7 @@ export const PAGE_CONFIG = {
 export const DEFAULT_PAGE_PROPS = {
   '/': {
     hero_video_url:
-      'https://res.cloudinary.com/ds11ggie4/video/upload/v1794232456/gemini_generated_video_2ecb6a5a_otemqr.mp4',
+      'https://res.cloudinary.com/ds11ggie4/video/upload/v1794319913/sonmai_uccrps.mp4',
     top_tagline: 'NƠI HỘI TỤ',
     cursive_title: 'Tinh hoa nghệ thuật',
     hero_image: '',
@@ -117,6 +114,9 @@ export const DEFAULT_PAGE_PROPS = {
     story_image_title: 'Mài Dưới Dòng Nước Lộ Sắc',
     story_image_desc:
       'Sự kiên nhẫn bóc tách từng tầng sơn then, son cánh gián để vàng son ngọc diệp hiển lộ quang minh.',
+    story_stamp_line1: 'DI SẢN',
+    story_stamp_line2: '1930–2030',
+    story_stamp_line3: 'VIỆT NAM',
     story_headline: 'Một thế kỷ — Một hành trình đang tiếp diễn',
     story_p1:
       'Sơn mài hội họa Việt Nam là kết quả diệu kỳ của sự gặp gỡ giữa nguồn nhựa sơn ta Phú Thọ huyền thoại, đôi bàn tay tài hoa của nghệ nhân cổ truyền và tư duy tạo hình hàn lâm hiện đại khởi nguồn từ Trường Mỹ thuật Đông Dương thập niên 1930.',
@@ -195,6 +195,7 @@ export const DEFAULT_PAGE_PROPS = {
     archive_cta_text: 'TẢI BẢN TÓM TẮT KỶ YẾU (PDF)',
     archive_cta_link: '/archive',
 
+    cta_tag: 'ĐỒNG KIẾN TẠO VĂN HÓA',
     cta_headline: 'Cùng chung tay kiến tạo một thế kỷ mới',
     cta_desc:
       'Chúng tôi chào đón sự đồng hành của các nghệ sĩ, nghệ nhân, nhà nghiên cứu, doanh nghiệp và người yêu nghệ thuật trong và ngoài nước để sơn mài Việt Nam tiếp tục tỏa sáng.',
@@ -471,7 +472,7 @@ export const DEFAULT_PAGE_PROPS = {
       'Tập trung vào quan hệ giữa sáng tạo, dữ liệu, quyền sở hữu trí tuệ, thương mại hóa và nền tảng số; hướng tới hệ sinh thái vừa bảo tồn bản sắc vừa tạo ra năng lực cạnh tranh mới.',
     featured_symposium_btn1: 'Đăng ký tham dự diễn đàn',
     featured_symposium_btn2: 'Tải đề cương chuyên đề',
-    cta_tag: '✦ THAM GIA KIẾN TẠO THẾ KỶ ✦',
+    cta_tag: '',
     cta_headline: 'Cùng Viết Tiếp Hành Trình 100 Năm',
     cta_desc:
       'Di sản không phải là một pho tượng đóng băng trong bảo tàng. Đó là ngọn lửa được bồi đắp bởi trí tuệ của từng thế hệ hôm nay.',
@@ -498,7 +499,7 @@ export const DEFAULT_PAGE_PROPS = {
     stat3_label: 'Viện Đào Tạo & Doanh Nghiệp',
     stat4_num: '1930–2030',
     stat4_label: 'Kỷ Nguyên Bách Niên',
-    counter_badge: 'ĐANG CẬP NHẬT 2 SỰ KIỆN QUAN TRỌNG',
+    counter_badge: '',
     program_badge: 'Mở cổng đăng ký trực tuyến',
     program_title: 'Đại Hội Thảo & Giám Tuyển: Kỷ Nguyên Đương Đại Của Sơn Mài Việt Nam',
     program_desc:
@@ -531,7 +532,7 @@ export const DEFAULT_PAGE_PROPS = {
     stat4_num: 'VIETKINGS',
     stat4_label: 'Hồ Sơ Đang Giám Định Di Sản',
     featured_collection_ids: [1, 2, 3],
-    community_badge: 'ĐỒNG KIẾN TẠO MỞ',
+    community_badge: '',
     community_title: 'DỰ ÁN CỘNG ĐỒNG & XÁC LẬP KỶ LỤC',
     community_desc:
       'Mở rộng biên độ nghệ thuật sơn mài: từ xưởng họa cá nhân đến dấu ấn bàn tay của muôn người.',
@@ -601,7 +602,7 @@ export const DEFAULT_PAGE_PROPS = {
     stat4_label: 'Chuẩn Hóa Kiểm Chứng',
     stat4_sub: 'Xác thực kỷ lục di sản',
 
-    categories_badge: 'HỆ THỐNG LƯU TRỮ PHÂN TẦNG',
+    categories_badge: '',
     categories_title: '5 Phân Hệ Tri Thức Cốt Lõi',
     categories_desc:
       'Khung cấu trúc học thuật bao quát toàn bộ tiến trình lịch sử, kỹ nghệ truyền thống và phương hướng phát triển của nghệ thuật sơn mài Việt Nam.',
@@ -643,7 +644,7 @@ export const DEFAULT_PAGE_PROPS = {
       },
     ],
 
-    volumes_badge: 'BỘ TÁC PHẨM BÁCH NIÊN KỶ YẾU',
+    volumes_badge: '',
     volumes_title: 'Bốn Tập Chuyên Khảo Thế Kỷ (1930–2030)',
     volumes_desc:
       'Công trình xuất bản quy mô quốc gia quy tụ các nhà nghiên cứu mỹ thuật, nghệ nhân làng nghề và học giả uy tín trong và ngoài nước.',
@@ -696,7 +697,7 @@ export const DEFAULT_PAGE_PROPS = {
     vol4_title: 'Tập IV: Hồ sơ đề cử Di sản Văn hóa Thế giới',
     vol4_desc: 'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
 
-    schema_badge: 'TIÊU CHUẨN DỮ LIỆU HỌC THUẬT',
+    schema_badge: '',
     schema_title: 'Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia',
     schema_desc:
       'Hệ thống chuẩn hóa thông tin đầu vào phục vụ kiểm định, tra cứu liên viện bảo tàng và bảo tồn di sản hội họa sơn mài vĩnh cửu.',
@@ -1065,7 +1066,6 @@ const PageManager = () => {
   const activePageConfig = PAGE_CONFIG[pageKey] || PAGE_CONFIG.home;
   const activeSlug = activePageConfig.slug;
 
-  const [editorMode, setEditorMode] = useState('visual'); // 'visual' | 'json'
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState(null);
@@ -1073,9 +1073,7 @@ const PageManager = () => {
   // Form State
   const [pageId, setPageId] = useState(null);
   const [pageName, setPageName] = useState(activePageConfig.label);
-  const [parsedProps, setParsedProps] = useState(DEFAULT_PAGE_PROPS[activeSlug] || {});
-  const [jsonString, setJsonString] = useState('{}');
-  const [jsonError, setJsonError] = useState(null);
+  const [parsedProps, setParsedProps] = useState({});
 
   // Catalog items cho các bộ chọn (pickers)
   const [allEvents, setAllEvents] = useState([]);
@@ -1116,10 +1114,8 @@ const PageManager = () => {
     let isMounted = true;
     const fetchPage = async () => {
       setLoading(true);
-      setJsonError(null);
       setStatusMsg(null);
 
-      const defaultProps = DEFAULT_PAGE_PROPS[activeSlug] || {};
       setPageName(activePageConfig.label);
 
       try {
@@ -1133,21 +1129,13 @@ const PageManager = () => {
           setPageId(item?.id || null);
           if (item?.name) setPageName(item.name);
 
-          const merged = {
-            ...defaultProps,
-            ...(item?.props || {}),
-          };
-
-          setParsedProps(merged);
-          setJsonString(JSON.stringify(merged, null, 2));
+          setParsedProps(item?.props || {});
         } else if (isMounted) {
-          setParsedProps(defaultProps);
-          setJsonString(JSON.stringify(defaultProps, null, 2));
+          setParsedProps({});
         }
       } catch {
         if (isMounted) {
-          setParsedProps(defaultProps);
-          setJsonString(JSON.stringify(defaultProps, null, 2));
+          setParsedProps({});
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -1164,8 +1152,6 @@ const PageManager = () => {
   const handlePropChange = (field, value) => {
     const updated = { ...parsedProps, [field]: value };
     setParsedProps(updated);
-    setJsonString(JSON.stringify(updated, null, 2));
-    setJsonError(null);
   };
 
   // Toggle Sự kiện được tick chọn
@@ -1204,53 +1190,16 @@ const PageManager = () => {
     handlePropChange('featured_article_ids', updated);
   };
 
-  // Xử lý khi sửa trực tiếp ô JSON Editor
-  const handleJsonTextChange = (e) => {
-    const text = e.target.value;
-    setJsonString(text);
-    try {
-      const parsed = JSON.parse(text);
-      setParsedProps(parsed);
-      setJsonError(null);
-    } catch (err) {
-      setJsonError('Cú pháp JSON không hợp lệ: ' + err.message);
-    }
-  };
-
-  // Format làm đẹp JSON
-  const handleFormatJson = () => {
-    try {
-      const parsed = JSON.parse(jsonString);
-      setJsonString(JSON.stringify(parsed, null, 2));
-      setJsonError(null);
-    } catch (err) {
-      setJsonError('Không thể định dạng: JSON lỗi ' + err.message);
-    }
-  };
-
   // Lưu trang vào Cơ sở dữ liệu
   const handleSavePage = async () => {
     try {
-      let finalProps = parsedProps;
-      if (editorMode === 'json') {
-        try {
-          finalProps = JSON.parse(jsonString);
-        } catch {
-          setStatusMsg({
-            type: 'error',
-            text: 'Không thể lưu: Vui lòng sửa lỗi cú pháp JSON trước.',
-          });
-          return;
-        }
-      }
-
       setSaving(true);
       setStatusMsg(null);
 
       const payload = {
         name: pageName || activePageConfig.label,
         slug: activeSlug,
-        props: finalProps,
+        props: parsedProps,
       };
 
       const res = pageId
@@ -1404,7 +1353,7 @@ const PageManager = () => {
             <Layers className="w-4 h-4 text-[#FFDF73]" />
             <span>CMS Quản Trị Nội Dung Toàn Diện</span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
+          <h1 className="font-sans text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
             Chỉnh Sửa Toàn Bộ Nội Dung: {activePageConfig.name}
           </h1>
           <p className="text-sm text-[#EADBCE]/80 mt-1">
@@ -1426,7 +1375,7 @@ const PageManager = () => {
           <button
             type="button"
             onClick={handleSavePage}
-            disabled={saving || Boolean(jsonError)}
+            disabled={saving}
             className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-sm tracking-wider uppercase transition shadow-[0_4px_16px_rgba(212,155,26,0.35)] cursor-pointer disabled:opacity-50"
           >
             {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
@@ -1453,87 +1402,15 @@ const PageManager = () => {
         </div>
       )}
 
-      {/* 3. EDITOR MODE SWITCH: TRỰC QUAN VS JSON */}
-      <div className="flex items-center justify-between border-b border-[#D4AF37]/20 pb-3">
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setEditorMode('visual')}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition ${
-              editorMode === 'visual'
-                ? 'bg-[#d49b1a] text-black shadow-[0_0_12px_rgba(212,155,26,0.35)]'
-                : 'bg-[#180305] border border-[#D4AF37]/30 text-[#EADBCE] hover:text-[#FFDF73]'
-            }`}
-          >
-            <Edit3 className="w-3.5 h-3.5" />
-            <span>Chỉnh Sửa Trực Quan Từng Phần</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setEditorMode('json')}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider transition ${
-              editorMode === 'json'
-                ? 'bg-[#d49b1a] text-black shadow-[0_0_12px_rgba(212,155,26,0.35)]'
-                : 'bg-[#180305] border border-[#D4AF37]/30 text-[#EADBCE] hover:text-[#FFDF73]'
-            }`}
-          >
-            <Code className="w-3.5 h-3.5" />
-            <span>Mã Nguồn JSON</span>
-          </button>
-        </div>
-
-        {editorMode === 'json' && (
-          <button
-            type="button"
-            onClick={handleFormatJson}
-            className="text-xs font-mono text-[#FFDF73] hover:underline flex items-center gap-1"
-          >
-            <span>[Format JSON]</span>
-          </button>
-        )}
-      </div>
-
       {loading ? (
         <div className="py-20 flex flex-col items-center justify-center text-[#FFDF73] space-y-3">
           <RefreshCw className="w-8 h-8 animate-spin" />
-          <span className="font-serif tracking-widest text-sm uppercase">
+          <span className="font-sans tracking-widest text-sm uppercase">
             Đang tải dữ liệu {activePageConfig.name}...
           </span>
         </div>
-      ) : editorMode === 'visual' ? (
-        renderVisualEditor()
       ) : (
-        /* JSON CODE EDITOR MODE */
-        <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-4">
-          <div className="flex items-center justify-between border-b border-[#D4AF37]/25 pb-3">
-            <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
-                Mã Nguồn Cấu Hình Trang (JSON)
-              </h3>
-              <p className="text-xs text-[#EADBCE]/70">
-                Toàn bộ dữ liệu hiển thị trên trang được lưu dưới định dạng JSON trong bảng `pages`.
-              </p>
-            </div>
-            <span className="text-xs font-mono text-[#FFDF73] bg-[#2e090e] px-2.5 py-1 rounded border border-[#D4AF37]/40">
-              Slug: {activeSlug}
-            </span>
-          </div>
-
-          {jsonError && (
-            <div className="p-3 rounded-lg bg-red-950/80 border border-red-500/60 text-red-200 text-xs font-mono">
-              {jsonError}
-            </div>
-          )}
-
-          <textarea
-            rows={24}
-            value={jsonString}
-            onChange={handleJsonTextChange}
-            spellCheck={false}
-            className="w-full p-4 rounded-xl bg-[#0d0102] border border-[#D4AF37]/30 text-[#FFDF73] font-mono text-xs leading-relaxed focus:border-[#FFDF73] focus:outline-none scrollbar-thin"
-          />
-        </div>
+        renderVisualEditor()
       )}
 
       {/* BOTTOM STICKY SAVE BAR */}
@@ -1550,7 +1427,7 @@ const PageManager = () => {
             <button
               type="button"
               onClick={handleSavePage}
-              disabled={saving || Boolean(jsonError)}
+              disabled={saving}
               className="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-xs tracking-wider uppercase transition shadow-[0_2px_12px_rgba(212,155,26,0.35)] cursor-pointer disabled:opacity-50"
             >
               {saving ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}

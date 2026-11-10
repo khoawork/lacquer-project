@@ -5,43 +5,56 @@ import LeadershipAdvisorySection from '../components/leadership/LeadershipAdviso
 import LeadershipProjectTeamsSection from '../components/leadership/LeadershipProjectTeamsSection';
 import LeadershipNetworkSection from '../components/leadership/LeadershipNetworkSection';
 import pageServices from '../services/pageServices';
-import { DEFAULT_PAGE_PROPS } from './admin/PageManager';
 
 const Leadership = () => {
-  const [pageProps, setPageProps] = useState(DEFAULT_PAGE_PROPS['/leadership'] || null);
+  const [pageProps, setPageProps] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
     const fetchPageData = async () => {
       try {
+        setLoading(true);
         const res = await pageServices.getPageBySlug('/leadership');
         if (res.data && res.data.success && isMounted) {
           const raw = res.data.data;
           const pageData = Array.isArray(raw)
             ? raw.find((p) => p.slug === '/leadership' || p.slug === 'leadership') || raw[0]
             : raw;
-          const defaultProps = DEFAULT_PAGE_PROPS['/leadership'] || {};
-          const dbProps = pageData?.props || {};
-          const merged = {
-            ...defaultProps,
-            ...dbProps,
-          };
-          if (!merged.badge || !merged.badge.trim()) {
-            merged.badge = defaultProps.badge || '✦ BÁCH NIÊN TRỌNG TRÁCH • MINH BẠCH & LIÊN NGÀNH ✦';
-          }
-          if (!merged.headline || merged.headline.includes('BAN ĐIỀU HÀNH & HỘI')) {
-            merged.headline = defaultProps.headline || 'NHỮNG NGƯỜI GIỮ NHỊP CHO HÀNH TRÌNH';
-          }
-          setPageProps(merged);
+          setPageProps(pageData?.props || null);
         }
       } catch (err) {
         console.warn('Lỗi tải dữ liệu trang ban điều hành từ DB:', err);
+        if (isMounted) setPageProps(null);
+      } finally {
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchPageData();
     return () => { isMounted = false; };
   }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#100202] text-[#FFDF73] flex flex-col items-center justify-center font-sans">
+        <span className="material-symbols-outlined text-4xl animate-spin mb-3">progress_activity</span>
+        <p className="text-sm tracking-widest uppercase">Đang tải dữ liệu ban điều hành...</p>
+      </div>
+    );
+  }
+
+  if (!pageProps) {
+    return (
+      <div className="min-h-screen bg-[#100202] text-[#FAF7F2] flex items-center justify-center p-6 font-sans">
+        <div className="p-10 rounded-2xl border border-[#D4AF37]/30 bg-[#1a0407]/90 max-w-md w-full text-center space-y-3 shadow-2xl">
+          <span className="material-symbols-outlined text-[#FFDF73] text-5xl">folder_off</span>
+          <h3 className="text-xl font-bold text-[#FFDF73]">Chưa có dữ liệu</h3>
+          <p className="text-sm text-[#EADBCE]/70">Dữ liệu ban điều hành hiện chưa sẵn sàng trong hệ thống.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

@@ -16,29 +16,39 @@ const AboutStorySection = ({ pageProps }) => {
 
   return (
     <section
-      className="relative w-full py-16 lg:py-24"
+      className="relative w-full py-12 lg:py-20"
       style={{
         background:
           'linear-gradient(rgba(26, 7, 10, 0.97) 0%, rgba(36, 10, 14, 0.92) 50%, rgba(22, 6, 8, 0.98) 100%)',
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
+        {/* Full-width Header: Đặt phía trên grid để tiêu đề hiển thị liền mạch trên 1 dòng */}
+        {(storyTag || storyHeadline) && (
+          <div className="mb-2 lg:mb-6 space-y-2.5">
+            {storyTag && (
+              <div className="inline-flex items-center gap-2.5">
+                <span className="w-2.5 h-2.5 rotate-45 bg-[#FFDF73] shadow-[0_0_8px_#FFDF73]" />
+                <span className="font-sans text-[13px] text-[#FFDF73] uppercase tracking-[0.22em] font-semibold">
+                  {storyTag}
+                </span>
+              </div>
+            )}
+            {storyHeadline && (
+              <h2 className="font-sans text-3xl sm:text-4xl lg:text-[42px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight whitespace-normal sm:whitespace-nowrap py-1">
+                {storyHeadline}
+              </h2>
+            )}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           {/* Left Column: Manifesto & Narrative */}
           <div className="lg:col-span-6 flex flex-col space-y-6">
-            <div className="inline-flex items-center gap-2.5">
-              <span className="w-2.5 h-2.5 rotate-45 bg-[#FFDF73] shadow-[0_0_8px_#FFDF73]" />
-              <span className="font-serif text-[13px] text-[#FFDF73] uppercase tracking-[0.22em] font-semibold">
-                {storyTag}
-              </span>
-            </div>
-            <h2 className="font-serif text-3xl lg:text-[40px] lg:leading-[48px] text-gold-gradient font-bold tracking-tight">
-              {storyHeadline}
-            </h2>
-            <p className="font-body text-[17px] md:text-[18px] text-[#FAF7F2] leading-relaxed font-normal">
+            <p className="font-body text-[18px] md:text-[19px] text-[#FAF7F2] leading-relaxed text-justify">
               {storyP1}
             </p>
-            <p className="font-body text-[16px] md:text-[17px] text-[#EADBCE] leading-relaxed">
+            <p className="font-body text-[18px] md:text-[19px] text-[#FAF7F2] leading-relaxed text-justify">
               {storyP2}
             </p>
 
@@ -61,7 +71,7 @@ const AboutStorySection = ({ pageProps }) => {
                   >
                     format_quote
                   </span>
-                  <p className="font-serif text-[19px] md:text-[21px] italic text-[#FFF3CC] leading-snug font-semibold">
+                  <p className="font-sans text-[19px] md:text-[21px] italic text-[#FFF3CC] leading-snug font-semibold text-justify">
                     {storyQuote}
                   </p>
                 </div>
@@ -90,12 +100,12 @@ const AboutStorySection = ({ pageProps }) => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[#150305] via-[#150305]/30 to-transparent opacity-80" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 space-y-2">
                   {storyImageTag && (
-                    <span className="font-serif text-xs md:text-sm text-[#FFDF73] uppercase tracking-[0.2em] font-bold block">
+                    <span className="font-sans text-xs md:text-sm text-[#FFDF73] uppercase tracking-[0.2em] font-bold block">
                       {storyImageTag}
                     </span>
                   )}
                   {storyImageTitle && (
-                    <h3 className="font-serif text-xl sm:text-2xl text-[#FAF7F2] font-bold leading-tight">
+                    <h3 className="font-sans text-xl sm:text-2xl text-[#FAF7F2] font-bold leading-tight">
                       {storyImageTitle}
                     </h3>
                   )}

@@ -75,21 +75,16 @@ const ArchiveCallSection = ({ pageProps = null }) => {
               '0 24px 60px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(212, 175, 55, 0.12)',
           }}
         >
-          {/* Archival Quill Emblem */}
-          <div className="w-16 h-16 rounded-full bg-[#3d0e14] border border-[#D4AF37]/50 flex items-center justify-center text-[#FFDF73] mb-6 shadow-[0_0_24px_rgba(233,195,73,0.35)]">
-            <FileEdit className="w-7 h-7 text-[#FFDF73]" />
-          </div>
-
           {/* Overline Tag */}
           {tag && (
-            <span className="font-serif text-[#FFDF73] tracking-[0.24em] uppercase font-bold text-[12px] md:text-[13px] mb-3">
+            <span className="font-sans text-[#FFDF73] tracking-[0.24em] uppercase font-bold text-[12px] md:text-[13px] mb-3">
               {tag}
             </span>
           )}
 
           {/* Royal Gold Heading */}
           {headline && (
-            <h2 className="font-serif text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient max-w-3xl mb-6 font-bold uppercase leading-tight">
+            <h2 className="font-sans text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient max-w-3xl mb-6 font-bold uppercase leading-tight">
               {headline}
             </h2>
           )}
@@ -124,14 +119,14 @@ const ArchiveCallSection = ({ pageProps = null }) => {
               btn3Text,
               btn3Link,
               <Download className="w-4 h-4 text-[#FFDF73]" />,
-              'w-full sm:w-auto px-5 py-2.5 rounded font-serif text-[13px] md:text-[14px] uppercase font-bold tracking-wider inline-flex items-center justify-center gap-2 cursor-pointer transition-all border border-[#D4AF37]/35 text-[#FAF7F2] hover:bg-[#4d1319]',
+              'w-full sm:w-auto px-5 py-2.5 rounded font-sans text-[13px] md:text-[14px] uppercase font-bold tracking-wider inline-flex items-center justify-center gap-2 cursor-pointer transition-all border border-[#D4AF37]/35 text-[#FAF7F2] hover:bg-[#4d1319]',
               { background: 'rgba(55, 14, 19, 0.75)' }
             )}
           </div>
 
           {/* Archival Subtext Guarantee */}
           {guarantee && (
-            <p className="font-serif text-[12px] md:text-[13px] text-[#EADBCE]/80 mt-8 tracking-wider uppercase flex items-center justify-center gap-1.5">
+            <p className="font-sans text-[12px] md:text-[13px] text-[#EADBCE]/80 mt-8 tracking-wider uppercase flex items-center justify-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-[#FFDF73]" />
               {guarantee}
             </p>

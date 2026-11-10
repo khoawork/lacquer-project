@@ -160,7 +160,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang Giới Thiệu (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -223,7 +223,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
             <FileText className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 2: Câu Chuyện Khởi Nguồn &amp; Ý Niệm
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -327,7 +327,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
             <Award className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 3: Sứ Mệnh Di Sản &amp; Tầm Nhìn 2030 (Chiến Lược)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -369,7 +369,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D4AF37]/20 pb-2">
             <div className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-[#FFDF73]" />
-              <h4 className="font-serif text-sm font-bold text-[#FFDF73] uppercase tracking-wider">
+              <h4 className="font-sans text-sm font-bold text-[#FFDF73] uppercase tracking-wider">
                 Khối 1: Sứ Mệnh Di Sản (Mission) — ({currentMissionPoints.length} điểm)
               </h4>
             </div>
@@ -462,7 +462,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#D4AF37]/20 pb-2">
             <div className="flex items-center gap-2">
               <Calendar className="w-4 h-4 text-[#FFDF73]" />
-              <h4 className="font-serif text-sm font-bold text-[#FFDF73] uppercase tracking-wider">
+              <h4 className="font-sans text-sm font-bold text-[#FFDF73] uppercase tracking-wider">
                 Khối 2: Tầm Nhìn 2030 (Vision 2030) — ({currentMilestones.length} mốc son)
               </h4>
             </div>
@@ -537,7 +537,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
                     value={m.year || ''}
                     onChange={(e) => handleUpdateMilestone(index, 'year', e.target.value)}
                     placeholder="2026..."
-                    className="w-full px-2.5 py-1.5 rounded bg-[#100203] border border-[#D4AF37]/30 text-[#FFDF73] font-serif font-bold text-xs"
+                    className="w-full px-2.5 py-1.5 rounded bg-[#100203] border border-[#D4AF37]/30 text-[#FFDF73] font-sans font-bold text-xs"
                   />
                 </div>
                 <div className="w-full md:flex-1">
@@ -574,7 +574,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 4: Ba Nguyên Tắc Cốt Lõi — ({currentPrinciples.length} nguyên tắc)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -716,7 +716,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 5: Kiến Trúc Nền Tảng (Mô Hình Hệ Thống) — ({currentArchTiers.length} tầng)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -846,7 +846,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
               <Users className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 6: Cộng Đồng Đồng Hành (Một Hành Trình Cho Nhiều Cộng Đồng) — ({currentCommunities.length} nhóm)
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -963,7 +963,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
             <Send className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 7: Lời Kêu Gọi Đồng Kiến Tạo (CTA Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">

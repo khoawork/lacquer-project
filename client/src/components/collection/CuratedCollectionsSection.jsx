@@ -50,7 +50,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
     >
       {/* Loading State */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-20 text-[#FFDF73] gap-3 font-serif">
+        <div className="flex flex-col items-center justify-center py-20 text-[#FFDF73] gap-3 font-sans">
           <RefreshCw className="w-6 h-6 animate-spin text-[#FFDF73]" />
           <p className="text-sm tracking-wider">Đang nạp các bộ sưu tập di sản từ cơ sở dữ liệu...</p>
         </div>
@@ -58,7 +58,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
 
       {/* Error State */}
       {!loading && error && collections.length === 0 && (
-        <div className="max-w-2xl mx-auto p-6 rounded-2xl border border-red-500/40 bg-red-950/30 text-red-200 text-center font-serif">
+        <div className="max-w-2xl mx-auto p-6 rounded-2xl border border-red-500/40 bg-red-950/30 text-red-200 text-center font-sans">
           <p className="font-bold text-base mb-1">Không thể tải dữ liệu bộ sưu tập.</p>
           <p className="text-xs text-red-300/80">Chi tiết: {error}</p>
         </div>
@@ -66,7 +66,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
 
       {/* Empty State */}
       {!loading && collections.length === 0 && (
-        <div className="max-w-2xl mx-auto p-12 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-serif bg-[#180406]/70 space-y-2">
+        <div className="max-w-2xl mx-auto p-12 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/70 space-y-2">
           <FolderKanban className="w-8 h-8 text-[#FFDF73] mx-auto opacity-70 mb-2" />
           <h4 className="text-lg font-bold text-[#FFDF73]">Chưa có bộ sưu tập nào được công bố</h4>
           <p className="text-xs text-[#FAF7F2]/60">
@@ -98,17 +98,17 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
                         src={col.cover_image}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[#FFDF73] font-serif">
+                      <div className="w-full h-full flex items-center justify-center text-[#FFDF73] font-sans">
                         <span>Hình ảnh bộ sưu tập</span>
                       </div>
                     )}
                     {/* Archival Overlay */}
                     <div className="absolute bottom-4 left-4 right-4 p-3 rounded-lg bg-[#100203]/90 backdrop-blur-md flex items-center justify-between text-[#EADBCE] border border-[#D4AF37]/35 shadow-lg">
-                      <span className="font-serif tracking-wider uppercase text-[#FFDF73] font-bold text-[12px] sm:text-[13px]">
-                        Mã định danh: {col.code || `#COL-${col.id}`}
+                      <span className="font-sans tracking-wider uppercase text-[#FFDF73] font-bold text-[12px] sm:text-[13px]">
+                        Mã định danh: #{col.id}
                       </span>
                       {firstArtwork?.dimensions && (
-                        <span className="font-serif tracking-wider text-[#FAF7F2]/90 text-[12px] sm:text-[13px]">
+                        <span className="font-sans tracking-wider text-[#FAF7F2]/90 text-[12px] sm:text-[13px]">
                           {firstArtwork.dimensions}
                         </span>
                       )}
@@ -126,16 +126,16 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
                     border: '1px solid rgba(212, 175, 55, 0.35)',
                   }}
                 >
-                  <span className="font-serif text-[#FFDF73] uppercase tracking-[0.2em] text-[12px] font-bold">
-                    BỘ SƯU TẬP 0{idx + 1} &bull; {col.code || 'ĐỘC BẢN DI SẢN'}
+                  <span className="font-sans text-[#FFDF73] uppercase tracking-[0.2em] text-[12px] font-bold">
+                    BỘ SƯU TẬP 0{idx + 1}
                   </span>
                 </div>
 
-                <h2 className="font-serif text-[30px] sm:text-[36px] md:text-[42px] leading-tight font-bold text-gold-gradient uppercase">
+                <h2 className="font-sans text-[30px] sm:text-[36px] md:text-[42px] leading-tight font-bold text-gold-gradient uppercase">
                   {col.name}
                 </h2>
 
-                <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/95 leading-[1.85]">
+                <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/95 leading-[1.85] text-justify">
                   {col.description}
                 </p>
 
@@ -145,7 +145,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
                     <div className="flex items-start gap-3">
                       <Palette className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
                       <div>
-                        <strong className="font-serif text-[#FFDF73] tracking-wide uppercase text-[15px]">
+                        <strong className="font-sans text-[#FFDF73] tracking-wide uppercase text-[15px]">
                           Chất liệu:
                         </strong>{' '}
                         {firstArtwork.material}
@@ -157,7 +157,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
                     <div className="flex items-start gap-3">
                       <Grid className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
                       <div>
-                        <strong className="font-serif text-[#FFDF73] tracking-wide uppercase text-[15px]">
+                        <strong className="font-sans text-[#FFDF73] tracking-wide uppercase text-[15px]">
                           Tác giả / Nghệ nhân:
                         </strong>{' '}
                         {firstArtwork.artist}
@@ -169,7 +169,7 @@ const CuratedCollectionsSection = ({ pageProps = null }) => {
                     <div className="flex items-start gap-3">
                       <Layers className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
                       <div>
-                        <strong className="font-serif text-[#FFDF73] tracking-wide uppercase text-[15px]">
+                        <strong className="font-sans text-[#FFDF73] tracking-wide uppercase text-[15px]">
                           Quy mô tác phẩm:
                         </strong>{' '}
                         {col.artworks.length} tác phẩm đã được định danh số lưu trữ trong cơ sở dữ liệu.

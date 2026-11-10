@@ -173,7 +173,7 @@ const MenuManager = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D4AF37]/25 pb-5">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#FFDF73]">
+          <h1 className="font-sans text-2xl sm:text-3xl font-bold text-[#FFDF73]">
             Menu &amp; Điều Hướng
           </h1>
           <p className="text-sm text-[#EADBCE]/80 mt-1 max-w-3xl leading-relaxed">
@@ -231,7 +231,7 @@ const MenuManager = () => {
       >
         {/* Card Header: Mục menu (N) */}
         <div className="flex items-center justify-between border-b border-[#D4AF37]/25 pb-4">
-          <h2 className="font-serif text-xl sm:text-2xl font-bold text-[#FFDF73] tracking-wide">
+          <h2 className="font-sans text-xl sm:text-2xl font-bold text-[#FFDF73] tracking-wide">
             Mục menu ({items.length})
           </h2>
           <span className="text-xs text-[#EADBCE]/70">
@@ -255,7 +255,7 @@ const MenuManager = () => {
                 }`}
               >
                 {/* 1. Numerical Index */}
-                <div className="w-8 flex items-center justify-center font-serif text-base font-bold text-[#FFDF73]/85 shrink-0">
+                <div className="w-8 flex items-center justify-center font-sans text-base font-bold text-[#FFDF73]/85 shrink-0">
                   {index + 1}
                 </div>
 

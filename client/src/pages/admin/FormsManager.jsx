@@ -123,7 +123,7 @@ export default function FormsManager() {
       {/* Header */}
       <div className="p-6 rounded-xl border border-[#D4AF37]/35 bg-gradient-to-r from-[#2c080d] to-[#180305] shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="font-serif text-2xl sm:text-3xl text-gold-gradient font-bold">
+          <h1 className="font-sans text-2xl sm:text-3xl text-gold-gradient font-bold">
             Quản Lý Biểu Mẫu &amp; Hồ Sơ Tiếp Nhận
           </h1>
           <p className="font-body text-xs sm:text-sm text-[#FAF7F2]/75 mt-1">
@@ -149,7 +149,7 @@ export default function FormsManager() {
       <div className="rounded-xl border border-[#D4AF37]/30 bg-[#200508]/90 overflow-hidden shadow-xl">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs text-[#FAF7F2]">
-            <thead className="bg-[#180305] text-[#FFDF73] font-serif uppercase tracking-wider text-[11px] border-b border-[#D4AF37]/25">
+            <thead className="bg-[#180305] text-[#FFDF73] font-sans uppercase tracking-wider text-[11px] border-b border-[#D4AF37]/25">
               <tr>
                 <th className="p-4">Mã hồ sơ</th>
                 <th className="p-4">Họ tên &amp; Đơn vị</th>
@@ -169,7 +169,7 @@ export default function FormsManager() {
                     <div className="font-bold text-[#FAF7F2]">{row.name}</div>
                     <div className="text-[11px] text-[#EADBCE]/70">{row.org}</div>
                   </td>
-                  <td className="p-4 text-[#EADBCE] font-serif">{row.route}</td>
+                  <td className="p-4 text-[#EADBCE] font-sans">{row.route}</td>
                   <td className="p-4 text-[11px] text-[#FAF7F2]/60 whitespace-nowrap">
                     {row.created_at}
                   </td>
@@ -215,7 +215,7 @@ export default function FormsManager() {
                 <span className="text-xs font-mono text-[#FFDF73] font-bold">
                   {selectedItem.ref}
                 </span>
-                <h3 className="font-serif text-xl font-bold text-[#FAF7F2] mt-0.5">
+                <h3 className="font-sans text-xl font-bold text-[#FAF7F2] mt-0.5">
                   {selectedItem.name}
                 </h3>
               </div>
@@ -235,7 +235,7 @@ export default function FormsManager() {
               </div>
               <div className="space-y-1">
                 <span className="text-[#EADBCE]/60 uppercase tracking-wider">Tuyến tham gia</span>
-                <div className="text-[#FFDF73] font-serif font-bold">{selectedItem.route}</div>
+                <div className="text-[#FFDF73] font-sans font-bold">{selectedItem.route}</div>
               </div>
               <div className="space-y-1">
                 <span className="text-[#EADBCE]/60 uppercase tracking-wider">Email</span>

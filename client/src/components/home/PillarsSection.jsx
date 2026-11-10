@@ -29,11 +29,21 @@ const PillarsSection = ({ pageProps }) => {
   const bottomCtaText = pageProps?.pillars_bottom_cta_text || '';
   const bottomCtaLink = pageProps?.pillars_bottom_cta_link || '#mo-hinh';
 
-  if (!headline && !desc && !pillar1Title) return null;
+  if (!headline && !desc && !pillar1Title) {
+    return (
+      <section className="relative w-full py-16 bg-[#180303] border-t border-[#D4AF37]/20">
+        <div className="max-w-7xl mx-auto px-5 text-center">
+          <div className="p-10 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/70 max-w-xl mx-auto">
+            Chưa có dữ liệu
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
-      className="relative w-full py-24 bg-[#180303] border-t border-[#D4AF37]/20"
+      className="relative w-full pt-16! py-24 bg-[#180303] border-t border-[#D4AF37]/20"
       id="bon-huong-mo"
       style={{
         background: 'linear-gradient(rgb(40, 9, 13) 0%, rgb(30, 6, 8) 100%)',
@@ -43,12 +53,12 @@ const PillarsSection = ({ pageProps }) => {
       <FloatingSparkles size={4.5} />
 
       <div className="max-w-7xl mx-auto px-5 md:px-12 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="space-y-2 max-w-2xl">
-            <h2 className="font-serif text-[34px] md:text-[46px] font-bold text-gold-gradient leading-tight">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <div className="space-y-2 max-w-4xl">
+            <h2 className="font-sans text-[clamp(20px,2.4vw,36px)] font-bold text-gold-gradient leading-tight whitespace-normal sm:whitespace-nowrap">
               {headline}
             </h2>
-            <p className="font-body text-[18px] text-[#FAF7F2]">
+            <p className="font-body text-[18px] text-[#FAF7F2] py-4">
               {desc}
             </p>
           </div>
@@ -63,15 +73,15 @@ const PillarsSection = ({ pageProps }) => {
                 <span className="material-symbols-outlined text-[30px]">groups_3</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
+                <h3 className="font-sans text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
                   {pillar1Title}
                 </h3>
-                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
+                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75] text-justify">
                   {pillar1Desc}
                 </p>
               </div>
             </div>
-            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
+            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-sans text-[15px] font-semibold tracking-wider">
               {(p1CtaLink || '').startsWith('#') ? (
                 <a
                   href={p1CtaLink}
@@ -99,15 +109,15 @@ const PillarsSection = ({ pageProps }) => {
                 <span className="material-symbols-outlined text-[30px]">palette</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
+                <h3 className="font-sans text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
                   {pillar2Title}
                 </h3>
-                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
+                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75] text-justify">
                   {pillar2Desc}
                 </p>
               </div>
             </div>
-            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
+            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-sans text-[15px] font-semibold tracking-wider">
               {(p2CtaLink || '').startsWith('#') ? (
                 <a
                   href={p2CtaLink}
@@ -135,15 +145,15 @@ const PillarsSection = ({ pageProps }) => {
                 <span className="material-symbols-outlined text-[30px]">account_balance</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
+                <h3 className="font-sans text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
                   {pillar3Title}
                 </h3>
-                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
+                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75] text-justify">
                   {pillar3Desc}
                 </p>
               </div>
             </div>
-            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
+            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-sans text-[15px] font-semibold tracking-wider">
               {(p3CtaLink || '').startsWith('#') ? (
                 <a
                   href={p3CtaLink}
@@ -171,15 +181,15 @@ const PillarsSection = ({ pageProps }) => {
                 <span className="material-symbols-outlined text-[30px]">science</span>
               </div>
               <div className="space-y-2">
-                <h3 className="font-serif text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
+                <h3 className="font-sans text-[24px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors">
                   {pillar4Title}
                 </h3>
-                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75]">
+                <p className="font-body text-[16px] text-[#FAF7F2] leading-[1.75] text-justify">
                   {pillar4Desc}
                 </p>
               </div>
             </div>
-            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-serif text-[15px] font-semibold tracking-wider">
+            <div className="pt-5 mt-4 border-t border-[#D4AF37]/20 flex items-center text-[#FFDF73] font-sans text-[15px] font-semibold tracking-wider">
               {(p4CtaLink || '').startsWith('#') ? (
                 <a
                   href={p4CtaLink}

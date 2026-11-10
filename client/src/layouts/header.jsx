@@ -8,7 +8,10 @@ const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === '/' || location.pathname === '';
+  const isHomePage =
+    location.pathname === '/' ||
+    location.pathname === '' ||
+    location.pathname === '/home';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -123,21 +126,25 @@ const Header = () => {
     <header
       className={`${
         isHomePage ? 'fixed top-0 left-0' : 'sticky top-0'
-      } w-full z-50 transition-all duration-300`}
+      } w-full z-50 transition-[background-color,border-color,box-shadow,backdrop-filter] duration-300`}
       style={
         isHomePage
           ? {
               background:
                 !isScrolled && !mobileOpen
-                  ? 'linear-gradient(to bottom, rgba(28, 6, 9, 0.92) 0%, rgba(28, 6, 9, 0.35) 60%, transparent 100%)'
-                  : 'rgba(32, 7, 11, 0.96)',
-              borderBottom:
+                  ? 'rgba(28, 6, 9, 0)'
+                  : 'rgba(28, 6, 9, 0.95)',
+              borderBottom: '1px solid',
+              borderBottomColor:
                 !isScrolled && !mobileOpen
-                  ? '1px solid transparent'
-                  : '1px solid rgba(212, 175, 55, 0.35)',
-              backdropFilter: !isScrolled && !mobileOpen ? 'none' : 'blur(16px)',
+                  ? 'rgba(212, 175, 55, 0)'
+                  : 'rgba(212, 175, 55, 0.45)',
+              backdropFilter:
+                !isScrolled && !mobileOpen ? 'blur(0px)' : 'blur(16px)',
               boxShadow:
-                !isScrolled && !mobileOpen ? 'none' : '0 4px 28px rgba(0,0,0,0.7)',
+                !isScrolled && !mobileOpen
+                  ? '0 4px 28px rgba(0, 0, 0, 0)'
+                  : '0 4px 28px rgba(0, 0, 0, 0.75)',
             }
           : {
               background: 'rgba(40, 9, 13, 0.97)',
@@ -163,10 +170,10 @@ const Header = () => {
             />
           </div>
           <div className="flex flex-col justify-center shrink-0">
-            <span className="font-serif text-[13px] sm:text-[14px] xl:text-[16px] font-bold uppercase tracking-[0.1em] text-[#D4AF37] group-hover:text-[#FFDF73] transition-colors leading-none whitespace-nowrap drop-shadow-[0_2px_6px_rgba(212,175,55,0.3)]">
+            <span className=" text-[13px] sm:text-[14px] xl:text-[16px]  uppercase tracking-[0.1em] text-[#D4AF37] group-hover:text-[#FFDF73] transition-colors leading-none whitespace-nowrap drop-shadow-[0_2px_6px_rgba(212,175,55,0.3)]">
               HÀNH TRÌNH 100 NĂM SƠN MÀI
             </span>
-            <span className="text-[9px] xl:text-[10px] font-serif uppercase tracking-[0.18em] text-[#EADBCE]/80 font-medium mt-0.5 whitespace-nowrap">
+            <span className="text-[9px] xl:text-[10px]  uppercase tracking-[0.18em] text-[#EADBCE]/80 font-medium mt-0.5 whitespace-nowrap">
               HỘI HỌA & DI SẢN THẾ KỶ (1930–2030)
             </span>
           </div>
@@ -181,10 +188,10 @@ const Header = () => {
                 key={item.name}
                 to={item.path}
                 onClick={() => setMobileOpen(false)}
-                className={`nav-link-item font-serif text-[11.5px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.08em] whitespace-nowrap py-1.5 shrink-0 transition-all duration-300 ${
+                className={`nav-link-item  text-[11.5px] xl:text-[12.5px] 2xl:text-[13.5px] uppercase tracking-[0.08em] whitespace-nowrap py-1.5 shrink-0 transition-all duration-300 ${
                   active
-                    ? 'active text-[#FFDF73] font-bold drop-shadow-[0_0_12px_rgba(255,223,115,0.85)]'
-                    : 'text-[#EADBCE] hover:text-[#FFDF73] font-semibold'
+                    ? 'active text-[#E6CA65] font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]'
+                    : 'text-[#EADBCE] hover:text-[#E6CA65] font-semibold'
                 }`}
               >
                 {item.name}
@@ -219,7 +226,7 @@ const Header = () => {
 
       {/* Drawer Menu Mobile */}
       {mobileOpen && (
-        <div className="lg:hidden bg-[#1c0608] border-t border-[#3e161b] px-6 py-4 space-y-2.5 font-serif">
+        <div className="lg:hidden bg-[#1c0608] border-t border-[#3e161b] px-6 py-4 space-y-2.5 ">
           {navLinks.map((item) => {
             const active = isNavActive(item);
             return (
@@ -229,8 +236,8 @@ const Header = () => {
                 onClick={() => setMobileOpen(false)}
                 className={`block py-1.5 text-xs uppercase tracking-wider border-b border-[#2d0e12]/60 transition-colors ${
                   active
-                    ? 'text-[#FFDF73] font-bold drop-shadow-[0_0_10px_rgba(255,223,115,0.8)] pl-2 border-l-2 border-l-[#FFDF73] bg-[#2a080d]/60'
-                    : 'text-[#EADBCE] hover:text-[#FFDF73]'
+                    ? 'text-[#E6CA65] font-bold drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)] pl-2 border-l-2 border-l-[#E6CA65] bg-[#2a080d]/60'
+                    : 'text-[#EADBCE] hover:text-[#E6CA65]'
                 }`}
               >
                 {item.name}

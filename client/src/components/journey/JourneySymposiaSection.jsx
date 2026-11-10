@@ -14,10 +14,10 @@ const JourneySymposiaSection = ({ pageProps }) => {
   if (symposia.length === 0 && !featuredTitle) return null;
 
   return (
-    <section className="relative z-10 w-full py-16 md:py-24 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto scroll-mt-20">
+    <section className="relative z-10 w-full pt-12! py-16 md:py-24 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto scroll-mt-20">
       {/* Title */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 className="font-serif text-[32px] sm:text-[42px] md:text-[52px] lg:text-[60px] font-bold text-gold-gradient uppercase tracking-tight mb-4 leading-tight drop-shadow-[0_2px_10px_rgba(212,175,55,0.35)]">
+      <div className="text-center max-w-4xl mx-auto mb-16">
+        <h2 className="font-sans text-3xl lg:text-[44px] lg:leading-[52px] font-bold text-gold-gradient uppercase tracking-tight mb-4 leading-tight py-2 drop-shadow-[0_2px_10px_rgba(0,0,0,0.8)]">
           {symposiaTitle}
         </h2>
       </div>
@@ -28,33 +28,33 @@ const JourneySymposiaSection = ({ pageProps }) => {
           {symposia.map((item, idx) => (
             <div
               key={idx}
-              className="card-lacquer p-8 rounded-xl flex flex-col justify-between group transition-all duration-500 hover:border-[#FFDF73]"
+              className="card-lacquer p-8 rounded-xl flex flex-col justify-between group transition-all duration-500 hover:border-[#D4AF37]"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
                   {item.code && (
-                    <span className="px-3.5 py-1 rounded bg-[#2e090e] text-[#FFDF73] text-[13px] tracking-wider font-bold border border-[#D4AF37]/25">
+                    <span className="px-3.5 py-1 rounded bg-[#2e090e] text-[#E6CA65] text-[12px] md:text-[13px] tracking-wider font-bold border border-[#D4AF37]/25">
                       {item.code}
                     </span>
                   )}
-                  <span className="material-symbols-outlined text-[#FFDF73]/60 group-hover:text-[#FFDF73] group-hover:rotate-45 transition-all text-2xl">
+                  <span className="material-symbols-outlined text-[#E6CA65]/70 group-hover:text-[#F5DE9C] group-hover:rotate-45 transition-all text-2xl">
                     arrow_outward
                   </span>
                 </div>
                 {item.title && (
-                  <h3 className="font-serif text-[24px] md:text-[27px] font-bold text-[#FAF7F2] group-hover:text-[#FFDF73] transition-colors mb-3 leading-snug">
+                  <h3 className="font-sans text-[20px] md:text-[22px] font-bold text-[#FAF7F2] group-hover:text-[#F5DE9C] transition-colors mb-3 leading-snug">
                     {item.title}
                   </h3>
                 )}
                 {item.desc && (
-                  <p className="font-body text-[15px] md:text-[16px] text-[#FAF7F2]/85 leading-relaxed font-normal">
+                  <p className="font-body text-[16px] md:text-[17px] text-[#FAF7F2]/90 leading-relaxed font-normal text-justify">
                     {item.desc}
                   </p>
                 )}
               </div>
 
               {item.sub && (
-                <div className="mt-6 pt-4 border-t border-[#D4AF37]/15 flex items-center gap-2 text-[#FFDF73] text-xs uppercase tracking-widest font-semibold">
+                <div className="mt-6 pt-4 border-t border-[#D4AF37]/15 flex items-center gap-2 text-[#E6CA65] text-xs uppercase tracking-widest font-semibold">
                   <span>{item.sub}</span>
                 </div>
               )}
@@ -73,11 +73,11 @@ const JourneySymposiaSection = ({ pageProps }) => {
                   <span>{featuredCode}</span>
                 </div>
               )}
-              <h3 className="font-serif text-[26px] sm:text-[32px] md:text-[36px] text-gold-gradient font-bold leading-snug drop-shadow-[0_2px_8px_rgba(212,175,55,0.35)]">
+              <h3 className="font-sans text-2xl sm:text-3xl lg:text-[32px] text-gold-gradient font-bold leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">
                 {featuredTitle}
               </h3>
               {featuredDesc && (
-                <p className="font-body text-[15px] md:text-[16px] text-[#FAF7F2]/90 leading-relaxed font-normal">
+                <p className="font-body text-[16px] md:text-[17px] text-[#FAF7F2]/90 leading-relaxed font-normal text-justify">
                   {featuredDesc}
                 </p>
               )}

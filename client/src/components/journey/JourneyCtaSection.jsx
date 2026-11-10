@@ -23,20 +23,14 @@ const JourneyCtaSection = ({ pageProps }) => {
 
       <div className="max-w-4xl mx-auto space-y-7 relative z-10">
         <div className="space-y-3">
-          {ctaTag && (
-            <span className="font-serif text-[15px] md:text-[16px] tracking-[0.28em] text-[#FFDF73] uppercase font-bold whitespace-nowrap block">
-              {ctaTag}
-            </span>
-          )}
-
           {ctaHeadline && (
-            <h2 className="font-serif text-[42px] sm:text-[56px] md:text-[68px] lg:text-[76px] font-bold text-gold-gradient uppercase tracking-tight leading-[1.1] drop-shadow-[0_4px_20px_rgba(212,175,55,0.45)]">
+            <h2 className="font-sans text-3xl sm:text-4xl lg:text-[46px] lg:leading-[54px] font-bold text-gold-gradient uppercase tracking-tight leading-[1.1] py-2 drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
               {ctaHeadline}
             </h2>
           )}
 
           {ctaDesc && (
-            <p className="font-body text-[18px] md:text-[20px] text-[#FAF7F2] max-w-2xl mx-auto leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] font-normal">
+            <p className="font-body text-[18px] md:text-[19px] text-[#FAF7F2] max-w-2xl mx-auto tracking-wide leading-relaxed drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] font-normal">
               {ctaDesc}
             </p>
           )}
@@ -45,31 +39,15 @@ const JourneyCtaSection = ({ pageProps }) => {
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           <Link
             to={ctaBtn1Link}
-            className="btn-gold px-10 py-4 rounded text-[16px] uppercase tracking-[0.16em] font-bold shadow-xl whitespace-nowrap cursor-pointer inline-block"
+            className="btn-gold inline-flex items-center justify-center px-8 py-3.5 rounded text-[15px] uppercase tracking-wider font-bold shadow-xl whitespace-nowrap cursor-pointer"
           >
             {ctaBtn1Text}
           </Link>
           <Link
             to={ctaBtn2Link}
-            className="btn-gold-outline px-8 py-4 rounded text-[16px] uppercase tracking-[0.16em] font-bold whitespace-nowrap cursor-pointer inline-block"
+            className="btn-gold-outline inline-flex items-center justify-center px-8 py-3.5 rounded text-[15px] uppercase tracking-wider font-bold whitespace-nowrap cursor-pointer"
           >
             {ctaBtn2Text}
-          </Link>
-        </div>
-
-        <div className="w-40 h-[2px] bg-gradient-to-r from-transparent via-[#FFDF73] to-transparent mx-auto mt-8 opacity-70" />
-
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-[#FFDF73]/90 font-serif text-[14px] tracking-widest uppercase">
-          <Link to="/contact" className="hover:text-[#FFF3CC] transition-colors font-semibold">
-            ĐĂNG KÝ THAM GIA
-          </Link>
-          <span className="text-[#D4AF37]/50">•</span>
-          <Link to="/contact" className="hover:text-[#FFF3CC] transition-colors font-semibold">
-            ĐỀ XUẤT HỢP TÁC
-          </Link>
-          <span className="text-[#D4AF37]/50">•</span>
-          <Link to="/contact" className="hover:text-[#FFF3CC] transition-colors font-semibold">
-            GỬI TƯ LIỆU QUÝ
           </Link>
         </div>
       </div>

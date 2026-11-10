@@ -92,7 +92,7 @@ const NewsGridSection = ({
     <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 z-10 w-full mb-20 select-none">
       {/* Loading state */}
       {loading && (
-        <div className="flex flex-col items-center justify-center py-20 text-[#FFDF73] gap-3 font-serif">
+        <div className="flex flex-col items-center justify-center py-20 text-[#FFDF73] gap-3 font-sans">
           <RefreshCw className="w-7 h-7 animate-spin text-[#FFDF73]" />
           <span className="text-base tracking-wider">Đang kết nối kho dữ liệu tin tức...</span>
         </div>
@@ -100,7 +100,7 @@ const NewsGridSection = ({
 
       {/* Error state */}
       {!loading && error && allArticles.length === 0 && (
-        <div className="p-8 rounded-2xl border border-red-500/40 bg-red-950/40 text-red-200 text-center font-serif shadow-xl">
+        <div className="p-8 rounded-2xl border border-red-500/40 bg-red-950/40 text-red-200 text-center font-sans shadow-xl">
           <p className="font-bold text-lg mb-1">Không thể kết nối cơ sở dữ liệu tin tức.</p>
           <p className="text-xs text-red-300/80">Chi tiết lỗi: {error}</p>
         </div>
@@ -108,7 +108,7 @@ const NewsGridSection = ({
 
       {/* Empty state */}
       {!loading && filteredArticles.length === 0 && (
-        <div className="p-16 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-serif bg-[#180406]/75 space-y-3 shadow-xl max-w-2xl mx-auto">
+        <div className="p-16 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/75 space-y-3 shadow-xl max-w-2xl mx-auto">
           <Newspaper className="w-10 h-10 text-[#FFDF73] mx-auto opacity-70 mb-2" />
           <h4 className="text-xl font-bold text-[#FFDF73]">
             Chưa có bài viết trong chuyên mục “{activeCategory}”
@@ -156,7 +156,7 @@ const NewsGridSection = ({
                   {/* Category Pill Badge */}
                   <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
                     <span
-                      className="px-3 py-1 rounded font-serif text-[12px] tracking-wider font-semibold shadow-md uppercase"
+                      className="px-3 py-1 rounded font-sans text-[12px] tracking-wider font-semibold shadow-md uppercase"
                       style={{
                         background: 'rgba(82, 21, 21, 0.9)',
                         color: '#FFDF73',
@@ -187,7 +187,7 @@ const NewsGridSection = ({
                     </div>
 
                     <Link to={`/news/${article.id}`} className="cursor-pointer">
-                      <h3 className="font-serif text-[21px] leading-snug font-bold transition-colors duration-300 group-hover:text-[#FFDF73] text-[#FAF7F2] line-clamp-2">
+                      <h3 className="font-sans text-[21px] leading-snug font-bold transition-colors duration-300 group-hover:text-[#FFDF73] text-[#FAF7F2] line-clamp-2">
                         {article.title}
                       </h3>
                     </Link>
@@ -200,7 +200,7 @@ const NewsGridSection = ({
                   <div className="pt-4 flex items-center justify-between border-t border-[rgba(212,175,55,0.18)] mt-2">
                     <Link
                       to={`/news/${article.id}`}
-                      className="inline-flex items-center gap-1.5 font-serif text-[13px] uppercase tracking-wider transition-colors font-bold text-[#FFDF73] hover:text-white cursor-pointer group-hover:underline"
+                      className="inline-flex items-center gap-1.5 font-sans text-[13px] uppercase tracking-wider transition-colors font-bold text-[#FFDF73] hover:text-white cursor-pointer group-hover:underline"
                     >
                       <span>ĐỌC BÀI VIẾT</span>
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />

@@ -34,7 +34,7 @@ const NewsPageEditor = ({
               <Newspaper className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-serif text-base font-bold text-[#FFDF73]">
+              <h4 className="font-sans text-base font-bold text-[#FFDF73]">
                 Quản Trị Nội Dung: Trang Tin Tức &amp; Tư Liệu
               </h4>
               <p className="text-xs text-[#EADBCE]/70">
@@ -61,7 +61,7 @@ const NewsPageEditor = ({
             <Newspaper className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang Tin Tức (Hero Banner)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -118,7 +118,7 @@ const NewsPageEditor = ({
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 2: Chọn Bài Viết Hiển Thị Ưu Tiên
               </h3>
               <p className="text-xs text-[#EADBCE]/70">

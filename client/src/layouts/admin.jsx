@@ -102,7 +102,7 @@ const AdminLayout = () => {
                 <Sparkles className="w-5 h-5 text-[#FFDF73]" />
               </div>
               <div>
-                <h2 className="font-serif text-[17px] font-bold text-[#FFDF73] tracking-wider uppercase leading-tight">
+                <h2 className="font-sans text-[17px] font-bold text-[#FFDF73] tracking-wider uppercase leading-tight">
                   SƠN MÀI CMS
                 </h2>
                 <p className="text-[11px] text-[#EADBCE]/75 tracking-wider uppercase">
@@ -116,7 +116,7 @@ const AdminLayout = () => {
           <div className="space-y-6">
             {sidebarGroups.map((group, gIdx) => (
               <div key={gIdx} className="space-y-1">
-                <div className="px-3 py-1 text-[11px] font-bold tracking-[0.2em] uppercase text-[#ffcfcf]/90 font-serif">
+                <div className="px-3 py-1 text-[11px] font-bold tracking-[0.2em] uppercase text-[#ffcfcf]/90 font-sans">
                   {group.groupTitle}
                 </div>
                 <div className="space-y-0.5">
@@ -186,7 +186,7 @@ const AdminLayout = () => {
               <MenuIcon className="w-5 h-5" />
             </button>
             <div className="flex items-center gap-2">
-              <span className="font-serif text-sm uppercase tracking-wider text-[#FFDF73] font-semibold hidden sm:inline">
+              <span className="font-sans text-sm uppercase tracking-wider text-[#FFDF73] font-semibold hidden sm:inline">
                 Hệ Thống Quản Lý Nội Dung Bách Niên
               </span>
             </div>
@@ -197,7 +197,7 @@ const AdminLayout = () => {
               <div className="w-6 h-6 rounded-full bg-[#d49b1a] text-[#1a0406] flex items-center justify-center font-bold text-xs">
                 A
               </div>
-              <span className="text-xs font-serif font-bold text-[#FAF7F2] hidden sm:inline">
+              <span className="text-xs font-sans font-bold text-[#FAF7F2] hidden sm:inline">
                 Quản Trị Viên (Admin)
               </span>
             </div>

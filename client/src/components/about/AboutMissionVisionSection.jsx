@@ -23,7 +23,7 @@ const AboutMissionVisionSection = ({ pageProps }) => {
 
   return (
     <section
-      className="relative w-full py-16 lg:py-24"
+      className="relative w-full py-12 lg:py-20"
       style={{
         background:
           'radial-gradient(circle, rgba(44, 12, 17, 0.9) 0%, rgba(22, 6, 8, 0.98) 100%)',
@@ -32,14 +32,14 @@ const AboutMissionVisionSection = ({ pageProps }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header */}
         {(mvTag || mvTitle) && (
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-4xl mx-auto mb-16 space-y-3">
             {mvTag && (
-              <span className="font-serif text-[13px] uppercase tracking-[0.25em] text-[#FFDF73] font-bold">
+              <span className="font-sans text-[13px] uppercase tracking-[0.25em] text-[#FFDF73] font-bold">
                 {mvTag}
               </span>
             )}
             {mvTitle && (
-              <h2 className="font-serif text-3xl lg:text-[44px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight">
+              <h2 className="font-sans text-2xl sm:text-3xl md:text-4xl lg:text-[44px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight py-4 whitespace-normal sm:whitespace-nowrap">
                 {mvTitle}
               </h2>
             )}
@@ -56,7 +56,7 @@ const AboutMissionVisionSection = ({ pageProps }) => {
                 <div className="flex items-center justify-between">
                   {missionBadge && (
                     <span
-                      className="inline-flex items-center px-3.5 py-1 rounded border border-[#D4AF37]/40 text-[#FFDF73] font-serif text-[13px] tracking-widest uppercase font-bold"
+                      className="inline-flex items-center px-3.5 py-1 rounded border border-[#D4AF37]/40 text-[#FFDF73] font-sans text-[13px] tracking-widest uppercase font-bold"
                       style={{ background: 'rgba(50, 10, 10, 0.7)' }}
                     >
                       {missionBadge}
@@ -67,7 +67,7 @@ const AboutMissionVisionSection = ({ pageProps }) => {
                   </span>
                 </div>
                 {missionTitle && (
-                  <h3 className="font-serif text-2xl lg:text-[28px] text-gold-gradient font-bold leading-snug">
+                  <h3 className="font-sans text-2xl lg:text-[28px] text-gold-gradient font-bold leading-snug">
                     {missionTitle}
                   </h3>
                 )}
@@ -75,9 +75,9 @@ const AboutMissionVisionSection = ({ pageProps }) => {
                   {missionPoints.map((point, idx) => (
                     <div key={idx} className="flex items-start gap-3.5">
                       <span className="w-2.5 h-2.5 rotate-45 bg-[#FFDF73] shadow-[0_0_6px_#FFDF73] flex-shrink-0 mt-2" />
-                      <p className="font-body text-[16px] md:text-[17px] text-[#FAF7F2]">
+                      <p className="font-body text-[16px] md:text-[17px] text-[#FAF7F2] text-justify">
                         {point.bold && (
-                          <strong className="text-[#FFDF73] font-serif font-bold">
+                          <strong className="text-[#FFDF73] font-sans font-bold">
                             {point.bold}{' '}
                           </strong>
                         )}
@@ -97,7 +97,7 @@ const AboutMissionVisionSection = ({ pageProps }) => {
                 <div className="flex items-center justify-between">
                   {visionBadge && (
                     <span
-                      className="inline-flex items-center px-3.5 py-1 rounded border border-[#D4AF37]/40 text-[#FFDF73] font-serif text-[13px] tracking-widest uppercase font-bold"
+                      className="inline-flex items-center px-3.5 py-1 rounded border border-[#D4AF37]/40 text-[#FFDF73] font-sans text-[13px] tracking-widest uppercase font-bold"
                       style={{ background: 'rgba(50, 10, 10, 0.7)' }}
                     >
                       {visionBadge}
@@ -108,12 +108,12 @@ const AboutMissionVisionSection = ({ pageProps }) => {
                   </span>
                 </div>
                 {visionTitle && (
-                  <h3 className="font-serif text-2xl lg:text-[28px] text-gold-gradient font-bold leading-snug">
+                  <h3 className="font-sans text-2xl lg:text-[28px] text-gold-gradient font-bold leading-snug">
                     {visionTitle}
                   </h3>
                 )}
                 {visionDesc && (
-                  <p className="font-body text-[17px] text-[#FAF7F2] leading-relaxed font-normal">
+                  <p className="font-body text-[17px] text-[#FAF7F2] leading-relaxed font-normal text-justify">
                     {visionDesc}
                   </p>
                 )}
@@ -126,7 +126,7 @@ const AboutMissionVisionSection = ({ pageProps }) => {
                       className="p-3.5 rounded-lg bg-[#180303]/90 border border-[#D4AF37]/25 flex items-center justify-between"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-serif text-[#FFDF73] font-bold text-base">
+                        <span className="font-sans text-[#FFDF73] font-bold text-base">
                           {m.year}
                         </span>
                         <span className="text-xs text-[#EADBCE]">{m.desc}</span>

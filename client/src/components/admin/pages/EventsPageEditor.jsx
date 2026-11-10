@@ -49,7 +49,7 @@ const EventsPageEditor = ({
             <Sparkles className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+            <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
               Phần 1: Khung Đầu Trang Sự Kiện &amp; 4 Chỉ Số Thống Kê
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
@@ -188,20 +188,6 @@ const EventsPageEditor = ({
             </div>
           </div>
         </div>
-
-        {/* Counter Badge */}
-        <div>
-          <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-            Huy hiệu cập nhật nhanh (counter_badge)
-          </label>
-          <input
-            type="text"
-            value={parsedProps.counter_badge || ''}
-            onChange={(e) => handlePropChange('counter_badge', e.target.value)}
-            className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-            placeholder="VD: ĐANG CẬP NHẬT 2 SỰ KIỆN QUAN TRỌNG"
-          />
-        </div>
       </div>
 
       {/* SECTION 2: BỘ CHỌN SỰ KIỆN TỪ DATABASE & ĐẶT SỰ KIỆN NỔI BẬT */}
@@ -212,7 +198,7 @@ const EventsPageEditor = ({
               <Layers className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Phần 2: Chọn Các Sự Kiện Từ Cơ Sở Dữ Liệu Để Hiển Thị
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -324,7 +310,7 @@ const EventsPageEditor = ({
                       : 'bg-[#100203]/80 border-[#D4AF37]/25 hover:border-[#D4AF37]/50'
                   }`}
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-start gap-3 text-justify">
                     <div
                       className={`w-5 h-5 rounded mt-0.5 flex items-center justify-center shrink-0 transition ${
                         isSelected ? 'bg-[#d49b1a] text-black font-bold' : 'border border-[#D4AF37]/50'

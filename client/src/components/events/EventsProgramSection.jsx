@@ -48,7 +48,7 @@ const EventsProgramSection = ({ pageProps = null }) => {
           <div className="relative z-10 max-w-3xl">
             {badge && (
               <div
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 text-[#FFDF73] font-serif text-[12px] uppercase tracking-widest mb-4 font-bold"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D4AF37]/40 text-[#FFDF73] font-sans text-[12px] uppercase tracking-widest mb-4 font-bold"
                 style={{ background: 'rgba(38, 10, 14, 0.85)' }}
               >
                 <span className="w-2 h-2 rounded-full bg-[#FFDF73] animate-pulse" />
@@ -56,7 +56,7 @@ const EventsProgramSection = ({ pageProps = null }) => {
               </div>
             )}
             {title && (
-              <h4 className="font-serif text-[30px] sm:text-[34px] md:text-[46px] leading-[40px] md:leading-[54px] text-gold-gradient mb-4 font-bold">
+              <h4 className="font-sans text-[30px] sm:text-[34px] md:text-[46px] leading-[40px] md:leading-[54px] text-gold-gradient mb-4 font-bold">
                 {title}
               </h4>
             )}
@@ -86,10 +86,10 @@ const EventsProgramSection = ({ pageProps = null }) => {
               </span>
             </div>
             <div>
-              <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+              <span className="font-sans text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Thời gian tổ chức
               </span>
-              <span className="font-serif text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+              <span className="font-sans text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
                 {time}
               </span>
               <span className="font-body text-[14px] text-[#EADBCE]">{date}</span>
@@ -112,10 +112,10 @@ const EventsProgramSection = ({ pageProps = null }) => {
               </span>
             </div>
             <div>
-              <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+              <span className="font-sans text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Địa điểm thực hiện
               </span>
-              <span className="font-serif text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+              <span className="font-sans text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
                 {location}
               </span>
               <span className="font-body text-[14px] text-[#EADBCE]">
@@ -140,10 +140,10 @@ const EventsProgramSection = ({ pageProps = null }) => {
               </span>
             </div>
             <div>
-              <span className="font-serif text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
+              <span className="font-sans text-[12px] uppercase tracking-wider text-[#FFDF73] font-bold block">
                 Bản đồ định vị GPS
               </span>
-              <span className="font-serif text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
+              <span className="font-sans text-[20px] text-[#FAF7F2] font-bold block mt-0.5">
                 {gpsTitle}
               </span>
               <span className="font-body text-[14px] text-[#EADBCE]">

@@ -2,29 +2,6 @@ import React from 'react';
 import { resolveLeadershipIcon } from './leadershipIconRegistry';
 import { Share2 } from 'lucide-react';
 
-const DEFAULT_NETWORK_PARTNERS = [
-  {
-    icon: 'Share2',
-    title: 'Không Gian Đổi Mới Sáng Tạo & Viện Nghiên Cứu',
-    status: 'Đang cập nhật',
-  },
-  {
-    icon: 'GraduationCap',
-    title: 'Cơ Sở Đào Tạo Mỹ Thuật & Thiết Kế',
-    status: 'Đang cập nhật',
-  },
-  {
-    icon: 'Store',
-    title: 'Hiệp Hội Làng Nghề & Doanh Nghiệp Vật Liệu',
-    status: 'Đang cập nhật',
-  },
-  {
-    icon: 'Image',
-    title: 'Bảo Tàng, Không Gian Trưng Bày & Truyền Thông',
-    status: 'Đang cập nhật',
-  },
-];
-
 const LeadershipNetworkSection = ({ pageProps }) => {
   const title = pageProps?.network_title || 'Mạng lưới phối hợp';
   const subtitle = pageProps?.network_subtitle || '“Cùng tạo nên hệ sinh thái”';
@@ -36,16 +13,16 @@ const LeadershipNetworkSection = ({ pageProps }) => {
   const partners =
     Array.isArray(pageProps?.network_partners) && pageProps.network_partners.length > 0
       ? pageProps.network_partners
-      : DEFAULT_NETWORK_PARTNERS;
+      : [];
 
   return (
     <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pb-24 text-center select-none">
       <div className="max-w-3xl mx-auto mb-12">
-        <h2 className="font-serif text-[34px] sm:text-[42px] lg:text-[48px] uppercase text-gold-gradient font-bold mb-2">
+        <h2 className="font-sans text-[34px] sm:text-[42px] lg:text-[48px] uppercase text-gold-gradient font-bold mb-2">
           {title}
         </h2>
         {subtitle && (
-          <p className="font-serif text-[20px] md:text-[22px] italic text-[#FFE599] font-medium mb-3">
+          <p className="font-sans text-[20px] md:text-[22px] italic text-[#FFE599] font-medium mb-3">
             {subtitle}
           </p>
         )}
@@ -56,26 +33,32 @@ const LeadershipNetworkSection = ({ pageProps }) => {
         )}
       </div>
 
-      <div className={`grid grid-cols-1 sm:grid-cols-2 ${partners.length >= 4 ? 'lg:grid-cols-4' : partners.length === 3 ? 'lg:grid-cols-3' : ''} gap-6 mb-12`}>
-        {partners.map((partner, idx) => {
-          const PartnerIcon = resolveLeadershipIcon(partner.icon, Share2);
+      {partners.length === 0 ? (
+        <div className="p-10 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/70 max-w-xl mx-auto my-8">
+          Chưa có dữ liệu
+        </div>
+      ) : (
+        <div className={`grid grid-cols-1 sm:grid-cols-2 ${partners.length >= 4 ? 'lg:grid-cols-4' : partners.length === 3 ? 'lg:grid-cols-3' : ''} gap-6 mb-12`}>
+          {partners.map((partner, idx) => {
+            const PartnerIcon = resolveLeadershipIcon(partner.icon, Share2);
 
-          return (
-            <div
-              key={partner.id || idx}
-              className="card-dashed-gold rounded-xl p-7 flex flex-col items-center justify-center min-h-[190px] group"
-            >
-              <PartnerIcon className="w-8 h-8 text-[#FFDF73] mb-3 transition-transform duration-300 group-hover:scale-110" />
-              <h3 className="font-serif text-[18px] text-[#FAF7F2] font-semibold mb-2">
-                {partner.title}
-              </h3>
-              <span className="font-serif text-[14px] italic text-[#FFDF73]/75 font-medium">
-                {partner.status || 'Đang cập nhật'}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <div
+                key={partner.id || idx}
+                className="card-dashed-gold rounded-xl p-7 flex flex-col items-center justify-center min-h-[190px] group"
+              >
+                <PartnerIcon className="w-8 h-8 text-[#FFDF73] mb-3 transition-transform duration-300 group-hover:scale-110" />
+                <h3 className="font-sans text-[18px] text-[#FAF7F2] font-semibold mb-2">
+                  {partner.title}
+                </h3>
+                <span className="font-sans text-[14px] italic text-[#FFDF73]/75 font-medium">
+                  {partner.status || 'Đang cập nhật'}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       {btnText && (
         <div className="flex justify-center">

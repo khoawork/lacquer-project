@@ -109,7 +109,7 @@ const ImageUploader = ({ value, onChange, label = 'Hình Ảnh', placeholder = '
           ) : (
             <div className="flex flex-col items-center justify-center text-[#D4AF37]/40 text-center p-2">
               <ImageIcon className="w-7 h-7 mb-1" />
-              <span className="text-[10px] uppercase font-serif">Chưa có ảnh</span>
+              <span className="text-[10px] uppercase font-sans">Chưa có ảnh</span>
             </div>
           )}
         </div>

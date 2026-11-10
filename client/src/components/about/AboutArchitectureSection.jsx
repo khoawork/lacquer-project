@@ -13,7 +13,7 @@ const AboutArchitectureSection = ({ pageProps }) => {
 
   return (
     <section
-      className="relative w-full py-16 lg:py-24"
+      className="relative w-full py-12 lg:py-20"
       style={{
         background:
           'radial-gradient(circle, rgba(42, 12, 16, 0.9) 0%, rgba(20, 5, 7, 0.98) 100%)',
@@ -22,19 +22,19 @@ const AboutArchitectureSection = ({ pageProps }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
         {/* Section Header */}
         {(archTag || archTitle) && (
-          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-5xl mx-auto mb-16 space-y-3">
             {archTag && (
-              <span className="font-serif text-[13px] uppercase tracking-[0.25em] text-[#FFDF73] font-bold">
+              <span className="font-sans text-[13px] uppercase tracking-[0.25em] text-[#FFDF73] font-bold">
                 {archTag}
               </span>
             )}
             {archTitle && (
-              <h2 className="font-serif text-3xl lg:text-[44px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight">
+              <h2 className="font-sans text-3xl lg:text-[44px] lg:leading-[52px] text-gold-gradient font-bold tracking-tight py-4 ">
                 {archTitle}
               </h2>
             )}
             {archSubtitle && (
-              <p className="font-serif text-[20px] italic text-[#FFDF73]">
+              <p className="font-sans text-[20px] italic text-[#FFDF73]">
                 {archSubtitle}
               </p>
             )}
@@ -57,10 +57,10 @@ const AboutArchitectureSection = ({ pageProps }) => {
                     </span>
                   </div>
                   <div>
-                    <span className="font-serif text-[12px] text-[#FFDF73] uppercase tracking-widest block mb-1 font-bold">
+                    <span className="font-sans text-[12px] text-[#FFDF73] uppercase tracking-widest block mb-1 font-bold">
                       {tier.tier_badge || `Tầng 0${idx + 1}`}
                     </span>
-                    <h3 className="font-serif text-[22px] md:text-[24px] text-gold-gradient font-bold">
+                    <h3 className="font-sans text-[22px] md:text-[24px] text-gold-gradient font-bold">
                       {tier.title}
                     </h3>
                     <p className="font-body text-[16px] text-[#FAF7F2] mt-2 max-w-2xl leading-relaxed">

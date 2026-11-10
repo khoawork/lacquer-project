@@ -48,7 +48,13 @@ export const getImageUrl = (url) => {
   if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('data:')) {
     return url;
   }
-  const serverOrigin = BASE_URL.replace(/\/api\/?$/, '');
+  const fallbackOrigin =
+    typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SERVER_URL
+      ? import.meta.env.VITE_SERVER_URL
+      : '';
+  const serverOrigin = BASE_URL.startsWith('http')
+    ? BASE_URL.replace(/\/api\/?$/, '')
+    : fallbackOrigin;
   return `${serverOrigin}${url.startsWith('/') ? '' : '/'}${url}`;
 };
 

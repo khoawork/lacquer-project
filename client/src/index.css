@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-serif: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-cursive: 'Alex Brush', 'Pinyon Script', cursive;
+  --font-script: 'Alex Brush', 'Pinyon Script', cursive;
+}
+
 :root {
   --gold-glow: rgba(212, 175, 55, 0.65);
   --gold-glow-soft: rgba(255, 223, 115, 0.45);
@@ -29,64 +37,79 @@ body {
   background: radial-gradient(circle at 50% 15%, #421217 0%, #28090d 55%, #180507 100%);
   background-color: #28090d;
   color: #FAF7F2;
-  font-family: 'Lora', Georgia, serif;
-  font-size: 18px;
-  line-height: 1.8;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 16px;
+  line-height: 1.75;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .font-serif, [class*="font-display"] {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+h1:not(.font-cursive):not(.font-script),
+h2:not(.font-cursive):not(.font-script),
+h3:not(.font-cursive):not(.font-script),
+h4:not(.font-cursive):not(.font-script),
+h5, h6, .font-serif, .font-sans, [class*="font-display"] {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   text-wrap: balance;
 }
 
-.font-cursive, .font-script {
-  font-family: 'Alex Brush', 'Pinyon Script', 'Playfair Display', cursive, serif;
-}
-
-p, li, blockquote, .font-body {
-  font-family: 'Lora', Georgia, serif;
+p:not(.font-cursive):not(.font-script),
+li:not(.font-cursive):not(.font-script),
+blockquote:not(.font-cursive):not(.font-script),
+.font-body:not(.font-cursive):not(.font-script) {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
   text-wrap: pretty;
 }
 
-/* Chữ vàng hoàng gia sáng chói rực rỡ */
+.font-cursive,
+.font-script,
+p.font-cursive,
+span.font-cursive,
+h1.font-cursive,
+h2.font-cursive,
+div.font-cursive,
+[class*="font-cursive"],
+[class*="font-script"] {
+  font-family: 'Alex Brush', 'Pinyon Script', 'Playfair Display', cursive, serif !important;
+}
+
+/* Chữ vàng hoàng gia sang trọng, quý phái, sắc nét, không bị ám quầng vàng mờ */
 .text-gold-gradient {
-  background: linear-gradient(135deg, #FFFFFF 0%, #FFF5CC 15%, #FFE07D 40%, #E5B834 75%, #B88916 100%);
+  background: linear-gradient(135deg, #FFF8E7 0%, #F5DE9C 25%, #D4AF37 60%, #AA820A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 20px rgba(255, 223, 115, 0.65)) drop-shadow(0 0 45px rgba(212, 175, 55, 0.45));
+  filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.85));
 }
 
 .text-gold-subtle {
-  background: linear-gradient(135deg, #FFF9E5 0%, #FFE599 50%, #D4AF37 100%);
+  background: linear-gradient(135deg, #FFF3D6 0%, #E5C158 55%, #AA820A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 /* Royal Gold Buttons - Primary */
 .btn-gold {
-  background: linear-gradient(135deg, #FFF0B3 0%, #FFDF73 30%, #D4AF37 70%, #A67C14 100%) !important;
+  background: linear-gradient(135deg, #FDE8B5 0%, #E8C86A 35%, #C99E2A 70%, #9C750A 100%) !important;
   color: #1a0303 !important;
-  font-family: 'Cormorant Garamond', serif !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
   font-weight: 700 !important;
-  letter-spacing: 0.16em !important;
-  box-shadow: 0 4px 24px rgba(212, 175, 55, 0.55), 0 0 15px rgba(255, 223, 115, 0.4) !important;
-  border: 1px solid rgba(255, 243, 204, 0.8) !important;
+  letter-spacing: 0.12em !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 12px rgba(212, 175, 55, 0.25) !important;
+  border: 1px solid rgba(245, 222, 156, 0.6) !important;
   transition: all 0.35s ease;
 }
 .btn-gold:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 6px 36px rgba(255, 223, 115, 0.85), 0 0 24px rgba(255, 243, 204, 0.65) !important;
+  filter: brightness(1.08);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 0 18px rgba(212, 175, 55, 0.4) !important;
   transform: translateY(-2px);
 }
 
 /* Ghost Outline Gold */
 .btn-gold-outline {
   background: rgba(40, 9, 13, 0.85) !important;
-  color: #FFDF73 !important;
-  border: 1px solid rgba(212, 175, 55, 0.65) !important;
-  font-family: 'Cormorant Garamond', serif !important;
-  letter-spacing: 0.16em !important;
+  color: #E6CA65 !important;
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  letter-spacing: 0.12em !important;
   font-weight: 700 !important;
   backdrop-filter: blur(12px);
   transition: all 0.35s ease;
@@ -94,9 +117,9 @@ p, li, blockquote, .font-body {
 }
 .btn-gold-outline:hover {
   background: rgba(60, 16, 23, 0.95) !important;
-  border-color: #FFDF73 !important;
-  color: #FFF3CC !important;
-  box-shadow: 0 0 24px rgba(212, 175, 55, 0.6) !important;
+  border-color: #E6CA65 !important;
+  color: #FDF3D6 !important;
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.35) !important;
   transform: translateY(-2px);
 }
 

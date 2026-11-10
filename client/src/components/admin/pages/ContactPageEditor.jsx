@@ -476,7 +476,7 @@ const ContactPageEditor = ({
             <Sliders className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="font-serif text-base sm:text-lg font-bold text-[#FFDF73] uppercase tracking-wide">
+            <h2 className="font-sans text-base sm:text-lg font-bold text-[#FFDF73] uppercase tracking-wide">
               Cấu Hình &amp; Biên Tập Form Liên Hệ Trực Tuyến
             </h2>
             <p className="text-xs text-[#EADBCE]/70">
@@ -490,7 +490,7 @@ const ContactPageEditor = ({
             href="/contact"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#D4AF37]/35 text-[#EADBCE] hover:text-[#FFDF73] text-xs font-serif uppercase tracking-wider transition"
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#D4AF37]/35 text-[#EADBCE] hover:text-[#FFDF73] text-xs font-sans uppercase tracking-wider transition"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             <span>Mở Web Ngoài</span>
@@ -501,7 +501,7 @@ const ContactPageEditor = ({
               type="button"
               onClick={handleSavePage}
               disabled={saving}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] text-xs font-serif font-bold uppercase tracking-wider hover:brightness-110 transition cursor-pointer shadow-md"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] text-xs font-sans font-bold uppercase tracking-wider hover:brightness-110 transition cursor-pointer shadow-md"
             >
               <Save className="w-4 h-4" />
               <span>{saving ? 'Đang lưu...' : 'Lưu Thay Đổi'}</span>
@@ -518,7 +518,7 @@ const ContactPageEditor = ({
               <MessageSquare className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="font-serif text-lg font-bold text-[#FFDF73]">
+              <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
                 Cấu Hình Các Trường Thông Tin Của Form
               </h3>
               <p className="text-xs text-[#EADBCE]/70">
@@ -529,7 +529,7 @@ const ContactPageEditor = ({
           <button
             type="button"
             onClick={handleAddField}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] text-xs font-serif font-bold uppercase tracking-wider hover:brightness-110 transition cursor-pointer shadow-md self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] text-xs font-sans font-bold uppercase tracking-wider hover:brightness-110 transition cursor-pointer shadow-md self-start sm:self-auto"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             <span>Thêm trường thông tin mới</span>
@@ -624,7 +624,7 @@ const ContactPageEditor = ({
                     <span className="w-5 h-5 rounded-full bg-[#FAF7F2] text-[#140305] text-xs font-bold flex items-center justify-center shrink-0 shadow">
                       {idx + 1}
                     </span>
-                    <span className="font-serif text-sm font-bold text-[#FAF7F2] truncate">
+                    <span className="font-sans text-sm font-bold text-[#FAF7F2] truncate">
                       {field.label || `Trường thông tin #${idx + 1}`}
                     </span>
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-[#3a080c] border border-[#D4AF37]/40 text-[#FFDF73]">
@@ -740,7 +740,7 @@ const ContactPageEditor = ({
 
                   <div className="lg:col-span-7">
                     <div className="flex items-center gap-1.5 mb-1">
-                      <span className="w-3.5 h-3.5 rounded-full border border-[#D4AF37]/60 text-[#FFDF73] text-[9px] flex items-center justify-center font-serif font-bold">
+                      <span className="w-3.5 h-3.5 rounded-full border border-[#D4AF37]/60 text-[#FFDF73] text-[9px] flex items-center justify-center font-sans font-bold">
                         i
                       </span>
                       <label className="block text-[11px] uppercase font-bold text-[#EADBCE]/80">
@@ -832,7 +832,7 @@ const ContactPageEditor = ({
           <button
             type="button"
             onClick={handleAddField}
-            className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-dashed border-[#D4AF37]/50 hover:border-[#FFDF73] text-[#FFDF73] hover:bg-[#3d090f]/50 text-xs font-serif uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 mx-auto cursor-pointer"
+            className="w-full sm:w-auto px-6 py-2.5 rounded-xl border border-dashed border-[#D4AF37]/50 hover:border-[#FFDF73] text-[#FFDF73] hover:bg-[#3d090f]/50 text-xs font-sans uppercase tracking-wider font-bold transition flex items-center justify-center gap-2 mx-auto cursor-pointer"
           >
             <Plus className="w-4 h-4 stroke-[3]" />
             <span>Thêm một trường thông tin khác</span>
@@ -843,7 +843,7 @@ const ContactPageEditor = ({
       {/* ===================== KHU VỰC XEM TRƯỚC PHẦN FORM (CHÍNH XÁC NHƯ ẢNH USER) ===================== */}
       <div className="space-y-4">
         {/* Tiêu đề mục Xem trước */}
-        <div className="flex items-center gap-2 text-sm font-serif font-bold text-[#FFDF73] uppercase tracking-wider">
+        <div className="flex items-center gap-2 text-sm font-sans font-bold text-[#FFDF73] uppercase tracking-wider">
           <Eye className="w-4 h-4 text-[#FFDF73]" />
           <span>Xem trước Form liên hệ thực tế</span>
         </div>
@@ -859,13 +859,13 @@ const ContactPageEditor = ({
               <div className="w-5 h-5 rounded-full bg-amber-100 border border-amber-400 flex items-center justify-center text-amber-700 text-xs font-bold shrink-0">
                 <HelpCircle className="w-3.5 h-3.5" />
               </div>
-              <span className="text-xs font-serif font-bold tracking-[0.18em] uppercase text-amber-700">
+              <span className="text-xs font-sans font-bold tracking-[0.18em] uppercase text-amber-700">
                 {parsedProps.form_portal_badge || 'CỔNG TIẾP NHẬN TRỰC TUYẾN'}
               </span>
             </div>
 
             {/* Tiêu đề chính */}
-            <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#7a0c16] uppercase tracking-tight leading-tight">
+            <h2 className="font-sans text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#7a0c16] uppercase tracking-tight leading-tight">
               {parsedProps.form_title || 'GỬI PHẢN HỒI HOẶC YÊU CẦU TƯ VẤN'}
             </h2>
 
@@ -956,7 +956,7 @@ const ContactPageEditor = ({
             <div className="pt-4">
               <button
                 type="button"
-                className="w-full py-4 px-6 rounded-xl font-serif text-sm sm:text-base font-bold uppercase tracking-wider text-white shadow-xl transition-all cursor-pointer hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-2"
+                className="w-full py-4 px-6 rounded-xl font-sans text-sm sm:text-base font-bold uppercase tracking-wider text-white shadow-xl transition-all cursor-pointer hover:brightness-110 active:scale-[0.99] flex items-center justify-center gap-2"
                 style={{
                   background:
                     'linear-gradient(135deg, #a31826 0%, #7a0c16 50%, #52070e 100%)',
@@ -973,7 +973,7 @@ const ContactPageEditor = ({
 
       {/* ===================== CÁC PHẦN KHÁC: HERO & TUYẾN ĐỒNG HÀNH ===================== */}
       <details className="p-5 rounded-2xl bg-[#140305] border border-[#D4AF37]/25 shadow-lg group">
-        <summary className="font-serif text-sm font-bold text-[#FFDF73] uppercase tracking-wider cursor-pointer list-none flex items-center justify-between">
+        <summary className="font-sans text-sm font-bold text-[#FFDF73] uppercase tracking-wider cursor-pointer list-none flex items-center justify-between">
           <span className="flex items-center gap-2">
             <Sparkles className="w-4 h-4" />
             <span>Mở rộng: Chỉnh sửa Khung Đầu Trang (Hero Banner) &amp; Tuyến Đồng Hành</span>
@@ -984,7 +984,7 @@ const ContactPageEditor = ({
         <div className="pt-5 space-y-6">
           {/* SECTION HERO */}
           <div className="p-4 rounded-xl bg-[#1e0508] border border-[#D4AF37]/30 space-y-3">
-            <h4 className="font-serif text-sm font-bold text-[#FFDF73] uppercase">
+            <h4 className="font-sans text-sm font-bold text-[#FFDF73] uppercase">
               1. Khung Đầu Trang (Hero Banner)
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -1030,7 +1030,7 @@ const ContactPageEditor = ({
           {/* SECTION TUYẾN ĐỒNG HÀNH */}
           <div className="p-4 rounded-xl bg-[#1e0508] border border-[#D4AF37]/30 space-y-4">
             <div className="flex items-center justify-between">
-              <h4 className="font-serif text-sm font-bold text-[#FFDF73] uppercase">
+              <h4 className="font-sans text-sm font-bold text-[#FFDF73] uppercase">
                 2. Các Tuyến Tham Gia Đồng Hành ({routes.length} tuyến)
               </h4>
               <button
@@ -1055,7 +1055,7 @@ const ContactPageEditor = ({
                         <span className="text-xs font-mono font-bold text-[#FFDF73]">
                           #{idx + 1}
                         </span>
-                        <span className="text-xs font-serif font-bold text-[#FAF7F2]">
+                        <span className="text-xs font-sans font-bold text-[#FAF7F2]">
                           {route.title}
                         </span>
                       </div>

@@ -12,7 +12,7 @@ const AboutCtaSection = ({ pageProps }) => {
 
   return (
     <section
-      className="relative w-full py-20 lg:py-28 overflow-hidden"
+      className="relative w-full py-12 lg:py-20 overflow-hidden"
       style={{
         background:
           'radial-gradient(circle, rgba(48, 13, 18, 0.94) 0%, rgba(28, 7, 10, 0.96) 50%, rgb(18, 4, 6) 100%)',
@@ -31,10 +31,10 @@ const AboutCtaSection = ({ pageProps }) => {
       <FloatingSparkles size={4.5} />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
-        <h2 className="font-serif text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
+        <h2 className="font-sans text-3xl lg:text-[46px] lg:leading-[54px] text-gold-gradient font-bold tracking-tight">
           {ctaHeadline}
         </h2>
-        <p className="font-body text-[17px] md:text-[19px] text-[#FAF7F2] max-w-2xl mx-auto leading-relaxed">
+        <p className="font-body text-[19px] md:text-[20px] text-[#FAF7F2] max-w-2xl mx-auto leading-relaxed">
           {ctaDesc}
         </p>
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -46,7 +46,7 @@ const AboutCtaSection = ({ pageProps }) => {
             <span className="material-symbols-outlined ml-2 text-xl font-bold">arrow_forward</span>
           </Link>
         </div>
-        <div className="pt-6 flex items-center justify-center gap-6 text-[#FFDF73] font-serif text-[13px] md:text-[14px] uppercase tracking-widest font-semibold">
+        <div className="pt-6 flex items-center justify-center gap-6 text-[#FFDF73] font-sans text-[13px] md:text-[14px] uppercase tracking-widest font-semibold">
           <Link to="/contact" className="hover:underline">
             Đăng ký tham gia
           </Link>
