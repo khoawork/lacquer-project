@@ -30,20 +30,20 @@
   * Vùng hào quang tỏa sáng (Center Glow): `radial-gradient(circle, rgba(255, 215, 110, 0.55) 0%, rgba(235, 75, 80, 0.45) 35%, rgba(160, 25, 40, 0.35) 60%, transparent 75%)`
   * Nền thẻ bento: `linear-gradient(180deg, rgba(46, 12, 17, 0.92) 0%, rgba(32, 7, 11, 0.96) 100%)`
 * **Ánh Kim Vàng Hoàng Gia (Imperial Gold):**
-  * Chữ vàng rực rỡ (`.text-gold-gradient`): `linear-gradient(135deg, #FFFFFF 0%, #FFF5CC 15%, #FFE07D 40%, #E5B834 75%, #B88916 100%)` kết hợp đổ bóng `drop-shadow(0 4px 20px rgba(255, 223, 115, 0.65))`.
-  * Chữ vàng ánh kim nhẹ (`.text-gold-subtle`): `linear-gradient(135deg, #FFF9E5 0%, #FFE599 50%, #D4AF37 100%)`.
-  * Viền vàng kim (`border-gold`): `rgba(212, 175, 55, 0.38)` đến `rgba(255, 223, 115, 0.85)` khi hover.
+  * Chữ vàng ánh kim sắc nét (`.text-gold-gradient`): `linear-gradient(135deg, #FFF8E7 0%, #F5DE9C 25%, #D4AF37 60%, #AA820A 100%)` kết hợp đổ bóng tương phản đen tự nhiên `drop-shadow(0 3px 10px rgba(0, 0, 0, 0.85))` (loại bỏ hoàn toàn quầng mờ vàng gây ám khói chữ).
+  * Chữ vàng ánh kim nhẹ (`.text-gold-subtle`): `linear-gradient(135deg, #FFF3D6 0%, #E5C158 55%, #AA820A 100%)`.
+  * Viền vàng kim (`border-gold`): `rgba(212, 175, 55, 0.38)` đến `rgba(245, 222, 156, 0.75)` khi hover.
 * **Nút bấm phong cách sơn mài (Buttons) — Đồng bộ chuẩn mực toàn dự án:**
-  * `.btn-gold`: Nền gradient vàng kim hoàng gia `#FFF0B3` -> `#FFDF73` -> `#D4AF37` -> `#A67C14`, chữ đen nâu `#1a0303`, viền vàng nhạt bóng bẩy, padding chuẩn `px-8 py-3.5 rounded text-[15px] font-bold uppercase tracking-wider shadow-xl cursor-pointer`, kết hợp icon mũi tên `ArrowRight` bên phải.
-  * `.btn-gold-outline`: Nền đỏ then trong suốt `rgba(40, 9, 13, 0.85)`, chữ vàng `#FFDF73`, viền `#D4AF37`, hiệu ứng kính mờ `backdrop-filter: blur(12px)`, padding chuẩn `px-7 py-3.5 rounded text-[15px] font-bold uppercase tracking-wider shadow-md cursor-pointer`, kết hợp icon `BookOpen` / `Handshake` / `Compass` bên trái.
+  * `.btn-gold`: Nền gradient vàng đồng tự nhiên `#FDE8B5` -> `#E8C86A` -> `#C99E2A` -> `#9C750A`, chữ đen nâu `#1a0303`, viền vàng nhạt bóng bẩy, padding chuẩn `px-8 py-3.5 rounded text-[15px] font-bold uppercase tracking-wider shadow-xl cursor-pointer`, kết hợp icon mũi tên `ArrowRight` bên phải.
+  * `.btn-gold-outline`: Nền đỏ then trong suốt `rgba(40, 9, 13, 0.85)`, chữ vàng dịu `#E6CA65`, viền `#D4AF37`, hiệu ứng kính mờ `backdrop-filter: blur(12px)`, padding chuẩn `px-8 py-3.5 rounded text-[15px] font-bold uppercase tracking-wider shadow-md cursor-pointer`.
 
 ### B. Nghệ Thuật Chữ (Typography)
-* **Font Tiêu đề & Nhấn mạnh (Serif / Display):** `Cormorant Garamond` (Google Font).
-  * Áp dụng tự động cho: `h1, h2, h3, h4, .font-serif, [class*="font-display"]`.
-  * Thuộc tính đi kèm: `text-wrap: balance`, chữ in hoa `uppercase`, giãn chữ rộng `tracking-[0.14em]` đến `tracking-[0.25em]`.
-* **Font Nội dung & Đoạn văn (Body):** `Lora` (Google Font).
-  * Áp dụng tự động cho: `p, li, blockquote, .font-body`.
-  * Thuộc tính đi kèm: `text-wrap: pretty`, line-height `1.8`, cỡ chữ `17px - 18px`.
+* **Font Chủ đạo toàn hệ thống (Sans-serif Hiện đại & Sang trọng):** `Plus Jakarta Sans` (Google Font).
+  * Áp dụng tự động cho toàn bộ: `body, h1, h2, h3, h4, h5, h6, p, li, blockquote, .font-sans, .font-serif, .font-body`.
+  * **Hero Section Headings (`h1`)**: `font-sans text-3xl md:text-5xl lg:text-[54px] lg:leading-[64px] text-gold-gradient font-bold uppercase tracking-[0.06em] max-w-4xl text-center mb-6 py-2 px-4`.
+  * **Section Headings (`h2`)**: `font-sans text-3xl lg:text-[44px] lg:leading-[52px] font-bold text-gold-gradient uppercase tracking-tight py-2` (học theo tỷ lệ chuẩn của Trang Giới thiệu, thay thế các cỡ chữ quá khổ 60px-76px ở Trang Hành trình).
+  * **Card Headings (`h3`)**: `font-sans text-[20px] md:text-[22px]` hoặc `text-[22px] md:text-[24px]` font-bold.
+  * **Body Text (`p`)**: `font-body text-[16px] md:text-[17px]` hoặc `text-[17px] md:text-[18px]` text-[#FAF7F2] leading-relaxed.
 
 ### C. Quy Chuẩn Đốm Sáng Vàng Kim (FloatingSparkles) — TUYỆT ĐỐI TUÂN THỦ
 * **Hình thức chuẩn mực lấy Trang Hành trình (Image 1) làm chuẩn:**
@@ -56,8 +56,14 @@
   * Độ mờ (opacity) và kích thước hạt giữ nguyên cố định 100%, không phóng to thu nhỏ nhấp nháy làm rối mắt người dùng.
 * **Component dùng chung:** `client/src/components/common/FloatingSparkles.jsx`.
   * Đồng bộ 100% trên toàn bộ các trang: **Trang Chủ**, **Giới Thiệu**, **Hành Trình**, **Sự Kiện**, **Bộ Sưu Tập**, và **Kỷ Yếu** đều sử dụng chung `size={4.5}` chuẩn mực.
-* **Đồng bộ Hero Section giữa Hành Trình và Giới Thiệu:**
-  * Cả 2 trang đều giữ cấu trúc trang nghiêm, tinh tế: Con dấu bách niên -> Badge thời gian -> Tiêu đề chính -> Đoạn văn di sản -> Thanh trang trí hoàng kim (hairline divider) kết hợp biểu tượng trung tâm (La bàn / Ngôi sao flare). Loại bỏ các nút bấm thừa ở phần đầu trang để đồng nhất tuyệt đối về visual weight.
+* **Chuẩn Nền Hero Section Đồng Nhất Toàn Bộ Các Trang (Theo Chuẩn Trang Hành Trình):**
+  * **Nền chuyển màu (Radial Gradient):** `background: 'radial-gradient(circle at 50% 25%, rgb(54, 13, 18) 0%, rgb(36, 8, 11) 48%, rgb(20, 5, 7) 100%)'` (Đỏ then chín sâu thẳm, quý phái, không bị ám quầng vàng đục).
+  * **Đĩa tỏa sáng mờ hai bên sườn (Ambient Glows):**
+    * `ambient-glow-disc absolute top-[10%] left-[-10%] w-[550px] h-[550px] bg-[#681010]/35 rounded-full blur-[160px]`
+    * `ambient-glow-disc absolute bottom-[10%] right-[-10%] w-[550px] h-[550px] bg-[#4a0808]/40 rounded-full blur-[160px]`
+  * **Đốm hạt vàng bay:** `FloatingSparkles size={4.5}`.
+  * **Tiêu đề `h1`:** `font-sans text-3xl md:text-5xl lg:text-[54px] lg:leading-[72px] text-gold-gradient font-bold uppercase tracking-[0.06em] max-w-4xl text-center mb-6 py-2 px-4 drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]`.
+  * **Áp dụng đồng bộ 100% trên toàn bộ các trang:** **Giới Thiệu**, **Hành Trình**, **Sự Kiện**, **Bộ Sưu Tập**, **Kỷ Yếu**, **Ban Điều Hành**, **Tin Tức**, **Liên Hệ**.
 
 ### D. Thanh Điều Hướng (Navbar Header)
 * **Hiệu ứng Kính mờ (Glassmorphism):** `background: rgba(28, 6, 9, 0.94); backdrop-filter: blur(16px);`.
