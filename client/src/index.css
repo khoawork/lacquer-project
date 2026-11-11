@@ -70,6 +70,7 @@ div.font-cursive,
 [class*="font-cursive"],
 [class*="font-script"] {
   font-family: 'Alex Brush', 'Pinyon Script', 'Playfair Display', cursive, serif !important;
+  overflow: visible;
 }
 
 /* Chữ vàng hoàng gia sang trọng, quý phái, sắc nét, không bị ám quầng vàng mờ */

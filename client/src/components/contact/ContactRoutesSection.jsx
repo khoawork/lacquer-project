@@ -2,13 +2,61 @@ import React from 'react';
 import { ArrowRight, Palette } from 'lucide-react';
 import { resolveLeadershipIcon } from '../leadership/leadershipIconRegistry';
 
+const DEFAULT_ROUTES = [
+  {
+    id: 1,
+    key: 'artist',
+    icon: 'Palette',
+    badge: 'TUYẾN 01 • SÁNG TÁC',
+    title: 'Tham gia với tư cách nghệ sĩ / nghệ nhân',
+    desc: 'Đăng ký Open Studio, triển lãm, trình diễn sáng tác, workshop, chương trình lưu trú nghệ thuật hoặc đề xuất bộ sưu tập độc bản vinh danh bách niên.',
+    buttonText: 'GỬI HỒ SƠ SÁNG TẠO',
+  },
+  {
+    id: 2,
+    key: 'academic',
+    icon: 'BookOpen',
+    badge: 'TUYẾN 02 • HỌC THUẬT',
+    title: 'Tham gia với tư cách chuyên gia / nhà nghiên cứu',
+    desc: 'Đề xuất tham luận, phản biện học thuật, gửi bài viết cho Kỷ yếu bách niên, cố vấn chuyên đề di sản hoặc đóng góp tư liệu lịch sử quý giá.',
+    buttonText: 'ĐỀ XUẤT CHUYÊN MÔN',
+  },
+  {
+    id: 3,
+    key: 'business',
+    icon: 'Building2',
+    badge: 'TUYẾN 03 • ĐỒNG HÀNH DOANH NGHIỆP',
+    title: 'Hợp tác doanh nghiệp và thương hiệu',
+    desc: 'Đồng sáng tạo sản phẩm, ứng dụng sơn mài trong kiến trúc - nội thất đương đại, tài trợ di sản, licensing bản quyền hoặc bảo trợ không gian văn hóa.',
+    buttonText: 'ĐỀ XUẤT HỢP TÁC',
+  },
+  {
+    id: 4,
+    key: 'education',
+    icon: 'GraduationCap',
+    badge: 'TUYẾN 04 • GIÁO DỤC DI SẢN',
+    title: 'Trường học và cộng đồng',
+    desc: 'Tổ chức tham quan bảo tàng xưởng, lớp học chuyên đề nghệ thuật, hoạt động trải nghiệm thực hành, dự án sinh viên hoặc mạng lưới tình nguyện viên văn hóa.',
+    buttonText: 'ĐĂNG KÝ CHƯƠNG TRÌNH',
+  },
+  {
+    id: 5,
+    key: 'press',
+    icon: 'Megaphone',
+    badge: 'TUYẾN 05 • TRUYỀN THÔNG ĐẠI CHÚNG',
+    title: 'Báo chí và truyền thông',
+    desc: 'Nhận bộ tài liệu báo chí chính thức (Press Kit), hình ảnh tư liệu độ phân giải cao được cấp quyền sử dụng, đặt lịch phỏng vấn Ban cố vấn và đầu mối phát ngôn.',
+    buttonText: 'LIÊN HỆ TRUYỀN THÔNG',
+  },
+];
+
 export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
   const routesBadge = pageProps?.routes_badge || 'PHƯƠNG THỨC KẾT NỐI';
   const routesTitle = pageProps?.routes_title || 'CÁC TUYẾN THAM GIA ĐỒNG HÀNH';
   const routes =
     Array.isArray(pageProps?.routes) && pageProps.routes.length > 0
       ? pageProps.routes
-      : [];
+      : DEFAULT_ROUTES;
 
   const renderRouteCard = (route) => {
     const IconComponent = resolveLeadershipIcon(route.icon, Palette);
@@ -66,7 +114,7 @@ export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
     );
   };
 
-  // Bố cục linh hoạt theo số lượng tuyến
+  // Bố cục linh hoạt theo số lượng tuyến (3 trên, 2 dưới căn giữa)
   const isFiveRoutes = routes.length === 5;
 
   return (
@@ -80,6 +128,11 @@ export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex flex-col items-center text-center mb-12">
+          {routesBadge && (
+            <span className="font-sans text-xs md:text-sm uppercase tracking-[0.25em] text-[#EADBCE]/80 font-bold mb-2 block">
+              {routesBadge}
+            </span>
+          )}
           <h2
             className="font-sans text-3xl sm:text-4xl md:text-5xl text-[#FFDF73] tracking-wide font-bold"
             style={{ textShadow: '0 0 20px rgba(233, 195, 73, 0.3)' }}

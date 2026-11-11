@@ -95,10 +95,10 @@ const HeroSection = ({ pageProps }) => {
 
         {/* Center Hero Block: Tinh hoa nghệ thuật uốn lượn uốn trên Tiêu đề hoành tráng */}
         <div className="flex flex-col items-center justify-center text-center my-auto py-6 sm:py-8">
-          {/* Cursive script: "Tinh hoa nghệ thuật" (nguyên bản ban đầu) */}
-          <p className="font-cursive text-[52px] sm:text-[76px] md:text-[96px] lg:text-[112px] text-transparent bg-clip-text bg-gradient-to-b from-[#FFFDF0] via-[#FFEBB0] to-[#E5C158] drop-shadow-[0_4px_24px_rgba(255,235,176,0.45)] leading-[0.95] tracking-normal select-none -mb-3 sm:-mb-5 md:-mb-7">
-            {cursiveTitle}
-          </p>
+          {/* Cursive script: "Tinh hoa nghệ thuật" (nguyên bản ban đầu, tăng line-height và padding để không bị cắt xén nét chữ T) */}
+        <p  className="font-cursive text-[52px] sm:text-[76px] md:text-[96px] lg:text-[112px] text-transparent bg-clip-text bg-gradient-to-b from-[#FFFDF0] via-[#FFEBB0] to-[#E5C158] drop-shadow-[0_4px_24px_rgba(255,235,176,0.45)] leading-[1.25]  pb-4 px-6 sm:px-10 tracking-normal select-none -mb-6 sm:-mb-10 md:-mb-12 inline-block h-auto min-h-[1.5em]">
+  {cursiveTitle}
+</p>
 
           {/* Monumental Main Headline */}
           <h1 className="font-sans text-[34px] sm:text-[54px] md:text-[70px] lg:text-[86px] font-black tracking-[0.04em] leading-[1.08] text-center max-w-5xl uppercase drop-shadow-[0_4px_32px_rgba(212,175,55,0.45)]">
