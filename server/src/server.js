@@ -12,6 +12,8 @@ async function startServer() {
   try {
     // Tự động kiểm tra và đồng bộ bảng Sequelize
     await syncDatabase();
+    const { seedDefaultAdmin } = require('./services/authService');
+    await seedDefaultAdmin();
   } catch (err) {
     console.warn('⚠️ Cảnh báo kết nối Database:', err.message);
   }

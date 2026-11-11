@@ -19,6 +19,16 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
   const formDescription =
     pageProps?.form_description ||
     'Vui lòng điền thông tin chi tiết. Ban điều hành cam kết bảo mật hồ sơ và liên hệ trong 48 giờ.';
+  const formNameLabel = pageProps?.form_name_label || 'HỌ VÀ TÊN / DANH XƯNG';
+  const formNamePlaceholder = pageProps?.form_name_placeholder || 'Họa sĩ / Nhà nghiên cứu / Ông...';
+  const formOrgLabel = pageProps?.form_org_label || 'ĐƠN VỊ / TỔ CHỨC / VAI TRÒ';
+  const formOrgPlaceholder = pageProps?.form_org_placeholder || 'Xưởng sáng tác, Trường ĐH Mỹ thuật...';
+  const formEmailLabel = pageProps?.form_email_label || 'EMAIL LIÊN HỆ';
+  const formEmailPlaceholder = pageProps?.form_email_placeholder || 'dia-chi-email@domain.com';
+  const formPhoneLabel = pageProps?.form_phone_label || 'SỐ ĐIỆN THOẠI';
+  const formPhonePlaceholder = pageProps?.form_phone_placeholder || '090 xxx xxxx';
+  const formRoutesLabel = pageProps?.form_routes_label || 'NHÓM NHU CẦU KẾT NỐI';
+  const formRoutesPlaceholder = pageProps?.form_routes_placeholder || '-- Vui lòng chọn tuyến tham gia --';
   const formSubmitText = pageProps?.form_submit_text || 'GỬI THÔNG TIN ĐỀ XUẤT';
   const formTermsText =
     pageProps?.form_terms_text ||
@@ -31,6 +41,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
   const formUploadSubhint =
     pageProps?.form_upload_subhint ||
     'Hỗ trợ PDF, DOCX, ZIP tối đa 25MB hoặc dán URL Drive';
+  const formFileBtnText = pageProps?.form_file_btn_text || 'CHỌN TỆP';
   const formLinkPlaceholder =
     pageProps?.form_link_placeholder ||
     'Hoặc dán liên kết Google Drive / Dropbox / Behance tại đây...';
@@ -93,6 +104,15 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
     setReferenceCode(ref);
 
     try {
+      // Thu thập các trường tùy chỉnh nếu có
+      const customEntries = Object.entries(formData).filter(
+        ([k, v]) => !['fullName', 'organization', 'email', 'phone', 'routeType', 'proposalMessage', 'documentUrl', 'termsAgreed'].includes(k) && v
+      );
+      let combinedMessage = formData.proposalMessage;
+      if (customEntries.length > 0) {
+        combinedMessage += '\n\n--- THÔNG TIN BỔ SUNG ---\n' + customEntries.map(([k, v]) => `${k}: ${v}`).join('\n');
+      }
+
       await siteServices.submitForm({
         form_type: formData.routeType || 'contact',
         full_name: formData.fullName,
@@ -100,7 +120,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
         email: formData.email,
         phone: formData.phone,
         subject: `Đề xuất hợp tác: ${formData.routeType || 'Liên hệ chung'}`,
-        message: formData.proposalMessage,
+        message: combinedMessage,
         reference_code: ref,
       });
     } catch (err) {
@@ -250,7 +270,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="block font-sans text-xs uppercase tracking-wider text-[#FAF7F2] font-semibold" htmlFor="fullName">
-                      HỌ VÀ TÊN / DANH XƯNG <span className="text-[#ffb3ae]">*</span>
+                      {formNameLabel} <span className="text-[#ffb3ae]">*</span>
                     </label>
                     <input
                       id="fullName"
@@ -259,7 +279,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                       type="text"
                       value={formData.fullName}
                       onChange={handleChange}
-                      placeholder="Họa sĩ / Nhà nghiên cứu / Ông..."
+                      placeholder={formNamePlaceholder}
                       className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] placeholder-[#FAF7F2]/40 focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all"
                       style={{
                         backgroundColor: 'rgba(28, 7, 11, 0.75)',
@@ -270,7 +290,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
 
                   <div className="space-y-1.5">
                     <label className="block font-sans text-xs uppercase tracking-wider text-[#FAF7F2] font-semibold" htmlFor="organization">
-                      ĐƠN VỊ / TỔ CHỨC / VAI TRÒ
+                      {formOrgLabel}
                     </label>
                     <input
                       id="organization"
@@ -278,7 +298,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                       type="text"
                       value={formData.organization}
                       onChange={handleChange}
-                      placeholder="Xưởng sáng tác, Trường ĐH Mỹ thuật..."
+                      placeholder={formOrgPlaceholder}
                       className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] placeholder-[#FAF7F2]/40 focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all"
                       style={{
                         backgroundColor: 'rgba(28, 7, 11, 0.75)',
@@ -292,7 +312,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="block font-sans text-xs uppercase tracking-wider text-[#FAF7F2] font-semibold" htmlFor="email">
-                      EMAIL LIÊN HỆ <span className="text-[#ffb3ae]">*</span>
+                      {formEmailLabel} <span className="text-[#ffb3ae]">*</span>
                     </label>
                     <input
                       id="email"
@@ -301,7 +321,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                       type="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="dia-chi-email@domain.com"
+                      placeholder={formEmailPlaceholder}
                       className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] placeholder-[#FAF7F2]/40 focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all"
                       style={{
                         backgroundColor: 'rgba(28, 7, 11, 0.75)',
@@ -312,7 +332,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
 
                   <div className="space-y-1.5">
                     <label className="block font-sans text-xs uppercase tracking-wider text-[#FAF7F2] font-semibold" htmlFor="phone">
-                      SỐ ĐIỆN THOẠI <span className="text-[#ffb3ae]">*</span>
+                      {formPhoneLabel} <span className="text-[#ffb3ae]">*</span>
                     </label>
                     <input
                       id="phone"
@@ -321,7 +341,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                       type="tel"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="090 xxx xxxx"
+                      placeholder={formPhonePlaceholder}
                       className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] placeholder-[#FAF7F2]/40 focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all"
                       style={{
                         backgroundColor: 'rgba(28, 7, 11, 0.75)',
@@ -334,7 +354,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                 {/* 3. Group Category */}
                 <div className="space-y-1.5">
                   <label className="block font-sans text-xs uppercase tracking-wider text-[#FAF7F2] font-semibold" htmlFor="routeType">
-                    NHÓM NHU CẦU KẾT NỐI <span className="text-[#ffb3ae]">*</span>
+                    {formRoutesLabel} <span className="text-[#ffb3ae]">*</span>
                   </label>
                   <div className="relative">
                     <select
@@ -350,7 +370,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                       }}
                     >
                       <option value="" disabled className="bg-[#1a0508] text-[#FAF7F2]/60">
-                        -- Vui lòng chọn tuyến tham gia --
+                        {formRoutesPlaceholder}
                       </option>
                       {routeOptions.map((r, idx) => (
                         <option key={r.key || idx} value={r.key} className="bg-[#1a0508] text-[#FAF7F2]">
@@ -412,7 +432,7 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                       </div>
                     </div>
                     <label className="shrink-0 px-4 py-2 rounded bg-[#37352e] text-[#FFDF73] hover:bg-[#E9C349] hover:text-[#241a00] font-sans text-xs font-semibold tracking-wider uppercase cursor-pointer transition-colors">
-                      CHỌN TỆP
+                      {formFileBtnText}
                       <input type="file" onChange={handleFileChange} className="hidden" />
                     </label>
                   </div>
@@ -437,6 +457,86 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                     }}
                   />
                 </div>
+
+                {/* 6. Các trường tùy chỉnh do Admin bổ sung */}
+                {Array.isArray(pageProps?.custom_fields) && pageProps.custom_fields.length > 0 && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    {pageProps.custom_fields.map((field, fIdx) => {
+                      const isFull = field.gridWidth === '12/12';
+                      const colClass = isFull ? 'col-span-1 md:col-span-2' : 'col-span-1';
+                      const fieldKey = field.key || `custom_${fIdx}`;
+                      const fieldVal = formData[fieldKey] ?? '';
+
+                      return (
+                        <div key={field.id || fIdx} className={`${colClass} space-y-1.5`}>
+                          <label className="block font-sans text-xs uppercase tracking-wider text-[#FAF7F2] font-semibold" htmlFor={fieldKey}>
+                            {field.label || `Trường bổ sung #${fIdx + 1}`}
+                            {field.required && <span className="text-[#ffb3ae] ml-1 font-bold">*</span>}
+                          </label>
+
+                          {field.type === 'textarea' ? (
+                            <textarea
+                              id={fieldKey}
+                              name={fieldKey}
+                              required={Boolean(field.required)}
+                              rows={3}
+                              value={fieldVal}
+                              onChange={handleChange}
+                              placeholder={field.placeholder || ''}
+                              className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] placeholder-[#FAF7F2]/40 focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all resize-y"
+                              style={{
+                                backgroundColor: 'rgba(28, 7, 11, 0.75)',
+                                border: '1px solid rgba(212, 175, 55, 0.3)',
+                              }}
+                            />
+                          ) : field.type === 'select' ? (
+                            <div className="relative">
+                              <select
+                                id={fieldKey}
+                                name={fieldKey}
+                                required={Boolean(field.required)}
+                                value={fieldVal}
+                                onChange={handleChange}
+                                className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] appearance-none cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all pr-10"
+                                style={{
+                                  backgroundColor: 'rgba(28, 7, 11, 0.95)',
+                                  border: '1px solid rgba(212, 175, 55, 0.3)',
+                                }}
+                              >
+                                <option value="" disabled className="bg-[#1a0508] text-[#FAF7F2]/60">
+                                  {field.placeholder || '-- Vui lòng chọn --'}
+                                </option>
+                                {(field.options || []).map((opt, oIdx) => (
+                                  <option key={oIdx} value={opt} className="bg-[#1a0508] text-[#FAF7F2]">
+                                    {opt}
+                                  </option>
+                                ))}
+                              </select>
+                              <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-[#FFDF73]">
+                                <ChevronDown className="w-4 h-4" />
+                              </div>
+                            </div>
+                          ) : (
+                            <input
+                              id={fieldKey}
+                              name={fieldKey}
+                              required={Boolean(field.required)}
+                              type={field.type || 'text'}
+                              value={fieldVal}
+                              onChange={handleChange}
+                              placeholder={field.placeholder || ''}
+                              className="w-full px-4 py-3 rounded-lg text-sm text-[#FAF7F2] placeholder-[#FAF7F2]/40 focus:outline-none focus:ring-1 focus:ring-[#FFDF73] focus:border-[#FFDF73] transition-all"
+                              style={{
+                                backgroundColor: 'rgba(28, 7, 11, 0.75)',
+                                border: '1px solid rgba(212, 175, 55, 0.3)',
+                              }}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </>
             )}
 
@@ -489,9 +589,6 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
             <div className="absolute -top-12 -right-12 w-32 h-32 bg-[#521515]/30 rounded-full blur-2xl pointer-events-none" />
 
             <div className="space-y-1 mb-6 border-b border-[#D4AF37]/20 pb-4">
-              <span className="font-sans text-[11px] md:text-xs text-[#FFDF73] uppercase tracking-[0.2em] block font-semibold">
-                {directBadge}
-              </span>
               <h3 className="font-sans text-2xl text-[#FFDF73] font-bold">
                 {directTitle}
               </h3>

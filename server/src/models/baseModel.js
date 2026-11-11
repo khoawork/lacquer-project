@@ -2,6 +2,7 @@ const mysql = require('mysql2/promise');
 const { sequelize, DataTypes } = require('../config/db');
 
 // Import all models
+const { User } = require('./userModel');
 const { Page } = require('./pageModel');
 const { Event } = require('./eventModel');
 const { Collection, Artwork } = require('./collectionModel');
@@ -78,6 +79,7 @@ module.exports = {
   syncDatabase,
 
   // Models
+  User,
   Page,
   Event,
   Collection,

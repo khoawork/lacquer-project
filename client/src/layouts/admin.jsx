@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Outlet, Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Home,
@@ -22,10 +22,55 @@ import {
   LogOut,
   User,
 } from 'lucide-react';
+import authServices from '../services/authServices';
 
 const AdminLayout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, setUser] = useState(() => authServices.getCurrentUser());
+
+  // Kiểm tra token trong cookie
+  const isAuth = authServices.isAuthenticated();
+
+  // Xác thực token với server và cập nhật thông tin user
+  useEffect(() => {
+    if (!isAuth) return;
+
+    let isMounted = true;
+    authServices
+      .getMe()
+      .then((res) => {
+        if (isMounted && res && res.user) {
+          setUser(res.user);
+        }
+      })
+      .catch((err) => {
+        console.warn('Phiên làm việc hết hạn hoặc không hợp lệ:', err);
+        if (isMounted) {
+          navigate('/login', { replace: true });
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isAuth, navigate]);
+
+  // Nếu chưa có token trong Cookie, điều hướng sang trang Đăng nhập
+  if (!isAuth) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  const handleLogout = async () => {
+    try {
+      await authServices.logout();
+    } catch (err) {
+      console.warn('Lỗi đăng xuất:', err);
+    } finally {
+      navigate('/login', { replace: true });
+    }
+  };
 
   const sidebarGroups = [
     {
@@ -194,20 +239,26 @@ const AdminLayout = () => {
 
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#36080d] border border-[#D4AF37]/30">
-              <div className="w-6 h-6 rounded-full bg-[#d49b1a] text-[#1a0406] flex items-center justify-center font-bold text-xs">
-                A
+              <div className="w-6 h-6 rounded-full bg-[#d49b1a] text-[#1a0406] flex items-center justify-center font-bold text-xs uppercase">
+                {user?.name ? user.name.charAt(0) : 'A'}
               </div>
-              <span className="text-xs font-sans font-bold text-[#FAF7F2] hidden sm:inline">
-                Quản Trị Viên (Admin)
-              </span>
+              <div className="flex flex-col text-left">
+                <span className="text-xs font-sans font-bold text-[#FAF7F2] hidden sm:inline leading-tight">
+                  {user?.name || 'Quản Trị Viên (Admin)'}
+                </span>
+                <span className="text-[10px] text-[#FFDF73]/80 hidden sm:inline leading-tight">
+                  {user?.email || 'admin@lacquer.com'}
+                </span>
+              </div>
             </div>
-            <Link
-              to="/login"
-              className="p-2 rounded-lg text-[#FAF7F2]/60 hover:text-[#FFDF73] hover:bg-[#36080d] transition-colors"
-              title="Đăng xuất"
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="p-2 rounded-lg text-[#FAF7F2]/60 hover:text-red-300 hover:bg-[#36080d] transition-colors cursor-pointer"
+              title="Đăng xuất khỏi hệ thống"
             >
               <LogOut className="w-4 h-4" />
-            </Link>
+            </button>
           </div>
         </header>
 

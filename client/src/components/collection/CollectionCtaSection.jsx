@@ -1,15 +1,16 @@
 import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
-import { ArrowRight, Mail } from 'lucide-react';
 
 const CollectionCtaSection = ({ pageProps }) => {
-  const ctaTag = pageProps?.cta_tag;
-  const ctaHeadline = pageProps?.cta_headline;
-  const ctaDesc = pageProps?.cta_desc;
-  const ctaBtnText = pageProps?.cta_button_text || 'Đăng ký tham gia kiến tạo';
+  const ctaTag = pageProps?.cta_tag || 'KẾT NỐI DI SẢN BÁCH NIÊN';
+  const ctaHeadline = pageProps?.cta_headline || 'BẠN MUỐN ĐỒNG KIẾN TẠO CÙNG CHÚNG TÔI?';
+  const ctaDesc =
+    pageProps?.cta_desc ||
+    'Mỗi nghệ sĩ, nhà nghiên cứu, hay người yêu mỹ thuật đều có thể đóng góp một nét sơn trong trang sử mới của nghệ thuật sơn mài Việt Nam.';
+  const ctaBtnText = pageProps?.cta_button_text || 'ĐĂNG KÝ THAM GIA KIẾN TẠO';
   const ctaBtnLink = pageProps?.cta_button_link || '/contact';
-  const ctaSecBtnText = pageProps?.cta_secondary_button_text || 'Liên hệ ban điều phối';
-  const ctaSecBtnLink = pageProps?.cta_secondary_button_link || 'mailto:info@sonmaihoihoavietnam.com';
+  const ctaSecBtnText = pageProps?.cta_secondary_button_text || 'LIÊN HỆ BAN ĐIỀU PHỐI';
+  const ctaSecBtnLink = pageProps?.cta_secondary_button_link || '/contact';
 
   if (!ctaHeadline && !ctaDesc) return null;
 
@@ -31,7 +32,7 @@ const CollectionCtaSection = ({ pageProps }) => {
         }}
       />
 
-      {/* Đốm sao vàng kim bay lơ lửng đồng bộ chuẩn với trang Hành trình */}
+      {/* Floating Gold Sparkles */}
       <FloatingSparkles size={4.5} />
 
       <div className="relative max-w-3xl mx-auto space-y-6 z-10">
@@ -42,30 +43,28 @@ const CollectionCtaSection = ({ pageProps }) => {
         )}
 
         {ctaHeadline && (
-          <h2 className="font-sans text-[32px] sm:text-[40px] md:text-[46px] text-gold-gradient uppercase font-bold leading-tight">
+          <h2 className="font-sans text-[30px] sm:text-[38px] md:text-[44px] text-gold-gradient uppercase font-bold leading-tight">
             {ctaHeadline}
           </h2>
         )}
 
         {ctaDesc && (
-          <p className="font-body text-[17px] md:text-[18px] text-[#FAF7F2]/90 leading-relaxed max-w-2xl mx-auto">
+          <p className="font-body text-[16px] md:text-[18px] text-[#FAF7F2]/90 leading-relaxed max-w-2xl mx-auto">
             {ctaDesc}
           </p>
         )}
 
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href={ctaBtnLink}
-            className="btn-gold px-6 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center gap-2"
+            className="btn-gold px-8 py-3.5 rounded-lg text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center justify-center shadow-[0_4px_16px_rgba(212,175,55,0.35)] hover:shadow-[0_6px_22px_rgba(212,175,55,0.55)] transition-all"
           >
             <span>{ctaBtnText}</span>
-            <ArrowRight className="w-4 h-4 font-bold" />
           </a>
           <a
-            className="btn-gold-outline px-5 py-2.5 rounded text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center gap-2"
+            className="btn-gold-outline px-8 py-3.5 rounded-lg text-[13px] md:text-[14px] uppercase font-bold tracking-wider cursor-pointer inline-flex items-center justify-center transition-all"
             href={ctaSecBtnLink}
           >
-            <Mail className="w-4 h-4" />
             <span>{ctaSecBtnText}</span>
           </a>
         </div>
@@ -75,4 +74,3 @@ const CollectionCtaSection = ({ pageProps }) => {
 };
 
 export default CollectionCtaSection;
-

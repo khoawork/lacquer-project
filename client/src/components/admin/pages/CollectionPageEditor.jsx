@@ -159,19 +159,7 @@ const CollectionPageEditor = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu đầu trang (badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.badge || ''}
-              onChange={(e) => handlePropChange('badge', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-              placeholder="VD: DI SẢN HỘI HỌA & MỸ THUẬT BÁCH NIÊN (1930–2030)"
-            />
-          </div>
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề lớn trung tâm (headline)
             </label>

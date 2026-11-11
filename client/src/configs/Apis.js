@@ -1,6 +1,14 @@
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const endpoints = {
+  // Auth API
+  auth: {
+    login: '/auth/login',
+    me: '/auth/me',
+    logout: '/auth/logout',
+  },
+
   // Pages API (slug chỉ nằm trong page)
   pages: '/pages',
   pageBySlug: (slug) => {
@@ -68,18 +76,19 @@ export const Apis = () => {
     headers: {
       'Content-Type': 'application/json',
     },
-    timeout: 10000,
+    timeout: 15000,
   });
 };
 
 export const authApis = (token) => {
+  const authToken = token || Cookies.get('admin_token') || '';
   return axios.create({
     baseURL: BASE_URL,
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
     },
-    timeout: 10000,
+    timeout: 15000,
   });
 };
 

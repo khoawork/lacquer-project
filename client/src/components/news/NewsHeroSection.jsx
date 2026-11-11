@@ -2,15 +2,8 @@ import React from 'react';
 import FloatingSparkles from '../common/FloatingSparkles';
 
 const NewsHeroSection = ({ pageProps = null }) => {
-  const badgeText =
-    pageProps?.badge || '✦ BÁCH NIÊN KHỞI SẮC • GÓC NHÌN & TIẾNG NÓI DI SẢN ✦';
-  const headlineText =
-    pageProps?.headline || 'NHỮNG CÂU CHUYỆN ĐANG ĐƯỢC VIẾT TIẾP';
-  const descText =
-    pageProps?.description ||
-    pageProps?.subtitle ||
-    'Tin tức của Hành trình không chỉ đưa tin sự kiện. Đây là nơi lịch sử được kể lại bằng ngôn ngữ gần gũi, người làm nghề được nhìn thấy và các ý tưởng mới được đưa vào đối thoại công chúng.';
-
+  const headlineText = pageProps?.headline;
+  const descText = pageProps?.description || pageProps?.subtitle;
   return (
     <section
       className="relative w-full pt-[46px] pb-20 lg:pb-24 overflow-hidden flex flex-col items-center justify-center text-center select-none"

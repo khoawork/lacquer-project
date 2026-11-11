@@ -80,11 +80,6 @@ export default function ContactRoutesSection({ onSelectRoute, pageProps }) {
     >
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12">
         <div className="flex flex-col items-center text-center mb-12">
-          {routesBadge && (
-            <span className="font-sans text-xs md:text-sm text-[#FFDF73] tracking-[0.25em] uppercase mb-1 font-semibold">
-              {routesBadge}
-            </span>
-          )}
           <h2
             className="font-sans text-3xl sm:text-4xl md:text-5xl text-[#FFDF73] tracking-wide font-bold"
             style={{ textShadow: '0 0 20px rgba(233, 195, 73, 0.3)' }}

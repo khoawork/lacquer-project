@@ -538,19 +538,7 @@ const LeadershipPageEditor = ({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu (badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.badge || ''}
-              onChange={(e) => handlePropChange('badge', e.target.value)}
-              placeholder="VD: ✦ BÁCH NIÊN TRỌNG TRÁCH • MINH BẠCH & LIÊN NGÀNH ✦"
-              className="w-full px-3.5 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-xs font-semibold focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề chính (headline)
             </label>

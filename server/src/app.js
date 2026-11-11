@@ -1,8 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 // Import routes
+const authRoutes = require('./routes/authRoutes');
 const pageRoutes = require('./routes/pageRoutes');
 const eventRoutes = require('./routes/eventRoutes');
 const collectionRoutes = require('./routes/collectionRoutes');
@@ -12,7 +14,15 @@ const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 
-app.use(cors());
+// Thiết lập CORS hỗ trợ credentials (cookie) và đa domain (localhost, Vercel, Render)
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
+
+app.use(cookieParser());
 app.use(express.json({ limit: '25mb' }));
 app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 
@@ -29,6 +39,7 @@ app.get('/api/health', (req, res) => {
 });
 
 // CMS API Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/pages', pageRoutes);
 app.use('/api/events', eventRoutes);

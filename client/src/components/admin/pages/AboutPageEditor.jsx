@@ -170,18 +170,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-              Huy hiệu (badge)
-            </label>
-            <input
-              type="text"
-              value={parsedProps.badge || ''}
-              onChange={(e) => handlePropChange('badge', e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-            />
-          </div>
-          <div>
+          <div className="md:col-span-2">
             <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
               Tiêu đề lớn (headline)
             </label>
@@ -383,34 +372,20 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs uppercase font-bold text-[#EADBCE]/80 mb-1">
-                Nhãn huy hiệu (mission_badge)
-              </label>
-              <input
-                type="text"
-                value={parsedProps.mission_badge || ''}
-                onChange={(e) => handlePropChange('mission_badge', e.target.value)}
-                placeholder="SỨ MỆNH"
-                className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/30 text-white text-xs"
-              />
-            </div>
-            <div>
-              <label className="block text-xs uppercase font-bold text-[#EADBCE]/80 mb-1">
-                Tiêu đề sứ mệnh (mission_title)
-              </label>
-              <input
-                type="text"
-                value={parsedProps.mission_title || parsedProps.mission || ''}
-                onChange={(e) => {
-                  handlePropChange('mission_title', e.target.value);
-                  handlePropChange('mission', e.target.value);
-                }}
-                placeholder="Kích hoạt giá trị sống của sơn mài hội họa Việt Nam"
-                className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/30 text-white text-xs font-bold"
-              />
-            </div>
+          <div>
+            <label className="block text-xs uppercase font-bold text-[#EADBCE]/80 mb-1">
+              Tiêu đề sứ mệnh (mission_title)
+            </label>
+            <input
+              type="text"
+              value={parsedProps.mission_title || parsedProps.mission || ''}
+              onChange={(e) => {
+                handlePropChange('mission_title', e.target.value);
+                handlePropChange('mission', e.target.value);
+              }}
+              placeholder="Kích hoạt giá trị sống của sơn mài hội họa Việt Nam"
+              className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/30 text-white text-xs font-bold"
+            />
           </div>
 
           {/* Danh sách điểm sứ mệnh */}
@@ -477,19 +452,7 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs uppercase font-bold text-[#EADBCE]/80 mb-1">
-                Nhãn huy hiệu (vision_badge)
-              </label>
-              <input
-                type="text"
-                value={parsedProps.vision_badge || ''}
-                onChange={(e) => handlePropChange('vision_badge', e.target.value)}
-                placeholder="TẦM NHÌN 2030"
-                className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/30 text-white text-xs"
-              />
-            </div>
-            <div>
+            <div className="md:col-span-2">
               <label className="block text-xs uppercase font-bold text-[#EADBCE]/80 mb-1">
                 Tiêu đề tầm nhìn (vision_title)
               </label>
