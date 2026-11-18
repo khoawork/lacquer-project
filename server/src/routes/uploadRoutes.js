@@ -20,6 +20,33 @@ const upload = multer({
   },
 });
 
+// Multer cho tài liệu đính kèm (PDF, DOCX, ZIP tối đa 25MB)
+const documentFileFilter = (req, file, cb) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  const allowedExts = ['.pdf', '.doc', '.docx', '.zip', '.rar', '.7z'];
+  const allowedMimes = [
+    'application/pdf',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'application/zip',
+    'application/x-zip-compressed',
+    'application/x-rar-compressed',
+    'application/octet-stream',
+  ];
+
+  if (allowedExts.includes(ext) || allowedMimes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Chỉ chấp nhận tài liệu định dạng PDF, DOC, DOCX, ZIP (tối đa 25MB)'), false);
+  }
+};
+
+const uploadDocumentMulter = multer({
+  storage,
+  limits: { fileSize: 25 * 1024 * 1024 }, // 25MB
+  fileFilter: documentFileFilter,
+});
+
 // Middleware linh hoạt: chỉ gọi multer khi request là multipart/form-data
 const handleUpload = (req, res, next) => {
   const contentType = req.headers['content-type'] || '';
@@ -126,6 +153,99 @@ router.post('/', handleUpload, async (req, res) => {
       message: `Lỗi tải ảnh lên Cloudinary: ${error.message || error}`,
     });
   }
+});
+
+/**
+ * Helper tải tệp tài liệu (PDF, DOCX, ZIP) lên Cloudinary với resource_type: 'raw'
+ */
+const uploadDocumentBufferToCloudinary = (buffer, originalname) => {
+  return new Promise((resolve, reject) => {
+    const parsed = path.parse(originalname);
+    const safeBase = parsed.name.replace(/[^a-zA-Z0-9]/g, '_');
+    const ext = parsed.ext.toLowerCase();
+
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: 'lacquer_project/documents',
+        public_id: `${safeBase}_${Date.now()}${ext}`,
+        resource_type: 'raw',
+      },
+      (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      }
+    );
+
+    stream.end(buffer);
+  });
+};
+
+// POST /api/upload/document (Tải tệp đính kèm PDF, DOCX, ZIP tối đa 25MB)
+router.post('/document', (req, res) => {
+  uploadDocumentMulter.single('document')(req, res, async (err) => {
+    if (err) {
+      if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({
+          success: false,
+          message: 'Dung lượng tệp vượt quá giới hạn 25MB',
+        });
+      }
+      return res.status(400).json({
+        success: false,
+        message: err.message || 'Lỗi khi tải tệp tài liệu',
+      });
+    }
+
+    if (!req.file || !req.file.buffer) {
+      return res.status(400).json({
+        success: false,
+        message: 'Vui lòng chọn tệp tài liệu (PDF, DOC, DOCX, ZIP)',
+      });
+    }
+
+    try {
+      // 1. Nếu có cấu hình Cloudinary
+      if (
+        process.env.CLOUDINARY_CLOUD_NAME &&
+        process.env.CLOUDINARY_API_KEY &&
+        process.env.CLOUDINARY_API_SECRET
+      ) {
+        const result = await uploadDocumentBufferToCloudinary(
+          req.file.buffer,
+          req.file.originalname
+        );
+        return res.json({
+          success: true,
+          message: 'Tải tài liệu lên máy chủ thành công',
+          url: result.secure_url,
+          public_id: result.public_id,
+          bytes: result.bytes,
+          filename: req.file.originalname,
+        });
+      }
+
+      // 2. Fallback lưu local nếu chưa cấu hình Cloudinary
+      const uploadDir = path.join(__dirname, '../../uploads/documents');
+      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+      const parsed = path.parse(req.file.originalname);
+      const safeBase = parsed.name.replace(/[^a-zA-Z0-9]/g, '_');
+      const filename = `doc-${Date.now()}-${safeBase}${parsed.ext.toLowerCase()}`;
+      fs.writeFileSync(path.join(uploadDir, filename), req.file.buffer);
+
+      return res.json({
+        success: true,
+        message: 'Tải tài liệu cục bộ thành công',
+        url: `/uploads/documents/${filename}`,
+        filename: req.file.originalname,
+      });
+    } catch (uploadError) {
+      console.error('Lỗi khi tải tài liệu:', uploadError);
+      return res.status(500).json({
+        success: false,
+        message: `Lỗi tải tài liệu: ${uploadError.message || uploadError}`,
+      });
+    }
+  });
 });
 
 // DELETE /api/upload/:public_id (Xóa ảnh trên Cloudinary khi cần)

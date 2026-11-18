@@ -38,10 +38,17 @@ class SiteService {
 
   async saveMenu(menuKey, name, itemsJson) {
     let menu = await Menu.findOne({ where: { menu_key: menuKey } });
+    const payload = { items_json: itemsJson };
+    if (name) payload.name = name;
+
     if (menu) {
-      await menu.update({ name, items_json: itemsJson });
+      await menu.update(payload);
     } else {
-      menu = await Menu.create({ menu_key: menuKey, name, items_json: itemsJson });
+      menu = await Menu.create({
+        menu_key: menuKey,
+        name: name || 'Menu Chính Website',
+        items_json: itemsJson,
+      });
     }
     return menu;
   }

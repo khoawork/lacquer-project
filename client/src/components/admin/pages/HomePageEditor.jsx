@@ -16,6 +16,7 @@ import { getImageUrl } from '../../../configs/Apis';
 const HomePageEditor = ({
   parsedProps,
   handlePropChange,
+  handlePropsPatch,
   allEvents = [],
   allCollections = [],
   eventSearch = '',
@@ -87,8 +88,12 @@ const HomePageEditor = ({
               placeholder="NƠI HỘI TỤ"
               value={parsedProps.top_tagline || parsedProps.badge || ''}
               onChange={(e) => {
-                handlePropChange('top_tagline', e.target.value);
-                handlePropChange('badge', e.target.value);
+                const val = e.target.value;
+                if (handlePropsPatch) {
+                  handlePropsPatch({ top_tagline: val, badge: val });
+                } else {
+                  handlePropChange('top_tagline', val);
+                }
               }}
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
             />
@@ -103,8 +108,12 @@ const HomePageEditor = ({
               placeholder="Tinh hoa nghệ thuật"
               value={parsedProps.cursive_title || parsedProps.subtitle || ''}
               onChange={(e) => {
-                handlePropChange('cursive_title', e.target.value);
-                handlePropChange('subtitle', e.target.value);
+                const val = e.target.value;
+                if (handlePropsPatch) {
+                  handlePropsPatch({ cursive_title: val, subtitle: val });
+                } else {
+                  handlePropChange('cursive_title', val);
+                }
               }}
               className="w-full px-3.5 py-2.5 rounded-lg bg-[#100203] border border-[#D4AF37]/35 text-white text-sm font-cursive text-lg focus:border-[#FFDF73] focus:outline-none"
             />

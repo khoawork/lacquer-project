@@ -99,15 +99,11 @@ client/src/
 │   ├── journey/                         # CÁC SECTION TÁCH RỜI TRANG HÀNH TRÌNH (JOURNEY)
 │   │   ├── JourneyHeroSection.jsx       # Hero hành trình bách niên chuyển mình di sản & FloatingSparkles
 │   │   ├── JourneyTimelineSection.jsx   # 5 Mốc son lịch sử xuyên thế kỷ (1925 - 2030)
-│   │   ├── JourneyMastersSection.jsx    # Bậc thầy hội họa sơn mài tiên phong (Nguyễn Gia Trí, Phạm Hậu...)
-│   │   ├── JourneyTerroirsSection.jsx   # Cội nguồn đất và nghề: Phú Thọ, Hạ Thái, Tương Bình Hiệp
-│   │   ├── JourneyFutureSection.jsx     # Hạ tầng sáng tạo và tầm nhìn 2030
 │   │   └── JourneyCtaSection.jsx        # Kêu gọi đồng hành và đóng góp tư liệu kỷ yếu & FloatingSparkles
 │   ├── events/                          # CÁC SECTION TÁCH RỜI TRANG SỰ KIỆN (EVENTS)
 │   │   ├── EventsHeroSection.jsx        # Hero "Nơi di sản được thực hành", 4 metrics & FloatingSparkles
 │   │   ├── EventsFilterSection.jsx      # Bộ lọc chuyên đề (Tọa đàm, Triển lãm, Workshop, Kỷ lục...)
 │   │   ├── EventsListSection.jsx        # Card Hành trình lần 7 & Hoạt động SIHUB
-│   │   ├── EventsProgramSection.jsx     # Mô hình chuẩn hóa: Đại hội thảo, GPS, khung vận hành chi tiết
 │   │   └── EventsCtaSection.jsx         # Kêu gọi đồng hành kiến tạo sự kiện tiếp theo & FloatingSparkles
 │   ├── collection/                      # CÁC SECTION TÁCH RỜI TRANG BỘ SƯU TẬP (COLLECTION)
 │   │   ├── CollectionHeroSection.jsx    # Hero "Mỗi tác phẩm là một lớp thời gian", 4 metrics & FloatingSparkles
@@ -130,8 +126,7 @@ client/src/
 │   │   ├── NewsHeroSection.jsx          # Hero "Nhật Ký & Nghiên Cứu Di Sản" & FloatingSparkles
 │   │   ├── NewsFilterSection.jsx        # 7 Phân loại chuyên đề (Dòng chảy, Người giữ lửa, Sơn mài 2.0...)
 │   │   ├── NewsGridSection.jsx          # Lưới bài viết với 6 chuyên khảo thực tế & hình ảnh chất lượng cao
-│   │   ├── NewsTemplateMockupSection.jsx# Khung bố cục bài viết mẫu chuẩn bảo tàng (Article Detail Mockup)
-│   │   └── NewsNewsletterSection.jsx    # Form đăng ký nhận bản tin định kỳ VietKings
+│   │   └── NewsTemplateMockupSection.jsx# Khung bố cục bài viết mẫu chuẩn bảo tàng (Article Detail Mockup)
 │   ├── contact/                         # CÁC SECTION TÁCH RỜI TRANG LIÊN HỆ (CONTACT)
 │   │   ├── ContactHeroSection.jsx       # Hero "Mọi hành trình đều bắt đầu từ một cuộc gặp" & FloatingSparkles
 │   │   ├── ContactRoutesSection.jsx     # 5 Tuyến tham gia đồng hành (Sáng tác, Học thuật, Doanh nghiệp, Giáo dục, Truyền thông)
@@ -217,9 +212,9 @@ client/src/
 - **Service (`server/src/services/`)**: Nơi thực hiện toàn bộ nghiệp vụ, ràng buộc validation và các câu truy vấn Sequelize (`findByPk`, `findOne`, `findAll`, `create`, `update`, `destroy`).
 - **Model (`server/src/models/`)**: Định nghĩa schema bảng trong cơ sở dữ liệu MySQL (`underscored: true`, `timestamps: true`).
   - `pageModel.js`: Bảng `pages` gồm chính xác 4 trường: `id`, `name`, `slug` và `props` (JSON). Slug **chỉ nằm trong bảng page**.
-  - `eventModel.js`: Bảng `events` chỉ lưu thông tin sự kiện (không chứa slug).
-  - `collectionModel.js`: Bảng `collections` và `artworks` chỉ lưu thông tin bộ sưu tập và tác phẩm (không chứa slug).
-  - `newsModel.js`: Bảng `news_articles` chỉ lưu bài viết, kỷ yếu và tư liệu (không chứa slug).
+  - `eventModel.js`: Bảng `events` (liên kết khóa ngoại `category_id` sang bảng `event_categories` gồm `id, name`).
+  - `collectionModel.js`: Bảng `collections` (liên kết khóa ngoại `category_id` sang bảng `collection_categories` gồm `id, name`) và bảng `artworks`.
+  - `newsModel.js`: Bảng `news_articles` (liên kết khóa ngoại `category_id` sang bảng `news_categories` gồm `id, name`).
   - `siteModel.js`: Bảng `site_settings`, `menus`, `form_submissions`.
   - `baseModel.js`: Hub kết nối Sequelize, quan hệ bảng và hàm `syncDatabase()`.
 
@@ -229,13 +224,14 @@ client/src/
   - Nút Menu Active: Nền Vàng Hoàng Kim Quý Phái (`#d49b1a`), chữ sẫm (`#1a0406`), biểu tượng mũi tên dẫn hướng.
   - Content Workspace: Nền Đen Khói Sơn Mài (`#140305`), thẻ card viền vàng vương giả (`#D4AF37`/30).
 - **Lệnh Seed Dữ Liệu Mẫu**:
-  - `npm --prefix server run seed`: Nạp toàn bộ dữ liệu mẫu chuẩn từ frontend vào 7 bảng (`pages`, `events`, `collections`, `artworks`, `news_articles`, `site_settings`, `menus`, `form_submissions`).
+  - `npm --prefix server run seed`: Nạp toàn bộ dữ liệu mẫu chuẩn từ frontend vào các bảng (`pages`, `event_categories`, `events`, `collection_categories`, `collections`, `artworks`, `news_categories`, `news_articles`, `site_settings`, `menus`, `form_submissions`).
 - **Tầng Dịch Vụ Gọi API Client (`client/src/services/` & `client/src/configs/Apis.js`)**:
-  - `eventServices.js`: `getEvents`, `getEventById`, `createEvent`, `updateEvent`, `deleteEvent`.
-  - `newsServices.js`: `getNews`, `getNewsById`, `createNews`, `updateNews`, `deleteNews`.
-  - `collectionServices.js`: `getCollections`, `getCollectionById`, `getArtworkById`, `createCollection`.
+  - `eventServices.js`: `getEvents`, `getEventById`, `createEvent`, `updateEvent`, `deleteEvent`, `getCategories`, `createCategory`, `updateCategory`, `deleteCategory`.
+  - `newsServices.js`: `getNews`, `getNewsById`, `createNews`, `updateNews`, `deleteNews`, `getCategories`, `createCategory`, `updateCategory`, `deleteCategory`.
+  - `collectionServices.js`: `getCollections`, `getCollectionById`, `createCollection`, `updateCollection`, `deleteCollection`, `getCategories`, `createCategory`, `updateCategory`, `deleteCategory`, `getArtworkById`, `createArtwork`, `updateArtwork`, `deleteArtwork`.
   - `pageServices.js`: `getPages`, `getPageBySlug`, `savePageBySlug`, `updatePage` (Slug chỉ nằm trong page).
-  - `siteServices.js`: `getSettings`, `getMainMenu`, `saveMainMenu`, `submitForm`, `getSubmissions`, `updateSubmissionStatus`.
+  - `siteServices.js`: `getSettings`, `updateSetting`, `getMainMenu`, `saveMainMenu` (gửi `{ name, items_json: items }`), `submitForm`, `getSubmissions`, `updateSubmissionStatus`, `deleteSubmission`, `parseCategorySetting` (đồng bộ endpoint `endpoints.forms = '/site/submissions'`).
+  - `uploadService.js`: `uploadImage` (ảnh tối đa 10MB), `uploadDocument` (tài liệu PDF, DOCX, ZIP tối đa 25MB qua `POST /api/upload/document`).
 - **Cấu Trúc Menu Quản Trị**:
   - **TỔNG QUAN**: Bảng điều khiển (`/admin`).
   - **NỘI DUNG WEBSITE**: Gồm đúng 9 trang nội dung:
@@ -248,4 +244,4 @@ client/src/
     7. Ban điều hành (`/admin/pages/leadership`)
     8. Tin tức (`/admin/pages/news`)
     9. Liên hệ (`/admin/pages/contact`)
-  - **HỆ THỐNG**: Danh mục dữ liệu, Tài khoản & Phân quyền, Nhật ký hoạt động, Menu & Điều hướng (`/admin/system/menus` - quản lý vị trí ↑ ↓, ẩn/hiện theo slug như ảnh mẫu), Quản lý Biểu mẫu (`/admin/system/forms`), Logo & Chân trang (`/admin/system/settings`).
+  - **HỆ THỐNG**: Danh mục dữ liệu (`/admin/system/categories`), Tài khoản & Phân quyền (gắn nhãn sắp ra mắt), Menu & Điều hướng (`/admin/system/menus`), Quản lý Biểu mẫu (`/admin/system/forms`), Logo & Chân trang (`/admin/system/settings`). Mọi đường dẫn nội bộ không xác định trong `/admin/*` được bắt bởi trang `AdminNotFound` theo tông màu sơn mài.

@@ -101,7 +101,13 @@ const AdminLayout = () => {
       groupTitle: 'HỆ THỐNG',
       items: [
         { name: 'Danh mục dữ liệu', path: '/admin/system/categories', icon: Database },
-        { name: 'Tài khoản & Phân quyền', path: '/admin/system/users', icon: Users },
+        {
+          name: 'Tài khoản & Phân quyền',
+          path: '/admin/system/users',
+          icon: Users,
+          badge: 'Sắp ra mắt',
+          disabled: true,
+        },
         { name: 'Menu & Điều hướng', path: '/admin/system/menus', icon: MenuIcon },
         { name: 'Quản lý Biểu mẫu (Forms)', path: '/admin/system/forms', icon: FileText },
         { name: 'Logo & Footer', path: '/admin/system/settings', icon: Sliders },
@@ -171,21 +177,39 @@ const AdminLayout = () => {
                     return (
                       <Link
                         key={item.path}
-                        to={item.path}
-                        onClick={() => setMobileOpen(false)}
+                        to={item.disabled ? '#' : item.path}
+                        onClick={(e) => {
+                          if (item.disabled) {
+                            e.preventDefault();
+                            return;
+                          }
+                          setMobileOpen(false);
+                        }}
                         className={`flex items-center gap-3.5 px-3.5 py-2.5 rounded transition-all duration-200 text-[14px] font-medium select-none ${
                           active
                             ? 'bg-[#d49b1a] text-[#1a0406] font-bold shadow-[0_4px_16px_rgba(212,155,26,0.45)]'
+                            : item.disabled
+                            ? 'text-[#FAF7F2]/45 cursor-not-allowed hover:bg-transparent'
                             : 'text-[#FAF7F2]/90 hover:bg-white/10 hover:text-white'
                         }`}
+                        title={item.disabled ? 'Tính năng đang trong lộ trình phát triển' : item.name}
                       >
                         <Icon
                           className={`w-[18px] h-[18px] shrink-0 ${
-                            active ? 'text-[#1a0406]' : 'text-[#FAF7F2]/80'
+                            active
+                              ? 'text-[#1a0406]'
+                              : item.disabled
+                              ? 'text-[#FAF7F2]/35'
+                              : 'text-[#FAF7F2]/80'
                           }`}
                         />
                         <span className="truncate">{item.name}</span>
-                        {active && <ChevronRight className="w-4 h-4 ml-auto text-[#1a0406]" />}
+                        {item.badge && (
+                          <span className="ml-auto text-[10px] font-normal tracking-wide px-2 py-0.5 rounded bg-[#421014] border border-[#ffb3ae]/30 text-[#ffb3ae]">
+                            {item.badge}
+                          </span>
+                        )}
+                        {active && !item.badge && <ChevronRight className="w-4 h-4 ml-auto text-[#1a0406]" />}
                       </Link>
                     );
                   })}

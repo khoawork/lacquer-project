@@ -14,9 +14,12 @@ const {
   sequelize,
   syncDatabase,
   Page,
+  EventCategory,
   Event,
+  CollectionCategory,
   Collection,
   Artwork,
+  NewsCategory,
   NewsArticle,
   SiteSetting,
   Menu,
@@ -444,7 +447,6 @@ async function runSeed() {
           program_gps_title: '273 Điện Biên Phủ',
           program_gps_sub: 'Phường Võ Thị Sáu, Quận 3, TP.HCM',
           featured_event_ids: [1, 2],
-          spotlight_event_id: 1,
         },
       },
       {
@@ -1022,7 +1024,15 @@ async function runSeed() {
     ];
 
     for (const evt of eventsData) {
-      await Event.upsert(evt);
+      const catName = evt.category || 'Tọa đàm chuyên sâu';
+      const [evtCat] = await EventCategory.findOrCreate({
+        where: { name: catName },
+        defaults: { name: catName },
+      });
+      await Event.upsert({
+        ...evt,
+        category_id: evtCat.id,
+      });
     }
     console.log(`✅ Đã nạp thành công ${eventsData.length} sự kiện vào bảng events.`);
 
@@ -1032,6 +1042,7 @@ async function runSeed() {
       {
         id: 1,
         name: 'Cửu Cửu – Mạch Ngầm Tinh Hoa',
+        category: 'Di sản Bách niên',
         code: 'CUU-CUU',
         description:
           'Bộ sưu tập 99 đĩa sơn mài khai thác hệ hoa văn trống đồng như một mạch ký ức xuyên suốt. Mỗi tác phẩm là một cách diễn giải độc lập; khi đặt cạnh nhau, 99 bề mặt tạo thành trường đối thoại giữa biểu tượng cổ và ngôn ngữ đương đại.',
@@ -1043,6 +1054,7 @@ async function runSeed() {
       {
         id: 2,
         name: 'Bách Thụ Đồng Tâm Viên',
+        category: 'Đồng sáng tác Cộng đồng',
         code: 'BACH-THU',
         description:
           'Chuỗi tác phẩm biểu tượng cho sự trường tồn và gắn kết của các thế hệ nghệ sĩ và nghệ nhân di sản Việt Nam.',
@@ -1054,6 +1066,7 @@ async function runSeed() {
       {
         id: 3,
         name: 'Du Lãm Cõi Vô Cùng',
+        category: 'Thể nghiệm Đương đại',
         code: 'DU-LAM',
         description:
           'Hành trình thể nghiệm tư duy trừu tượng trên nền chất liệu then sâu thẳm kết hợp bạc rắc và vàng quỳ 9999.',
@@ -1065,7 +1078,15 @@ async function runSeed() {
     ];
 
     for (const col of collectionsData) {
-      await Collection.upsert(col);
+      const catName = col.category || 'Di sản Bách niên';
+      const [colCat] = await CollectionCategory.findOrCreate({
+        where: { name: catName },
+        defaults: { name: catName },
+      });
+      await Collection.upsert({
+        ...col,
+        category_id: colCat.id,
+      });
     }
 
     const artworksData = [
@@ -1246,7 +1267,15 @@ async function runSeed() {
     ];
 
     for (const art of newsData) {
-      await NewsArticle.upsert(art);
+      const catName = art.category || 'Dòng chảy 100 năm';
+      const [newsCat] = await NewsCategory.findOrCreate({
+        where: { name: catName },
+        defaults: { name: catName },
+      });
+      await NewsArticle.upsert({
+        ...art,
+        category_id: newsCat.id,
+      });
     }
     console.log(`✅ Đã nạp thành công ${newsData.length} bài viết vào bảng news_articles.`);
 
@@ -1294,20 +1323,6 @@ async function runSeed() {
       setting_key: 'social',
       setting_value: socialData,
       description: 'Liên kết mạng xã hội chính thức',
-    });
-
-    await SiteSetting.upsert({
-      setting_key: 'event_categories',
-      setting_value: [
-        'Tất cả',
-        'Tọa đàm – Hội thảo',
-        'Triển lãm',
-        'Workshop – Open Studio',
-        'Kỷ lục – Vinh danh',
-        'Giáo dục – Cộng đồng',
-        'Đã diễn ra',
-      ],
-      description: 'Danh sách các thể loại sự kiện hiển thị trên website',
     });
 
     // Menu chính điều hướng website

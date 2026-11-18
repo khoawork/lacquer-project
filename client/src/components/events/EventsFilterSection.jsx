@@ -1,24 +1,39 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Filter, ChevronDown, Check } from 'lucide-react';
 
 export const DEFAULT_EVENT_CATEGORIES = [];
 
 const EventsFilterSection = ({
-  activeFilter = 'Tất cả',
+  activeFilter = 'all',
   setActiveFilter,
   categories = [],
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Đảm bảo "Tất cả" luôn ở đầu và "Đã diễn ra" ở cuối nếu có danh mục
-  const displayCategories = Array.isArray(categories) && categories.length > 0
-    ? [...categories]
-    : ['Tất cả'];
-  if (!displayCategories.includes('Tất cả')) displayCategories.unshift('Tất cả');
-  if (displayCategories.length > 1 && !displayCategories.includes('Đã diễn ra')) {
-    displayCategories.push('Đã diễn ra');
-  }
+  // Chuẩn hóa danh sách chủ đề sự kiện dạng [{ id, name }]
+  const displayCategories = useMemo(() => {
+    const list = [{ id: 'all', name: 'Tất cả' }];
+    if (Array.isArray(categories)) {
+      categories.forEach((cat) => {
+        if (cat && typeof cat === 'object' && cat.id !== undefined && cat.name) {
+          if (cat.name !== 'Tất cả' && cat.name !== 'Đã diễn ra') {
+            list.push({ id: Number(cat.id), name: cat.name });
+          }
+        }
+      });
+    }
+    list.push({ id: 'past', name: 'Đã diễn ra' });
+    return list;
+  }, [categories]);
+
+  const selectedOption =
+    displayCategories.find(
+      (c) =>
+        (c.id === 'all' && (!activeFilter || activeFilter === 'all' || activeFilter === 'Tất cả')) ||
+        (c.id === 'past' && (activeFilter === 'past' || activeFilter === 'Đã diễn ra')) ||
+        (typeof c.id === 'number' && Number(c.id) === Number(activeFilter))
+    ) || displayCategories[0];
 
   // Đóng dropdown khi nhấp ra ngoài hoặc bấm Escape
   useEffect(() => {
@@ -56,7 +71,7 @@ const EventsFilterSection = ({
               Chủ đề:
             </span>
             <span className="text-[#E6CA65] font-bold max-w-[160px] sm:max-w-none truncate">
-              {activeFilter || 'Tất cả'}
+              {selectedOption.name}
             </span>
             <ChevronDown
               className={`w-4 h-4 text-[#E6CA65] transition-transform duration-200 ${
@@ -75,17 +90,15 @@ const EventsFilterSection = ({
                 </span>
               </div>
               <div className="space-y-1 max-h-72 overflow-y-auto custom-scrollbar">
-                {displayCategories.map((catName) => {
-                  const isSelected =
-                    activeFilter?.toLowerCase() === catName.toLowerCase() ||
-                    (catName === 'Tất cả' && (!activeFilter || activeFilter === 'Tất cả'));
+                {displayCategories.map((cat) => {
+                  const isSelected = cat.id === selectedOption.id;
 
                   return (
                     <button
-                      key={catName}
+                      key={cat.id}
                       type="button"
                       onClick={() => {
-                        setActiveFilter?.(catName);
+                        setActiveFilter?.(cat.id);
                         setIsOpen(false);
                       }}
                       className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-sans uppercase tracking-wider text-left transition cursor-pointer ${
@@ -100,7 +113,7 @@ const EventsFilterSection = ({
                         ) : (
                           <span className="w-4 shrink-0" />
                         )}
-                        <span className="truncate">{catName}</span>
+                        <span className="truncate">{cat.name}</span>
                       </div>
                     </button>
                   );

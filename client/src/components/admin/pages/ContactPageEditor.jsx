@@ -18,8 +18,6 @@ import {
   Save,
   Compass,
   Eye,
-  Sliders,
-  ExternalLink,
   MessageSquare,
   FileText,
   User,
@@ -233,6 +231,7 @@ const FIELD_TYPES = [
 const ContactPageEditor = ({
   parsedProps = {},
   handlePropChange,
+  handlePropsPatch,
   handleSavePage,
   saving = false,
 }) => {
@@ -411,47 +410,6 @@ const ContactPageEditor = ({
 
   return (
     <div className="space-y-8 select-none">
-      {/* THANH ĐIỀU HƯỚNG LƯU TRANG */}
-      <div className="flex items-center justify-between p-4 rounded-2xl bg-[#180406] border border-[#D4AF37]/40 shadow-lg">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#3a080c] border border-[#D4AF37]/50 flex items-center justify-center text-[#FFDF73] shadow-md">
-            <Sliders className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="font-sans text-base sm:text-lg font-bold text-[#FFDF73] uppercase tracking-wide">
-              Quản Trị Toàn Diện Trang Liên Hệ &amp; Biểu Mẫu
-            </h2>
-            <p className="text-xs text-[#EADBCE]/70">
-              Chỉnh sửa Hero, Tuyến đồng hành, Biểu mẫu đề xuất (thêm/sửa trường) và Kênh kết nối trực tiếp.
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2.5">
-          <a
-            href="/contact"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg border border-[#D4AF37]/35 text-[#EADBCE] hover:text-[#FFDF73] text-xs font-sans uppercase tracking-wider transition"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            <span>Mở Trang Web</span>
-          </a>
-
-          {handleSavePage && (
-            <button
-              type="button"
-              onClick={handleSavePage}
-              disabled={saving}
-              className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] text-xs font-sans font-bold uppercase tracking-wider hover:brightness-110 transition cursor-pointer shadow-md"
-            >
-              <Save className="w-4 h-4" />
-              <span>{saving ? 'Đang lưu...' : 'Lưu Thay Đổi'}</span>
-            </button>
-          )}
-        </div>
-      </div>
-
       {/* ===================== PHẦN 1: KHUNG ĐẦU TRANG (HERO SECTION - ĐÃ BỎ BADGE) ===================== */}
       <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-4">
         <div className="flex items-center gap-2.5 border-b border-[#D4AF37]/25 pb-3">

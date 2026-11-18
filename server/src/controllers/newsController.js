@@ -45,7 +45,43 @@ class NewsController {
       res.status(400).json({ success: false, message: error.message });
     }
   }
+
+  // Categories
+  async getCategories(req, res) {
+    try {
+      const categories = await newsService.getAllCategories();
+      res.json({ success: true, data: categories });
+    } catch (error) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  }
+
+  async createCategory(req, res) {
+    try {
+      const category = await newsService.createCategory(req.body);
+      res.status(201).json({ success: true, message: 'Thêm thể loại tin tức thành công', data: category });
+    } catch (error) {
+      res.status(400).json({ success: false, message: error.message });
+    }
+  }
+
+  async updateCategory(req, res) {
+    try {
+      const category = await newsService.updateCategory(req.params.id, req.body);
+      res.json({ success: true, message: 'Cập nhật thể loại tin tức thành công', data: category });
+    } catch (error) {
+      res.status(400).json({ success: false, message: error.message });
+    }
+  }
+
+  async deleteCategory(req, res) {
+    try {
+      await newsService.deleteCategory(req.params.id);
+      res.json({ success: true, message: 'Đã xóa thể loại tin tức' });
+    } catch (error) {
+      res.status(400).json({ success: false, message: error.message });
+    }
+  }
 }
 
 module.exports = new NewsController();
-

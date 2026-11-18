@@ -1,6 +1,30 @@
 import React, { useState } from 'react';
-import { Mail, PhoneCall, MapPin, Clock, ShieldCheck, Check, Copy, Upload, ArrowRight, X, ChevronDown, Paperclip } from 'lucide-react';
+import {
+  Mail,
+  PhoneCall,
+  MapPin,
+  Clock,
+  ShieldCheck,
+  Check,
+  Copy,
+  Upload,
+  ArrowRight,
+  X,
+  ChevronDown,
+  Paperclip,
+  AlertCircle,
+  RefreshCw,
+} from 'lucide-react';
 import siteServices from '../../services/siteServices';
+import uploadService from '../../services/uploadService';
+
+const FIELD_ALIASES = {
+  fullName: ['fullName', 'full_name', 'ho_va_ten', 'ho_ten', 'name', 'sender_name'],
+  email: ['email', 'dia_chi_email', 'mail'],
+  phone: ['phone', 'so_dien_thoai', 'sdt', 'dien_thoai', 'telephone'],
+  organization: ['organization', 'don_vi', 'to_chuc', 'co_quan'],
+  proposalMessage: ['proposalMessage', 'message', 'noi_dung', 'noi_dung_de_xuat'],
+};
 
 export default function ContactFormSection({ selectedRoute, setSelectedRoute, formRef, pageProps }) {
   const emailAddress = pageProps?.email || 'info@sonmaihoihoavietnam.com';
@@ -72,9 +96,13 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
   });
 
   const [fileName, setFileName] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
   const [copied, setCopied] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [referenceCode, setReferenceCode] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [uploadingFile, setUploadingFile] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   // Synchronize when selectedRoute changes from outside
   React.useEffect(() => {
@@ -93,45 +121,138 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
 
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setFileName(e.target.files[0].name);
+      const file = e.target.files[0];
+      if (file.size > 25 * 1024 * 1024) {
+        setSubmitError('Dung lượng tệp vượt quá giới hạn 25MB.');
+        e.target.value = '';
+        return;
+      }
+      setSelectedFile(file);
+      setFileName(file.name);
+      setSubmitError(null);
     }
+  };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    setFileName('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const randomCode = Math.floor(1000 + Math.random() * 9000);
-    const ref = `#SMVN-2026-REG-${randomCode}`;
-    setReferenceCode(ref);
+    setSubmitError(null);
 
-    try {
-      // Thu thập các trường tùy chỉnh nếu có
-      const customEntries = Object.entries(formData).filter(
-        ([k, v]) => !['fullName', 'organization', 'email', 'phone', 'routeType', 'proposalMessage', 'documentUrl', 'termsAgreed'].includes(k) && v
-      );
-      let combinedMessage = formData.proposalMessage;
-      if (customEntries.length > 0) {
-        combinedMessage += '\n\n--- THÔNG TIN BỔ SUNG ---\n' + customEntries.map(([k, v]) => `${k}: ${v}`).join('\n');
+    // Resolve standard fields from formData using FIELD_ALIASES
+    const getFieldValue = (fieldKey) => {
+      const aliases = FIELD_ALIASES[fieldKey] || [fieldKey];
+      for (const alias of aliases) {
+        if (
+          formData[alias] !== undefined &&
+          formData[alias] !== null &&
+          String(formData[alias]).trim() !== ''
+        ) {
+          return String(formData[alias]).trim();
+        }
       }
+      return '';
+    };
 
-      await siteServices.submitForm({
-        form_type: formData.routeType || 'contact',
-        full_name: formData.fullName,
-        organization: formData.organization,
-        email: formData.email,
-        phone: formData.phone,
-        subject: `Đề xuất hợp tác: ${formData.routeType || 'Liên hệ chung'}`,
-        message: combinedMessage,
-        reference_code: ref,
-      });
-    } catch (err) {
-      console.warn('Gửi form lưu trữ:', err.message);
+    const resolvedFullName = getFieldValue('fullName');
+    const resolvedEmail = getFieldValue('email');
+    const resolvedPhone = getFieldValue('phone');
+    const resolvedOrg = getFieldValue('organization');
+    const resolvedMessage = getFieldValue('proposalMessage');
+
+    if (!resolvedFullName || !resolvedEmail) {
+      setSubmitError('Vui lòng nhập đầy đủ Họ và tên và Email.');
+      return;
     }
 
-    setShowModal(true);
+    // Collect all mapped alias keys so they are not duplicated in additional custom fields
+    const allKnownAliases = new Set([
+      'routeType',
+      'documentUrl',
+      'termsAgreed',
+      ...Object.values(FIELD_ALIASES).flat(),
+    ]);
+
+    const customEntries = Object.entries(formData).filter(
+      ([k, v]) =>
+        !allKnownAliases.has(k) &&
+        v !== undefined &&
+        v !== null &&
+        String(v).trim() !== ''
+    );
+
+    let combinedMessage = resolvedMessage;
+    if (customEntries.length > 0) {
+      combinedMessage +=
+        (combinedMessage ? '\n\n' : '') +
+        '--- THÔNG TIN BỔ SUNG ---\n' +
+        customEntries.map(([k, v]) => `${k}: ${v}`).join('\n');
+    }
+
+    const randomCode = Math.floor(1000 + Math.random() * 9000);
+    const fallbackRef = `#SMVN-2026-REG-${randomCode}`;
+
+    setSubmitting(true);
+    try {
+      let attachmentUrl = formData.documentUrl ? String(formData.documentUrl).trim() : null;
+
+      // Nếu có tệp đính kèm được chọn từ máy, tải tệp lên trước
+      if (selectedFile) {
+        setUploadingFile(true);
+        try {
+          const uploadedDocUrl = await uploadService.uploadDocument(selectedFile);
+          attachmentUrl = uploadedDocUrl;
+        } catch (uploadErr) {
+          const errMsg =
+            uploadErr.response?.data?.message ||
+            uploadErr.message ||
+            'Không thể tải tệp đính kèm lên máy chủ.';
+          setSubmitError(`Lỗi tải tệp: ${errMsg}`);
+          setSubmitting(false);
+          setUploadingFile(false);
+          return;
+        } finally {
+          setUploadingFile(false);
+        }
+      }
+
+      const payload = {
+        form_type: formData.routeType || 'contact',
+        full_name: resolvedFullName,
+        organization: resolvedOrg || null,
+        email: resolvedEmail,
+        phone: resolvedPhone || null,
+        route_type: formData.routeType || null,
+        subject: `Đề xuất hợp tác: ${formData.routeType || 'Liên hệ chung'}`,
+        message: combinedMessage,
+        reference_code: fallbackRef,
+        attachments_url: attachmentUrl,
+      };
+
+      const res = await siteServices.submitForm(payload);
+      if (res.data && res.data.success) {
+        setReferenceCode(res.data.data?.reference_code || fallbackRef);
+        setShowModal(true);
+      } else {
+        setSubmitError(res.data?.message || 'Gửi đề xuất không thành công, vui lòng thử lại.');
+      }
+    } catch (err) {
+      setSubmitError(
+        err.response?.data?.message || err.message || 'Gửi không thành công, vui lòng thử lại.'
+      );
+    } finally {
+      setSubmitting(false);
+      setUploadingFile(false);
+    }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setSelectedFile(null);
+    setFileName('');
     setFormData({
       fullName: '',
       organization: '',
@@ -142,7 +263,6 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
       documentUrl: '',
       termsAgreed: false,
     });
-    setFileName('');
     if (setSelectedRoute) setSelectedRoute('');
   };
 
@@ -433,14 +553,29 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                     </div>
                     <label className="shrink-0 px-4 py-2 rounded bg-[#37352e] text-[#FFDF73] hover:bg-[#E9C349] hover:text-[#241a00] font-sans text-xs font-semibold tracking-wider uppercase cursor-pointer transition-colors">
                       {formFileBtnText}
-                      <input type="file" onChange={handleFileChange} className="hidden" />
+                      <input
+                        type="file"
+                        onChange={handleFileChange}
+                        accept=".pdf,.doc,.docx,.zip,.rar,.7z,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/zip,application/x-zip-compressed"
+                        className="hidden"
+                      />
                     </label>
                   </div>
 
                   {fileName && (
-                    <div className="text-xs text-[#FFDF73] flex items-center gap-1.5 px-1">
-                      <Paperclip className="w-3.5 h-3.5" />
-                      <span>Đã chọn tệp: {fileName}</span>
+                    <div className="text-xs text-[#FFDF73] flex items-center justify-between px-3 py-2 rounded-lg bg-[#2b080c] border border-[#D4AF37]/35 shadow-inner">
+                      <div className="flex items-center gap-2 truncate">
+                        <Paperclip className="w-4 h-4 shrink-0 text-[#FFDF73]" />
+                        <span className="truncate font-mono">Đã chọn: {fileName}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleRemoveFile}
+                        className="text-red-400 hover:text-red-300 p-1 cursor-pointer shrink-0 rounded hover:bg-red-950/50 transition-colors"
+                        title="Hủy chọn tệp này"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
                     </div>
                   )}
 
@@ -558,9 +693,16 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
 
             {/* Submit Button */}
             <div className="pt-2">
+              {submitError && (
+                <div className="mb-3 p-3 rounded-lg bg-[#3d1115]/80 border border-red-500/50 text-[#ffb3ae] text-xs flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+                  <span>{submitError}</span>
+                </div>
+              )}
               <button
                 type="submit"
-                className="w-full py-4 px-6 rounded-lg uppercase tracking-wider font-sans font-bold text-base sm:text-lg flex items-center justify-center gap-3 cursor-pointer shadow-lg transition-all duration-300 hover:brightness-110 active:scale-[0.99]"
+                disabled={submitting}
+                className="w-full py-4 px-6 rounded-lg uppercase tracking-wider font-sans font-bold text-base sm:text-lg flex items-center justify-center gap-3 cursor-pointer shadow-lg transition-all duration-300 hover:brightness-110 active:scale-[0.99] disabled:opacity-50"
                 style={{
                   background: 'linear-gradient(135deg, rgb(255, 223, 115) 0%, rgb(233, 195, 73) 50%, rgb(196, 155, 40) 100%)',
                   color: 'rgb(46, 21, 0)',
@@ -568,8 +710,8 @@ export default function ContactFormSection({ selectedRoute, setSelectedRoute, fo
                   boxShadow: '0 4px 20px rgba(233, 195, 73, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.6)',
                 }}
               >
-                <span>{formSubmitText}</span>
-                <ArrowRight className="w-5 h-5" />
+                <span>{submitting ? (uploadingFile ? 'ĐANG TẢI TỆP ĐÍNH KÈM…' : 'ĐANG GỬI HỒ SƠ…') : formSubmitText}</span>
+                {submitting ? <RefreshCw className="w-5 h-5 animate-spin" /> : <ArrowRight className="w-5 h-5" />}
               </button>
             </div>
           </form>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Save,
   Globe,
@@ -10,14 +11,14 @@ import {
   Image as ImageIcon,
   CheckCircle,
   AlertCircle,
-  Plus,
-  Trash2,
+  ExternalLink,
   RefreshCw,
 } from 'lucide-react';
+import siteServices from '../../services/siteServices';
 
 const SettingsManager = () => {
   const [activeTab, setActiveTab] = useState('brand');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState(null);
 
@@ -46,105 +47,61 @@ const SettingsManager = () => {
     linkedin: 'https://linkedin.com/company/vietnam-lacquer-art',
   });
 
-  const [menuItems, setMenuItems] = useState([
-    { id: 1, label: 'Trang chủ', link: '/', target: '_self' },
-    { id: 2, label: 'Về Chúng Tôi', link: '/about', target: '_self' },
-    { id: 3, label: 'Hành Trình 100 Năm', link: '/journey', target: '_self' },
-    { id: 4, label: 'Sự Kiện', link: '/events', target: '_self' },
-    { id: 5, label: 'Bộ Sưu Tập', link: '/collection', target: '_self' },
-    { id: 6, label: 'Kỷ Yếu Di Sản', link: '/ky-yeu', target: '_self' },
-    { id: 7, label: 'Ban Điều Hành', link: '/leadership', target: '_self' },
-    { id: 8, label: 'Tin Tức', link: '/news', target: '_self' },
-    { id: 9, label: 'Liên Hệ', link: '/contact', target: '_self' },
-  ]);
-
-  // Fetch initial settings from server if available
   useEffect(() => {
-    const fetchSettings = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch('/api/site/settings');
-        if (res.ok) {
-          const json = await res.json();
-          if (json.data && json.data.length > 0) {
-            // Populate state from saved settings key-value pairs
-            const settingsMap = {};
-            json.data.forEach((s) => {
-              settingsMap[s.key_name] = s.value;
-            });
+    let cancelled = false;
 
-            if (settingsMap.brand) {
-              setBrandSettings((prev) => ({ ...prev, ...JSON.parse(settingsMap.brand) }));
-            }
-            if (settingsMap.contact) {
-              setContactSettings((prev) => ({ ...prev, ...JSON.parse(settingsMap.contact) }));
-            }
-            if (settingsMap.social) {
-              setSocialSettings((prev) => ({ ...prev, ...JSON.parse(settingsMap.social) }));
-            }
-          }
+    const fetchSettings = async () => {
+      try {
+        const res = await siteServices.getSettings();
+        const { success, data, message } = res.data;
+        if (!success || !data || typeof data !== 'object' || Array.isArray(data)) {
+          throw new Error(message || 'Dữ liệu cài đặt không hợp lệ.');
         }
-      } catch {
-        // Fallback silently to default lacquer settings
+        if (cancelled) return;
+
+        if (data.brand) setBrandSettings((prev) => ({ ...prev, ...data.brand }));
+        if (data.contact) setContactSettings((prev) => ({ ...prev, ...data.contact }));
+        if (data.social) setSocialSettings((prev) => ({ ...prev, ...data.social }));
+      } catch (error) {
+        if (!cancelled) {
+          setStatusMsg({
+            type: 'error',
+            text: 'Không thể tải cài đặt: ' + (error.response?.data?.message || error.message),
+          });
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) setLoading(false);
       }
     };
 
     fetchSettings();
+    return () => { cancelled = true; };
   }, []);
 
   const handleSave = async () => {
     setSaving(true);
     setStatusMsg(null);
     try {
-      // Post to backend site setting endpoint
-      const payload = {
-        settings: [
-          { key_name: 'brand', value: JSON.stringify(brandSettings), group_name: 'general' },
-          { key_name: 'contact', value: JSON.stringify(contactSettings), group_name: 'contact' },
-          { key_name: 'social', value: JSON.stringify(socialSettings), group_name: 'social' },
-        ],
-      };
-
-      const res = await fetch('/api/site/settings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!res.ok) {
-        // If server is not responding, simulate successful persistence in local demo
-      }
+      const results = await Promise.all([
+        siteServices.updateSetting('brand', brandSettings),
+        siteServices.updateSetting('contact', contactSettings),
+        siteServices.updateSetting('social', socialSettings),
+      ]);
+      const failed = results.find((res) => !res.data.success);
+      if (failed) throw new Error(failed.data.message || 'Lưu cài đặt thất bại.');
 
       setStatusMsg({
         type: 'success',
         text: 'Đã lưu cấu hình Logo, Footer & Hệ Thống thành công!',
       });
-    } catch {
+    } catch (error) {
       setStatusMsg({
-        type: 'success',
-        text: 'Đã lưu cấu hình Logo & Hệ Thống vào bộ đệm trình duyệt!',
+        type: 'error',
+        text: 'Không thể lưu đầy đủ cài đặt: ' + (error.response?.data?.message || error.message),
       });
     } finally {
       setSaving(false);
-      setTimeout(() => setStatusMsg(null), 4000);
     }
-  };
-
-  const handleAddMenuItem = () => {
-    const newId = Date.now();
-    setMenuItems([...menuItems, { id: newId, label: 'Mục mới', link: '#', target: '_self' }]);
-  };
-
-  const handleRemoveMenuItem = (id) => {
-    setMenuItems(menuItems.filter((item) => item.id !== id));
-  };
-
-  const handleUpdateMenuItem = (id, field, value) => {
-    setMenuItems(
-      menuItems.map((item) => (item.id === id ? { ...item, [field]: value } : item))
-    );
   };
 
   return (
@@ -166,11 +123,11 @@ const SettingsManager = () => {
 
         <button
           onClick={handleSave}
-          disabled={saving}
+          disabled={loading || saving}
           className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-sm tracking-wider uppercase transition shadow-[0_4px_16px_rgba(212,155,26,0.35)] cursor-pointer self-start sm:self-auto disabled:opacity-50"
         >
           {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          <span>{saving ? 'Đang lưu...' : 'Lưu Thay Đổi'}</span>
+          <span>{loading ? 'Đang tải...' : saving ? 'Đang lưu...' : 'Lưu Thay Đổi'}</span>
         </button>
       </div>
 
@@ -451,13 +408,13 @@ const SettingsManager = () => {
           </div>
 
           <div className="pt-2">
-            <a
-              href="/admin/system/menus"
+            <Link
+              to="/admin/system/menus"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-sm tracking-wider uppercase transition shadow-lg"
             >
               <span>Mở Trình Quản Trị Menu Chuyên Biệt</span>
               <ExternalLink className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       )}

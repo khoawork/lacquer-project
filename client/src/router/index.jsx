@@ -21,13 +21,12 @@ import NotFound from '../pages/NotFound';
 
 // Admin Pages
 import AdminDashboard from '../pages/admin/Dashboard';
-import AdminProducts from '../pages/admin/Products';
-import AdminOrders from '../pages/admin/Orders';
 import PageManager from '../pages/admin/PageManager';
 import FormsManager from '../pages/admin/FormsManager';
 import SettingsManager from '../pages/admin/SettingsManager';
 import MenuManager from '../pages/admin/MenuManager';
 import DataCatalogManager from '../pages/admin/DataCatalogManager';
+import AdminNotFound from '../pages/admin/AdminNotFound';
 
 const router = createBrowserRouter([
   {
@@ -143,16 +142,8 @@ const router = createBrowserRouter([
         element: <DataCatalogManager />,
       },
       {
-        path: 'system/users',
-        element: <AdminDashboard />,
-      },
-      {
-        path: 'products',
-        element: <AdminProducts />,
-      },
-      {
-        path: 'orders',
-        element: <AdminOrders />,
+        path: '*',
+        element: <AdminNotFound />,
       },
     ],
   },

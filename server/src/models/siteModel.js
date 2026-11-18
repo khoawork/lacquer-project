@@ -65,17 +65,29 @@ const Menu = sequelize.define(
       allowNull: true,
       get() {
         const val = this.getDataValue('items_json');
+        if (!val) return [];
         try {
-          return val ? JSON.parse(val) : [];
+          const parsed = JSON.parse(val);
+          return Array.isArray(parsed) ? parsed : [];
         } catch {
           return [];
         }
       },
       set(val) {
-        this.setDataValue(
-          'items_json',
-          typeof val === 'object' ? JSON.stringify(val) : String(val)
-        );
+        if (val === undefined || val === null) {
+          this.setDataValue('items_json', null);
+        } else if (typeof val === 'string') {
+          try {
+            JSON.parse(val);
+            this.setDataValue('items_json', val);
+          } catch {
+            throw new Error('items_json không phải JSON hợp lệ');
+          }
+        } else if (typeof val === 'object') {
+          this.setDataValue('items_json', JSON.stringify(val));
+        } else {
+          throw new Error('items_json có kiểu dữ liệu không hợp lệ');
+        }
       },
     },
   },

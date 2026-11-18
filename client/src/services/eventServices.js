@@ -20,6 +20,23 @@ export const eventServices = {
   deleteEvent: async (id) => {
     return await Apis().delete(endpoints.eventDetail(id));
   },
+
+  // Categories
+  getCategories: async () => {
+    return await Apis().get(endpoints.eventCategories);
+  },
+
+  createCategory: async (data) => {
+    return await Apis().post(endpoints.eventCategories, data);
+  },
+
+  updateCategory: async (id, data) => {
+    return await Apis().put(endpoints.eventCategoryDetail(id), data);
+  },
+
+  deleteCategory: async (id) => {
+    return await Apis().delete(endpoints.eventCategoryDetail(id));
+  },
 };
 
 export default eventServices;

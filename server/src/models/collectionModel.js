@@ -1,6 +1,30 @@
 const { sequelize, DataTypes } = require('../config/db');
 
 /**
+ * Model CollectionCategory: Lưu danh mục bộ sưu tập (chỉ gồm id và name)
+ */
+const CollectionCategory = sequelize.define(
+  'CollectionCategory',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+    },
+  },
+  {
+    tableName: 'collection_categories',
+    timestamps: false,
+    underscored: true,
+  }
+);
+
+/**
  * Model Collection: Chỉ lưu thông tin của bộ sưu tập (không chứa slug)
  */
 const Collection = sequelize.define(
@@ -14,6 +38,10 @@ const Collection = sequelize.define(
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     code: {
       type: DataTypes.STRING(50),
@@ -119,6 +147,7 @@ const Artwork = sequelize.define(
 );
 
 module.exports = {
+  CollectionCategory,
   Collection,
   Artwork,
 };

@@ -18,6 +18,7 @@ import { getImageUrl } from '../../../configs/Apis';
 const EventsPageEditor = ({
   parsedProps,
   handlePropChange,
+  handlePropsPatch,
   allEvents = [],
   eventSearch = '',
   setEventSearch,
@@ -236,8 +237,7 @@ const EventsPageEditor = ({
               <button
                 type="button"
                 onClick={() => {
-                  handlePropChange('featured_event_ids', []);
-                  handlePropChange('highlighted_event_id', null);
+                  handlePropsPatch({ featured_event_ids: [], highlighted_event_id: null });
                 }}
                 className="px-3 py-1.5 rounded-lg bg-[#140204] border border-[#D4AF37]/25 text-xs font-semibold text-[#EADBCE]/80 hover:text-white transition cursor-pointer"
               >
@@ -343,9 +343,13 @@ const EventsPageEditor = ({
                         if (isHighlighted) {
                           handlePropChange('highlighted_event_id', null);
                         } else {
-                          handlePropChange('highlighted_event_id', numId);
-                          if (!isSelected) {
-                            handlePropChange('featured_event_ids', [...selectedEventIds, numId]);
+                          if (handlePropsPatch) {
+                            handlePropsPatch({
+                              highlighted_event_id: numId,
+                              ...(isSelected ? {} : { featured_event_ids: [...selectedEventIds, numId] }),
+                            });
+                          } else {
+                            handlePropChange('highlighted_event_id', numId);
                           }
                         }
                       }}

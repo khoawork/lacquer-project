@@ -1,6 +1,30 @@
 const { sequelize, DataTypes } = require('../config/db');
 
 /**
+ * Model NewsCategory: Lưu danh mục tin tức (chỉ gồm id và name)
+ */
+const NewsCategory = sequelize.define(
+  'NewsCategory',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+    },
+  },
+  {
+    tableName: 'news_categories',
+    timestamps: false,
+    underscored: true,
+  }
+);
+
+/**
  * Model NewsArticle: Chỉ lưu các thông tin của bài viết/tin tức (không chứa slug)
  */
 const NewsArticle = sequelize.define(
@@ -15,10 +39,9 @@ const NewsArticle = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    category: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      defaultValue: 'Dòng chảy 100 năm',
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     author: {
       type: DataTypes.STRING(150),
@@ -74,5 +97,6 @@ const NewsArticle = sequelize.define(
 );
 
 module.exports = {
+  NewsCategory,
   NewsArticle,
 };
