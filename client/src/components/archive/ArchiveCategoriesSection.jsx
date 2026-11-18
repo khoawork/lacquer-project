@@ -9,6 +9,34 @@ const ICONS_MAP = {
   economy: ShieldCheck,
 };
 
+const DEFAULT_CATEGORIES = [
+  {
+    id: 'history',
+    title: 'Lịch sử và mỹ học',
+    desc: 'Các bài nghiên cứu về tiến trình hình thành, ngôn ngữ tạo hình, hệ màu, không gian, ánh sáng và vị trí của sơn mài trong mỹ thuật Việt Nam hiện đại.',
+  },
+  {
+    id: 'masters',
+    title: 'Con người và truyền thừa',
+    desc: 'Chân dung họa sĩ, nghệ nhân, nhà giáo, nhà nghiên cứu, nhà sưu tập và những người góp phần duy trì mạch nghề qua các thế hệ di sản.',
+  },
+  {
+    id: 'materials',
+    title: 'Làng nghề và vật liệu',
+    desc: 'Tư liệu về vùng nguyên liệu, vóc, sơn ta, son trát, vàng quỳ, vỏ trứng, kỹ thuật ủ – mài – đánh bóng, cùng thách thức của chuỗi cung ứng bản địa.',
+  },
+  {
+    id: 'creativity',
+    title: 'Sáng tạo và ứng dụng',
+    desc: 'Nghiên cứu, thử nghiệm và trường hợp thực tế về sơn mài trong thiết kế nội thất, kiến trúc cảnh quan, thời trang xa xỉ, điện ảnh, truyền thông số, giáo dục mỹ cảm và sản phẩm văn hóa đương thời.',
+  },
+  {
+    id: 'economy',
+    title: 'Kinh tế di sản và nền tảng số',
+    desc: 'Các mô hình định danh, giám định, bản quyền sở hữu trí tuệ, lưu trữ phi tập trung, thương mại hóa có trách nhiệm và xây dựng thị trường sơn mài minh bạch.',
+  },
+];
+
 const ArchiveCategoriesSection = ({ pageProps = null }) => {
   const badge = pageProps?.categories_badge || 'Hệ thống lưu trữ phân tầng';
   const title = pageProps?.categories_title || '5 Phân Hệ Tri Thức Cốt Lõi';
@@ -17,14 +45,13 @@ const ArchiveCategoriesSection = ({ pageProps = null }) => {
     'Khung cấu trúc học thuật bao quát toàn bộ tiến trình lịch sử, kỹ nghệ truyền thống và phương hướng phát triển của nghệ thuật sơn mài Việt Nam.';
 
   const rawCats = pageProps?.categories;
-  const categories =
-    Array.isArray(rawCats) && rawCats.length > 0
-      ? rawCats.map((cat, idx) => ({
-          ...cat,
-          icon: ICONS_MAP[cat.id] || Sparkles,
-          colSpan: cat.colSpan || (idx === 3 ? 'md:col-span-2 lg:col-span-2' : 'md:col-span-1 lg:col-span-1'),
-        }))
-      : [];
+  const sourceCats =
+    Array.isArray(rawCats) && rawCats.length > 0 ? rawCats : DEFAULT_CATEGORIES;
+  const categories = sourceCats.map((cat, idx) => ({
+    ...cat,
+    icon: ICONS_MAP[cat.id] || Sparkles,
+    colSpan: cat.colSpan || (idx === 3 ? 'md:col-span-2 lg:col-span-2' : 'md:col-span-1 lg:col-span-1'),
+  }));
 
   return (
     <section

@@ -1,6 +1,45 @@
 import React from 'react';
 import { BookMarked, Download, Eye, FileText, Sparkles } from 'lucide-react';
 
+const DEFAULT_VOLUMES = [
+  {
+    vol: 'TẬP I',
+    era: '1930 — 1954',
+    title: 'Vật liệu tự nhiên & Kỹ pháp Then cổ truyền',
+    focus: 'Từ kỹ nghệ phủ bóng dân gian đến ngôn ngữ hội họa bác học độc bản tại trường Mỹ thuật Đông Dương.',
+    pages: '380 trang',
+    papers: '24 Chuyên luận khoa học',
+    status: 'Đã hoàn tất bản thảo',
+  },
+  {
+    vol: 'TẬP II',
+    era: '1954 — 1986',
+    title: 'Các danh họa tiêu biểu và tác phẩm kinh điển',
+    focus: 'Khảo sát điền dã vùng cây sơn ta Phú Thọ, kỹ thuật ủ then Hạ Thái, Tương Bình Hiệp và chuỗi cung ứng vật liệu.',
+    pages: '420 trang',
+    papers: '32 Hồ sơ điền dã',
+    status: 'Đang biên tập phản biện',
+  },
+  {
+    vol: 'TẬP III',
+    era: '1986 — 2010',
+    title: 'Kinh tế di sản & Thị trường nghệ thuật đương đại',
+    focus: 'Hệ thống tác giả, trường phái sáng tác tiêu biểu: Nguyễn Gia Trí, Phạm Hậu, Nguyễn Tư Nghiêm, Trần Văn Cẩn...',
+    pages: '510 trang',
+    papers: '45 Hồ sơ tác phẩm bảo vật',
+    status: 'Đang thẩm định tư liệu',
+  },
+  {
+    vol: 'TẬP IV',
+    era: '2010 — 2030',
+    title: 'Hồ sơ đề cử Di sản Văn hóa Thế giới',
+    focus: 'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
+    pages: '460 trang',
+    papers: '38 Đề xuất mô hình kinh tế số',
+    status: 'Đang tiếp nhận bản thảo',
+  },
+];
+
 const ArchiveVolumesSection = ({ pageProps = null }) => {
   const badge = pageProps?.volumes_badge || 'Bộ Tác Phẩm Bách Niên Kỷ Yếu';
   const title = pageProps?.volumes_title || 'Bốn Tập Chuyên Khảo Thế Kỷ (1930–2030)';
@@ -52,6 +91,8 @@ const ArchiveVolumesSection = ({ pageProps = null }) => {
         status: 'Đang tiếp nhận bản thảo',
       },
     ].filter(Boolean);
+  } else {
+    volumes = DEFAULT_VOLUMES;
   }
 
   return (

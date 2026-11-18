@@ -1,6 +1,49 @@
 import React from 'react';
 import { resolveTypeIcon, resolveStatusIcon } from './archiveIconRegistry';
 
+const DEFAULT_SCHEMA_ROWS = [
+  {
+    id: 1,
+    type: 'Bài nghiên cứu',
+    icon: 'article',
+    fields: 'Tiêu đề; tóm tắt; tác giả; đơn vị; từ khóa; tài liệu tham khảo; tệp tải về (PDF chuẩn OCR)',
+    status: 'Chuẩn học thuật • Đã xác thực',
+    status_icon: 'check_circle',
+  },
+  {
+    id: 2,
+    type: 'Nhân vật',
+    icon: 'person_search',
+    fields: 'Họ tên; vai trò; giai đoạn hoạt động; địa phương; câu chuyện nghề; tư liệu kiểm chứng; hình ảnh lưu trữ',
+    status: 'Hồ sơ tiểu sử bảo chứng',
+    status_icon: 'shield',
+  },
+  {
+    id: 3,
+    type: 'Làng nghề',
+    icon: 'warehouse',
+    fields: 'Tên làng nghề; địa bàn tọa lạc; lịch sử sơ khởi; kỹ thuật đặc thù; quy mô nhân lực; thách thức nguyên liệu',
+    status: 'Dữ liệu điền dã xác minh',
+    status_icon: 'fact_check',
+  },
+  {
+    id: 4,
+    type: 'Tác phẩm',
+    icon: 'palette',
+    fields: 'Mã định danh độc bản; tác giả; năm sáng tác; chất liệu (sơn then, cánh gián, son trầm, vàng quỳ); kích thước; lịch sử lưu lạc',
+    status: 'Định danh số & Chip NFC',
+    status_icon: 'nfc',
+  },
+  {
+    id: 5,
+    type: 'Sự kiện',
+    icon: 'event_note',
+    fields: 'Thời gian; địa điểm; đơn vị đồng tổ chức; chương trình chi tiết; diễn giả; kết quả học thuật; tài liệu và video lưu trữ',
+    status: 'Lưu trữ đa phương tiện số',
+    status_icon: 'video_library',
+  },
+];
+
 const ArchiveSchemaSection = ({ pageProps = null }) => {
   const badge = pageProps?.schema_badge || 'Tiêu chuẩn dữ liệu học thuật';
   const title = pageProps?.schema_title || 'Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia';
@@ -10,7 +53,7 @@ const ArchiveSchemaSection = ({ pageProps = null }) => {
 
   const rawRows = pageProps?.schema_rows;
   const schemaRows =
-    Array.isArray(rawRows) && rawRows.length > 0 ? rawRows : [];
+    Array.isArray(rawRows) && rawRows.length > 0 ? rawRows : DEFAULT_SCHEMA_ROWS;
 
   return (
     <section

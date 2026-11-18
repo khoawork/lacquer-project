@@ -520,13 +520,189 @@ async function runSeed() {
         name: 'Kỷ yếu',
         slug: '/archive',
         props: {
-          headline: 'Kỷ Yếu Di Sản Bách Niên Sơn Mài Hội Họa',
-          subHeadline: 'Kho tri thức mở của Hành trình 100 năm',
-          editions: [
-            { volume: 'Tập I', title: 'Vật liệu tự nhiên & Kỹ pháp Then cổ truyền' },
-            { volume: 'Tập II', title: 'Các danh họa tiêu biểu và tác phẩm kinh điển' },
-            { volume: 'Tập III', title: 'Kinh tế di sản & Thị trường nghệ thuật đương đại' },
+          badge: 'KHO LƯU TRỮ VĂN HÓA & KỶ NGUYÊN BÁCH NIÊN (1930–2030)',
+          headline: 'KHO TRI THỨC CỦA MỘT DI SẢN ĐANG SỐNG',
+          description:
+            'Kỷ yếu không chỉ ghi lại những gì đã xảy ra. Đây là không gian tập hợp, kiểm chứng và kết nối tri thức để mỗi thế hệ có thể tiếp tục nghiên cứu, thực hành và viết thêm chương mới cho sơn mài hội họa Việt Nam.',
+          stat1_num: '05',
+          stat1_label: 'Phân Hệ Tri Thức Cốt Lõi',
+          stat1_sub: 'Tiêu chuẩn viện bảo tàng',
+          stat2_num: '100+',
+          stat2_label: 'Chuyên Khảo & Nghiên Cứu',
+          stat2_sub: 'Học giả & Nghệ nhân kỳ cựu',
+          stat3_num: '07',
+          stat3_label: 'Kỳ Hành Trình Lưu Trữ Số',
+          stat3_sub: 'Hồ sơ đa phương tiện 4K',
+          stat4_num: 'VIETKINGS',
+          stat4_label: 'Chuẩn Hóa Kiểm Chứng',
+          stat4_sub: 'Xác thực kỷ lục di sản',
+
+          categories_badge: 'Hệ thống lưu trữ phân tầng',
+          categories_title: '5 Phân Hệ Tri Thức Cốt Lõi',
+          categories_desc:
+            'Khung cấu trúc học thuật bao quát toàn bộ tiến trình lịch sử, kỹ nghệ truyền thống và phương hướng phát triển của nghệ thuật sơn mài Việt Nam.',
+          categories: [
+            {
+              id: 'history',
+              icon: 'history_edu',
+              title: 'Lịch sử và mỹ học',
+              desc: 'Các bài nghiên cứu về tiến trình hình thành, ngôn ngữ tạo hình, hệ màu, không gian, ánh sáng và vị trí của sơn mài trong mỹ thuật Việt Nam hiện đại.',
+              btnLabel: 'Tra cứu chuyên đề',
+            },
+            {
+              id: 'masters',
+              icon: 'diversity_3',
+              title: 'Con người và truyền thừa',
+              desc: 'Chân dung họa sĩ, nghệ nhân, nhà giáo, nhà nghiên cứu, nhà sưu tập và những người góp phần duy trì mạch nghề qua các thế hệ di sản.',
+              btnLabel: 'Danh họa & Nghệ nhân',
+            },
+            {
+              id: 'materials',
+              icon: 'format_paint',
+              title: 'Làng nghề và vật liệu',
+              desc: 'Tư liệu về vùng nguyên liệu, vóc, sơn ta, son trát, vàng quỳ, vỏ trứng, kỹ thuật ủ – mài – đánh bóng, cùng thách thức của chuỗi cung ứng bản địa.',
+              btnLabel: 'Hồ sơ làng nghề',
+            },
+            {
+              id: 'creativity',
+              icon: 'lightbulb',
+              title: 'Sáng tạo và ứng dụng',
+              desc: 'Nghiên cứu, thử nghiệm và trường hợp thực tế về sơn mài trong thiết kế nội thất, kiến trúc cảnh quan, thời trang xa xỉ, điện ảnh, truyền thông số, giáo dục mỹ cảm và sản phẩm văn hóa đương thời.',
+              btnLabel: 'Khảo sát ứng dụng đương đại',
+            },
+            {
+              id: 'economy',
+              icon: 'token',
+              title: 'Kinh tế di sản và nền tảng số',
+              desc: 'Các mô hình định danh, giám định, bản quyền sở hữu trí tuệ, lưu trữ phi tập trung, thương mại hóa có trách nhiệm và xây dựng thị trường sơn mài minh bạch.',
+              btnLabel: 'Khung pháp lý & Số hóa',
+            },
           ],
+
+          volumes_badge: 'Bộ Tác Phẩm Bách Niên Kỷ Yếu',
+          volumes_title: 'Bốn Tập Chuyên Khảo Thế Kỷ (1930–2030)',
+          volumes_desc:
+            'Công trình xuất bản quy mô quốc gia quy tụ các nhà nghiên cứu mỹ thuật, nghệ nhân làng nghề và học giả uy tín trong và ngoài nước.',
+          volumes_index_btn: 'Xem mục lục tổng quát',
+          vol1_title: 'Vật liệu tự nhiên & Kỹ pháp Then cổ truyền',
+          vol1_desc:
+            'Từ kỹ nghệ phủ bóng dân gian đến ngôn ngữ hội họa bác học độc bản tại trường Mỹ thuật Đông Dương.',
+          vol2_title: 'Các danh họa tiêu biểu và tác phẩm kinh điển',
+          vol2_desc:
+            'Khảo sát điền dã vùng cây sơn ta Phú Thọ, kỹ thuật ủ then Hạ Thái, Tương Bình Hiệp và chuỗi cung ứng vật liệu.',
+          vol3_title: 'Kinh tế di sản & Thị trường nghệ thuật đương đại',
+          vol3_desc:
+            'Hệ thống tác giả, trường phái sáng tác tiêu biểu: Nguyễn Gia Trí, Phạm Hậu, Nguyễn Tư Nghiêm, Trần Văn Cẩn...',
+          vol4_title: 'Hồ sơ đề cử Di sản Văn hóa Thế giới',
+          vol4_desc:
+            'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
+          volumes: [
+            {
+              vol: 'TẬP I',
+              era: '1930 — 1954',
+              title: 'Vật liệu tự nhiên & Kỹ pháp Then cổ truyền',
+              focus:
+                'Từ kỹ nghệ phủ bóng dân gian đến ngôn ngữ hội họa bác học độc bản tại trường Mỹ thuật Đông Dương.',
+              pages: '380 trang',
+              papers: '24 Chuyên luận khoa học',
+              status: 'Đã hoàn tất bản thảo',
+            },
+            {
+              vol: 'TẬP II',
+              era: '1954 — 1986',
+              title: 'Các danh họa tiêu biểu và tác phẩm kinh điển',
+              focus:
+                'Khảo sát điền dã vùng cây sơn ta Phú Thọ, kỹ thuật ủ then Hạ Thái, Tương Bình Hiệp và chuỗi cung ứng vật liệu.',
+              pages: '420 trang',
+              papers: '32 Hồ sơ điền dã',
+              status: 'Đang biên tập phản biện',
+            },
+            {
+              vol: 'TẬP III',
+              era: '1986 — 2010',
+              title: 'Kinh tế di sản & Thị trường nghệ thuật đương đại',
+              focus:
+                'Hệ thống tác giả, trường phái sáng tác tiêu biểu: Nguyễn Gia Trí, Phạm Hậu, Nguyễn Tư Nghiêm, Trần Văn Cẩn...',
+              pages: '510 trang',
+              papers: '45 Hồ sơ tác phẩm bảo vật',
+              status: 'Đang thẩm định tư liệu',
+            },
+            {
+              vol: 'TẬP IV',
+              era: '2010 — 2030',
+              title: 'Hồ sơ đề cử Di sản Văn hóa Thế giới',
+              focus:
+                'Thực hành thử nghiệm, định danh số, bảo tồn tích hợp và chiến lược đưa sơn mài Việt Nam bước ra thế giới.',
+              pages: '460 trang',
+              papers: '38 Đề xuất mô hình kinh tế số',
+              status: 'Đang tiếp nhận bản thảo',
+            },
+          ],
+
+          schema_badge: 'Tiêu chuẩn dữ liệu học thuật',
+          schema_title: 'Khung Chuẩn Dữ Liệu Lưu Trữ Quốc Gia',
+          schema_desc:
+            'Hệ thống chuẩn hóa thông tin đầu vào phục vụ kiểm định, tra cứu liên viện bảo tàng và bảo tồn di sản hội họa sơn mài vĩnh cửu.',
+          schema_rows: [
+            {
+              id: 1,
+              type: 'Bài nghiên cứu',
+              icon: 'FileText',
+              fields:
+                'Tiêu đề; tóm tắt; tác giả; đơn vị; từ khóa; tài liệu tham khảo; tệp tải về (PDF chuẩn OCR)',
+              status: 'Chuẩn học thuật • Đã xác thực',
+              status_icon: 'CheckCircle2',
+            },
+            {
+              id: 2,
+              type: 'Nhân vật',
+              icon: 'UserCheck',
+              fields:
+                'Họ tên; vai trò; giai đoạn hoạt động; địa phương; câu chuyện nghề; tư liệu kiểm chứng; hình ảnh lưu trữ',
+              status: 'Hồ sơ tiểu sử bảo chứng',
+              status_icon: 'Shield',
+            },
+            {
+              id: 3,
+              type: 'Làng nghề',
+              icon: 'Warehouse',
+              fields:
+                'Tên làng nghề; địa bàn tọa lạc; lịch sử sơ khởi; kỹ thuật đặc thù; quy mô nhân lực; thách thức nguyên liệu',
+              status: 'Dữ liệu điền dã xác minh',
+              status_icon: 'SearchCheck',
+            },
+            {
+              id: 4,
+              type: 'Tác phẩm',
+              icon: 'Palette',
+              fields:
+                'Mã định danh độc bản; tác giả; năm sáng tác; chất liệu (sơn then, cánh gián, son trầm, vàng quỳ); kích thước; lịch sử lưu lạc',
+              status: 'Định danh số & Chip NFC',
+              status_icon: 'Cpu',
+            },
+            {
+              id: 5,
+              type: 'Sự kiện',
+              icon: 'Calendar',
+              fields:
+                'Thời gian; địa điểm; đơn vị đồng tổ chức; chương trình chi tiết; diễn giả; kết quả học thuật; tài liệu và video lưu trữ',
+              status: 'Lưu trữ đa phương tiện số',
+              status_icon: 'Video',
+            },
+          ],
+
+          call_tag: 'KÊU GỌI ĐÓNG GÓP TƯ LIỆU VĂN HÓA',
+          call_headline: 'Gửi tư liệu cho Kỷ yếu 100 năm',
+          call_desc:
+            'Hành trình tiếp nhận bài nghiên cứu, hồi ức nghề, hồ sơ tác phẩm, ảnh tư liệu, video, tài liệu làng nghề và đề xuất chuyên đề. Mọi tư liệu được rà soát nguồn gốc, quyền sử dụng và giá trị học thuật trước khi chính thức lưu trữ và công bố.',
+          call_btn1_text: 'Gửi tư liệu',
+          call_btn1_link: '/contact',
+          call_btn2_text: 'Đề xuất bài viết',
+          call_btn2_link: '/contact',
+          call_btn3_text: 'Tải thể lệ (PDF)',
+          call_btn3_link: '/contact',
+          call_guarantee:
+            'Bản quyền tác giả và quyền sở hữu trí tuệ được bảo hộ theo pháp luật hiện hành',
         },
       },
       {
