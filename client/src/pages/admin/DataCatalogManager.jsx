@@ -26,19 +26,8 @@ import {
 import newsServices from '../../services/newsServices';
 import collectionServices from '../../services/collectionServices';
 import eventServices from '../../services/eventServices';
-import siteServices, { parseCategorySetting } from '../../services/siteServices';
 import ImageUploader from '../../components/common/ImageUploader';
 import { getImageUrl } from '../../configs/Apis';
-
-const DEFAULT_EVENT_CATEGORIES_LIST = [
-  'Tọa đàm chuyên sâu',
-  'Tọa đàm – Hội thảo',
-  'Đại triển lãm',
-  'Triển lãm',
-  'Workshop – Open Studio',
-  'Kỷ lục – Vinh danh',
-  'Giáo dục – Cộng đồng',
-];
 
 const DataCatalogManager = () => {
   const [activeTab, setActiveTab] = useState('news'); // 'news' | 'collections' | 'events'
@@ -46,8 +35,10 @@ const DataCatalogManager = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusMsg, setStatusMsg] = useState(null);
 
-  // Event Categories State
-  const [eventCategories, setEventCategories] = useState(DEFAULT_EVENT_CATEGORIES_LIST);
+  // Categories State (dạng [{ id, name }] cho cả 3 phân hệ)
+  const [newsCategories, setNewsCategories] = useState([]);
+  const [collectionCategories, setCollectionCategories] = useState([]);
+  const [eventCategories, setEventCategories] = useState([]);
   const [showCategoryModal, setShowCategoryModal] = useState(false);
   const [newCategoryInput, setNewCategoryInput] = useState('');
   const [quickCategoryInput, setQuickCategoryInput] = useState('');
@@ -68,7 +59,7 @@ const DataCatalogManager = () => {
   // Form States for News
   const [newsForm, setNewsForm] = useState({
     title: '',
-    category: 'Nghiên cứu & Học thuật',
+    category_id: '',
     author: 'Ban Giám Tuyển',
     summary: '',
     content: '',
@@ -80,6 +71,7 @@ const DataCatalogManager = () => {
   // Form States for Collection
   const [collectionForm, setCollectionForm] = useState({
     title: '',
+    category_id: '',
     subtitle: '',
     curator_statement: '',
     year: '1930 - 2030',
@@ -91,7 +83,7 @@ const DataCatalogManager = () => {
   // Form States for Event
   const [eventForm, setEventForm] = useState({
     title: '',
-    category: 'Tọa đàm chuyên sâu',
+    category_id: '',
     date_display: 'Thứ Bảy, 14 Tháng 11, 2026',
     location: 'Hội trường Di Sản SIHUB, 273 Điện Biên Phủ, Quận 3, TP.HCM',
     status: 'Sắp diễn ra',
@@ -101,40 +93,31 @@ const DataCatalogManager = () => {
     is_featured: false,
   });
 
-  // Load All Data
+  // Load All Data & Categories
   const loadData = async () => {
     setLoading(true);
     try {
       if (activeTab === 'news') {
-        const res = await newsServices.getNews();
-        if (res.data && res.data.success) {
-          setNewsList(res.data.data || []);
-        }
+        const [newsRes, catRes] = await Promise.all([
+          newsServices.getNews(),
+          newsServices.getCategories().catch(() => null),
+        ]);
+        if (newsRes?.data?.success) setNewsList(newsRes.data.data || []);
+        if (catRes?.data?.success) setNewsCategories(catRes.data.data || []);
       } else if (activeTab === 'collections') {
-        const res = await collectionServices.getCollections();
-        if (res.data && res.data.success) {
-          setCollectionList(res.data.data || []);
-        }
+        const [colRes, catRes] = await Promise.all([
+          collectionServices.getCollections(),
+          collectionServices.getCategories().catch(() => null),
+        ]);
+        if (colRes?.data?.success) setCollectionList(colRes.data.data || []);
+        if (catRes?.data?.success) setCollectionCategories(catRes.data.data || []);
       } else if (activeTab === 'events') {
-        const res = await eventServices.getEvents();
-        if (res.data && res.data.success) {
-          setEventList(res.data.data || []);
-        }
-      }
-
-      // Tải danh sách thể loại sự kiện từ Cài Đặt (site_settings)
-      try {
-        const settingsRes = await siteServices.getSettings();
-        if (settingsRes.data && settingsRes.data.success) {
-          const parsed = parseCategorySetting(settingsRes.data.data);
-          if (parsed.length > 0) {
-            // Lọc bỏ 'Tất cả' khỏi danh sách quản lý thể loại trong admin
-            const adminCategories = parsed.filter((c) => c !== 'Tất cả');
-            setEventCategories(adminCategories.length > 0 ? adminCategories : DEFAULT_EVENT_CATEGORIES_LIST);
-          }
-        }
-      } catch (err) {
-        console.warn('Lỗi đọc danh mục thể loại sự kiện:', err);
+        const [evtRes, catRes] = await Promise.all([
+          eventServices.getEvents(),
+          eventServices.getCategories().catch(() => null),
+        ]);
+        if (evtRes?.data?.success) setEventList(evtRes.data.data || []);
+        if (catRes?.data?.success) setEventCategories(catRes.data.data || []);
       }
     } catch (err) {
       console.warn('Lỗi tải danh mục dữ liệu:', err);
@@ -143,70 +126,100 @@ const DataCatalogManager = () => {
     }
   };
 
-  // Thêm thể loại sự kiện mới
-  const handleAddCategory = async (catName) => {
+  const getActiveCategories = (tab = activeTab) => {
+    if (tab === 'news') return newsCategories;
+    if (tab === 'collections') return collectionCategories;
+    return eventCategories;
+  };
+
+  const getTabLabel = (tab = activeTab) => {
+    if (tab === 'news') return 'Tin Tức';
+    if (tab === 'collections') return 'Bộ Sưu Tập';
+    return 'Sự Kiện';
+  };
+
+  const getCategoryService = (tab = activeTab) => {
+    if (tab === 'news') return newsServices;
+    if (tab === 'collections') return collectionServices;
+    return eventServices;
+  };
+
+  // Thêm thể loại mới vào schema riêng (id, name)
+  const handleAddCategory = async (catName, targetTab = activeTab) => {
     const trimmed = (catName || '').trim();
+    const label = getTabLabel(targetTab);
     if (!trimmed) {
-      showNotification('error', 'Vui lòng nhập tên thể loại sự kiện.');
-      return;
+      showNotification('error', `Vui lòng nhập tên thể loại ${label.toLowerCase()}.`);
+      return null;
     }
-    if (eventCategories.includes(trimmed)) {
+    const currentCats = getActiveCategories(targetTab);
+    if (currentCats.some((c) => c.name?.toLowerCase() === trimmed.toLowerCase())) {
       showNotification('error', `Thể loại "${trimmed}" đã tồn tại.`);
-      return;
+      return null;
     }
-    const prev = eventCategories;
-    const updated = [...eventCategories, trimmed];
-    setEventCategories(updated);
-    setNewCategoryInput('');
-    setQuickCategoryInput('');
+
     try {
-      const res = await siteServices.updateSetting(
-        'event_categories',
-        ['Tất cả', ...updated.filter((c) => c !== 'Tất cả')],
-        'Danh sách thể loại sự kiện'
-      );
-      if (res.data && res.data.success) {
-        showNotification('success', `Đã thêm thể loại sự kiện "${trimmed}" thành công!`);
+      const svc = getCategoryService(targetTab);
+      const res = await svc.createCategory({ name: trimmed });
+      if (res.data && res.data.success && res.data.data) {
+        const created = res.data.data;
+        if (targetTab === 'news') setNewsCategories((prev) => [...prev, created]);
+        else if (targetTab === 'collections') setCollectionCategories((prev) => [...prev, created]);
+        else setEventCategories((prev) => [...prev, created]);
+
+        setNewCategoryInput('');
+        setQuickCategoryInput('');
+        showNotification('success', `Đã thêm thể loại "${created.name}" thành công!`);
+        return created;
       } else {
-        setEventCategories(prev);
-        showNotification('error', 'Lỗi lưu thể loại sự kiện: ' + (res.data?.message || 'Máy chủ từ chối lưu.'));
+        showNotification('error', 'Lỗi lưu thể loại: ' + (res.data?.message || 'Máy chủ từ chối lưu.'));
+        return null;
       }
     } catch (err) {
-      setEventCategories(prev);
-      showNotification('error', 'Lỗi lưu thể loại sự kiện: ' + (err.response?.data?.message || err.message));
+      showNotification('error', 'Lỗi lưu thể loại: ' + (err.response?.data?.message || err.message));
+      return null;
     }
   };
 
-  // Xóa thể loại sự kiện
-  const handleDeleteCategory = async (catToDelete) => {
-    if (!window.confirm(`Bạn có chắc muốn xóa thể loại "${catToDelete}"?`)) return;
-    const prev = eventCategories;
-    const updated = eventCategories.filter((c) => c !== catToDelete);
-    setEventCategories(updated);
+  // Xóa thể loại theo id
+  const handleDeleteCategory = async (catObj, targetTab = activeTab) => {
+    if (!catObj || !catObj.id) return;
+    if (!window.confirm(`Bạn có chắc muốn xóa thể loại "${catObj.name}"?`)) return;
+
     try {
-      const res = await siteServices.updateSetting(
-        'event_categories',
-        ['Tất cả', ...updated.filter((c) => c !== 'Tất cả')],
-        'Danh sách thể loại sự kiện'
-      );
+      const svc = getCategoryService(targetTab);
+      const res = await svc.deleteCategory(catObj.id);
       if (res.data && res.data.success) {
-        showNotification('success', `Đã xóa thể loại "${catToDelete}" thành công!`);
+        if (targetTab === 'news') {
+          setNewsCategories((prev) => prev.filter((c) => Number(c.id) !== Number(catObj.id)));
+        } else if (targetTab === 'collections') {
+          setCollectionCategories((prev) => prev.filter((c) => Number(c.id) !== Number(catObj.id)));
+        } else {
+          setEventCategories((prev) => prev.filter((c) => Number(c.id) !== Number(catObj.id)));
+        }
+        showNotification('success', `Đã xóa thể loại "${catObj.name}" thành công!`);
+        loadData();
       } else {
-        setEventCategories(prev);
         showNotification('error', 'Lỗi xóa thể loại: ' + (res.data?.message || 'Máy chủ từ chối lưu.'));
       }
     } catch (err) {
-      setEventCategories(prev);
       showNotification('error', 'Lỗi xóa thể loại: ' + (err.response?.data?.message || err.message));
     }
   };
 
-  // Thêm nhanh thể loại ngay trong modal tạo/sửa sự kiện
-  const handleQuickAddCategory = async () => {
+  // Thêm nhanh thể loại ngay trong modal tạo/sửa của cả 3 phân hệ
+  const handleQuickAddCategory = async (targetTab = activeTab) => {
     if (!quickCategoryInput.trim()) return;
-    const newCat = quickCategoryInput.trim();
-    await handleAddCategory(newCat);
-    setEventForm((prev) => ({ ...prev, category: newCat }));
+    const created = await handleAddCategory(quickCategoryInput.trim(), targetTab);
+    if (created && created.id) {
+      if (targetTab === 'news') {
+        setNewsForm((prev) => ({ ...prev, category_id: created.id }));
+      } else if (targetTab === 'collections') {
+        setCollectionForm((prev) => ({ ...prev, category_id: created.id }));
+      } else {
+        setEventForm((prev) => ({ ...prev, category_id: created.id }));
+      }
+    }
   };
 
   useEffect(() => {
@@ -235,7 +248,7 @@ const DataCatalogManager = () => {
   const openCreateNews = () => {
     setNewsForm({
       title: '',
-      category: 'Nghiên cứu & Học thuật',
+      category_id: newsCategories[0]?.id || '',
       author: 'Ban Giám Tuyển',
       summary: '',
       content: '',
@@ -243,6 +256,7 @@ const DataCatalogManager = () => {
       read_time: '5 phút đọc',
       is_featured: false,
     });
+    setQuickCategoryInput('');
     setCurrentEditItem(null);
     setModalType('create_news');
   };
@@ -250,7 +264,7 @@ const DataCatalogManager = () => {
   const openEditNews = (item) => {
     setNewsForm({
       title: item.title || '',
-      category: item.category || 'Nghiên cứu & Học thuật',
+      category_id: item.category_id || newsCategories[0]?.id || '',
       author: item.author || 'Ban Giám Tuyển',
       summary: item.summary || '',
       content: item.content || '',
@@ -258,6 +272,7 @@ const DataCatalogManager = () => {
       read_time: item.read_time || '5 phút đọc',
       is_featured: Boolean(item.is_featured),
     });
+    setQuickCategoryInput('');
     setCurrentEditItem(item);
     setModalType('edit_news');
   };
@@ -268,6 +283,7 @@ const DataCatalogManager = () => {
     try {
       const payload = {
         ...newsForm,
+        category_id: newsForm.category_id ? Number(newsForm.category_id) : null,
         thumbnail_url: newsForm.image,
         cover_image: newsForm.image,
       };
@@ -305,6 +321,7 @@ const DataCatalogManager = () => {
   const openCreateCollection = () => {
     setCollectionForm({
       title: '',
+      category_id: collectionCategories[0]?.id || '',
       subtitle: '',
       curator_statement: '',
       year: '1930 - 2030',
@@ -312,6 +329,7 @@ const DataCatalogManager = () => {
       cover_image: '',
       is_highlighted: false,
     });
+    setQuickCategoryInput('');
     setCurrentEditItem(null);
     setModalType('create_collection');
   };
@@ -319,6 +337,7 @@ const DataCatalogManager = () => {
   const openEditCollection = (item) => {
     setCollectionForm({
       title: item.title || item.name || '',
+      category_id: item.category_id || collectionCategories[0]?.id || '',
       subtitle: item.subtitle || '',
       curator_statement: item.curator_statement || item.description || '',
       year: item.year || '1930 - 2030',
@@ -326,6 +345,7 @@ const DataCatalogManager = () => {
       cover_image: item.cover_image || item.thumbnail_url || item.image || '',
       is_highlighted: Boolean(item.is_highlighted),
     });
+    setQuickCategoryInput('');
     setCurrentEditItem(item);
     setModalType('edit_collection');
   };
@@ -337,6 +357,7 @@ const DataCatalogManager = () => {
       const payload = {
         name: collectionForm.title,
         title: collectionForm.title,
+        category_id: collectionForm.category_id ? Number(collectionForm.category_id) : null,
         subtitle: collectionForm.subtitle,
         description: collectionForm.curator_statement || collectionForm.subtitle,
         curator_statement: collectionForm.curator_statement,
@@ -409,7 +430,7 @@ const DataCatalogManager = () => {
   const openCreateEvent = () => {
     setEventForm({
       title: '',
-      category: 'Tọa đàm chuyên sâu',
+      category_id: eventCategories[0]?.id || '',
       date_display: 'Thứ Bảy, 14 Tháng 11, 2026',
       location: 'Hội trường Di Sản SIHUB, 273 Điện Biên Phủ, Quận 3, TP.HCM',
       status: 'Sắp diễn ra',
@@ -420,6 +441,7 @@ const DataCatalogManager = () => {
         'Đối tượng: Nghệ sĩ, nghệ nhân, nhà nghiên cứu, trường đại học, doanh nghiệp sáng tạo, đơn vị công nghệ và công chúng yêu mỹ thuật.\n' +
         'Kết quả kỳ vọng: Tư liệu hóa tri thức, hình thành đề xuất hợp tác thực chất và bổ sung hệ dữ liệu cho Kỷ yếu 100 năm.',
     });
+    setQuickCategoryInput('');
     setCurrentEditItem(null);
     setModalType('create_event');
   };
@@ -427,7 +449,7 @@ const DataCatalogManager = () => {
   const openEditEvent = (item) => {
     setEventForm({
       title: item.name || item.title || '',
-      category: item.category || item.event_type || 'Tọa đàm chuyên sâu',
+      category_id: item.category_id || eventCategories[0]?.id || '',
       date_display: item.date_display || (item.event_date ? new Date(item.event_date).toLocaleDateString('vi-VN') : ''),
       location: item.location || '',
       status:
@@ -440,6 +462,7 @@ const DataCatalogManager = () => {
       description: (item.description || item.subtitle || '').replace(/<[^>]*>?/gm, '').trim(),
       content: parseRawContentToPlainText(item.content),
     });
+    setQuickCategoryInput('');
     setCurrentEditItem(item);
     setModalType('edit_event');
   };
@@ -455,7 +478,7 @@ const DataCatalogManager = () => {
       const payload = {
         name: eventForm.title?.trim(),
         title: eventForm.title?.trim(),
-        category: eventForm.category,
+        category_id: eventForm.category_id ? Number(eventForm.category_id) : null,
         date_display: eventForm.date_display,
         location: eventForm.location?.trim(),
         thumbnail_url: eventForm.cover_image,
@@ -510,6 +533,7 @@ const DataCatalogManager = () => {
         (item) =>
           !term ||
           item.title?.toLowerCase().includes(term) ||
+          item.category_name?.toLowerCase().includes(term) ||
           item.category?.toLowerCase().includes(term) ||
           item.author?.toLowerCase().includes(term)
       );
@@ -520,7 +544,8 @@ const DataCatalogManager = () => {
           !term ||
           item.title?.toLowerCase().includes(term) ||
           item.subtitle?.toLowerCase().includes(term) ||
-          item.period?.toLowerCase().includes(term)
+          item.category_name?.toLowerCase().includes(term) ||
+          item.category?.toLowerCase().includes(term)
       );
     }
     if (activeTab === 'events') {
@@ -529,21 +554,23 @@ const DataCatalogManager = () => {
           !term ||
           item.title?.toLowerCase().includes(term) ||
           item.location?.toLowerCase().includes(term) ||
-          item.event_type?.toLowerCase().includes(term)
+          item.category_name?.toLowerCase().includes(term) ||
+          item.category?.toLowerCase().includes(term)
       );
     }
     return [];
   };
 
   const filteredItems = getCurrentFilteredList();
+  const currentTabCategories = getActiveCategories(activeTab);
 
   return (
     <div className="space-y-6">
       {/* Top Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D4AF37]/25 pb-5">
-        <div>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#D4AF37]/25 pb-5">
+        <div className="min-w-0">
           <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#FFDF73] font-bold">
-            <Database className="w-4 h-4 text-[#FFDF73]" />
+            <Database className="w-4 h-4 text-[#FFDF73] shrink-0" />
             <span>Hệ Thống &bull; Danh Mục Dữ Liệu Đồng Bộ</span>
           </div>
           <h1 className="font-sans text-2xl sm:text-3xl font-bold text-[#FFDF73] mt-1">
@@ -554,35 +581,33 @@ const DataCatalogManager = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 shrink-0 flex-wrap sm:flex-nowrap">
           <button
             type="button"
             onClick={loadData}
             disabled={loading}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded border border-[#D4AF37]/40 text-[#FFDF73] hover:bg-[#D4AF37]/15 text-sm font-semibold tracking-wider transition cursor-pointer"
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded border border-[#D4AF37]/40 text-[#FFDF73] hover:bg-[#D4AF37]/15 text-sm font-semibold tracking-wider transition cursor-pointer whitespace-nowrap shrink-0"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 shrink-0 ${loading ? 'animate-spin' : ''}`} />
             <span>Làm Mới</span>
           </button>
 
-          {activeTab === 'events' && (
-            <button
-              type="button"
-              onClick={() => setShowCategoryModal(true)}
-              className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded border border-[#D4AF37]/50 bg-[#2b080e] hover:bg-[#3d0b13] text-[#FFDF73] text-sm font-semibold tracking-wider transition cursor-pointer"
-              title="Thêm và chỉnh sửa các thể loại sự kiện"
-            >
-              <Tag className="w-4 h-4 text-[#FFDF73]" />
-              <span>Quản Lý Thể Loại ({eventCategories.length})</span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => setShowCategoryModal(true)}
+            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded border border-[#D4AF37]/50 bg-[#2b080e] hover:bg-[#3d0b13] text-[#FFDF73] text-sm font-semibold tracking-wider transition cursor-pointer whitespace-nowrap shrink-0"
+            title="Thêm và chỉnh sửa các thể loại"
+          >
+            <Tag className="w-4 h-4 text-[#FFDF73] shrink-0" />
+            <span>Quản Lý Thể Loại</span>
+          </button>
 
           <button
             type="button"
             onClick={handleOpenCreateModal}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-sm tracking-wider uppercase transition shadow-[0_4px_16px_rgba(212,155,26,0.35)] cursor-pointer"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-sm tracking-wider uppercase transition shadow-[0_4px_16px_rgba(212,155,26,0.35)] cursor-pointer whitespace-nowrap shrink-0"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-4 h-4 shrink-0" />
             <span>
               {activeTab === 'news'
                 ? 'Thêm Bài Viết'
@@ -622,8 +647,8 @@ const DataCatalogManager = () => {
               : 'text-[#EADBCE]/70 border-transparent hover:text-[#FFDF73] hover:bg-[#250508]'
           }`}
         >
-          <Newspaper className="w-4 h-4" />
-          <span>Bảng Tin Tức ({newsList.length})</span>
+          <Newspaper className="w-4 h-4 shrink-0" />
+          <span>Bảng Tin Tức</span>
         </button>
 
         <button
@@ -634,8 +659,8 @@ const DataCatalogManager = () => {
               : 'text-[#EADBCE]/70 border-transparent hover:text-[#FFDF73] hover:bg-[#250508]'
           }`}
         >
-          <Palette className="w-4 h-4" />
-          <span>Bảng Bộ Sưu Tập ({collectionList.length})</span>
+          <Palette className="w-4 h-4 shrink-0" />
+          <span>Bảng Bộ Sưu Tập</span>
         </button>
 
         <button
@@ -646,8 +671,8 @@ const DataCatalogManager = () => {
               : 'text-[#EADBCE]/70 border-transparent hover:text-[#FFDF73] hover:bg-[#250508]'
           }`}
         >
-          <Calendar className="w-4 h-4" />
-          <span>Bảng Sự Kiện ({eventList.length})</span>
+          <Calendar className="w-4 h-4 shrink-0" />
+          <span>Bảng Sự Kiện</span>
         </button>
       </div>
 
@@ -704,11 +729,8 @@ const DataCatalogManager = () => {
                   ? item.curator_statement || item.description
                   : item.description || parseRawContentToPlainText(item.content);
 
-                const categoryBadge = isNews
-                  ? item.category
-                  : isCollection
-                  ? item.period || 'Kỷ nguyên Bách Niên'
-                  : item.category || item.event_type || 'Tọa đàm';
+                const categoryBadge =
+                  item.category_name || item.category || 'Chưa phân loại';
 
                 return (
                   <tr key={item.id} className="hover:bg-[#290509] transition-colors">
@@ -945,19 +967,54 @@ const DataCatalogManager = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-                      Thể Loại
-                    </label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs uppercase font-bold text-[#FFDF73]">
+                        Thể Loại Tin Tức *
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setShowCategoryModal(true)}
+                        className="text-[11px] text-[#FFDF73] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
+                      >
+                        <Tag className="w-3 h-3" />
+                        <span>Quản lý</span>
+                      </button>
+                    </div>
                     <select
-                      value={newsForm.category}
-                      onChange={(e) => setNewsForm({ ...newsForm, category: e.target.value })}
+                      value={newsForm.category_id}
+                      onChange={(e) => setNewsForm({ ...newsForm, category_id: e.target.value })}
                       className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
                     >
-                      <option value="Dòng chảy 100 năm">Dòng chảy 100 năm</option>
-                      <option value="Nghiên cứu & Học thuật">Nghiên cứu & Học thuật</option>
-                      <option value="Sự kiện & Tọa đàm">Sự kiện & Tọa đàm</option>
-                      <option value="Chân dung nghệ sĩ">Chân dung nghệ sĩ</option>
+                      {newsCategories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
                     </select>
+
+                    {/* Inline Thêm Thể Loại Nhanh */}
+                    <div className="mt-2 flex gap-1.5">
+                      <input
+                        type="text"
+                        value={quickCategoryInput}
+                        onChange={(e) => setQuickCategoryInput(e.target.value)}
+                        placeholder="Thêm thể loại tin tức mới..."
+                        className="flex-1 px-2.5 py-1 rounded bg-[#100203] border border-[#D4AF37]/30 text-white text-xs focus:border-[#FFDF73] focus:outline-none"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleQuickAddCategory('news');
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleQuickAddCategory('news')}
+                        className="px-2.5 py-1 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs transition cursor-pointer shrink-0"
+                      >
+                        + Thêm
+                      </button>
+                    </div>
                   </div>
 
                   <div>
@@ -1083,6 +1140,57 @@ const DataCatalogManager = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="block text-xs uppercase font-bold text-[#FFDF73]">
+                        Thể Loại Bộ Sưu Tập *
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setShowCategoryModal(true)}
+                        className="text-[11px] text-[#FFDF73] hover:underline flex items-center gap-1 cursor-pointer font-semibold"
+                      >
+                        <Tag className="w-3 h-3" />
+                        <span>Quản lý</span>
+                      </button>
+                    </div>
+                    <select
+                      value={collectionForm.category_id}
+                      onChange={(e) => setCollectionForm({ ...collectionForm, category_id: e.target.value })}
+                      className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
+                    >
+                      {collectionCategories.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* Inline Thêm Thể Loại Nhanh */}
+                    <div className="mt-2 flex gap-1.5">
+                      <input
+                        type="text"
+                        value={quickCategoryInput}
+                        onChange={(e) => setQuickCategoryInput(e.target.value)}
+                        placeholder="Thêm thể loại bộ sưu tập..."
+                        className="flex-1 px-2.5 py-1 rounded bg-[#100203] border border-[#D4AF37]/30 text-white text-xs focus:border-[#FFDF73] focus:outline-none"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleQuickAddCategory('collections');
+                          }
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleQuickAddCategory('collections')}
+                        className="px-2.5 py-1 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs transition cursor-pointer shrink-0"
+                      >
+                        + Thêm
+                      </button>
+                    </div>
+                  </div>
+
+                  <div>
                     <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
                       Niên Đại / Năm
                     </label>
@@ -1092,19 +1200,6 @@ const DataCatalogManager = () => {
                       onChange={(e) => setCollectionForm({ ...collectionForm, year: e.target.value })}
                       className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
                       placeholder="VD: 1930 - 2030"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-                      Thời Kỳ
-                    </label>
-                    <input
-                      type="text"
-                      value={collectionForm.period}
-                      onChange={(e) => setCollectionForm({ ...collectionForm, period: e.target.value })}
-                      className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
-                      placeholder="VD: Kỷ nguyên Bách Niên"
                     />
                   </div>
                 </div>
@@ -1261,18 +1356,15 @@ const DataCatalogManager = () => {
                     </div>
 
                     <select
-                      value={eventForm.category}
-                      onChange={(e) => setEventForm({ ...eventForm, category: e.target.value })}
+                      value={eventForm.category_id}
+                      onChange={(e) => setEventForm({ ...eventForm, category_id: e.target.value })}
                       className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
                     >
                       {eventCategories.map((cat) => (
-                        <option key={cat} value={cat}>
-                          {cat}
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name}
                         </option>
                       ))}
-                      {!eventCategories.includes(eventForm.category) && eventForm.category && (
-                        <option value={eventForm.category}>{eventForm.category}</option>
-                      )}
                     </select>
 
                     {/* Inline Thêm Thể Loại Nhanh */}
@@ -1281,18 +1373,18 @@ const DataCatalogManager = () => {
                         type="text"
                         value={quickCategoryInput}
                         onChange={(e) => setQuickCategoryInput(e.target.value)}
-                        placeholder="Thêm thể loại mới tại đây..."
+                        placeholder="Thêm thể loại sự kiện mới..."
                         className="flex-1 px-2.5 py-1 rounded bg-[#100203] border border-[#D4AF37]/30 text-white text-xs focus:border-[#FFDF73] focus:outline-none"
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
                             e.preventDefault();
-                            handleQuickAddCategory();
+                            handleQuickAddCategory('events');
                           }
                         }}
                       />
                       <button
                         type="button"
-                        onClick={handleQuickAddCategory}
+                        onClick={() => handleQuickAddCategory('events')}
                         className="px-2.5 py-1 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs transition cursor-pointer shrink-0"
                       >
                         + Thêm
@@ -1431,7 +1523,7 @@ const DataCatalogManager = () => {
         </div>
       )}
 
-      {/* ================= MODAL QUẢN LÝ THỂ LOẠI SỰ KIỆN ================= */}
+      {/* ================= MODAL QUẢN LÝ THỂ LOẠI ================= */}
       {showCategoryModal && (
         <div className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4 backdrop-blur-sm">
           <div className="bg-[#1e0407] border border-[#D4AF37]/50 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative space-y-5">
@@ -1439,7 +1531,7 @@ const DataCatalogManager = () => {
               <div className="flex items-center gap-2 text-[#FFDF73]">
                 <Tag className="w-5 h-5 text-[#FFDF73]" />
                 <h3 className="font-sans text-lg font-bold">
-                  Quản Lý Thể Loại Sự Kiện
+                  Quản Lý Thể Loại
                 </h3>
               </div>
               <button
@@ -1451,10 +1543,6 @@ const DataCatalogManager = () => {
               </button>
             </div>
 
-            <p className="text-xs text-[#EADBCE]/80">
-              Các thể loại dưới đây được dùng để phân loại sự kiện trong trang quản trị và hiển thị trên thanh bộ lọc trang Sự Kiện ngoài website.
-            </p>
-
             {/* Input thêm thể loại mới */}
             <div className="flex gap-2">
               <input
@@ -1464,15 +1552,15 @@ const DataCatalogManager = () => {
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
-                    handleAddCategory(newCategoryInput);
+                    handleAddCategory(newCategoryInput, activeTab);
                   }
                 }}
-                placeholder="Nhập tên thể loại sự kiện mới..."
+                placeholder="Nhập tên thể loại mới..."
                 className="flex-1 px-3 py-2 rounded-lg bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none"
               />
               <button
                 type="button"
-                onClick={() => handleAddCategory(newCategoryInput)}
+                onClick={() => handleAddCategory(newCategoryInput, activeTab)}
                 className="px-4 py-2 rounded-lg bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs uppercase tracking-wider transition cursor-pointer shrink-0"
               >
                 + Thêm
@@ -1482,18 +1570,18 @@ const DataCatalogManager = () => {
             {/* Danh sách thể loại hiện tại */}
             <div className="space-y-2">
               <span className="text-xs font-mono uppercase tracking-wider text-[#FFDF73] font-bold">
-                Danh sách hiện có ({eventCategories.length}):
+                Danh sách hiện có:
               </span>
               <div className="flex flex-wrap gap-2 max-h-60 overflow-y-auto p-1">
-                {eventCategories.map((cat) => (
+                {currentTabCategories.map((cat) => (
                   <span
-                    key={cat}
+                    key={cat.id}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#2e070c] border border-[#D4AF37]/40 text-xs font-sans text-[#FFDF73] tracking-wide"
                   >
-                    <span>{cat}</span>
+                    <span>{cat.name}</span>
                     <button
                       type="button"
-                      onClick={() => handleDeleteCategory(cat)}
+                      onClick={() => handleDeleteCategory(cat, activeTab)}
                       className="w-4 h-4 rounded-full hover:bg-red-900/60 flex items-center justify-center text-red-300 hover:text-red-100 transition cursor-pointer"
                       title="Xóa thể loại này"
                     >

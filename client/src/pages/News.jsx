@@ -1,28 +1,38 @@
-import React, { useState, useEffect } from "react";
-import NewsHeroSection from "../components/news/NewsHeroSection";
-import NewsFilterSection from "../components/news/NewsFilterSection";
-import NewsGridSection from "../components/news/NewsGridSection";
-import pageServices from "../services/pageServices";
+import React, { useState, useEffect } from 'react';
+import NewsHeroSection from '../components/news/NewsHeroSection';
+import NewsFilterSection from '../components/news/NewsFilterSection';
+import NewsGridSection from '../components/news/NewsGridSection';
+import pageServices from '../services/pageServices';
+import newsServices from '../services/newsServices';
 
 export default function News() {
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
+  const [activeCategoryId, setActiveCategoryId] = useState('all');
+  const [categories, setCategories] = useState([]);
   const [pageProps, setPageProps] = useState(null);
   const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState([]);
 
-  // Đọc cấu hình trang tin tức trực tiếp từ DB
+  // Đọc cấu hình trang tin tức và danh sách chuyên mục (id, name) trực tiếp từ DB
   useEffect(() => {
     let isMounted = true;
     const fetchPageData = async () => {
       try {
         setLoading(true);
-        const res = await pageServices.getPageBySlug('/news');
-        if (res.data && res.data.success && isMounted) {
-          const raw = res.data.data;
+        const [pageRes, catRes] = await Promise.all([
+          pageServices.getPageBySlug('/news'),
+          newsServices.getCategories().catch(() => null),
+        ]);
+
+        if (pageRes?.data?.success && isMounted) {
+          const raw = pageRes.data.data;
           const pageData = Array.isArray(raw)
             ? raw.find((p) => p.slug === '/news' || p.slug === 'news') || raw[0]
             : raw;
           setPageProps(pageData?.props || null);
+        }
+
+        if (catRes?.data?.success && Array.isArray(catRes.data.data) && isMounted) {
+          setCategories(catRes.data.data);
         }
       } catch (err) {
         console.warn('Lỗi tải dữ liệu trang tin tức từ DB:', err);
@@ -33,7 +43,9 @@ export default function News() {
     };
 
     fetchPageData();
-    return () => { isMounted = false; };
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (loading) {
@@ -57,6 +69,9 @@ export default function News() {
     );
   }
 
+  const activeCategoryObj = categories.find((c) => Number(c.id) === Number(activeCategoryId));
+  const activeCategoryName = activeCategoryObj ? activeCategoryObj.name : 'Tất cả';
+
   return (
     <div className="min-h-screen bg-[#100202] text-[#FAF7F2] font-sans relative overflow-x-hidden selection:bg-[#D4AF37]/30 selection:text-[#FFDF73]">
       {/* Background ambient lighting */}
@@ -70,16 +85,18 @@ export default function News() {
         {/* Hero Section */}
         <NewsHeroSection pageProps={pageProps} />
 
-        {/* Filter Navigation */}
+        {/* Filter Navigation (giữ id và name, lọc theo id) */}
         <NewsFilterSection
-          activeCategory={activeCategory}
-          setActiveCategory={setActiveCategory}
+          activeCategoryId={activeCategoryId}
+          setActiveCategoryId={setActiveCategoryId}
+          categories={categories}
           articles={articles}
         />
 
-        {/* Articles Grid */}
+        {/* Articles Grid (truy vấn và lọc theo category_id) */}
         <NewsGridSection
-          activeCategory={activeCategory}
+          activeCategoryId={activeCategoryId}
+          activeCategoryName={activeCategoryName}
           pageProps={pageProps}
           onArticlesLoaded={setArticles}
         />
@@ -87,4 +104,3 @@ export default function News() {
     </div>
   );
 }
-   

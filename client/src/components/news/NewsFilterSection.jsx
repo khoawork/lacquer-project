@@ -2,16 +2,15 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { ChevronDown, Check, Filter } from 'lucide-react';
 
 const NewsFilterSection = ({
-  activeCategory = 'Tất cả',
-  onSelectCategory,
-  setActiveCategory,
-  categories: customCategories,
+  activeCategoryId = 'all',
+  setActiveCategoryId,
+  categories: customCategories = [],
   articles = [],
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const handleSelect = onSelectCategory || setActiveCategory || (() => {});
+  const handleSelect = setActiveCategoryId || (() => {});
 
   // Đóng dropdown khi nhấp ra ngoài
   useEffect(() => {
@@ -24,30 +23,55 @@ const NewsFilterSection = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Tự động gộp các chuyên mục từ dữ liệu bài viết thực tế trong database
-  const categories = useMemo(() => {
-    if (customCategories && customCategories.length > 0) return customCategories;
-    const dbCats = Array.from(
-      new Set(articles.map((a) => a.category?.trim()).filter(Boolean))
-    );
-    const combined = ['Tất cả'];
-    dbCats.forEach((cat) => {
-      if (!combined.includes(cat)) combined.push(cat);
+  // Chuẩn hóa danh sách chuyên mục dạng [{ id, name }]
+  const categoryOptions = useMemo(() => {
+    const base = [{ id: 'all', name: 'Tất cả' }];
+    if (Array.isArray(customCategories) && customCategories.length > 0) {
+      customCategories.forEach((cat) => {
+        if (cat && cat.id !== undefined && cat.name) {
+          base.push({ id: Number(cat.id), name: cat.name });
+        }
+      });
+      return base;
+    }
+
+    // Fallback gom từ bài viết nếu API categories chưa trả về
+    const seenIds = new Set();
+    articles.forEach((a) => {
+      if (a.category_id && !seenIds.has(Number(a.category_id))) {
+        seenIds.add(Number(a.category_id));
+        base.push({
+          id: Number(a.category_id),
+          name: a.category_name || a.category || `Chuyên mục #${a.category_id}`,
+        });
+      }
     });
-    return combined;
+    return base;
   }, [customCategories, articles]);
 
-  // Đếm số lượng bài viết mỗi chuyên mục
-  const countByCategory = useMemo(() => {
-    const map = { 'Tất cả': articles.length };
+  // Đếm số lượng bài viết theo category_id
+  const countByCategoryId = useMemo(() => {
+    const map = { all: articles.length };
     articles.forEach((a) => {
-      const cat = a.category?.trim();
-      if (cat) {
-        map[cat] = (map[cat] || 0) + 1;
+      if (a.category_id !== undefined && a.category_id !== null) {
+        const cid = Number(a.category_id);
+        map[cid] = (map[cid] || 0) + 1;
       }
     });
     return map;
   }, [articles]);
+
+  const selectedOption =
+    categoryOptions.find(
+      (c) =>
+        (activeCategoryId === 'all' && c.id === 'all') ||
+        (c.id !== 'all' && Number(c.id) === Number(activeCategoryId))
+    ) || categoryOptions[0];
+
+  const activeCount =
+    selectedOption.id === 'all'
+      ? countByCategoryId.all
+      : countByCategoryId[Number(selectedOption.id)] ?? 0;
 
   return (
     <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 z-20 w-full mb-8 select-none">
@@ -56,11 +80,11 @@ const NewsFilterSection = ({
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rotate-45 bg-[#FFDF73] shadow-[0_0_8px_rgba(255,223,115,0.7)]" />
           <span className="font-sans text-base md:text-lg font-bold text-gold-gradient uppercase tracking-wide">
-            {activeCategory === 'Tất cả' ? 'Tất cả bài viết' : activeCategory}
+            {selectedOption.id === 'all' ? 'Tất cả bài viết' : selectedOption.name}
           </span>
-          {typeof countByCategory[activeCategory] === 'number' && (
+          {typeof activeCount === 'number' && (
             <span className="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-[#2a070c] border border-[#D4AF37]/30 text-[#FFDF73]">
-              {countByCategory[activeCategory]} bài
+              {activeCount} bài
             </span>
           )}
         </div>
@@ -78,7 +102,7 @@ const NewsFilterSection = ({
               Chuyên mục:
             </span>
             <span className="text-[#FFDF73] font-bold max-w-[160px] sm:max-w-none truncate">
-              {activeCategory}
+              {selectedOption.name}
             </span>
             <ChevronDown
               className={`w-4 h-4 text-[#FFDF73] transition-transform duration-200 ${
@@ -93,22 +117,23 @@ const NewsFilterSection = ({
               <div className="px-3 py-2 text-[11px] font-mono uppercase tracking-wider text-[#D4AF37]/80 border-b border-[#D4AF37]/20 mb-1 flex items-center justify-between">
                 <span>Chọn chuyên mục</span>
                 <span className="text-[10px] text-[#EADBCE]/50">
-                  {categories.length} danh mục
+                  {categoryOptions.length} danh mục
                 </span>
               </div>
               <div className="space-y-1 max-h-72 overflow-y-auto custom-scrollbar">
-                {categories.map((cat) => {
+                {categoryOptions.map((cat) => {
                   const isSelected =
-                    activeCategory?.toLowerCase() === cat.toLowerCase() ||
-                    (cat === 'Tất cả' && (!activeCategory || activeCategory === 'Tất cả'));
-                  const count = countByCategory[cat];
+                    (cat.id === 'all' && (!activeCategoryId || activeCategoryId === 'all')) ||
+                    (cat.id !== 'all' && Number(cat.id) === Number(activeCategoryId));
+                  const count =
+                    cat.id === 'all' ? countByCategoryId.all : countByCategoryId[Number(cat.id)] ?? 0;
 
                   return (
                     <button
-                      key={cat}
+                      key={cat.id}
                       type="button"
                       onClick={() => {
-                        handleSelect(cat);
+                        handleSelect(cat.id);
                         setIsOpen(false);
                       }}
                       className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-sans uppercase tracking-wider text-left transition cursor-pointer ${
@@ -123,7 +148,7 @@ const NewsFilterSection = ({
                         ) : (
                           <span className="w-4 shrink-0" />
                         )}
-                        <span className="truncate">{cat}</span>
+                        <span className="truncate">{cat.name}</span>
                       </div>
                       {typeof count === 'number' && (
                         <span

@@ -104,7 +104,11 @@ const getEventBreakdownList = (evt) => {
   return [];
 };
 
-const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) => {
+const EventsListSection = ({
+  activeFilter = 'all',
+  activeFilterName = 'Tất cả',
+  pageProps = null,
+}) => {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedEventModal, setSelectedEventModal] = useState(null);
@@ -127,13 +131,22 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
     []
   ).map(Number);
 
-  // NẠP TẤT CẢ SỰ KIỆN TRỰC TIẾP TỪ DATABASE
+  // NẠP SỰ KIỆN TRỰC TIẾP TỪ DATABASE (truy vấn theo category_id khi chọn chủ đề)
   useEffect(() => {
     let isMounted = true;
     const fetchEventsFromDB = async () => {
       try {
         setLoading(true);
-        const res = await eventServices.getEvents();
+        const isCategoryId =
+          activeFilter &&
+          activeFilter !== 'all' &&
+          activeFilter !== 'Tất cả' &&
+          activeFilter !== 'past' &&
+          activeFilter !== 'Đã diễn ra' &&
+          !isNaN(Number(activeFilter));
+        const params = isCategoryId ? { category_id: Number(activeFilter) } : {};
+
+        const res = await eventServices.getEvents(params);
         if (res.data && res.data.success && isMounted) {
           const list = res.data.data || [];
           let processed = list;
@@ -143,7 +156,7 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
             const picked = list.filter((evt) =>
               selectedEventIds.includes(Number(evt.id))
             );
-            if (picked.length > 0) processed = picked;
+            if (picked.length > 0 || isCategoryId) processed = picked;
           }
 
           setEvents(processed);
@@ -159,18 +172,16 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
     return () => {
       isMounted = false;
     };
-  }, [JSON.stringify(selectedEventIds)]);
+  }, [activeFilter, JSON.stringify(selectedEventIds)]);
 
-  // Lọc theo thể loại sự kiện
+  // Lọc theo category_id hoặc trạng thái sự kiện
   const filteredEvents = events.filter((evt) => {
     if (!activeFilter || activeFilter === 'Tất cả' || activeFilter === 'all')
       return true;
     if (activeFilter === 'Đã diễn ra' || activeFilter === 'past')
       return evt.status === 'completed' || evt.status === 'Đã diễn ra';
 
-    const cat = (evt.category || '').toLowerCase();
-    const filterKey = activeFilter.toLowerCase();
-    return cat.includes(filterKey) || filterKey.includes(cat);
+    return Number(evt.category_id) === Number(activeFilter);
   });
 
   return (
@@ -181,7 +192,9 @@ const EventsListSection = ({ activeFilter = 'Tất cả', pageProps = null }) =>
             event_busy
           </span>
           <h4 className="text-lg font-bold text-[#FFDF73]">
-            {loading ? 'Đang tải dữ liệu sự kiện từ hệ thống...' : `Chưa có sự kiện nào trong danh mục "${activeFilter}"`}
+            {loading
+              ? 'Đang tải dữ liệu sự kiện từ hệ thống...'
+              : `Chưa có sự kiện nào trong danh mục "${activeFilterName}"`}
           </h4>
           <p className="text-xs text-[#FAF7F2]/60">
             Dữ liệu được nạp trực tiếp từ cơ sở dữ liệu.

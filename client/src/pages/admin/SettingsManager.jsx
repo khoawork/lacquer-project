@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Save,
   Globe,
@@ -407,13 +408,13 @@ const SettingsManager = () => {
           </div>
 
           <div className="pt-2">
-            <a
-              href="/admin/system/menus"
+            <Link
+              to="/admin/system/menus"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-sm tracking-wider uppercase transition shadow-lg"
             >
               <span>Mở Trình Quản Trị Menu Chuyên Biệt</span>
               <ExternalLink className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       )}

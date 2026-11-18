@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { RefreshCw, Newspaper, Calendar, ArrowRight, User, Clock, Sparkles } from 'lucide-react';
+import { RefreshCw, Newspaper, Calendar, ArrowRight, Clock, Sparkles } from 'lucide-react';
 import newsServices from '../../services/newsServices';
 import { getImageUrl } from '../../configs/Apis';
 
@@ -8,11 +8,12 @@ const DEFAULT_COVER =
   'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1200&q=80';
 
 const NewsGridSection = ({
-  activeCategory = 'Tất cả',
+  activeCategoryId = 'all',
+  activeCategoryName = 'Tất cả',
   pageProps = null,
   onArticlesLoaded = null,
 }) => {
-  const [allArticles, setAllArticles] = useState([]);
+  const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -22,17 +23,40 @@ const NewsGridSection = ({
     []
   ).map(Number);
 
+  // Tải tổng danh sách 1 lần để cập nhật số đếm cho bộ lọc
+  useEffect(() => {
+    let isMounted = true;
+    if (onArticlesLoaded) {
+      newsServices
+        .getNews()
+        .then((res) => {
+          if (res.data?.success && isMounted) {
+            onArticlesLoaded(res.data.data || []);
+          }
+        })
+        .catch(() => {});
+    }
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Truy vấn dữ liệu bài viết theo category_id từ Backend API
   useEffect(() => {
     let isMounted = true;
     const fetchArticles = async () => {
       try {
         setLoading(true);
         setError(null);
-        const res = await newsServices.getNews();
+        const params =
+          activeCategoryId && activeCategoryId !== 'all'
+            ? { category_id: Number(activeCategoryId) }
+            : {};
+        const res = await newsServices.getNews(params);
         if (res.data && res.data.success && isMounted) {
           const list = res.data.data || [];
-          setAllArticles(list);
-          if (onArticlesLoaded) {
+          setArticles(list);
+          if ((!activeCategoryId || activeCategoryId === 'all') && onArticlesLoaded) {
             onArticlesLoaded(list);
           }
         }
@@ -48,31 +72,28 @@ const NewsGridSection = ({
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [activeCategoryId]);
 
-  // Lọc bài viết theo danh mục được chọn
+  // Lọc và sắp xếp theo category_id + bài viết ưu tiên
   const filteredArticles = React.useMemo(() => {
-    if (!allArticles || allArticles.length === 0) return [];
+    if (!articles || articles.length === 0) return [];
 
-    if (!activeCategory || activeCategory === 'Tất cả') {
-      // Ưu tiên hiển thị bài viết nổi bật lên đầu nếu có cấu hình
-      if (selectedNewsIds.length > 0) {
-        return [...allArticles].sort((a, b) => {
-          const aFeatured = selectedNewsIds.includes(Number(a.id));
-          const bFeatured = selectedNewsIds.includes(Number(b.id));
-          if (aFeatured && !bFeatured) return -1;
-          if (!aFeatured && bFeatured) return 1;
-          return 0;
-        });
-      }
-      return allArticles;
+    let result = articles;
+    if (activeCategoryId && activeCategoryId !== 'all') {
+      result = articles.filter((a) => Number(a.category_id) === Number(activeCategoryId));
     }
 
-    const query = activeCategory.trim().toLowerCase();
-    return allArticles.filter(
-      (a) => a.category && a.category.trim().toLowerCase() === query
-    );
-  }, [allArticles, activeCategory, JSON.stringify(selectedNewsIds)]);
+    if (selectedNewsIds.length > 0) {
+      return [...result].sort((a, b) => {
+        const aFeatured = selectedNewsIds.includes(Number(a.id));
+        const bFeatured = selectedNewsIds.includes(Number(b.id));
+        if (aFeatured && !bFeatured) return -1;
+        if (!aFeatured && bFeatured) return 1;
+        return 0;
+      });
+    }
+    return result;
+  }, [articles, activeCategoryId, JSON.stringify(selectedNewsIds)]);
 
   const formatArticleDate = (dateString) => {
     if (!dateString) return 'Gần đây';
@@ -99,7 +120,7 @@ const NewsGridSection = ({
       )}
 
       {/* Error state */}
-      {!loading && error && allArticles.length === 0 && (
+      {!loading && error && articles.length === 0 && (
         <div className="p-8 rounded-2xl border border-red-500/40 bg-red-950/40 text-red-200 text-center font-sans shadow-xl">
           <p className="font-bold text-lg mb-1">Không thể kết nối cơ sở dữ liệu tin tức.</p>
           <p className="text-xs text-red-300/80">Chi tiết lỗi: {error}</p>
@@ -111,7 +132,7 @@ const NewsGridSection = ({
         <div className="p-16 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/75 space-y-3 shadow-xl max-w-2xl mx-auto">
           <Newspaper className="w-10 h-10 text-[#FFDF73] mx-auto opacity-70 mb-2" />
           <h4 className="text-xl font-bold text-[#FFDF73]">
-            Chưa có bài viết trong chuyên mục “{activeCategory}”
+            Chưa có bài viết trong chuyên mục “{activeCategoryName}”
           </h4>
           <p className="text-xs text-[#FAF7F2]/70 leading-relaxed">
             Nội dung đang được Ban Biên Tập hoàn tất và sẽ sớm được cập nhật vào kho lưu trữ bách niên.
@@ -163,7 +184,7 @@ const NewsGridSection = ({
                         border: '1px solid rgba(212, 175, 55, 0.4)',
                       }}
                     >
-                      {article.category || 'Tin tức'}
+                      {article.category_name || article.category || 'Tin tức'}
                     </span>
                     {isFeatured && (
                       <span className="px-2.5 py-1 rounded bg-[#FFDF73] text-[#1a0507] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-md">

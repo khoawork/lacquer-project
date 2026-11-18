@@ -20,15 +20,21 @@ export const endpoints = {
   // Events API
   events: '/events',
   eventDetail: (id) => `/events/${id}`,
+  eventCategories: '/events/categories',
+  eventCategoryDetail: (id) => `/events/categories/${id}`,
 
   // Collections & Artworks API
   collections: '/collections',
   collectionDetail: (id) => `/collections/${id}`,
+  collectionCategories: '/collections/categories',
+  collectionCategoryDetail: (id) => `/collections/categories/${id}`,
   artworkDetail: (id) => `/collections/artworks/${id}`,
 
   // News Articles API
   news: '/news',
   newsDetail: (id) => `/news/${id}`,
+  newsCategories: '/news/categories',
+  newsCategoryDetail: (id) => `/news/categories/${id}`,
 
   // Site Settings & Menus & Forms API
   siteSettings: '/site/settings',

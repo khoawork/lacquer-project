@@ -212,9 +212,9 @@ client/src/
 - **Service (`server/src/services/`)**: Nơi thực hiện toàn bộ nghiệp vụ, ràng buộc validation và các câu truy vấn Sequelize (`findByPk`, `findOne`, `findAll`, `create`, `update`, `destroy`).
 - **Model (`server/src/models/`)**: Định nghĩa schema bảng trong cơ sở dữ liệu MySQL (`underscored: true`, `timestamps: true`).
   - `pageModel.js`: Bảng `pages` gồm chính xác 4 trường: `id`, `name`, `slug` và `props` (JSON). Slug **chỉ nằm trong bảng page**.
-  - `eventModel.js`: Bảng `events` chỉ lưu thông tin sự kiện (không chứa slug).
-  - `collectionModel.js`: Bảng `collections` và `artworks` chỉ lưu thông tin bộ sưu tập và tác phẩm (không chứa slug).
-  - `newsModel.js`: Bảng `news_articles` chỉ lưu bài viết, kỷ yếu và tư liệu (không chứa slug).
+  - `eventModel.js`: Bảng `events` (liên kết khóa ngoại `category_id` sang bảng `event_categories` gồm `id, name`).
+  - `collectionModel.js`: Bảng `collections` (liên kết khóa ngoại `category_id` sang bảng `collection_categories` gồm `id, name`) và bảng `artworks`.
+  - `newsModel.js`: Bảng `news_articles` (liên kết khóa ngoại `category_id` sang bảng `news_categories` gồm `id, name`).
   - `siteModel.js`: Bảng `site_settings`, `menus`, `form_submissions`.
   - `baseModel.js`: Hub kết nối Sequelize, quan hệ bảng và hàm `syncDatabase()`.
 
@@ -224,11 +224,11 @@ client/src/
   - Nút Menu Active: Nền Vàng Hoàng Kim Quý Phái (`#d49b1a`), chữ sẫm (`#1a0406`), biểu tượng mũi tên dẫn hướng.
   - Content Workspace: Nền Đen Khói Sơn Mài (`#140305`), thẻ card viền vàng vương giả (`#D4AF37`/30).
 - **Lệnh Seed Dữ Liệu Mẫu**:
-  - `npm --prefix server run seed`: Nạp toàn bộ dữ liệu mẫu chuẩn từ frontend vào 7 bảng (`pages`, `events`, `collections`, `artworks`, `news_articles`, `site_settings`, `menus`, `form_submissions`).
+  - `npm --prefix server run seed`: Nạp toàn bộ dữ liệu mẫu chuẩn từ frontend vào các bảng (`pages`, `event_categories`, `events`, `collection_categories`, `collections`, `artworks`, `news_categories`, `news_articles`, `site_settings`, `menus`, `form_submissions`).
 - **Tầng Dịch Vụ Gọi API Client (`client/src/services/` & `client/src/configs/Apis.js`)**:
-  - `eventServices.js`: `getEvents`, `getEventById`, `createEvent`, `updateEvent`, `deleteEvent`.
-  - `newsServices.js`: `getNews`, `getNewsById`, `createNews`, `updateNews`, `deleteNews`.
-  - `collectionServices.js`: `getCollections`, `getCollectionById`, `getArtworkById`, `createCollection`.
+  - `eventServices.js`: `getEvents`, `getEventById`, `createEvent`, `updateEvent`, `deleteEvent`, `getCategories`, `createCategory`, `updateCategory`, `deleteCategory`.
+  - `newsServices.js`: `getNews`, `getNewsById`, `createNews`, `updateNews`, `deleteNews`, `getCategories`, `createCategory`, `updateCategory`, `deleteCategory`.
+  - `collectionServices.js`: `getCollections`, `getCollectionById`, `createCollection`, `updateCollection`, `deleteCollection`, `getCategories`, `createCategory`, `updateCategory`, `deleteCategory`, `getArtworkById`, `createArtwork`, `updateArtwork`, `deleteArtwork`.
   - `pageServices.js`: `getPages`, `getPageBySlug`, `savePageBySlug`, `updatePage` (Slug chỉ nằm trong page).
   - `siteServices.js`: `getSettings`, `updateSetting`, `getMainMenu`, `saveMainMenu` (gửi `{ name, items_json: items }`), `submitForm`, `getSubmissions`, `updateSubmissionStatus`, `deleteSubmission`, `parseCategorySetting` (đồng bộ endpoint `endpoints.forms = '/site/submissions'`).
   - `uploadService.js`: `uploadImage` (ảnh tối đa 10MB), `uploadDocument` (tài liệu PDF, DOCX, ZIP tối đa 25MB qua `POST /api/upload/document`).

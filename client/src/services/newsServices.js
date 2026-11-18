@@ -20,7 +20,23 @@ export const newsServices = {
   deleteNews: async (id) => {
     return await Apis().delete(endpoints.newsDetail(id));
   },
+
+  // Categories
+  getCategories: async () => {
+    return await Apis().get(endpoints.newsCategories);
+  },
+
+  createCategory: async (data) => {
+    return await Apis().post(endpoints.newsCategories, data);
+  },
+
+  updateCategory: async (id, data) => {
+    return await Apis().put(endpoints.newsCategoryDetail(id), data);
+  },
+
+  deleteCategory: async (id) => {
+    return await Apis().delete(endpoints.newsCategoryDetail(id));
+  },
 };
 
 export default newsServices;
-

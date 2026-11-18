@@ -1,4 +1,4 @@
-const { Event } = require('../models/baseModel');
+const { EventCategory, Event } = require('../models/baseModel');
 
 class EventService {
   _cleanPlainTextContent(raw) {
@@ -29,11 +29,30 @@ class EventService {
     return '';
   }
 
-  _normalizeData(data) {
+  async _resolveCategoryId(data) {
+    if (data.category_id !== undefined && data.category_id !== null && data.category_id !== '') {
+      const numId = Number(data.category_id);
+      if (!isNaN(numId) && numId > 0) return numId;
+    }
+    const catName = String(
+      data.category || data.event_type || data.category_name || 'Tọa đàm chuyên sâu'
+    ).trim();
+    if (catName) {
+      const [cat] = await EventCategory.findOrCreate({
+        where: { name: catName },
+        defaults: { name: catName },
+      });
+      return cat.id;
+    }
+    return null;
+  }
+
+  async _normalizeData(data) {
     const rawStatus = String(data.status || 'upcoming').toLowerCase();
     let status = 'upcoming';
     if (rawStatus.includes('ongoing') || rawStatus.includes('đang')) status = 'ongoing';
-    else if (rawStatus.includes('completed') || rawStatus.includes('kết thúc')) status = 'completed';
+    else if (rawStatus.includes('completed') || rawStatus.includes('kết thúc') || rawStatus.includes('đã diễn ra'))
+      status = 'completed';
     else if (rawStatus.includes('cancel')) status = 'cancelled';
 
     let eventDate = data.event_date;
@@ -43,9 +62,11 @@ class EventService {
     }
     if (!eventDate) eventDate = new Date();
 
+    const categoryId = await this._resolveCategoryId(data);
+
     return {
       name: data.name || data.title || 'Sự kiện chưa đặt tên',
-      category: data.category || data.event_type || 'Tọa đàm',
+      category_id: categoryId,
       event_date: eventDate,
       location: (data.location || '').replace(/<[^>]*>?/gm, '').trim(),
       thumbnail_url: data.thumbnail_url || data.cover_image || data.image || '',
@@ -57,43 +78,14 @@ class EventService {
     };
   }
 
-  async getAllEvents(filters = {}) {
-    const where = {};
-    if (filters.status) {
-      where.status = filters.status;
-    }
-    if (filters.category) {
-      where.category = filters.category;
-    }
-
-    const events = await Event.findAll({
-      where,
-      order: [
-        ['sort_order', 'ASC'],
-        ['event_date', 'DESC'],
-      ],
-    });
-
-    return events.map((evt) => {
-      const json = evt.toJSON();
-      return {
-        ...json,
-        title: json.name,
-        cover_image: json.thumbnail_url,
-        image: json.thumbnail_url,
-        content: this._cleanPlainTextContent(json.content),
-      };
-    });
-  }
-
-  async getEventById(id) {
-    const event = await Event.findByPk(id);
-    if (!event) {
-      throw new Error(`Không tìm thấy sự kiện với ID: ${id}`);
-    }
-    const json = event.toJSON();
+  _formatEvent(evt) {
+    const json = typeof evt.toJSON === 'function' ? evt.toJSON() : evt;
+    const catName = json.categoryDetail?.name || 'Tọa đàm chuyên sâu';
     return {
       ...json,
+      category_id: json.category_id || json.categoryDetail?.id || null,
+      category_name: catName,
+      category: catName,
       title: json.name,
       cover_image: json.thumbnail_url,
       image: json.thumbnail_url,
@@ -101,20 +93,66 @@ class EventService {
     };
   }
 
+  async getAllEvents(filters = {}) {
+    const where = {};
+    if (filters.status) {
+      where.status = filters.status;
+    }
+    if (
+      filters.category_id !== undefined &&
+      filters.category_id !== null &&
+      filters.category_id !== '' &&
+      filters.category_id !== 'all' &&
+      filters.category_id !== 'Tất cả'
+    ) {
+      const numId = Number(filters.category_id);
+      if (!isNaN(numId) && numId > 0) {
+        where.category_id = numId;
+      }
+    }
+
+    const events = await Event.findAll({
+      where,
+      include: [
+        {
+          model: EventCategory,
+          as: 'categoryDetail',
+          attributes: ['id', 'name'],
+        },
+      ],
+      order: [
+        ['sort_order', 'ASC'],
+        ['event_date', 'DESC'],
+      ],
+    });
+
+    return events.map((evt) => this._formatEvent(evt));
+  }
+
+  async getEventById(id) {
+    const event = await Event.findByPk(id, {
+      include: [
+        {
+          model: EventCategory,
+          as: 'categoryDetail',
+          attributes: ['id', 'name'],
+        },
+      ],
+    });
+    if (!event) {
+      throw new Error(`Không tìm thấy sự kiện với ID: ${id}`);
+    }
+    return this._formatEvent(event);
+  }
+
   async createEvent(rawData) {
-    const data = this._normalizeData(rawData);
+    const data = await this._normalizeData(rawData);
     if (!data.name) {
       throw new Error('Tên sự kiện là bắt buộc');
     }
 
     const created = await Event.create(data);
-    const json = created.toJSON();
-    return {
-      ...json,
-      title: json.name,
-      cover_image: json.thumbnail_url,
-      image: json.thumbnail_url,
-    };
+    return await this.getEventById(created.id);
   }
 
   async updateEvent(id, rawData) {
@@ -123,15 +161,9 @@ class EventService {
       throw new Error(`Không tìm thấy sự kiện với ID: ${id}`);
     }
 
-    const data = this._normalizeData(rawData);
+    const data = await this._normalizeData(rawData);
     await event.update(data);
-    const json = event.toJSON();
-    return {
-      ...json,
-      title: json.name,
-      cover_image: json.thumbnail_url,
-      image: json.thumbnail_url,
-    };
+    return await this.getEventById(event.id);
   }
 
   async deleteEvent(id) {
@@ -140,6 +172,50 @@ class EventService {
       throw new Error(`Không tìm thấy sự kiện với ID: ${id}`);
     }
     await event.destroy();
+    return true;
+  }
+
+  // ================= CATEGORY CRUD =================
+  async getAllCategories() {
+    const categories = await EventCategory.findAll({
+      order: [['id', 'ASC']],
+    });
+    return categories.map((c) => c.toJSON());
+  }
+
+  async createCategory(rawData) {
+    const name = String(rawData?.name || '').replace(/<[^>]*>?/gm, '').trim();
+    if (!name) {
+      throw new Error('Tên thể loại sự kiện là bắt buộc');
+    }
+    const existing = await EventCategory.findOne({ where: { name } });
+    if (existing) {
+      throw new Error(`Thể loại "${name}" đã tồn tại`);
+    }
+    const created = await EventCategory.create({ name });
+    return created.toJSON();
+  }
+
+  async updateCategory(id, rawData) {
+    const cat = await EventCategory.findByPk(id);
+    if (!cat) {
+      throw new Error(`Không tìm thấy thể loại sự kiện với ID: ${id}`);
+    }
+    const name = String(rawData?.name || '').replace(/<[^>]*>?/gm, '').trim();
+    if (!name) {
+      throw new Error('Tên thể loại sự kiện là bắt buộc');
+    }
+    await cat.update({ name });
+    return cat.toJSON();
+  }
+
+  async deleteCategory(id) {
+    const cat = await EventCategory.findByPk(id);
+    if (!cat) {
+      throw new Error(`Không tìm thấy thể loại sự kiện với ID: ${id}`);
+    }
+    await Event.update({ category_id: null }, { where: { category_id: id } });
+    await cat.destroy();
     return true;
   }
 }

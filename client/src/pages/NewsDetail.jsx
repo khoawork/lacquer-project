@@ -67,8 +67,10 @@ const NewsDetail = () => {
             const related = allList
               .filter((item) => String(item.id) !== String(currentItem.id))
               .sort((a, b) => {
-                const aSameCat = a.category === currentItem.category ? -1 : 1;
-                const bSameCat = b.category === currentItem.category ? -1 : 1;
+                const aSameCat =
+                  Number(a.category_id) === Number(currentItem.category_id) ? -1 : 1;
+                const bSameCat =
+                  Number(b.category_id) === Number(currentItem.category_id) ? -1 : 1;
                 return aSameCat - bSameCat;
               })
               .slice(0, 3);

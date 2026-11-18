@@ -4,29 +4,37 @@ import EventsFilterSection from '../components/events/EventsFilterSection';
 import EventsListSection from '../components/events/EventsListSection';
 import EventsCtaSection from '../components/events/EventsCtaSection';
 import pageServices from '../services/pageServices';
-import siteServices, { parseCategorySetting } from '../services/siteServices';
+import eventServices from '../services/eventServices';
 
 const Events = () => {
-  const [activeFilter, setActiveFilter] = useState('Tất cả');
+  const [activeFilter, setActiveFilter] = useState('all');
   const [pageProps, setPageProps] = useState(null);
-  const [categories, setCategories] = useState(['Tất cả']);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Đọc cấu hình trang sự kiện trực tiếp từ bảng Page trong DB
+  // Đọc cấu hình trang sự kiện và danh mục sự kiện (id, name) trực tiếp từ DB
   useEffect(() => {
     let isMounted = true;
     const fetchPageData = async () => {
       try {
         setLoading(true);
-        const res = await pageServices.getPageBySlug('/events');
-        if (res.data && res.data.success && isMounted) {
-          const raw = res.data.data;
+        const [pageRes, catRes] = await Promise.all([
+          pageServices.getPageBySlug('/events'),
+          eventServices.getCategories().catch(() => null),
+        ]);
+
+        if (pageRes?.data?.success && isMounted) {
+          const raw = pageRes.data.data;
           const pageData = Array.isArray(raw)
             ? raw.find((p) => p.slug === '/events' || p.slug === 'events') || raw[0]
             : raw;
           if (pageData?.props) {
             setPageProps(pageData.props);
           }
+        }
+
+        if (catRes?.data?.success && Array.isArray(catRes.data.data) && isMounted) {
+          setCategories(catRes.data.data);
         }
       } catch (err) {
         console.warn('Lỗi tải dữ liệu trang sự kiện từ DB:', err);
@@ -36,23 +44,7 @@ const Events = () => {
       }
     };
 
-    const fetchCategories = async () => {
-      try {
-        const res = await siteServices.getSettings();
-        if (res.data && res.data.success && isMounted) {
-          const parsed = parseCategorySetting(res.data.data);
-          if (parsed.length > 0) {
-            const list = ['Tất cả', ...parsed.filter((c) => c !== 'Tất cả')];
-            setCategories(list);
-          }
-        }
-      } catch (err) {
-        console.warn('Lỗi tải thể loại sự kiện từ settings:', err);
-      }
-    };
-
     fetchPageData();
-    fetchCategories();
     return () => {
       isMounted = false;
     };
@@ -79,6 +71,14 @@ const Events = () => {
     );
   }
 
+  const matchedCat = categories.find((c) => Number(c.id) === Number(activeFilter));
+  const activeFilterName =
+    activeFilter === 'all'
+      ? 'Tất cả'
+      : activeFilter === 'past'
+      ? 'Đã diễn ra'
+      : matchedCat?.name || 'Tất cả';
+
   return (
     <div className="flex flex-col w-full text-stone-100 select-none relative overflow-x-hidden">
       {/* Ambient Lacquer Glows in Background */}
@@ -92,7 +92,7 @@ const Events = () => {
       {/* 1. HERO SECTION: NƠI DI SẢN ĐƯỢC THỰC HÀNH */}
       <EventsHeroSection pageProps={pageProps} />
 
-      {/* 2. EVENT FILTER SECTION: BỘ LỌC CÁC CHỦ ĐỀ SỰ KIỆN */}
+      {/* 2. EVENT FILTER SECTION: BỘ LỌC CÁC CHỦ ĐỀ SỰ KIỆN (giữ id và name, lọc theo id) */}
       <EventsFilterSection
         activeFilter={activeFilter}
         setActiveFilter={setActiveFilter}
@@ -100,7 +100,11 @@ const Events = () => {
       />
 
       {/* 3. EVENT LISTINGS: DANH SÁCH SỰ KIỆN NỔI BẬT & ĐÃ DIỄN RA */}
-      <EventsListSection activeFilter={activeFilter} pageProps={pageProps} />
+      <EventsListSection
+        activeFilter={activeFilter}
+        activeFilterName={activeFilterName}
+        pageProps={pageProps}
+      />
 
       {/* 4. CTA SECTION: ĐỒNG HÀNH KIẾN TẠO SỰ KIỆN TIẾP THEO */}
       <EventsCtaSection pageProps={pageProps} />

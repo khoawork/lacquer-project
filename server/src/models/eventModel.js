@@ -1,6 +1,30 @@
 const { sequelize, DataTypes } = require('../config/db');
 
 /**
+ * Model EventCategory: Lưu danh mục sự kiện (chỉ gồm id và name)
+ */
+const EventCategory = sequelize.define(
+  'EventCategory',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    name: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+      unique: true,
+    },
+  },
+  {
+    tableName: 'event_categories',
+    timestamps: false,
+    underscored: true,
+  }
+);
+
+/**
  * Model Event: Chỉ lưu các thông tin liên quan đến sự kiện (không chứa slug)
  */
 const Event = sequelize.define(
@@ -15,10 +39,9 @@ const Event = sequelize.define(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
-    category: {
-      type: DataTypes.STRING(100),
+    category_id: {
+      type: DataTypes.INTEGER,
       allowNull: true,
-      defaultValue: 'Tọa đàm',
     },
     event_date: {
       type: DataTypes.DATE,
@@ -61,5 +84,6 @@ const Event = sequelize.define(
 );
 
 module.exports = {
+  EventCategory,
   Event,
 };
