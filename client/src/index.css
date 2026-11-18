@@ -244,3 +244,216 @@ div.font-cursive,
 .anim-fly-3, .sparkle-3, .anim-sparkle-3, .anim-orb-3, .anim-about-3 { animation: flySparkle3 10s ease-in-out infinite; }
 .anim-fly-4, .sparkle-4, .anim-sparkle-4, .anim-orb-4, .anim-about-4 { animation: flySparkle4 12s ease-in-out infinite; }
 .anim-fly-5, .sparkle-5, .anim-sparkle-5, .anim-orb-5, .anim-about-5 { animation: flySparkle5 13s ease-in-out infinite; }
+
+/* =========================================================================
+   PROSE-LACQUER: Định dạng nội dung chi tiết bài viết phong phú (Rich Text)
+   Hỗ trợ hiển thị chữ như Word, hình ảnh, trích dẫn, tiêu đề, danh sách...
+   ========================================================================= */
+.prose-lacquer {
+  color: rgba(250, 247, 242, 0.95);
+  line-height: 1.95;
+  font-size: 17px;
+}
+
+@media (min-width: 768px) {
+  .prose-lacquer {
+    font-size: 18px;
+    line-height: 2.05;
+  }
+}
+
+.prose-lacquer h1,
+.prose-lacquer h2,
+.prose-lacquer h3,
+.prose-lacquer h4 {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif !important;
+  font-weight: 700;
+  color: #FFDF73;
+  margin-top: 2.25rem;
+  margin-bottom: 1rem;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.prose-lacquer h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.prose-lacquer h2 {
+  font-size: 1.7rem;
+  color: #FFE599;
+  border-left: 3px solid #D4AF37;
+  padding-left: 0.75rem;
+}
+
+.prose-lacquer h3 {
+  font-size: 1.4rem;
+  color: #FAF7F2;
+}
+
+.prose-lacquer h4 {
+  font-size: 1.2rem;
+  color: #EADBCE;
+}
+
+.prose-lacquer p {
+  margin-top: 1.1rem;
+  margin-bottom: 1.1rem;
+  text-align: justify;
+}
+
+.prose-lacquer strong,
+.prose-lacquer b {
+  font-weight: 700;
+  color: #FFDF73;
+}
+
+.prose-lacquer em,
+.prose-lacquer i {
+  font-style: italic;
+  color: #FAF7F2;
+}
+
+.prose-lacquer u {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: #D4AF37;
+}
+
+.prose-lacquer strike,
+.prose-lacquer s {
+  text-decoration: line-through;
+  opacity: 0.7;
+}
+
+.prose-lacquer a {
+  color: #FFDF73;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+
+.prose-lacquer a:hover {
+  color: #FFFFFF;
+}
+
+.prose-lacquer blockquote {
+  position: relative;
+  margin: 1.75rem 0;
+  padding: 1.25rem 1.75rem;
+  background: linear-gradient(135deg, rgba(65, 14, 20, 0.6) 0%, rgba(26, 6, 9, 0.8) 100%);
+  border-left: 4px solid #FFDF73;
+  border-radius: 0 0.75rem 0.75rem 0;
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.6), inset 0 0 16px rgba(212, 175, 55, 0.08);
+  font-style: italic;
+  color: #FFE599;
+}
+
+.prose-lacquer ul,
+.prose-lacquer ol {
+  margin: 1.25rem 0;
+  padding-left: 1.75rem;
+}
+
+.prose-lacquer ul {
+  list-style-type: disc;
+}
+
+.prose-lacquer ol {
+  list-style-type: decimal;
+}
+
+.prose-lacquer li {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: rgba(250, 247, 242, 0.92);
+}
+
+.prose-lacquer hr {
+  margin: 2.5rem 0;
+  border: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent);
+}
+
+.prose-lacquer figure {
+  margin: 2rem 0;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.prose-lacquer figure img,
+.prose-lacquer img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.875rem;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.9);
+  transition: transform 0.2s ease, outline 0.15s ease;
+}
+
+/* Hiệu ứng khi rê chuột vào ảnh trong khung soạn thảo để sửa */
+[contenteditable="true"] .prose-lacquer img:hover,
+[contenteditable="true"] .prose-lacquer figure img:hover,
+div[contenteditable="true"].prose-lacquer img:hover,
+div[contenteditable="true"].prose-lacquer figure img:hover {
+  cursor: pointer;
+  outline: 2px dashed #FFDF73;
+  outline-offset: 4px;
+}
+
+.prose-lacquer figcaption {
+  font-size: 0.85rem;
+  color: rgba(234, 219, 206, 0.8);
+  font-style: italic;
+  margin-top: 0.65rem;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.prose-lacquer figcaption[contenteditable="true"] {
+  cursor: text;
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  min-width: 120px;
+}
+
+.prose-lacquer figcaption[contenteditable="true"]:hover,
+.prose-lacquer figcaption[contenteditable="true"]:focus {
+  background: rgba(212, 175, 55, 0.15);
+  outline: 1px dashed rgba(212, 175, 55, 0.5);
+  color: #FFF3D6;
+}
+
+.prose-lacquer figcaption[contenteditable="true"]:empty::before {
+  content: attr(data-placeholder);
+  color: rgba(234, 219, 206, 0.4);
+}
+
+.prose-lacquer table {
+  width: 100%;
+  margin: 1.75rem 0;
+  border-collapse: collapse;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  background: rgba(26, 6, 9, 0.6);
+}
+
+.prose-lacquer th,
+.prose-lacquer td {
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  text-align: left;
+}
+
+.prose-lacquer th {
+  background: rgba(65, 14, 20, 0.85);
+  color: #FFDF73;
+  font-weight: 700;
+}
+

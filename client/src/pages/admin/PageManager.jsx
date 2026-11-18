@@ -1203,13 +1203,24 @@ const PageManager = () => {
   // Toggle Bài viết tin tức được tick chọn
   const handleToggleNews = (id) => {
     const numId = Number(id);
-    const currentList = Array.isArray(parsedProps.featured_article_ids)
+    const currentList = Array.isArray(parsedProps.selected_news_ids)
+      ? parsedProps.selected_news_ids.map(Number)
+      : Array.isArray(parsedProps.featured_article_ids)
       ? parsedProps.featured_article_ids.map(Number)
-      : [];
+      : allNews.map((n) => Number(n.id));
+
     const updated = currentList.includes(numId)
       ? currentList.filter((item) => item !== numId)
       : [...currentList, numId];
-    handlePropChange('featured_article_ids', updated);
+
+    const currentFeatured = parsedProps.featured_news_id ? Number(parsedProps.featured_news_id) : null;
+    const nextFeatured = (currentFeatured === numId && !updated.includes(numId)) ? null : currentFeatured;
+
+    handlePropsPatch({
+      selected_news_ids: updated,
+      featured_article_ids: updated,
+      featured_news_id: nextFeatured,
+    });
   };
 
   // Lưu trang vào Cơ sở dữ liệu

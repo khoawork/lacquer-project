@@ -58,6 +58,28 @@ export const uploadService = {
     }
     throw new Error(res.data?.message || 'Không thể tải tài liệu lên máy chủ');
   },
+
+  /**
+   * Tải tệp Word (.docx) hoặc PDF (.pdf) lên để tự động trích xuất văn bản + ảnh lên Cloudinary
+   * @param {File} file
+   * @returns {Promise<{ success: boolean, html: string, title: string, type: string, imageCount: number, images: string[] }>}
+   */
+  parseDocument: async (file) => {
+    if (!file || !(file instanceof File || file instanceof Blob)) {
+      throw new Error('Vui lòng chọn tệp Word (.docx) hoặc PDF (.pdf) hợp lệ');
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const parseUrl = `${BASE_URL}${endpoints.parseDocument || '/upload/parse-document'}`;
+    const res = await axios.post(parseUrl, formData);
+
+    if (res.data && res.data.success) {
+      return res.data;
+    }
+    throw new Error(res.data?.message || 'Không thể phân tích tài liệu Word / PDF');
+  },
 };
 
 export default uploadService;

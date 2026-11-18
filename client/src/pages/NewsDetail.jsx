@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Calendar,
   User,
@@ -14,13 +14,13 @@ import {
   RefreshCw,
   Sparkles,
   Newspaper,
-} from 'lucide-react';
-import newsServices from '../services/newsServices';
-import { getImageUrl } from '../configs/Apis';
-import FloatingSparkles from '../components/common/FloatingSparkles';
+} from "lucide-react";
+import newsServices from "../services/newsServices";
+import { getImageUrl } from "../configs/Apis";
+import FloatingSparkles from "../components/common/FloatingSparkles";
 
 const DEFAULT_COVER =
-  'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1400&q=80';
+  "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?auto=format&fit=crop&w=1400&q=80";
 
 const NewsDetail = () => {
   const { id } = useParams();
@@ -34,7 +34,7 @@ const NewsDetail = () => {
 
   useEffect(() => {
     let isMounted = true;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     const fetchArticleDetail = async () => {
       try {
@@ -57,7 +57,8 @@ const NewsDetail = () => {
         const allList = allRes?.data?.data || [];
 
         if (!currentItem && allList.length > 0) {
-          currentItem = allList.find((item) => String(item.id) === String(id)) || null;
+          currentItem =
+            allList.find((item) => String(item.id) === String(id)) || null;
         }
 
         if (isMounted) {
@@ -68,20 +69,24 @@ const NewsDetail = () => {
               .filter((item) => String(item.id) !== String(currentItem.id))
               .sort((a, b) => {
                 const aSameCat =
-                  Number(a.category_id) === Number(currentItem.category_id) ? -1 : 1;
+                  Number(a.category_id) === Number(currentItem.category_id)
+                    ? -1
+                    : 1;
                 const bSameCat =
-                  Number(b.category_id) === Number(currentItem.category_id) ? -1 : 1;
+                  Number(b.category_id) === Number(currentItem.category_id)
+                    ? -1
+                    : 1;
                 return aSameCat - bSameCat;
               })
               .slice(0, 3);
             setRelatedArticles(related);
           } else {
-            setError('Không tìm thấy bài viết yêu cầu.');
+            setError("Không tìm thấy bài viết yêu cầu.");
           }
         }
       } catch (err) {
-        console.error('Lỗi tải bài viết chi tiết:', err);
-        if (isMounted) setError(err.message || 'Lỗi kết nối máy chủ');
+        console.error("Lỗi tải bài viết chi tiết:", err);
+        if (isMounted) setError(err.message || "Lỗi kết nối máy chủ");
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -106,13 +111,13 @@ const NewsDetail = () => {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'Gần đây';
+    if (!dateString) return "Gần đây";
     try {
       const d = new Date(dateString);
-      return d.toLocaleDateString('vi-VN', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
+      return d.toLocaleDateString("vi-VN", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
       });
     } catch {
       return dateString;
@@ -135,7 +140,10 @@ const NewsDetail = () => {
     return (
       <div className="font-body text-[17px] md:text-[19px] text-[#FAF7F2]/90 leading-[2.1] space-y-6">
         {paragraphs.map((p, pIdx) => (
-          <p key={pIdx} className="text-pretty indent-6 sm:indent-8 first:indent-0">
+          <p
+            key={pIdx}
+            className="text-pretty indent-6 sm:indent-8 first:indent-0"
+          >
             {p}
           </p>
         ))}
@@ -147,7 +155,7 @@ const NewsDetail = () => {
     if (!article?.tags) return [];
     if (Array.isArray(article.tags)) return article.tags;
     return String(article.tags)
-      .split(',')
+      .split(",")
       .map((t) => t.trim())
       .filter(Boolean);
   }, [article?.tags]);
@@ -163,12 +171,14 @@ const NewsDetail = () => {
 
       <FloatingSparkles size={4} />
 
-      <main className="relative z-10 pt-24 pb-28 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="relative z-10 pt-6 pb-28 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Loading state */}
         {loading && (
           <div className="min-h-[60vh] flex flex-col items-center justify-center text-[#FFDF73] gap-3 font-sans">
             <RefreshCw className="w-8 h-8 animate-spin text-[#FFDF73]" />
-            <span className="text-base tracking-wider">Đang mở trang tư liệu bách niên...</span>
+            <span className="text-base tracking-wider">
+              Đang mở trang tư liệu bách niên...
+            </span>
           </div>
         )}
 
@@ -182,7 +192,8 @@ const NewsDetail = () => {
               Không Tìm Thấy Bài Viết
             </h2>
             <p className="font-body text-[#FAF7F2]/75 text-sm leading-relaxed">
-              Bài viết này có thể đã được lưu trữ hoặc tạm ẩn. Vui lòng quay lại danh sách tin tức để khám phá các chuyên khảo khác.
+              Bài viết này có thể đã được lưu trữ hoặc tạm ẩn. Vui lòng quay lại
+              danh sách tin tức để khám phá các chuyên khảo khác.
             </p>
             <Link
               to="/news"
@@ -209,7 +220,7 @@ const NewsDetail = () => {
                 </Link>
                 <span>/</span>
                 <span className="text-[#FFDF73] font-medium truncate max-w-[200px] sm:max-w-xs">
-                  {article.category || 'Chuyên khảo'}
+                  {article.category}
                 </span>
               </div>
 
@@ -223,28 +234,7 @@ const NewsDetail = () => {
             </nav>
 
             {/* Header: Category Badge, Title, Meta */}
-            <header className="space-y-5 text-center max-w-4xl mx-auto pt-4">
-              {/* Category Pill */}
-              <div className="inline-flex items-center gap-2">
-                <span
-                  className="px-4 py-1.5 rounded-full font-sans text-xs md:text-sm tracking-[0.2em] font-bold uppercase shadow-lg"
-                  style={{
-                    background:
-                      'linear-gradient(135deg, rgba(82, 21, 21, 0.9) 0%, rgba(36, 10, 14, 0.95) 100%)',
-                    color: '#FFDF73',
-                    border: '1px solid rgba(212, 175, 55, 0.5)',
-                  }}
-                >
-                  {article.category || 'DÒNG CHẢY 100 NĂM'}
-                </span>
-                {article.is_featured && (
-                  <span className="px-3 py-1.5 rounded-full bg-gradient-to-r from-[#D4AF37] to-[#FFDF73] text-[#1a0507] text-xs font-bold uppercase tracking-wider flex items-center gap-1 shadow-md">
-                    <Sparkles className="w-3 h-3" />
-                    Chuyên Khảo Nổi Bật
-                  </span>
-                )}
-              </div>
-
+            <header className="space-y-5 text-center max-w-6xl mx-auto pt-4">
               {/* Title */}
               <h1 className="font-sans text-[32px] sm:text-[44px] md:text-[52px] lg:text-[56px] leading-[1.18] font-bold text-gold-gradient tracking-tight py-1">
                 {article.title}
@@ -255,7 +245,7 @@ const NewsDetail = () => {
                 <div className="flex items-center gap-1.5">
                   <User className="w-4 h-4 text-[#D4AF37]" />
                   <span className="text-[#FFDF73] font-medium font-sans text-sm">
-                    {article.author || 'Ban Biên Tập Hành Trình'}
+                    {article.author}
                   </span>
                 </div>
                 <span>•</span>
@@ -266,7 +256,7 @@ const NewsDetail = () => {
                 <span>•</span>
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-4 h-4 text-[#D4AF37]" />
-                  <span>{article.read_time || '5 phút đọc'}</span>
+                  <span>{article.read_time || "5 phút đọc"}</span>
                 </div>
                 {article.views_count > 0 && (
                   <>
@@ -287,7 +277,9 @@ const NewsDetail = () => {
                   {copied ? (
                     <>
                       <Check className="w-3.5 h-3.5 text-green-400" />
-                      <span className="text-green-400 font-semibold">Đã chép link</span>
+                      <span className="text-green-400 font-semibold">
+                        Đã chép link
+                      </span>
                     </>
                   ) : (
                     <>
@@ -308,7 +300,8 @@ const NewsDetail = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#100203] via-transparent to-transparent opacity-60 pointer-events-none" />
               <div className="p-3 bg-[#180406]/90 border-t border-[#D4AF37]/20 text-center text-xs text-[#EADBCE]/70 italic font-body">
-                Tư liệu hình ảnh thuộc Dự án Hành trình 100 Năm Sơn Mài Hội Họa Việt Nam
+                Tư liệu hình ảnh thuộc Dự án Hành trình 100 Năm Sơn Mài Hội Họa
+                Việt Nam
               </div>
             </div>
 
@@ -318,9 +311,10 @@ const NewsDetail = () => {
                 className="p-6 sm:p-8 rounded-2xl relative overflow-hidden"
                 style={{
                   background:
-                    'linear-gradient(135deg, rgba(65, 14, 20, 0.8) 0%, rgba(26, 6, 9, 0.95) 100%)',
-                  border: '1px solid rgba(212, 175, 55, 0.45)',
-                  boxShadow: '0 12px 36px -10px rgba(0,0,0,0.8), inset 0 0 24px rgba(212,175,55,0.1)',
+                    "linear-gradient(135deg, rgba(65, 14, 20, 0.8) 0%, rgba(26, 6, 9, 0.95) 100%)",
+                  border: "1px solid rgba(212, 175, 55, 0.45)",
+                  boxShadow:
+                    "0 12px 36px -10px rgba(0,0,0,0.8), inset 0 0 24px rgba(212,175,55,0.1)",
                 }}
               >
                 <div className="absolute -top-6 -left-4 text-7xl font-sans text-[#D4AF37]/15 select-none pointer-events-none">
@@ -362,7 +356,6 @@ const NewsDetail = () => {
               </div>
             )}
 
-
             {/* Related Articles Section */}
             {relatedArticles.length > 0 && (
               <section className="pt-12 border-t border-[#D4AF37]/25 space-y-6">
@@ -372,7 +365,8 @@ const NewsDetail = () => {
                       Bài Viết Cùng Dòng Chảy
                     </h3>
                     <p className="text-xs text-[#EADBCE]/70 font-body">
-                      Tiếp tục hành trình khám phá những câu chuyện di sản và khảo cứu chuyên sâu.
+                      Tiếp tục hành trình khám phá những câu chuyện di sản và
+                      khảo cứu chuyên sâu.
                     </p>
                   </div>
                   <Link
@@ -399,7 +393,7 @@ const NewsDetail = () => {
                         />
                         <div className="absolute top-2.5 left-2.5">
                           <span className="px-2.5 py-0.5 rounded text-[10px] font-sans font-bold uppercase bg-[#521515]/90 text-[#FFDF73] border border-[#D4AF37]/35">
-                            {rel.category || 'Tin tức'}
+                            {rel.category || "Tin tức"}
                           </span>
                         </div>
                       </div>

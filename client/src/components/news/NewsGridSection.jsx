@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { RefreshCw, Newspaper, Calendar, ArrowRight, Clock, Sparkles } from 'lucide-react';
 import newsServices from '../../services/newsServices';
@@ -17,48 +17,42 @@ const NewsGridSection = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const selectedNewsIds = (
-    pageProps?.featured_article_ids ||
-    pageProps?.selected_news_ids ||
-    []
-  ).map(Number);
-
-  // Tải tổng danh sách 1 lần để cập nhật số đếm cho bộ lọc
-  useEffect(() => {
-    let isMounted = true;
-    if (onArticlesLoaded) {
-      newsServices
-        .getNews()
-        .then((res) => {
-          if (res.data?.success && isMounted) {
-            onArticlesLoaded(res.data.data || []);
-          }
-        })
-        .catch(() => {});
+  // 1. Danh sách ID bài viết được Admin chọn hiển thị trên trang tin tức
+  const selectedNewsIds = useMemo(() => {
+    if (Array.isArray(pageProps?.selected_news_ids)) {
+      return pageProps.selected_news_ids.map(Number);
     }
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+    // Hỗ trợ cấu hình cũ
+    if (Array.isArray(pageProps?.featured_article_ids)) {
+      return pageProps.featured_article_ids.map(Number);
+    }
+    // null: Chưa từng cấu hình qua Admin -> hiển thị toàn bộ mặc định
+    return null;
+  }, [pageProps?.selected_news_ids, pageProps?.featured_article_ids]);
 
-  // Truy vấn dữ liệu bài viết theo category_id từ Backend API
+  // 2. ID của DUY NHẤT 1 bài viết nổi bật được chọn để đưa lên đầu tiên
+  const featuredNewsId = useMemo(() => {
+    if (
+      pageProps?.featured_news_id !== undefined &&
+      pageProps?.featured_news_id !== null &&
+      pageProps?.featured_news_id !== ''
+    ) {
+      return Number(pageProps.featured_news_id);
+    }
+    return null;
+  }, [pageProps?.featured_news_id]);
+
+  // Truy vấn dữ liệu tất cả bài viết từ Backend API
   useEffect(() => {
     let isMounted = true;
     const fetchArticles = async () => {
       try {
         setLoading(true);
         setError(null);
-        const params =
-          activeCategoryId && activeCategoryId !== 'all'
-            ? { category_id: Number(activeCategoryId) }
-            : {};
-        const res = await newsServices.getNews(params);
+        const res = await newsServices.getNews();
         if (res.data && res.data.success && isMounted) {
           const list = res.data.data || [];
           setArticles(list);
-          if ((!activeCategoryId || activeCategoryId === 'all') && onArticlesLoaded) {
-            onArticlesLoaded(list);
-          }
         }
       } catch (err) {
         console.error('Lỗi khi tải bài viết từ cơ sở dữ liệu:', err);
@@ -72,28 +66,47 @@ const NewsGridSection = ({
     return () => {
       isMounted = false;
     };
-  }, [activeCategoryId]);
+  }, []);
 
-  // Lọc và sắp xếp theo category_id + bài viết ưu tiên
-  const filteredArticles = React.useMemo(() => {
+  // Lọc tập bài viết gốc: CHỈ GIỮ LẠI CÁC BÀI ĐƯỢC ADMIN CHỌN HIỂN THỊ
+  const visibleArticles = useMemo(() => {
     if (!articles || articles.length === 0) return [];
+    if (selectedNewsIds === null) return articles; // Mặc định hiển thị tất cả nếu chưa lưu cấu hình
+    return articles.filter((a) => selectedNewsIds.includes(Number(a.id)));
+  }, [articles, selectedNewsIds]);
 
-    let result = articles;
+  // Đồng bộ danh sách bài viết thực tế hiển thị về News.jsx để tính toán số đếm ở bộ lọc
+  useEffect(() => {
+    if (onArticlesLoaded && articles.length > 0) {
+      onArticlesLoaded(visibleArticles);
+    }
+  }, [visibleArticles, onArticlesLoaded, articles.length]);
+
+  // Lọc theo danh mục đã chọn VÀ sắp xếp đưa duy nhất 1 bài nổi bật lên vị trí đầu tiên
+  const filteredArticles = useMemo(() => {
+    if (!visibleArticles || visibleArticles.length === 0) return [];
+
+    let result = visibleArticles;
+    // Lọc theo category nếu người dùng click chuyên mục
     if (activeCategoryId && activeCategoryId !== 'all') {
-      result = articles.filter((a) => Number(a.category_id) === Number(activeCategoryId));
+      result = visibleArticles.filter(
+        (a) => Number(a.category_id) === Number(activeCategoryId)
+      );
     }
 
-    if (selectedNewsIds.length > 0) {
-      return [...result].sort((a, b) => {
-        const aFeatured = selectedNewsIds.includes(Number(a.id));
-        const bFeatured = selectedNewsIds.includes(Number(b.id));
-        if (aFeatured && !bFeatured) return -1;
-        if (!aFeatured && bFeatured) return 1;
-        return 0;
+    // Đưa duy nhất 1 bài viết nổi bật lên đầu tiên (vị trí index 0)
+    if (featuredNewsId) {
+      result = [...result].sort((a, b) => {
+        const aIsFeatured = Number(a.id) === featuredNewsId;
+        const bIsFeatured = Number(b.id) === featuredNewsId;
+        if (aIsFeatured && !bIsFeatured) return -1;
+        if (!aIsFeatured && bIsFeatured) return 1;
+        return 0; // Giữ nguyên thứ tự các bài viết còn lại
       });
     }
+
     return result;
-  }, [articles, activeCategoryId, JSON.stringify(selectedNewsIds)]);
+  }, [visibleArticles, activeCategoryId, featuredNewsId]);
 
   const formatArticleDate = (dateString) => {
     if (!dateString) return 'Gần đây';
@@ -127,15 +140,19 @@ const NewsGridSection = ({
         </div>
       )}
 
-      {/* Empty state */}
+      {/* Empty state: Không có bài viết nào được chọn hoặc không có bài trong chuyên mục */}
       {!loading && filteredArticles.length === 0 && (
         <div className="p-16 rounded-2xl border border-[#D4AF37]/25 text-center text-[#EADBCE]/80 font-sans bg-[#180406]/75 space-y-3 shadow-xl max-w-2xl mx-auto">
           <Newspaper className="w-10 h-10 text-[#FFDF73] mx-auto opacity-70 mb-2" />
           <h4 className="text-xl font-bold text-[#FFDF73]">
-            Chưa có bài viết trong chuyên mục “{activeCategoryName}”
+            {visibleArticles.length === 0
+              ? 'Chưa có bài viết nào được chọn hiển thị trên trang tin tức'
+              : `Chưa có bài viết trong chuyên mục “${activeCategoryName}”`}
           </h4>
           <p className="text-xs text-[#FAF7F2]/70 leading-relaxed">
-            Nội dung đang được Ban Biên Tập hoàn tất và sẽ sớm được cập nhật vào kho lưu trữ bách niên.
+            {visibleArticles.length === 0
+              ? 'Vui lòng truy cập trang Quản trị Admin để tích chọn các bài viết được phép xuất hiện tại trang này.'
+              : 'Nội dung đang được Ban Biên Tập hoàn tất và sẽ sớm được cập nhật vào kho lưu trữ bách niên.'}
           </p>
         </div>
       )}
@@ -144,21 +161,26 @@ const NewsGridSection = ({
       {!loading && filteredArticles.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredArticles.map((article) => {
-            const isFeatured = selectedNewsIds.includes(Number(article.id));
+            // Chỉ duy nhất 1 bài viết nổi bật được đánh dấu
+            const isFeatured = featuredNewsId && Number(article.id) === featuredNewsId;
             const cover = getImageUrl(article.thumbnail_url) || DEFAULT_COVER;
 
             return (
               <article
                 key={article.id}
-                className="flex flex-col rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group relative"
+                className={`flex flex-col rounded-xl overflow-hidden transition-all duration-500 hover:-translate-y-2 group relative ${
+                  isFeatured ? 'ring-1 ring-[#FFDF73]/60' : ''
+                }`}
                 style={{
-                  background:
-                    'linear-gradient(145deg, rgba(42, 12, 16, 0.78) 0%, rgba(22, 6, 9, 0.95) 100%)',
+                  background: isFeatured
+                    ? 'linear-gradient(145deg, rgba(58, 16, 22, 0.9) 0%, rgba(26, 7, 10, 0.98) 100%)'
+                    : 'linear-gradient(145deg, rgba(42, 12, 16, 0.78) 0%, rgba(22, 6, 9, 0.95) 100%)',
                   border: isFeatured
-                    ? '1px solid rgba(255, 223, 115, 0.55)'
+                    ? '1.5px solid rgba(255, 223, 115, 0.75)'
                     : '1px solid rgba(212, 175, 55, 0.32)',
-                  boxShadow:
-                    '0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 223, 115, 0.15)',
+                  boxShadow: isFeatured
+                    ? '0 16px 40px -8px rgba(255, 223, 115, 0.22), 0 10px 30px -10px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 223, 115, 0.3)'
+                    : '0 10px 30px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 223, 115, 0.15)',
                 }}
               >
                 {/* Thumbnail Container with Link */}
@@ -174,7 +196,7 @@ const NewsGridSection = ({
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#160609] via-transparent to-transparent" />
 
-                  {/* Category Pill Badge */}
+                  {/* Category & Featured Pill Badges */}
                   <div className="absolute top-3.5 left-3.5 flex items-center gap-2">
                     <span
                       className="px-3 py-1 rounded font-sans text-[12px] tracking-wider font-semibold shadow-md uppercase"
@@ -187,8 +209,8 @@ const NewsGridSection = ({
                       {article.category_name || article.category || 'Tin tức'}
                     </span>
                     {isFeatured && (
-                      <span className="px-2.5 py-1 rounded bg-[#FFDF73] text-[#1a0507] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-md">
-                        <Sparkles className="w-3 h-3" />
+                      <span className="px-2.5 py-1 rounded bg-gradient-to-r from-[#FFE58F] via-[#FFDF73] to-[#D4AF37] text-[#1a0507] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 shadow-[0_2px_10px_rgba(255,223,115,0.45)]">
+                        <Sparkles className="w-3.5 h-3.5 fill-current" />
                         Nổi bật
                       </span>
                     )}

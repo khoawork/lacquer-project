@@ -44,6 +44,7 @@ export const endpoints = {
   // Upload API
   upload: '/upload',
   uploadDocument: '/upload/document',
+  parseDocument: '/upload/parse-document',
 };
 
 const getBaseUrl = () => {

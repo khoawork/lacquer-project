@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="93fa407b-4837-4953-8b72-1b6e2c7fcca4" name="Changes" comment="" />
+    <list default="true" id="93fa407b-4837-4953-8b72-1b6e2c7fcca4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/client/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/admin/pages/NewsPageEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/admin/pages/NewsPageEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/components/news/NewsGridSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/components/news/NewsGridSection.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/configs/Apis.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/configs/Apis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/NewsDetail.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/NewsDetail.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/admin/DataCatalogManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/admin/DataCatalogManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/pages/admin/PageManager.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/pages/admin/PageManager.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client/src/services/uploadService.js" beforeDir="false" afterPath="$PROJECT_DIR$/client/src/services/uploadService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/server/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/config/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/config/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/routes/uploadRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/routes/uploadRoutes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/src/scripts/seed.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/src/scripts/seed.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,21 +48,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "D:/ProjectWork/lacquer-project",
-    "to.speed.mode.migration.done": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/ProjectWork/lacquer-project&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>

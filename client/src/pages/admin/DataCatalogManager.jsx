@@ -27,6 +27,7 @@ import newsServices from '../../services/newsServices';
 import collectionServices from '../../services/collectionServices';
 import eventServices from '../../services/eventServices';
 import ImageUploader from '../../components/common/ImageUploader';
+import RichTextEditor from '../../components/common/RichTextEditor';
 import { getImageUrl } from '../../configs/Apis';
 
 const DataCatalogManager = () => {
@@ -925,7 +926,7 @@ const DataCatalogManager = () => {
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-hidden"
           onClick={(e) => { if (e.target === e.currentTarget) setModalType(null); }}
         >
-          <div className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-full max-w-4xl lg:max-w-5xl max-h-[92vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header cố định */}
             <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#28060a]">
               <h2 className="font-sans text-lg sm:text-xl font-bold text-[#FFDF73]">
@@ -1043,14 +1044,27 @@ const DataCatalogManager = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs uppercase font-bold text-[#FFDF73] mb-1">
-                    Nội Dung Chi Tiết
-                  </label>
-                  <textarea
-                    rows={5}
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <label className="block text-xs uppercase font-bold text-[#FFDF73]">
+                      Nội Dung Chi Tiết Bài Viết (Soạn Thảo Phong Cách Word)
+                    </label>
+                    <span className="text-[11px] text-[#EADBCE]/70 italic font-sans">
+                      Hỗ trợ nhập tệp Word / PDF (tự trích ảnh lên Cloud), gắn ảnh máy tính, tiêu đề H2-H4, format chuẩn
+                    </span>
+                  </div>
+                  <RichTextEditor
                     value={newsForm.content}
-                    onChange={(e) => setNewsForm({ ...newsForm, content: e.target.value })}
-                    className="w-full px-3 py-2 rounded bg-[#140305] border border-[#D4AF37]/40 text-white text-sm focus:border-[#FFDF73] focus:outline-none font-sans"
+                    onChange={(html) => setNewsForm((prev) => ({ ...prev, content: html }))}
+                    onDocumentParsed={(doc) => {
+                      if (!newsForm.title && doc.title) {
+                        setNewsForm((prev) => ({ ...prev, title: doc.title }));
+                      }
+                      if (!newsForm.summary && doc.title) {
+                        setNewsForm((prev) => ({ ...prev, summary: `Bài viết: ${doc.title}` }));
+                      }
+                    }}
+                    placeholder="Nhập nội dung bài viết chi tiết tại đây. Bạn có thể bấm [Nhập Word] để nạp nội dung tự động hoặc tự gõ, căn lề, trích dẫn và gắn ảnh..."
+                    minHeight="380px"
                   />
                 </div>
 
@@ -1096,7 +1110,7 @@ const DataCatalogManager = () => {
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-hidden"
           onClick={(e) => { if (e.target === e.currentTarget) setModalType(null); }}
         >
-          <div className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-full max-w-4xl lg:max-w-5xl max-h-[92vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header cố định */}
             <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#28060a]">
               <h2 className="font-sans text-lg sm:text-xl font-bold text-[#FFDF73]">
@@ -1258,7 +1272,7 @@ const DataCatalogManager = () => {
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-hidden"
           onClick={(e) => { if (e.target === e.currentTarget) setModalType(null); }}
         >
-          <div className="w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-full max-w-4xl lg:max-w-5xl max-h-[92vh] flex flex-col bg-[#200407] border border-[#D4AF37]/50 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
             {/* Header cố định */}
             <div className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-[#D4AF37]/30 bg-[#28060a]">
               <h2 className="font-sans text-lg sm:text-xl font-bold text-[#FFDF73]">

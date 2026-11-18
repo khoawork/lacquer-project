@@ -845,6 +845,8 @@ async function runSeed() {
         slug: '/news',
         props: {
           headline: 'Tin Tức & Tư Liệu Nghiên Cứu',
+          description:
+            'Tin tức của Hành trình không chỉ đưa tin sự kiện. Đây là nơi lịch sử được kể lại bằng ngôn ngữ gần gũi, người làm nghề được nhìn thấy và các ý tưởng mới được đưa vào đối thoại công chúng.',
           categories: [
             'Dòng chảy 100 năm',
             'Từ xưởng đến đời sống',
@@ -853,6 +855,9 @@ async function runSeed() {
             'Nhật ký Hành trình',
             'Góc nhìn quốc tế',
           ],
+          selected_news_ids: [1, 2, 3, 4, 5, 6],
+          featured_article_ids: [1, 2, 3, 4, 5, 6],
+          featured_news_id: 1,
         },
       },
       {
