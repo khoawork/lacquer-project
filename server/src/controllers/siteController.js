@@ -48,8 +48,14 @@ class SiteController {
   async saveMenu(req, res) {
     try {
       const { menuKey } = req.params;
-      const { name, items_json } = req.body;
-      const menu = await siteService.saveMenu(menuKey, name, items_json);
+      const { name } = req.body;
+      const itemsJson = req.body.items_json ?? req.body.items;
+
+      if (!Array.isArray(itemsJson)) {
+        return res.status(400).json({ success: false, message: 'items_json phải là mảng' });
+      }
+
+      const menu = await siteService.saveMenu(menuKey, name, itemsJson);
       res.json({ success: true, message: 'Lưu menu thành công', data: menu });
     } catch (error) {
       res.status(400).json({ success: false, message: error.message });

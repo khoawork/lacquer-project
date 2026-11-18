@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import ImageUploader from '../../common/ImageUploader';
 
-const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
+const AboutPageEditor = ({ parsedProps, handlePropChange, handlePropsPatch }) => {
   // 1. Mission Points (Thêm / Giảm / Sửa)
   const currentMissionPoints = Array.isArray(parsedProps.mission_points)
     ? parsedProps.mission_points
@@ -197,8 +197,11 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
               label="Biểu Trưng Tròn / Dấu Ấn Đầu Trang (hero_seal / hero_image)"
               value={parsedProps.hero_seal || parsedProps.hero_image || ''}
               onChange={(val) => {
-                handlePropChange('hero_seal', val);
-                handlePropChange('hero_image', val);
+                if (handlePropsPatch) {
+                  handlePropsPatch({ hero_seal: val, hero_image: val });
+                } else {
+                  handlePropChange('hero_seal', val);
+                }
               }}
             />
           </div>
@@ -380,8 +383,12 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
               type="text"
               value={parsedProps.mission_title || parsedProps.mission || ''}
               onChange={(e) => {
-                handlePropChange('mission_title', e.target.value);
-                handlePropChange('mission', e.target.value);
+                const val = e.target.value;
+                if (handlePropsPatch) {
+                  handlePropsPatch({ mission_title: val, mission: val });
+                } else {
+                  handlePropChange('mission_title', val);
+                }
               }}
               placeholder="Kích hoạt giá trị sống của sơn mài hội họa Việt Nam"
               className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/30 text-white text-xs font-bold"
@@ -472,8 +479,12 @@ const AboutPageEditor = ({ parsedProps, handlePropChange }) => {
                 rows={3}
                 value={parsedProps.vision_desc || parsedProps.vision || ''}
                 onChange={(e) => {
-                  handlePropChange('vision_desc', e.target.value);
-                  handlePropChange('vision', e.target.value);
+                  const val = e.target.value;
+                  if (handlePropsPatch) {
+                    handlePropsPatch({ vision_desc: val, vision: val });
+                  } else {
+                    handlePropChange('vision_desc', val);
+                  }
                 }}
                 placeholder="Đến năm 2030, Hành trình hướng tới một mạng lưới bền vững..."
                 className="w-full px-3 py-2 rounded-lg bg-[#100203] border border-[#D4AF37]/30 text-[#FAF7F2] text-xs leading-relaxed"

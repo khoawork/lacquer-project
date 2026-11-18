@@ -26,7 +26,7 @@ import {
 import newsServices from '../../services/newsServices';
 import collectionServices from '../../services/collectionServices';
 import eventServices from '../../services/eventServices';
-import siteServices from '../../services/siteServices';
+import siteServices, { parseCategorySetting } from '../../services/siteServices';
 import ImageUploader from '../../components/common/ImageUploader';
 import { getImageUrl } from '../../configs/Apis';
 
@@ -126,17 +126,11 @@ const DataCatalogManager = () => {
       try {
         const settingsRes = await siteServices.getSettings();
         if (settingsRes.data && settingsRes.data.success) {
-          const sList = settingsRes.data.data || [];
-          const catSetting = sList.find((s) => s.key === 'event_categories');
-          if (catSetting && catSetting.value) {
-            const parsed = Array.isArray(catSetting.value)
-              ? catSetting.value
-              : typeof catSetting.value === 'string'
-              ? JSON.parse(catSetting.value)
-              : null;
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              setEventCategories(parsed);
-            }
+          const parsed = parseCategorySetting(settingsRes.data.data);
+          if (parsed.length > 0) {
+            // Lọc bỏ 'Tất cả' khỏi danh sách quản lý thể loại trong admin
+            const adminCategories = parsed.filter((c) => c !== 'Tất cả');
+            setEventCategories(adminCategories.length > 0 ? adminCategories : DEFAULT_EVENT_CATEGORIES_LIST);
           }
         }
       } catch (err) {
@@ -160,36 +154,50 @@ const DataCatalogManager = () => {
       showNotification('error', `Thể loại "${trimmed}" đã tồn tại.`);
       return;
     }
+    const prev = eventCategories;
     const updated = [...eventCategories, trimmed];
     setEventCategories(updated);
     setNewCategoryInput('');
     setQuickCategoryInput('');
     try {
-      await siteServices.updateSetting(
+      const res = await siteServices.updateSetting(
         'event_categories',
-        JSON.stringify(updated),
+        ['Tất cả', ...updated.filter((c) => c !== 'Tất cả')],
         'Danh sách thể loại sự kiện'
       );
-      showNotification('success', `Đã thêm thể loại sự kiện "${trimmed}" thành công!`);
+      if (res.data && res.data.success) {
+        showNotification('success', `Đã thêm thể loại sự kiện "${trimmed}" thành công!`);
+      } else {
+        setEventCategories(prev);
+        showNotification('error', 'Lỗi lưu thể loại sự kiện: ' + (res.data?.message || 'Máy chủ từ chối lưu.'));
+      }
     } catch (err) {
-      showNotification('error', 'Lỗi lưu thể loại sự kiện: ' + err.message);
+      setEventCategories(prev);
+      showNotification('error', 'Lỗi lưu thể loại sự kiện: ' + (err.response?.data?.message || err.message));
     }
   };
 
   // Xóa thể loại sự kiện
   const handleDeleteCategory = async (catToDelete) => {
     if (!window.confirm(`Bạn có chắc muốn xóa thể loại "${catToDelete}"?`)) return;
+    const prev = eventCategories;
     const updated = eventCategories.filter((c) => c !== catToDelete);
     setEventCategories(updated);
     try {
-      await siteServices.updateSetting(
+      const res = await siteServices.updateSetting(
         'event_categories',
-        JSON.stringify(updated),
+        ['Tất cả', ...updated.filter((c) => c !== 'Tất cả')],
         'Danh sách thể loại sự kiện'
       );
-      showNotification('success', `Đã xóa thể loại "${catToDelete}" thành công!`);
+      if (res.data && res.data.success) {
+        showNotification('success', `Đã xóa thể loại "${catToDelete}" thành công!`);
+      } else {
+        setEventCategories(prev);
+        showNotification('error', 'Lỗi xóa thể loại: ' + (res.data?.message || 'Máy chủ từ chối lưu.'));
+      }
     } catch (err) {
-      showNotification('error', 'Lỗi xóa thể loại: ' + err.message);
+      setEventCategories(prev);
+      showNotification('error', 'Lỗi xóa thể loại: ' + (err.response?.data?.message || err.message));
     }
   };
 
@@ -264,16 +272,18 @@ const DataCatalogManager = () => {
         cover_image: newsForm.image,
       };
       if (modalType === 'create_news') {
-        await newsServices.createNews(payload);
+        const res = await newsServices.createNews(payload);
+        if (!res.data?.success) throw new Error(res.data?.message || 'Không thể tạo bài viết.');
         showNotification('success', 'Đã thêm bài viết tin tức mới thành công!');
       } else {
-        await newsServices.updateNews(currentEditItem.id, payload);
+        const res = await newsServices.updateNews(currentEditItem.id, payload);
+        if (!res.data?.success) throw new Error(res.data?.message || 'Không thể cập nhật bài viết.');
         showNotification('success', 'Đã cập nhật bài viết tin tức thành công!');
       }
       setModalType(null);
       loadData();
     } catch (err) {
-      showNotification('error', 'Lỗi lưu bài viết: ' + err.message);
+      showNotification('error', 'Lỗi lưu bài viết: ' + (err.response?.data?.message || err.message));
     } finally {
       setSubmitting(false);
     }
@@ -282,11 +292,12 @@ const DataCatalogManager = () => {
   const handleDeleteNews = async (id, title) => {
     if (!window.confirm(`Bạn có chắc chắn muốn xóa bài viết "${title}"?`)) return;
     try {
-      await newsServices.deleteNews(id);
+      const res = await newsServices.deleteNews(id);
+      if (!res.data?.success) throw new Error(res.data?.message || 'Không thể xóa bài viết.');
       showNotification('success', 'Đã xóa bài viết thành công!');
       loadData();
     } catch (err) {
-      showNotification('error', 'Lỗi xóa bài viết: ' + err.message);
+      showNotification('error', 'Lỗi xóa bài viết: ' + (err.response?.data?.message || err.message));
     }
   };
 
@@ -337,16 +348,18 @@ const DataCatalogManager = () => {
       };
 
       if (modalType === 'create_collection') {
-        await collectionServices.createCollection(payload);
+        const res = await collectionServices.createCollection(payload);
+        if (!res.data?.success) throw new Error(res.data?.message || 'Không thể tạo bộ sưu tập.');
         showNotification('success', 'Đã thêm bộ sưu tập mới thành công!');
       } else {
-        await collectionServices.updateCollection(currentEditItem.id, payload);
+        const res = await collectionServices.updateCollection(currentEditItem.id, payload);
+        if (!res.data?.success) throw new Error(res.data?.message || 'Không thể cập nhật bộ sưu tập.');
         showNotification('success', 'Đã cập nhật bộ sưu tập thành công!');
       }
       setModalType(null);
       loadData();
     } catch (err) {
-      showNotification('error', 'Lỗi lưu bộ sưu tập: ' + err.message);
+      showNotification('error', 'Lỗi lưu bộ sưu tập: ' + (err.response?.data?.message || err.message));
     } finally {
       setSubmitting(false);
     }
@@ -355,11 +368,12 @@ const DataCatalogManager = () => {
   const handleDeleteCollection = async (id, title) => {
     if (!window.confirm(`Bạn có chắc muốn xóa bộ sưu tập "${title}"?`)) return;
     try {
-      await collectionServices.deleteCollection(id);
+      const res = await collectionServices.deleteCollection(id);
+      if (!res.data?.success) throw new Error(res.data?.message || 'Không thể xóa bộ sưu tập.');
       showNotification('success', 'Đã xóa bộ sưu tập thành công!');
       loadData();
     } catch (err) {
-      showNotification('error', 'Lỗi xóa bộ sưu tập: ' + err.message);
+      showNotification('error', 'Lỗi xóa bộ sưu tập: ' + (err.response?.data?.message || err.message));
     }
   };
 
@@ -452,16 +466,18 @@ const DataCatalogManager = () => {
       };
 
       if (modalType === 'create_event') {
-        await eventServices.createEvent(payload);
+        const res = await eventServices.createEvent(payload);
+        if (!res.data?.success) throw new Error(res.data?.message || 'Không thể tạo sự kiện.');
         showNotification('success', 'Đã thêm sự kiện mới thành công!');
       } else {
-        await eventServices.updateEvent(currentEditItem.id, payload);
+        const res = await eventServices.updateEvent(currentEditItem.id, payload);
+        if (!res.data?.success) throw new Error(res.data?.message || 'Không thể cập nhật sự kiện.');
         showNotification('success', 'Đã cập nhật sự kiện thành công!');
       }
       setModalType(null);
       loadData();
     } catch (err) {
-      showNotification('error', 'Lỗi lưu sự kiện: ' + err.message);
+      showNotification('error', 'Lỗi lưu sự kiện: ' + (err.response?.data?.message || err.message));
     } finally {
       setSubmitting(false);
     }
@@ -470,11 +486,12 @@ const DataCatalogManager = () => {
   const handleDeleteEvent = async (id, title) => {
     if (!window.confirm(`Bạn có chắc chắn muốn xóa sự kiện "${title}"?`)) return;
     try {
-      await eventServices.deleteEvent(id);
+      const res = await eventServices.deleteEvent(id);
+      if (!res.data?.success) throw new Error(res.data?.message || 'Không thể xóa sự kiện.');
       showNotification('success', 'Đã xóa sự kiện thành công!');
       loadData();
     } catch (err) {
-      showNotification('error', 'Lỗi xóa sự kiện: ' + err.message);
+      showNotification('error', 'Lỗi xóa sự kiện: ' + (err.response?.data?.message || err.message));
     }
   };
 

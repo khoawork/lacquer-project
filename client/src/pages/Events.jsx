@@ -4,7 +4,7 @@ import EventsFilterSection from '../components/events/EventsFilterSection';
 import EventsListSection from '../components/events/EventsListSection';
 import EventsCtaSection from '../components/events/EventsCtaSection';
 import pageServices from '../services/pageServices';
-import siteServices from '../services/siteServices';
+import siteServices, { parseCategorySetting } from '../services/siteServices';
 
 const Events = () => {
   const [activeFilter, setActiveFilter] = useState('Tất cả');
@@ -40,17 +40,10 @@ const Events = () => {
       try {
         const res = await siteServices.getSettings();
         if (res.data && res.data.success && isMounted) {
-          const settings = res.data.data || [];
-          const catSetting = settings.find((s) => s.key === 'event_categories');
-          if (catSetting && catSetting.value) {
-            const parsed = Array.isArray(catSetting.value)
-              ? catSetting.value
-              : typeof catSetting.value === 'string'
-              ? JSON.parse(catSetting.value)
-              : null;
-            if (Array.isArray(parsed) && parsed.length > 0) {
-              setCategories(parsed);
-            }
+          const parsed = parseCategorySetting(res.data.data);
+          if (parsed.length > 0) {
+            const list = ['Tất cả', ...parsed.filter((c) => c !== 'Tất cả')];
+            setCategories(list);
           }
         }
       } catch (err) {

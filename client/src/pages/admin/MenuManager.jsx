@@ -10,8 +10,6 @@ import {
   AlertCircle,
   RefreshCw,
   RotateCcw,
-  Sliders,
-  ExternalLink,
 } from 'lucide-react';
 import siteServices from '../../services/siteServices';
 
@@ -54,26 +52,39 @@ const MenuManager = () => {
             return;
           }
         }
-      } catch {
-        // Fallback
-      }
 
-      // Check localStorage fallback
-      const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (cached) {
-        try {
-          const parsed = JSON.parse(cached);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            setItems(parsed);
-            return;
+        // Check localStorage fallback
+        const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setItems(parsed);
+              return;
+            }
+          } catch {
+            // ignore
           }
-        } catch {
-          // ignore
         }
-      }
 
-      setItems(DEFAULT_MENU_ITEMS);
-      setLoading(false);
+        setItems(DEFAULT_MENU_ITEMS);
+      } catch {
+        const cached = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (cached) {
+          try {
+            const parsed = JSON.parse(cached);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setItems(parsed);
+              return;
+            }
+          } catch {
+            // ignore
+          }
+        }
+        setItems(DEFAULT_MENU_ITEMS);
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchMenu();
@@ -126,12 +137,11 @@ const MenuManager = () => {
   const handleResetDefault = () => {
     if (window.confirm('Khôi phục danh sách menu về 9 trang mặc định của hệ thống?')) {
       setItems(DEFAULT_MENU_ITEMS);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(DEFAULT_MENU_ITEMS));
       setStatusMsg({
         type: 'success',
-        text: 'Đã khôi phục menu về mặc định 9 trang.',
+        text: 'Đã khôi phục danh sách mặc định. Bấm "Lưu Thay Đổi" để áp dụng.',
       });
-      setTimeout(() => setStatusMsg(null), 3000);
+      setTimeout(() => setStatusMsg(null), 4000);
     }
   };
 
@@ -140,27 +150,25 @@ const MenuManager = () => {
     setSaving(true);
     setStatusMsg(null);
 
-    // Save to localStorage immediately so frontend can sync
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items));
-    window.dispatchEvent(new Event('lacquer_menu_updated'));
-
     try {
       const res = await siteServices.saveMainMenu(items);
       if (res.data && res.data.success) {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(items));
+        window.dispatchEvent(new Event('lacquer_menu_updated'));
         setStatusMsg({
           type: 'success',
           text: 'Đã lưu cấu hình menu chính thành công lên hệ thống!',
         });
       } else {
         setStatusMsg({
-          type: 'success',
-          text: 'Đã lưu cấu hình menu vào bộ nhớ hệ thống!',
+          type: 'error',
+          text: res.data?.message || 'Máy chủ từ chối lưu menu.',
         });
       }
-    } catch {
+    } catch (err) {
       setStatusMsg({
-        type: 'success',
-        text: 'Đã lưu cấu hình menu vào trình duyệt!',
+        type: 'error',
+        text: 'Không thể lưu menu: ' + (err.response?.data?.message || err.message),
       });
     } finally {
       setSaving(false);

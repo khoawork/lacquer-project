@@ -21,6 +21,7 @@ import { getImageUrl } from '../../../configs/Apis';
 const CollectionPageEditor = ({
   parsedProps,
   handlePropChange,
+  handlePropsPatch,
   allCollections = [],
   collectionSearch = '',
   setCollectionSearch,
@@ -70,21 +71,26 @@ const CollectionPageEditor = ({
       ];
 
   const handleUpdateProjects = (newList) => {
-    handlePropChange('community_projects', newList);
+    const patch = { community_projects: newList };
     // Đồng bộ ngược lại 2 dự án đầu cho tương thích ngược hoàn toàn
     if (newList[0]) {
-      handlePropChange('project1_tag', newList[0].tag || '');
-      handlePropChange('project1_title', newList[0].title || '');
-      handlePropChange('project1_desc', newList[0].desc || '');
-      handlePropChange('project1_btn', newList[0].btn_text || '');
-      handlePropChange('project1_link', newList[0].link || '');
+      patch.project1_tag = newList[0].tag || '';
+      patch.project1_title = newList[0].title || '';
+      patch.project1_desc = newList[0].desc || '';
+      patch.project1_btn = newList[0].btn_text || '';
+      patch.project1_link = newList[0].link || '';
     }
     if (newList[1]) {
-      handlePropChange('project2_tag', newList[1].tag || '');
-      handlePropChange('project2_title', newList[1].title || '');
-      handlePropChange('project2_desc', newList[1].desc || '');
-      handlePropChange('project2_btn', newList[1].btn_text || '');
-      handlePropChange('project2_link', newList[1].link || '');
+      patch.project2_tag = newList[1].tag || '';
+      patch.project2_title = newList[1].title || '';
+      patch.project2_desc = newList[1].desc || '';
+      patch.project2_btn = newList[1].btn_text || '';
+      patch.project2_link = newList[1].link || '';
+    }
+    if (handlePropsPatch) {
+      handlePropsPatch(patch);
+    } else {
+      handlePropChange('community_projects', newList);
     }
   };
 
@@ -151,8 +157,11 @@ const CollectionPageEditor = ({
           <ImageUploader
             value={parsedProps.hero_seal || parsedProps.hero_image || ''}
             onChange={(url) => {
-              handlePropChange('hero_seal', url);
-              handlePropChange('hero_image', url);
+              if (handlePropsPatch) {
+                handlePropsPatch({ hero_seal: url, hero_image: url });
+              } else {
+                handlePropChange('hero_seal', url);
+              }
             }}
             placeholder="Tải lên hoặc dán URL con dấu di sản"
           />
@@ -564,7 +573,7 @@ const CollectionPageEditor = ({
                 className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-[#2b080c] hover:bg-[#3d0b11] border border-dashed border-[#D4AF37]/60 text-xs font-bold text-[#FFDF73] hover:text-white transition cursor-pointer"
               >
                 <Plus className="w-4 h-4" />
-                <span>+ Thêm Một Dự Án Khác</span>
+                <span>Thêm Một Dự Án Khác</span>
               </button>
             </div>
           )}

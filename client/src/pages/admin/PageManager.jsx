@@ -1069,6 +1069,7 @@ const PageManager = () => {
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState(null);
+  const [isDirty, setIsDirty] = useState(false);
 
   // Form State
   const [pageId, setPageId] = useState(null);
@@ -1130,12 +1131,15 @@ const PageManager = () => {
           if (item?.name) setPageName(item.name);
 
           setParsedProps(item?.props || {});
+          if (isMounted) setIsDirty(false);
         } else if (isMounted) {
           setParsedProps({});
+          setIsDirty(false);
         }
       } catch {
         if (isMounted) {
           setParsedProps({});
+          setIsDirty(false);
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -1148,10 +1152,28 @@ const PageManager = () => {
     };
   }, [activeSlug, activePageConfig]);
 
+  // Cảnh báo người dùng khi có thay đổi chưa lưu trước khi đóng/chuyển tab
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      if (isDirty) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [isDirty]);
+
   // Cập nhật giá trị trường thuộc tính trong visual editor
   const handlePropChange = (field, value) => {
-    const updated = { ...parsedProps, [field]: value };
-    setParsedProps(updated);
+    setIsDirty(true);
+    setParsedProps((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Cập nhật đồng thời nhiều trường thuộc tính (tránh ghi đè snapshot cũ)
+  const handlePropsPatch = (patch) => {
+    setIsDirty(true);
+    setParsedProps((prev) => ({ ...prev, ...patch }));
   };
 
   // Toggle Sự kiện được tick chọn
@@ -1207,20 +1229,21 @@ const PageManager = () => {
         : await pageServices.savePageBySlug(activeSlug, payload);
       if (res.data && res.data.success) {
         if (res.data.data?.id) setPageId(res.data.data.id);
+        setIsDirty(false);
         setStatusMsg({
           type: 'success',
           text: `Đã lưu toàn bộ nội dung "${activePageConfig.name}" vào cơ sở dữ liệu thành công!`,
         });
       } else {
         setStatusMsg({
-          type: 'success',
-          text: `Đã lưu cấu hình "${activePageConfig.name}" thành công!`,
+          type: 'error',
+          text: `Lưu thất bại: ${res.data?.message || 'Máy chủ không xác nhận.'}`,
         });
       }
     } catch (err) {
       setStatusMsg({
         type: 'error',
-        text: 'Lỗi khi lưu dữ liệu: ' + err.message,
+        text: 'Lỗi khi lưu dữ liệu: ' + (err.response?.data?.message || err.message),
       });
     } finally {
       setSaving(false);
@@ -1236,6 +1259,7 @@ const PageManager = () => {
           <HomePageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             allEvents={allEvents}
             allCollections={allCollections}
             eventSearch={eventSearch}
@@ -1252,6 +1276,7 @@ const PageManager = () => {
           <AboutPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
           />
         );
 
@@ -1260,6 +1285,7 @@ const PageManager = () => {
           <JourneyPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
           />
         );
 
@@ -1268,6 +1294,7 @@ const PageManager = () => {
           <EventsPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             allEvents={allEvents}
             eventSearch={eventSearch}
             setEventSearch={setEventSearch}
@@ -1282,6 +1309,7 @@ const PageManager = () => {
           <CollectionPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             allCollections={allCollections}
             collectionSearch={collectionSearch}
             setCollectionSearch={setCollectionSearch}
@@ -1296,6 +1324,7 @@ const PageManager = () => {
           <ArchivePageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             handleSavePage={handleSavePage}
             saving={saving}
           />
@@ -1306,6 +1335,7 @@ const PageManager = () => {
           <LeadershipPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             handleSavePage={handleSavePage}
             saving={saving}
           />
@@ -1316,6 +1346,7 @@ const PageManager = () => {
           <NewsPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             allNews={allNews}
             newsSearch={newsSearch}
             setNewsSearch={setNewsSearch}
@@ -1330,6 +1361,7 @@ const PageManager = () => {
           <ContactPageEditor
             parsedProps={parsedProps}
             handlePropChange={handlePropChange}
+            handlePropsPatch={handlePropsPatch}
             handleSavePage={handleSavePage}
             saving={saving}
           />
@@ -1345,7 +1377,7 @@ const PageManager = () => {
   };
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6">
       {/* 1. TOP HEADER BAR */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#D4AF37]/25 pb-5">
         <div>
@@ -1413,29 +1445,6 @@ const PageManager = () => {
         renderVisualEditor()
       )}
 
-      {/* BOTTOM STICKY SAVE BAR */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-[#140204]/95 backdrop-blur-md border-t border-[#D4AF37]/30 py-3 px-6 shadow-2xl">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-xs text-[#EADBCE]/80">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>
-              Đang chỉnh sửa: <strong className="text-[#FFDF73]">{activePageConfig.name}</strong> (Slug: {activeSlug})
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={handleSavePage}
-              disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-[#d49b1a] hover:bg-[#e9c349] text-[#1a0406] font-bold text-xs tracking-wider uppercase transition shadow-[0_2px_12px_rgba(212,155,26,0.35)] cursor-pointer disabled:opacity-50"
-            >
-              {saving ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5" />}
-              <span>{saving ? 'Đang lưu...' : `Lưu ${activePageConfig.name}`}</span>
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

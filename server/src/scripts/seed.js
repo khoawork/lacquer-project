@@ -444,7 +444,6 @@ async function runSeed() {
           program_gps_title: '273 Điện Biên Phủ',
           program_gps_sub: 'Phường Võ Thị Sáu, Quận 3, TP.HCM',
           featured_event_ids: [1, 2],
-          spotlight_event_id: 1,
         },
       },
       {

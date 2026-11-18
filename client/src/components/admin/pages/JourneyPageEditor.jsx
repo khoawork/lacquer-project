@@ -2,7 +2,7 @@ import React from 'react';
 import { Compass, Calendar, Plus, Trash2, Quote, Layers, Megaphone } from 'lucide-react';
 import ImageUploader from '../../common/ImageUploader';
 
-const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
+const JourneyPageEditor = ({ parsedProps, handlePropChange, handlePropsPatch }) => {
   // Timeline nodes array helpers
   const timelineNodes = Array.isArray(parsedProps.timeline_nodes) ? parsedProps.timeline_nodes : [];
 
@@ -158,8 +158,11 @@ const JourneyPageEditor = ({ parsedProps, handlePropChange }) => {
               label="Biểu Trưng / Con Dấu Bách Niên Nền Hero (hero_seal)"
               value={parsedProps.hero_seal || parsedProps.hero_image || ''}
               onChange={(val) => {
-                handlePropChange('hero_seal', val);
-                handlePropChange('hero_image', val);
+                if (handlePropsPatch) {
+                  handlePropsPatch({ hero_seal: val, hero_image: val });
+                } else {
+                  handlePropChange('hero_seal', val);
+                }
               }}
             />
           </div>

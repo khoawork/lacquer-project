@@ -33,10 +33,11 @@ export const endpoints = {
   // Site Settings & Menus & Forms API
   siteSettings: '/site/settings',
   mainMenu: '/site/menus/main',
-  forms: '/site/forms',
+  forms: '/site/submissions',
 
   // Upload API
   upload: '/upload',
+  uploadDocument: '/upload/document',
 };
 
 const getBaseUrl = () => {

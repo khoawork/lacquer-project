@@ -298,6 +298,7 @@ function IconSelectDropdown({
 const ArchivePageEditor = ({
   parsedProps,
   handlePropChange,
+  handlePropsPatch,
   handleSavePage,
   saving = false,
 }) => {
@@ -345,23 +346,15 @@ const ArchivePageEditor = ({
       ];
 
   const handleUpdateVolumes = (newList) => {
-    handlePropChange('volumes', newList);
-    // Đồng bộ ngược lại các biến vol1 - vol4 cho tương thích ngược
-    if (newList[0]) {
-      handlePropChange('vol1_title', newList[0].title || '');
-      handlePropChange('vol1_desc', newList[0].focus || newList[0].desc || '');
-    }
-    if (newList[1]) {
-      handlePropChange('vol2_title', newList[1].title || '');
-      handlePropChange('vol2_desc', newList[1].focus || newList[1].desc || '');
-    }
-    if (newList[2]) {
-      handlePropChange('vol3_title', newList[2].title || '');
-      handlePropChange('vol3_desc', newList[2].focus || newList[2].desc || '');
-    }
-    if (newList[3]) {
-      handlePropChange('vol4_title', newList[3].title || '');
-      handlePropChange('vol4_desc', newList[3].focus || newList[3].desc || '');
+    const patch = { volumes: newList };
+    newList.slice(0, 4).forEach((v, i) => {
+      patch[`vol${i + 1}_title`] = v.title || '';
+      patch[`vol${i + 1}_desc`] = v.focus || v.desc || '';
+    });
+    if (handlePropsPatch) {
+      handlePropsPatch(patch);
+    } else {
+      handlePropChange('volumes', newList);
     }
   };
 
@@ -400,14 +393,43 @@ const ArchivePageEditor = ({
     handleUpdateVolumes(updated);
   };
 
-  // 2. Quản lý danh sách 5 Phân Hệ Tri Thức Cốt Lõi (Categories)
+  // 2. Quản lý danh sách Phân Hệ Tri Thức Cốt Lõi (Categories)
   const rawCategories = parsedProps.categories;
   const categoriesList = Array.isArray(rawCategories) && rawCategories.length > 0
     ? rawCategories
     : DEFAULT_CATEGORIES;
 
+  const handleAddCategory = () => {
+    const nextNum = categoriesList.length + 1;
+    const newCat = {
+      id: `cat_${Date.now()}`,
+      title: `Phân hệ tri thức #${nextNum}`,
+      desc: 'Mô tả tóm tắt nội dung phân hệ nghiên cứu và hệ thống tư liệu học thuật...',
+      btnLabel: 'Khám phá phân hệ',
+      link: '/archive',
+    };
+    handlePropChange('categories', [...categoriesList, newCat]);
+  };
+
+  const handleRemoveCategory = (idxToRemove) => {
+    const cat = categoriesList[idxToRemove];
+    if (!window.confirm(`Bạn có chắc muốn xóa phân hệ "${cat.title || 'này'}"?`)) return;
+    const updated = categoriesList.filter((_, idx) => idx !== idxToRemove);
+    handlePropChange('categories', updated);
+  };
+
   const handleCategoryFieldChange = (idx, field, value) => {
     const updated = categoriesList.map((cat, i) => (i === idx ? { ...cat, [field]: value } : cat));
+    handlePropChange('categories', updated);
+  };
+
+  const handleMoveCategory = (idx, delta) => {
+    const targetIdx = idx + delta;
+    if (targetIdx < 0 || targetIdx >= categoriesList.length) return;
+    const updated = [...categoriesList];
+    const temp = updated[idx];
+    updated[idx] = updated[targetIdx];
+    updated[targetIdx] = temp;
     handlePropChange('categories', updated);
   };
 
@@ -452,33 +474,6 @@ const ArchivePageEditor = ({
 
   return (
     <div className="space-y-8">
-      {/* ================= THANH TIÊU ĐỀ & NÚT LƯU NHANH ================= */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-[#140204] border border-[#D4AF37]/35 shadow-lg">
-        <div>
-          <span className="text-[11px] font-mono text-[#FFDF73] uppercase tracking-wider block">
-            CẤU HÌNH TRANG HỆ THỐNG
-          </span>
-          <h2 className="font-sans text-xl font-bold text-white">
-            Trang Kỷ Yếu Di Sản Bách Niên (/archive)
-          </h2>
-          <p className="text-xs text-[#EADBCE]/70">
-            Quản trị kho tri thức, 4 chỉ số di sản, 5 phân hệ cốt lõi, 4 tập chuyên khảo và cổng nhận tư liệu.
-          </p>
-        </div>
-
-        {handleSavePage && (
-          <button
-            type="button"
-            onClick={handleSavePage}
-            disabled={saving}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#d49b1a] hover:bg-[#e9c349] text-black font-bold text-xs uppercase tracking-wider transition shadow-[0_4px_16px_rgba(212,155,26,0.35)] cursor-pointer disabled:opacity-50 shrink-0 self-start sm:self-auto"
-          >
-            {saving ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-            <span>{saving ? 'Đang lưu trang...' : 'Lưu Trang Kỷ Yếu'}</span>
-          </button>
-        )}
-      </div>
-
       {/* ================= PHẦN 1: HERO & 4 CHỈ SỐ DI SẢN ================= */}
       <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-4">
         <div className="flex items-center gap-2.5 border-b border-[#D4AF37]/25 pb-3">
@@ -689,7 +684,7 @@ const ArchivePageEditor = ({
           </div>
           <div>
             <h3 className="font-sans text-lg font-bold text-[#FFDF73]">
-              Phần 2: 5 Phân Hệ Tri Thức Cốt Lõi (Categories)
+              Phần 2: {categoriesList.length} Phân Hệ Tri Thức Cốt Lõi (Categories)
             </h3>
             <p className="text-xs text-[#EADBCE]/70">
               Cấu hình tiêu đề và các phân hệ nghiên cứu lưu trữ học thuật.
@@ -741,6 +736,34 @@ const ArchivePageEditor = ({
                   <span className="text-xs font-mono font-bold text-[#FFDF73]">
                     PHÂN HỆ {String(cat.id || idx + 1).toUpperCase()}
                   </span>
+                  <div className="flex items-center gap-1">
+                    <button
+                      type="button"
+                      disabled={idx === 0}
+                      onClick={() => handleMoveCategory(idx, -1)}
+                      className="p-1 rounded hover:bg-[#2b080c] text-[#EADBCE]/70 hover:text-[#FFDF73] disabled:opacity-30 cursor-pointer"
+                      title="Lên trên"
+                    >
+                      <ArrowUp className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      disabled={idx === categoriesList.length - 1}
+                      onClick={() => handleMoveCategory(idx, 1)}
+                      className="p-1 rounded hover:bg-[#2b080c] text-[#EADBCE]/70 hover:text-[#FFDF73] disabled:opacity-30 cursor-pointer"
+                      title="Xuống dưới"
+                    >
+                      <ArrowDown className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveCategory(idx)}
+                      className="p-1 rounded hover:bg-red-950/60 text-red-400/80 hover:text-red-300 cursor-pointer"
+                      title="Xóa phân hệ"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div>
@@ -774,6 +797,17 @@ const ArchivePageEditor = ({
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="pt-2 text-center">
+            <button
+              type="button"
+              onClick={handleAddCategory}
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-[#2b080c] hover:bg-[#3d0b11] border border-dashed border-[#D4AF37]/60 text-xs font-bold text-[#FFDF73] hover:text-white transition cursor-pointer"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Thêm Một Phân Hệ Tri Thức Khác</span>
+            </button>
           </div>
         </div>
       </div>
@@ -983,7 +1017,7 @@ const ArchivePageEditor = ({
               className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-[#2b080c] hover:bg-[#3d0b11] border border-dashed border-[#D4AF37]/60 text-xs font-bold text-[#FFDF73] hover:text-white transition cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>+ Thêm Một Tập Khảo Cứu Khác</span>
+              <span>Thêm Một Tập Khảo Cứu Khác</span>
             </button>
           </div>
         </div>
@@ -1181,7 +1215,7 @@ const ArchivePageEditor = ({
               className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-[#2b080c] hover:bg-[#3d0b11] border border-dashed border-[#D4AF37]/60 text-xs font-bold text-[#FFDF73] hover:text-white transition cursor-pointer"
             >
               <Plus className="w-4 h-4" />
-              <span>+ Thêm Một Loại Tư Liệu Khác</span>
+              <span>Thêm Một Loại Tư Liệu Khác</span>
             </button>
           </div>
         </div>

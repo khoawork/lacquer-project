@@ -5,6 +5,7 @@ import { getImageUrl } from '../../../configs/Apis';
 const NewsPageEditor = ({
   parsedProps,
   handlePropChange,
+  handlePropsPatch,
   allNews = [],
   newsSearch = '',
   setNewsSearch,
@@ -26,34 +27,6 @@ const NewsPageEditor = ({
 
   return (
     <div className="space-y-8 select-none">
-      {/* Top Save Action Bar */}
-      {handleSavePage && (
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 rounded-xl bg-gradient-to-r from-[#2a080c] via-[#1a0407] to-[#120204] border border-[#D4AF37]/40 shadow-xl">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-[#3d090f] border border-[#D4AF37]/50 flex items-center justify-center text-[#FFDF73] shadow-[0_0_12px_rgba(255,223,115,0.3)]">
-              <Newspaper className="w-5 h-5" />
-            </div>
-            <div>
-              <h4 className="font-sans text-base font-bold text-[#FFDF73]">
-                Quản Trị Nội Dung: Trang Tin Tức &amp; Tư Liệu
-              </h4>
-              <p className="text-xs text-[#EADBCE]/70">
-                Cập nhật tiêu đề mở đầu, dẫn nhập và chọn danh sách bài viết nổi bật.
-              </p>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={handleSavePage}
-            disabled={saving}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg bg-gradient-to-r from-[#D4AF37] via-[#FFDF73] to-[#AA7C11] text-[#120204] text-xs font-bold uppercase tracking-wider shadow-lg hover:brightness-110 active:scale-95 transition disabled:opacity-50 cursor-pointer"
-          >
-            <Save className="w-4 h-4" />
-            <span>{saving ? 'Đang lưu...' : 'Lưu Thay Đổi'}</span>
-          </button>
-        </div>
-      )}
-
       {/* SECTION 1: HERO */}
       <div className="p-6 rounded-2xl bg-[#1e0508] border border-[#D4AF37]/35 shadow-xl space-y-4">
         <div className="flex items-center gap-2.5 border-b border-[#D4AF37]/25 pb-3">

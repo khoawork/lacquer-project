@@ -36,6 +36,28 @@ export const uploadService = {
     // Nếu đã là URL thông thường thì giữ nguyên
     return fileOrBase64;
   },
+
+  /**
+   * Tải tài liệu đính kèm (PDF, DOC, DOCX, ZIP tối đa 25MB) lên máy chủ
+   * @param {File|Blob} file
+   * @returns {Promise<string>} Trả về URL của tài liệu đã tải lên
+   */
+  uploadDocument: async (file) => {
+    if (!file || !(file instanceof File || file instanceof Blob)) {
+      throw new Error('Vui lòng chọn tệp tài liệu hợp lệ');
+    }
+
+    const formData = new FormData();
+    formData.append('document', file);
+
+    const uploadUrl = `${BASE_URL}${endpoints.uploadDocument || '/upload/document'}`;
+    const res = await axios.post(uploadUrl, formData);
+
+    if (res.data && res.data.success) {
+      return res.data.url;
+    }
+    throw new Error(res.data?.message || 'Không thể tải tài liệu lên máy chủ');
+  },
 };
 
 export default uploadService;

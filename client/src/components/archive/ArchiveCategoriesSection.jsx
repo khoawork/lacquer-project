@@ -1,5 +1,5 @@
 import React from 'react';
-import { History, Users, Palette, Lightbulb, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
+import { History, Users, Palette, Lightbulb, ShieldCheck, ArrowRight, Sparkles, BookOpen } from 'lucide-react';
 
 const ICONS_MAP = {
   history: History,
@@ -21,7 +21,7 @@ const ArchiveCategoriesSection = ({ pageProps = null }) => {
     Array.isArray(rawCats) && rawCats.length > 0
       ? rawCats.map((cat, idx) => ({
           ...cat,
-          icon: ICONS_MAP[cat.id] || Sparkles,
+          icon: ICONS_MAP[cat.id] || BookOpen,
           colSpan: cat.colSpan || (idx === 3 ? 'md:col-span-2 lg:col-span-2' : 'md:col-span-1 lg:col-span-1'),
         }))
       : [];
